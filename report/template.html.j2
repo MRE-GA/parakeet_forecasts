@@ -32,6 +32,9 @@ body{font-family:var(--body);font-size:12px;line-height:1.5;letter-spacing:.2px;
 .page .pin-bottom{margin-top:auto}
 table.roomy td{padding-top:7.5px;padding-bottom:7.5px}
 .page:last-child{break-after:auto}
+body{counter-reset:pg}
+.page{counter-increment:pg}
+.pn::after{content:counter(pg)}
 svg{display:block;max-width:100%;height:auto;overflow:visible}
 
 /* chrome */
@@ -168,7 +171,7 @@ ul.tight li{margin:0 0 5px}
     <div class="finding"><div class="num">04</div><p><b>Plan on {{ n.f2027[ENSEMBLE] | fm }}, with {{ n.low | fm }} as the conservative case.</b> New cafés (Manhattan Beach, Studio City, Enclave) are not in the number. Our last four openings each added {{ n.analogs | map(attribute="first12") | min | fm }}–{{ (n.analogs | map(attribute="first12") | max / 1e6) | round(1) }}M in their first year.</p></div>
   </div>
   <div class="strip pin-bottom"><span class="lab">Live check</span><span>October 1–14, 2026, after the data the models were trained on: Toast recorded {{ n.live.actual | fm(2) }} and the blend forecast was {{ n.live[ENSEMBLE] | pct(1) }} off (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).</span></div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS (after discounts; excludes tax, tips and gift-card sales) · data through Oct 14, 2026</span><span>2</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS (after discounts; excludes tax, tips and gift-card sales) · data through Oct 14, 2026</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= HISTORY #}
@@ -204,7 +207,7 @@ ul.tight li{margin:0 0 5px}
       <b>The mix of growth has shifted.</b> In 2024 it was all price (+10% average check, flat traffic). In 2026 it is almost all traffic ({{ n.lfl[2].checks | pct }} checks, {{ n.lfl[2].ticket | pct }} average check). Busier cafés are a sturdier base for 2027 than price alone.
     </div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Like-for-like = cafés trading the full Jan–Sep period in both years · checks = Toast checks</span><span>3</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Like-for-like = cafés trading the full Jan–Sep period in both years · checks = Toast checks</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= MODELS #}
@@ -255,7 +258,7 @@ ul.tight li{margin:0 0 5px}
     <div><h3>Same clean-up</h3>One-off disruptions are removed from training (Tropical Storm Hilary, Aug 2023; the LA fires at Brentwood, Jan 2025; closure days) but still count as actual sales in every test.</div>
     <div><h3>Same scoring</h3>Every model faces the same five back-tests and is judged against real Toast sales.</div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Technical settings for each model are in the appendix</span><span>4</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Technical settings for each model are in the appendix</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= BACKTEST #}
@@ -281,7 +284,7 @@ ul.tight li{margin:0 0 5px}
       <b>Verdict.</b> {{ n.best_single }} is the most accurate single model month to month, a nose ahead of Prophet; the two are effectively tied café by café. SARIMA is the best of the three on period totals but the least precise café by café. Prophet tends to run a little hot and Holt-Winters a little cold, so their errors partly cancel. <b>The blend beat every single model on every measure</b>, and its worst miss on a period total was {{ n.bt[3].max_err | pct(1, False) }}.
     </div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Cafés enter a rehearsal once they have 24 full months of history (5 cafés in Sep 2024, 7 from Dec 2024, 9 in Sep 2025)</span><span>5</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Cafés enter a rehearsal once they have 24 full months of history (5 cafés in Sep 2024, 7 from Dec 2024, 9 in Sep 2025)</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= REHEARSALS #}
@@ -310,8 +313,94 @@ ul.tight li{margin:0 0 5px}
       <b>Live check, October 1–14, 2026.</b> These two weeks came after the data the final models were trained on. Toast recorded {{ n.live.actual | fm(2) }}; the blend forecast was {{ n.live[ENSEMBLE] | pct(1) }} off (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).
     </div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Positive = over-forecast · October check prorates each model's October forecast by trading days</span><span>6</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Positive = over-forecast · October check prorates each model's October forecast by trading days</span><span class="pn"></span></div>
 </section>
+
+{% if n.tuning %}{% set T = n.tuning %}
+{# ======================================================================= TUNING #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Round 2 · Tuning</span></div>
+  <h1>Tuned on 2025, proven on 2026</h1>
+  <p class="lede">Each model searched for better settings and features using only its forecasts of 2025: {{ T.n_prophet }} Prophet trials (Optuna) and every one of {{ T.n_sarima }} SARIMA and {{ T.n_hw }} Holt-Winters combinations. The winners then faced a holdout the search never saw: forecasts made in June, September and December 2025 for January to September 2026 ({{ T.holdout_store_months }} café-months).</p>
+  {{ svg.dumbbells }}
+  <div class="row" style="margin-top:12px">
+    <div class="col" style="flex:1.7">
+      <table>
+        <thead><tr><th class="l">Model</th><th>Café-month error<br>round 1 → tuned</th><th>Brand monthly error<br>round 1 → tuned</th><th>Miss on period total<br>round 1 → tuned</th><th class="l" style="padding-left:14px">Decision</th></tr></thead>
+        <tbody>
+        {% for r in T.models %}
+          <tr><td>{{ r.model }}</td>
+            <td>{{ r.baseline_wape | pct(1, False) }} → <b>{{ r.tuned_wape | pct(1, False) }}</b></td>
+            <td>{{ r.baseline_brand_wape | pct(1, False) }} → <b>{{ r.tuned_brand_wape | pct(1, False) }}</b></td>
+            <td>{{ r.baseline_window_abs_error | pct(1, False) }} → <b>{{ r.tuned_window_abs_error | pct(1, False) }}</b></td>
+            <td class="l" style="padding-left:14px">{{ "Adopt tuned settings" if r.adopted else "Keep round-1 settings" }}</td></tr>
+        {% endfor %}
+          <tr class="hl"><td><span class="key pink"></span>Blend</td>
+            <td>{{ T.blend_before.holdout_wape | pct(1, False) }} → {{ T.blend_after.holdout_wape | pct(1, False) }}</td>
+            <td>{{ T.blend_before.holdout_brand_wape | pct(1, False) }} → {{ T.blend_after.holdout_brand_wape | pct(1, False) }}</td>
+            <td>{{ T.blend_before.holdout_window_abs_error | pct(1, False) }} → {{ T.blend_after.holdout_window_abs_error | pct(1, False) }}</td>
+            <td class="l" style="padding-left:14px">{{ "Simple average" if T.blend_rule == "mean" else T.blend_rule | capitalize }}</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:6px">Holdout: Jan–Sep 2026 sales, never used to choose settings. A tuned model is adopted only if it lowers the holdout score (average of café-month and brand-month error).</p>
+    </div>
+    <div class="col callout small" style="flex:1;align-self:center">{{ T.verdict }}</div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Tuning set: forecasts made Sep 2024 – Jun 2025, scored on 2025 months · {{ T.tune_store_months }} café-months</span><span class="pn"></span></div>
+</section>
+
+{# ======================================================================= FEATURES #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Round 2 · Features</span></div>
+  <h1>Which features earned their place</h1>
+  <p class="lede">{{ T.features_lede }}</p>
+  <div class="row">
+    <div class="col" style="flex:1.55">
+      <table>
+        <thead><tr><th class="l">Model</th><th class="l">Feature</th><th>Best score<br>with it</th><th>Best score<br>without</th><th class="l" style="padding-left:14px">Verdict</th></tr></thead>
+        <tbody>
+        {% for f in T.features %}
+          <tr><td>{{ f.model }}</td><td class="l" style="white-space:normal">{{ f.feature }}</td><td>{{ f.with | pct(2, False) }}</td><td>{{ f.without | pct(2, False) }}</td>
+            <td class="l" style="padding-left:14px">{% if f.verdict == "helps" %}<b>Helps</b>{% elif f.verdict == "hurts" %}Hurts{% else %}<span class="muted">No real difference</span>{% endif %}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:6px">Score = average of café-month and brand-month error on the 2025 tuning set (lower is better), for the best setting found with and without each feature. Weather could not be tested: this environment's network policy blocks the weather archive.</p>
+    </div>
+    <div class="col">
+      <h3>How much growth to extrapolate?</h3>
+      <table>
+        <thead><tr><th class="l">Trend setting</th><th>Best score</th></tr></thead>
+        <tbody>
+        {% for k, v in T.sarima_trends.items() %}<tr><td>SARIMA · {{ k }}</td><td>{{ v | pct(2, False) }}</td></tr>{% endfor %}
+        {% for k, v in T.hw_trends.items() %}<tr><td>Holt-Winters · {{ k }}</td><td>{{ v | pct(2, False) }}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Every trial and grid result: outputs/tuning/</span><span class="pn"></span></div>
+</section>
+
+{# ======================================================================= TOP-DOWN #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Round 2 · Structure</span></div>
+  <h1>One model per café, or one model for all?</h1>
+  <p class="lede">{{ T.topdown_lede }}</p>
+  <table style="margin-top:6px">
+    <thead><tr><th class="l">Model (tuned settings)</th><th>Brand monthly error<br>per café</th><th>Brand monthly error<br>one model</th><th>Miss on period total<br>per café</th><th>Miss on period total<br>one model</th><th>2027 forecast<br>per café</th><th>2027 forecast<br>one model</th></tr></thead>
+    <tbody>
+    {% for r in T.topdown_rows %}
+      <tr><td>{{ r.model }}</td><td>{{ r.per_cafe_mape | pct(1, False) }}</td><td>{{ r.total_mape | pct(1, False) }}</td><td>{{ r.per_cafe_miss | pct(1, False) }}</td><td>{{ r.total_miss | pct(1, False) }}</td><td>{{ r.per_cafe_2027 | fm(2) }}</td><td>{{ r.total_2027 | fm(2) }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:6px">Holdout Jan–Sep 2026. "One model" is fitted to the combined sales of the cafés in each test; for 2027 it only has history from April 2024, when the eleventh café opened.</p>
+  <div class="row" style="margin-top:18px">
+    <div class="col callout small">{{ T.topdown_verdict }}</div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Brand monthly error = MAPE of the combined monthly sales of the cafés in each test</span><span class="pn"></span></div>
+</section>
+{% endif %}
 
 {# ======================================================================= MONTHLY FORECAST #}
 <section class="page">
@@ -330,7 +419,7 @@ ul.tight li{margin:0 0 5px}
       <tr><td class="muted">Blend vs 2026</td>{% for r in n.months27 %}<td class="muted">{{ (r[ENSEMBLE] / r.ref2026 - 1) | pct }}</td>{% endfor %}<td class="muted">{{ n.g2027[ENSEMBLE] | pct }}</td></tr>
     </tbody>
   </table>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>2026 row: Jan–Sep actual, Oct–Dec blended forecast</span><span>7</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>2026 row: Jan–Sep actual, Oct–Dec blended forecast</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= BY CAFE #}
@@ -357,7 +446,7 @@ ul.tight li{margin:0 0 5px}
       {{ svg.growth }}
     </div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Forecasts by café and model: outputs/forecast_by_store_month.csv</span><span>8</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Forecasts by café and model: outputs/forecast_by_store_month.csv</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= RISKS #}
@@ -403,7 +492,7 @@ ul.tight li{margin:0 0 5px}
       <div><h3>Keep it fresh</h3>Re-run monthly as Toast data lands; the full pipeline (extract, back-test, forecast, this report) runs in minutes from the repo.</div>
     </div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>* Illustrative: half of the average first-year sales of our last four openings ({{ n.new_cafe_half_year | fm }}); opening dates are not yet set</span><span>9</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>* Illustrative: half of the average first-year sales of our last four openings ({{ n.new_cafe_half_year | fm }}); opening dates are not yet set</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= APPENDIX A #}
@@ -425,28 +514,26 @@ ul.tight li{margin:0 0 5px}
     </div>
     <div class="col">
       <h3>Prophet</h3>
-      <p style="margin:0 0 10px">Daily net sales per café. Linear trend (changepoint prior 0.05), multiplicative weekly and yearly seasonality (10 Fourier terms), US federal holidays plus Valentine's Day, Easter, Mother's and Father's Day, Black Friday, Christmas Eve and New Year's Eve. Monthly totals = sum of daily forecasts on trading days.</p>
+      <p style="margin:0 0 10px">Daily net sales per café: linear trend, weekly and yearly seasonality, US federal holidays plus Valentine's Day, Easter, Mother's and Father's Day, Black Friday, Christmas Eve and New Year's Eve. Monthly totals = sum of daily forecasts on trading days.</p>
       <h3>SARIMA</h3>
-      <p style="margin:0 0 10px">Monthly log sales rate per café (sales ÷ weekday-weighted trading days). Seasonal differencing with drift (average year-on-year growth). Order chosen by AICc from six candidates; the selected order for each café is listed on the next page.</p>
+      <p style="margin:0 0 10px">Monthly sales rate per café (sales ÷ trading days), seasonal ARIMA with the order chosen per café by an information criterion; orders used for 2027 are listed in the next appendix.</p>
       <h3>Holt-Winters</h3>
-      <p style="margin:0 0 10px">Same monthly rate. Additive damped trend, multiplicative seasonality (12 months); smoothing parameters and initial states estimated by least squares.</p>
+      <p style="margin:0 0 10px">Same monthly rate; exponential smoothing with a trend and a 12-month seasonal pattern, parameters estimated by least squares.</p>
       <h3>Blend</h3>
-      <p style="margin:0">Simple average of the three, café by café and month by month, with equal weights (not tuned).</p>
+      <p style="margin:0">Combines the three café by café and month by month{% if n.tuning %} ({{ "simple average" if n.tuning.blend_rule == "mean" else n.tuning.blend_rule }}){% endif %}. Settings for 2027 are on the next page.</p>
     </div>
     <div class="col">
-      <h3>Is Prophet set up fairly?</h3>
-      <p style="margin:0 0 8px">We kept Prophet's standard settings and checked four common alternatives on the same back-tests. No alternative wins on every measure. A stiffer trend helps the brand total but hurts accuracy café by café, so the default stands.</p>
-      <table>
-        <thead><tr><th class="l">Prophet setting</th><th>WAPE</th><th>MAPE</th><th>Avg. miss</th></tr></thead>
-        <tbody>
-        {% for _, r in n.sens.iterrows() %}
-          <tr class="{{ 'hl' if loop.first else '' }}"><td style="white-space:normal">{{ r.variant | replace(" (baseline)", " · used") }}</td><td>{{ r.store_month_wape | pct(1, False) }}</td><td>{{ r.brand_month_mape | pct(1, False) }}</td><td>{{ r.brand_window_abs_error | pct(1, False) }}</td></tr>
-        {% endfor %}
-        </tbody>
-      </table>
+      {% if n.tuning %}{% set T = n.tuning %}
+      <h3>Tuning design (round 2)</h3>
+      <p style="margin:0 0 8px"><b>Tuning set.</b> Forecasts made at the end of Sep 2024, Dec 2024, Mar 2025 and Jun 2025, scored on months 4–15 ahead that fall in 2025 ({{ T.tune_store_months }} café-months).</p>
+      <p style="margin:0 0 8px"><b>Holdout.</b> Forecasts made at the end of Jun, Sep and Dec 2025, scored only on Jan–Sep 2026 ({{ T.holdout_store_months }} café-months), never used to choose anything.</p>
+      <p style="margin:0 0 8px"><b>Score.</b> Average of café-month and brand-month error (WAPE), so a setting cannot win by sharpening cafés while drifting on the total.</p>
+      <p style="margin:0 0 8px"><b>Search.</b> Prophet: {{ T.n_prophet }} Optuna (TPE) trials over nine settings and feature switches, starting from round 1. SARIMA: all {{ T.n_sarima }} combinations. Holt-Winters: all {{ T.n_hw }}.</p>
+      <p style="margin:0"><b>Rules.</b> A model's tuned settings are adopted only if they lower its holdout score. The blend rule (average, median or error-weighted) is picked on the tuning set and kept only if it matches the average on the holdout.</p>
+      {% endif %}
     </div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Code and outputs: github.com/mre-ga/parakeet_forecasts</span><span>10</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Code and outputs: github.com/mre-ga/parakeet_forecasts</span><span class="pn"></span></div>
 </section>
 
 {# ======================================================================= APPENDIX B #}
@@ -471,10 +558,35 @@ ul.tight li{margin:0 0 5px}
         <li><i>outputs/backtest_forecasts.csv</i>, <i>backtest_metrics.csv</i>: every rehearsal forecast and score</li>
       </ul></div>
     <div class="col"><h3>Reading the ranges</h3>The low–high model range is the practical planning band. Each model's own 80% interval for the 2027 total (in <i>forecast_annual.csv</i>) ranges from ±{{ n.pi_halfwidth["Prophet"] | pct(0, False) }} for Prophet to ±{{ n.pi_halfwidth["Holt-Winters"] | pct(0, False) }} for Holt-Winters. They disagree too much, and Prophet's is far tighter than its back-test misses, so we don't headline them.</div>
-    <div class="col"><h3>Reproduce</h3><i>python src/backtest.py</i> → <i>python src/prophet_sensitivity.py</i> → <i>python src/forecast_2027.py</i> → <i>python report/build_report.py</i>. Data refresh: <i>data/sql/extract_parakeet_daily.sql</i> via MCP Andersons.</div>
+    <div class="col"><h3>Reproduce</h3><i>python src/backtest.py</i> → <i>python src/tune.py</i> → <i>python src/forecast_2027.py</i> → <i>python report/build_report.py</i>. Data refresh: <i>data/sql/extract_parakeet_daily.sql</i> via MCP Andersons.</div>
   </div>
-  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS · $ millions</span><span>11</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS · $ millions</span><span class="pn"></span></div>
 </section>
+
+{% if n.tuning %}{% set T = n.tuning %}
+{# ======================================================================= APPENDIX C #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Appendix</span></div>
+  <h1>Settings: round 1 vs tuned</h1>
+  <div class="row" style="margin-top:14px;gap:.3in">
+  {% for m in MODELS %}
+    <div class="col">
+      <h3>{{ m }} · {{ "tuned settings adopted" if T.adopted.variant[m] == "tuned" else "round-1 settings kept" }}</h3>
+      <table>
+        <thead><tr><th class="l">Setting</th><th>Best found</th><th>Round 1</th></tr></thead>
+        <tbody>
+        {% for label, tuned, base in T.describe_best[m] %}
+          <tr class="{{ 'hl' if tuned != base else '' }}"><td style="white-space:normal">{{ label }}</td><td>{{ tuned }}</td><td class="muted">{{ base }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+  </div>
+  <p class="note" style="margin-top:12px">Bold rows changed. "Best found" is the top score on the 2025 tuning set; it is used for 2027 only where the model is marked "adopted" (it also won on the 2026 holdout). Trend flexibility, seasonality and holiday strength are Prophet's prior scales: higher lets that component bend more.{% if T.blend_weights %} Blend weights: {% for m in MODELS %}{{ m }} {{ T.blend_weights[m] | pct(0, False) }}{{ ", " if not loop.last else "." }}{% endfor %}{% endif %}</p>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>outputs/tuned_configs.json holds the exact values</span><span class="pn"></span></div>
+</section>
+{% endif %}
 
 </body>
 </html>

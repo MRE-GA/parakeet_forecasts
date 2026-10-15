@@ -2,7 +2,7 @@
 
     python report/build_report.py [--ds PATH_TO_PARAKEET_DESIGN_SYSTEM]
 
-Run src/backtest.py, src/prophet_sensitivity.py and src/forecast_2027.py first.
+Run src/backtest.py, src/tune.py and src/forecast_2027.py first.
 Brand fonts, logo and photography come from the Parakeet Cafe design-system skill (not
 committed to this repo); pass its folder with --ds or the PARAKEET_DS environment variable.
 The PDF is printed by headless Chromium through Playwright (report/render_pdf.mjs).
@@ -10,6 +10,7 @@ The PDF is printed by headless Chromium through Playwright (report/render_pdf.mj
 from __future__ import annotations
 
 import argparse
+import json
 import os
 import shutil
 import subprocess
@@ -28,7 +29,8 @@ sys.path.insert(0, str(ROOT / "report"))
 
 import charts  # noqa: E402
 from backtest import ENSEMBLE  # noqa: E402
-from forecasting import ANOMALIES, MODELS, OUTPUTS, REGION, STORE_START, STORES, load_daily  # noqa: E402
+from forecasting import (ANOMALIES, DEFAULT_CONFIGS, MODELS, OUTPUTS, REGION, STORE_START, STORES,  # noqa: E402
+                         TUNED_CONFIGS, load_daily, load_stores)
 
 BUILD = OUTPUTS / "report"
 PDF = OUTPUTS / "Parakeet_2027_Sales_Forecast.pdf"
@@ -127,7 +129,6 @@ def collect() -> dict:
     by_store = pd.read_csv(OUTPUTS / "forecast_by_store_month.csv")
     metrics = pd.read_csv(OUTPUTS / "backtest_metrics.csv")
     bt = pd.read_csv(OUTPUTS / "backtest_forecasts.csv", parse_dates=["origin"])
-    sens = pd.read_csv(OUTPUTS / "prophet_sensitivity.csv")
     live = pd.read_csv(OUTPUTS / "october_check.csv")
     specs = pd.read_csv(OUTPUTS / "model_specs.csv")
     all_models = MODELS + [ENSEMBLE]
@@ -224,11 +225,156 @@ def collect() -> dict:
     n["fc"] = fc
     n["raw_brand"] = raw_brand
     n["by_store"] = by_store
-    n["sens"] = sens
     n["bt_df"] = bt
     n["anomalies"] = [f"{who or 'All cafés'}: {date_span(a, b)} ({why})" for who, a, b, why in ANOMALIES]
     n["fold_label"] = {o: pd.Timestamp(o).strftime("%b %-d, %Y") for o in n["bt_folds"].index}
+    n["tuning"] = collect_tuning() if TUNED_CONFIGS.exists() else None
     return n
+
+
+# ------------------------------------------------------------------------------------------
+# Tuning round
+# ------------------------------------------------------------------------------------------
+TUNING = OUTPUTS / "tuning"
+# (column, label, value when on, value when off)
+FEATURES = {
+    "Prophet": [
+        ("holiday_windows", "Holiday periods: Christmas week, spring break, Thanksgiving weekend", "True", "False"),
+        ("summer_weekly", "Separate weekly pattern for summer", "True", "False"),
+        ("cap_outliers", "Cap catering spikes at 3× the 29-day median", "3.0", "0.0"),
+        ("seasonality_mode", "Multiplicative rather than additive seasonality", "multiplicative", "additive"),
+    ],
+    "SARIMA": [
+        ("td_adjust", "Weekday-weighted trading days (vs plain day count)", "weekday", "calendar"),
+        ("transform", "Log transform", "log", "none"),
+    ],
+    "Holt-Winters": [
+        ("td_adjust", "Weekday-weighted trading days (vs plain day count)", "weekday", "calendar"),
+        ("boxcox", "Log transform", "log", "False"),
+        ("seasonal", "Multiplicative rather than additive seasonality", "mul", "add"),
+    ],
+}
+SARIMA_TREND = {"drift": "Constant growth (drift)", "none": "No growth term", "local": "Local trend (re-estimated)"}
+
+
+def hw_trend_label(row) -> str:
+    if row["trend"] in ("None", None):
+        return "No trend"
+    if str(row["damped"]) == "False":
+        return "Straight-line trend"
+    return "Damped trend, φ estimated" if row["phi"] in ("None", None) else f"Damped trend, φ = {row['phi']}"
+
+
+def describe(model: str, cfg: dict) -> list[tuple[str, str, str]]:
+    """(setting, tuned value, round-1 value) in plain words."""
+    base = DEFAULT_CONFIGS[model]
+    on = lambda v: "on" if v else "off"  # noqa: E731
+    if model == "Prophet":
+        rows = [
+            ("Trend flexibility", f"{cfg['changepoint_prior_scale']:.3g}", f"{base['changepoint_prior_scale']:.3g}"),
+            ("Trend can bend until", f"{cfg['changepoint_range']:.0%} of history", f"{base['changepoint_range']:.0%} of history"),
+            ("Seasonality strength", f"{cfg['seasonality_prior_scale']:.3g}", f"{base['seasonality_prior_scale']:.3g}"),
+            ("Holiday strength", f"{cfg['holidays_prior_scale']:.3g}", f"{base['holidays_prior_scale']:.3g}"),
+            ("Seasonality", cfg["seasonality_mode"], base["seasonality_mode"]),
+            ("Yearly detail (Fourier terms)", str(cfg["yearly_fourier"]), str(base["yearly_fourier"])),
+            ("Holiday periods", on(cfg["holiday_windows"]), on(base["holiday_windows"])),
+            ("Summer weekly pattern", on(cfg["summer_weekly"]), on(base["summer_weekly"])),
+            ("Cap catering spikes", on(cfg["cap_outliers"]), on(base["cap_outliers"])),
+        ]
+    elif model == "SARIMA":
+        rows = [
+            ("Growth term", SARIMA_TREND[cfg["trend"]], SARIMA_TREND[base["trend"]]),
+            ("Orders searched", "12 (extended)" if cfg["candidates"] == "extended" else "6", "6"),
+            ("Order chosen by", cfg["criterion"].upper(), base["criterion"].upper()),
+            ("Transform", cfg["transform"], base["transform"]),
+            ("Trading days", cfg["td_adjust"], base["td_adjust"]),
+        ]
+    else:
+        rows = [
+            ("Trend", hw_trend_label({k: str(v) for k, v in cfg.items()}),
+             hw_trend_label({k: str(v) for k, v in base.items()})),
+            ("Seasonality", {"mul": "multiplicative", "add": "additive"}[cfg["seasonal"]],
+             {"mul": "multiplicative", "add": "additive"}[base["seasonal"]]),
+            ("Transform", "log" if cfg["boxcox"] else "none", "log" if base["boxcox"] else "none"),
+            ("Starting values", cfg["init"], base["init"]),
+            ("Trading days", cfg["td_adjust"], base["td_adjust"]),
+        ]
+    return rows
+
+
+def collect_tuning() -> dict:
+    cfg = json.loads(TUNED_CONFIGS.read_text())
+    hold = pd.read_csv(TUNING / "holdout_results.csv")
+    blends = pd.read_csv(TUNING / "blend_results.csv")
+    topdown = pd.read_csv(TUNING / "topdown_results.csv")
+    by_setting = pd.read_csv(TUNING / "forecast_2027_by_setting.csv")
+    trials = {"Prophet": pd.read_csv(TUNING / "prophet_trials.csv", dtype=str),
+              "SARIMA": pd.read_csv(TUNING / "sarima_grid.csv", dtype=str),
+              "Holt-Winters": pd.read_csv(TUNING / "hw_grid.csv", dtype=str)}
+    for t in trials.values():
+        t["objective"] = t["objective"].astype(float)
+
+    t = {"design": cfg["design"], "adopted": cfg["adopted"], "best": cfg["best_on_tuning_set"]}
+    rows = []
+    for m in MODELS:
+        h = hold[hold.model == m].set_index("variant")
+        rows.append({"model": m, "adopted": cfg["adopted"]["variant"][m] == "tuned",
+                     **{f"{v}_{k}": h.loc[v, f"holdout_{k}"] for v in ("baseline", "tuned")
+                        for k in ("objective", "wape", "brand_wape", "brand_mape", "window_abs_error", "bias")},
+                     **{f"tune_{v}": h.loc[v, "tune_objective"] for v in ("baseline", "tuned")}})
+    t["models"] = rows
+    b = blends.set_index(["models", "rule"])
+    t["blend_rows"] = [{"models": mdl, "rule": rule, **b.loc[(mdl, rule)].to_dict()}
+                       for mdl, rule in b.index]
+    rule = cfg["adopted"]["blend"]
+    t["blend_rule"] = rule if isinstance(rule, str) else "inverse-error weights"
+    t["blend_weights"] = None if isinstance(rule, str) else {m: rule[m] / sum(rule.values()) for m in MODELS}
+    t["blend_before"] = b.loc[("baseline models", "mean")].to_dict()
+    t["blend_after"] = b.loc[("adopted models", t["blend_rule"])].to_dict()
+    t["topdown"] = topdown.to_dict("records")
+    t["by_setting"] = by_setting.to_dict("records")
+    t["describe"] = {m: describe(m, {**DEFAULT_CONFIGS[m], **cfg["adopted"]["models"][m]}) for m in MODELS}
+    t["describe_best"] = {m: describe(m, {**DEFAULT_CONFIGS[m], **cfg["best_on_tuning_set"][m]}) for m in MODELS}
+
+    feats = []
+    for m, specs in FEATURES.items():
+        tr = trials[m]
+        for col, label, yes, no in specs:
+            with_ = tr.loc[tr[col] == yes, "objective"].min()
+            without = tr.loc[tr[col] == no, "objective"].min()
+            change = with_ / without - 1
+            verdict = "helps" if change < -0.02 else "hurts" if change > 0.02 else "no real difference"
+            feats.append({"model": m, "feature": label, "with": with_, "without": without,
+                          "change": change, "verdict": verdict})
+    t["features"] = feats
+    t["sarima_trends"] = (trials["SARIMA"].groupby("trend").objective.min()
+                          .rename(index=SARIMA_TREND).sort_values().to_dict())
+    hw = trials["Holt-Winters"].assign(label=lambda d: d.apply(hw_trend_label, axis=1))
+    t["hw_trends"] = hw.groupby("label").objective.min().sort_values().to_dict()
+    t["n_prophet"] = len(trials["Prophet"])
+    t["n_sarima"] = len(trials["SARIMA"])
+    t["n_hw"] = len(trials["Holt-Winters"])
+    from tune import HOLDOUT_ORIGINS, HOLDOUT_WINDOW, TUNE_ORIGINS, TUNE_WINDOW, Evaluator
+    ev = Evaluator(load_stores(), 1)
+    t["tune_store_months"] = sum(len(j[2]) for j in ev.jobs(TUNE_ORIGINS, TUNE_WINDOW))
+    t["holdout_store_months"] = sum(len(j[2]) for j in ev.jobs(HOLDOUT_ORIGINS, HOLDOUT_WINDOW))
+    td = pd.DataFrame(t["topdown"])
+    t["topdown_rows"] = []
+    for m in MODELS:
+        g = td[td.model == m].set_index("approach")
+        f = by_setting[(by_setting.model == m) & (by_setting.settings == "adopted")].set_index("approach")
+        t["topdown_rows"].append({
+            "model": m,
+            "per_cafe_mape": g.loc["one model per cafe", "brand_mape"],
+            "total_mape": g.loc["one model on the total", "brand_mape"],
+            "per_cafe_miss": g.loc["one model per cafe", "window_abs_error"],
+            "total_miss": g.loc["one model on the total", "window_abs_error"],
+            "per_cafe_2027": f.loc["one model per cafe", "forecast_2027"],
+            "total_2027": f.loc["one model on the total", "forecast_2027"],
+        })
+    base27 = by_setting[(by_setting.settings == "baseline")].set_index("model").forecast_2027
+    t["baseline_2027"] = base27.to_dict()
+    return t
 
 
 def date_span(a: str, b: str) -> str:
@@ -299,6 +445,17 @@ def make_charts(n: dict) -> dict:
     out["scenarios"] = charts.model_dots([s for s, _ in scenarios], [v for _, v in scenarios],
                                          n["e2026"], f"2026E {fm(n['e2026'])}", plan, size=(5.6, 2.55),
                                          name="scenarios")
+    if n["tuning"]:
+        T = n["tuning"]
+        rows, bb, ba = T["models"], T["blend_before"], T["blend_after"]
+        out["dumbbells"] = charts.dumbbells(
+            MODELS + ["Blend"],
+            [("Café-month error (WAPE) on the 2026 holdout",
+              [r["baseline_wape"] for r in rows] + [bb["holdout_wape"]],
+              [r["tuned_wape"] for r in rows] + [ba["holdout_wape"]]),
+             ("Brand monthly error (WAPE) on the 2026 holdout",
+              [r["baseline_brand_wape"] for r in rows] + [bb["holdout_brand_wape"]],
+              [r["tuned_brand_wape"] for r in rows] + [ba["holdout_brand_wape"]])])
     return out
 
 

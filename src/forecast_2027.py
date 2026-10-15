@@ -1,5 +1,8 @@
 """Fit the three models on all history through Sep-2026 and forecast Oct-2026 .. Dec-2027.
 
+Uses the settings adopted by src/tune.py (outputs/tuned_configs.json) when present, otherwise
+the round-1 defaults.
+
 Outputs (outputs/):
   forecast_by_store_month.csv   point forecasts per store x month x model (+ actuals to date)
   forecast_brand_month.csv      brand totals per month: each model, ensemble, p10/p90 ranges
@@ -14,17 +17,32 @@ import pandas as pd
 from joblib import Parallel, delayed
 
 from backtest import ENSEMBLE
-from forecasting import FORECASTERS, MODELS, OUTPUTS, REGION, STORES, load_daily, load_stores
+from forecasting import (FORECASTERS, MODELS, OUTPUTS, REGION, STORES, combine, load_configs,
+                         load_daily, load_stores)
 
 ORIGIN = pd.Timestamp("2026-09-30")
 LAST_MONTH = pd.Period("2027-12", "M")
 LIVE_CHECK_END = pd.Timestamp("2026-10-14")
 N_SAMPLES = 1000
+CONFIGS = load_configs()
 
 
 def run(sd, model, seed):
-    point, samples = FORECASTERS[model](sd, ORIGIN, LAST_MONTH, n_samples=N_SAMPLES, seed=seed)
+    point, samples = FORECASTERS[model](sd, ORIGIN, LAST_MONTH, n_samples=N_SAMPLES, seed=seed,
+                                        cfg=CONFIGS["models"][model])
     return sd.store, model, point, samples
+
+
+def blend_paths(paths: dict) -> np.ndarray:
+    """Apply the blend rule draw by draw to the models' simulated brand paths."""
+    rule = CONFIGS["blend"]
+    stack = np.stack([paths[m] for m in MODELS])
+    if rule == "mean":
+        return stack.mean(axis=0)
+    if rule == "median":
+        return np.median(stack, axis=0)
+    w = np.array([rule[m] for m in MODELS])
+    return np.tensordot(w / w.sum(), stack, axes=1)
 
 
 def main() -> None:
@@ -43,13 +61,13 @@ def main() -> None:
             r.update({m: points[(s, m)][month] for m in MODELS})
             rows.append(r)
     by_store = pd.DataFrame(rows)
-    by_store[ENSEMBLE] = by_store[MODELS].mean(axis=1)
+    by_store[ENSEMBLE] = combine(by_store, CONFIGS["blend"])
     by_store.to_csv(OUTPUTS / "forecast_by_store_month.csv", index=False)
 
     # ---- brand totals with simulation ranges ---------------------------------------------
     # Paths are summed across stores draw by draw (stores treated as independent).
     brand_paths = {m: sum(samples[(s, m)].to_numpy() for s in STORES) for m in MODELS}
-    brand_paths[ENSEMBLE] = np.mean([brand_paths[m] for m in MODELS], axis=0)
+    brand_paths[ENSEMBLE] = blend_paths(brand_paths)
     brand = pd.DataFrame({"month": [str(x) for x in months]})
     for m in MODELS + [ENSEMBLE]:
         brand[m] = by_store.groupby("month")[m].sum().reindex(brand.month).to_numpy()
@@ -96,7 +114,7 @@ def main() -> None:
             r[m] = points[(s, m)][pd.Period("2026-10", "M")] * share
         live.append(r)
     live = pd.DataFrame(live)
-    live[ENSEMBLE] = live[MODELS].mean(axis=1)
+    live[ENSEMBLE] = combine(live, CONFIGS["blend"])
     live.to_csv(OUTPUTS / "october_check.csv", index=False)
 
     pd.DataFrame([{"store": s, "sarima_spec": points[(s, "SARIMA")].attrs.get("spec")} for s in STORES]) \

@@ -3,12 +3,16 @@
 Every model is fitted per store and the store forecasts are summed to the brand total, so new
 openings never get mistaken for organic growth.
 
-* Prophet       daily net sales; linear trend, multiplicative weekly + yearly seasonality and
-                US holiday effects (Mother's Day, Memorial Day, Christmas Eve, ...).
-* SARIMA        monthly trading-day-adjusted sales rate (log); seasonal ARIMA with drift,
-                order chosen by AICc from a small candidate set.
-* Holt-Winters  monthly trading-day-adjusted sales rate; exponential smoothing with damped
-                additive trend and multiplicative seasonality.
+* Prophet       daily net sales; linear trend, weekly + yearly seasonality and US holiday
+                effects (Mother's Day, Memorial Day, Christmas Eve, ...).
+* SARIMA        monthly trading-day-adjusted sales rate; seasonal ARIMA, order chosen by an
+                information criterion from a candidate set.
+* Holt-Winters  monthly trading-day-adjusted sales rate; exponential smoothing with trend and
+                seasonality.
+
+Each model takes a config dict (hyperparameters + feature switches). The *_DEFAULT dicts are the
+round-1 settings; src/tune.py searches alternatives and writes the adopted ones to
+outputs/tuned_configs.json, which load_configs() picks up.
 
 "Trading-day adjusted" means monthly sales are divided by the sum of the store's day-of-week
 weights over the days it trades that month, so the monthly models know that a month with five
@@ -16,6 +20,7 @@ Saturdays is worth more than one with four (Prophet sees this natively in the da
 """
 from __future__ import annotations
 
+import json
 import logging
 import warnings
 from dataclasses import dataclass
@@ -29,6 +34,7 @@ from dateutil.easter import easter
 ROOT = Path(__file__).resolve().parents[1]
 DAILY_CSV = ROOT / "data" / "raw" / "parakeet_toast_daily.csv"
 OUTPUTS = ROOT / "outputs"
+TUNED_CONFIGS = OUTPUTS / "tuned_configs.json"
 
 MODELS = ["Prophet", "SARIMA", "Holt-Winters"]
 
@@ -101,6 +107,35 @@ def holiday_table(years=range(2022, 2029)) -> pd.DataFrame:
 HOLIDAYS = holiday_table()
 
 
+# --------------------------------------------------------------------------------------------
+# Extra calendar features (switchable in the configs)
+# --------------------------------------------------------------------------------------------
+EVENT_COLUMNS = ["holiday_week", "spring_break", "thanksgiving_weekend"]
+
+
+def event_features(ds: pd.Series) -> pd.DataFrame:
+    """Multi-day periods that single-day holiday effects miss."""
+    ds = pd.DatetimeIndex(ds)
+    out = pd.DataFrame(index=range(len(ds)))
+    # between Christmas and New Year's Eve (both have their own holiday effect)
+    out["holiday_week"] = ((ds.month == 12) & (ds.day >= 26) & (ds.day <= 30)).astype(float)
+    # school spring break: the two weeks around Easter (Easter itself is a holiday)
+    spring = np.zeros(len(ds))
+    for y in set(ds.year):
+        e = pd.Timestamp(easter(y))
+        spring[(ds >= e - pd.Timedelta(days=7)) & (ds <= e + pd.Timedelta(days=7)) & (ds != e)] = 1
+    out["spring_break"] = spring
+    # Saturday and Sunday after Thanksgiving
+    tg = HOLIDAYS.loc[HOLIDAYS.holiday == "Thanksgiving Day", "ds"]
+    weekend = set(tg + pd.Timedelta(days=2)) | set(tg + pd.Timedelta(days=3))
+    out["thanksgiving_weekend"] = ds.isin(list(weekend)).astype(float)
+    return out
+
+
+def is_summer(ds: pd.Series) -> np.ndarray:
+    return pd.DatetimeIndex(ds).month.isin([6, 7, 8])
+
+
 @dataclass
 class StoreData:
     """One store's daily history on a full calendar, with the trading calendar and cleaning flags."""
@@ -150,11 +185,12 @@ class StoreData:
         by_dow = d.clean.groupby(d.index.dayofweek).mean().reindex(range(7)).fillna(0)
         return (by_dow / d.clean.mean()).to_numpy()
 
-    def trading_days(self, months: pd.PeriodIndex, origin: pd.Timestamp) -> np.ndarray:
-        """Weekday-weighted count of trading days in each month."""
-        w = self.dow_weights(origin)
+    def trading_days(self, months: pd.PeriodIndex, origin: pd.Timestamp, mode: str = "weekday") -> np.ndarray:
+        """Trading days per month: weekday-weighted ("weekday") or a plain count ("calendar")."""
         days = pd.date_range(months[0].start_time, months[-1].end_time.normalize())
-        weights = w[days.dayofweek] * self.open_flags(days)
+        weights = self.open_flags(days)
+        if mode == "weekday":
+            weights = weights * self.dow_weights(origin)[days.dayofweek]
         per_month = pd.Series(weights, index=days.to_period("M")).groupby(level=0).sum()
         return per_month.reindex(months).to_numpy()
 
@@ -201,6 +237,19 @@ def load_stores(last_date: str = "2026-10-14") -> dict[str, StoreData]:
     return {s: prepare_store(raw, s, last_date) for s in STORES}
 
 
+def aggregate_store(sds: list[StoreData], name: str = "All cafés") -> StoreData:
+    """One series for a fixed set of stores (cleaned sales summed), from the date all are open.
+
+    Used to test a single top-down model against the per-store (bottom-up) approach.
+    """
+    start = max(sd.start for sd in sds)
+    end = min(sd.daily.index[-1] for sd in sds)
+    idx = pd.date_range(start, end)
+    clean = sum(sd.daily.clean.reindex(idx).fillna(0) for sd in sds)
+    d = pd.DataFrame({"sales": clean, "open": 1.0, "anomaly": False, "clean": clean}, index=idx)
+    return StoreData(name, d, frozenset())
+
+
 def _months_after(origin: pd.Timestamp, last_month: pd.Period) -> pd.PeriodIndex:
     return pd.period_range(origin.to_period("M") + 1, last_month, freq="M")
 
@@ -208,97 +257,158 @@ def _months_after(origin: pd.Timestamp, last_month: pd.Period) -> pd.PeriodIndex
 # --------------------------------------------------------------------------------------------
 # Models. Each returns (point forecast by month, sample paths by month x draw or None).
 # --------------------------------------------------------------------------------------------
-PROPHET_PARAMS = dict(
-    growth="linear",
-    seasonality_mode="multiplicative",
-    yearly_seasonality=10,
-    weekly_seasonality=True,
-    daily_seasonality=False,
-    changepoint_prior_scale=0.05,
-)
+PROPHET_DEFAULT = {
+    "changepoint_prior_scale": 0.05,
+    "seasonality_prior_scale": 10.0,
+    "holidays_prior_scale": 10.0,
+    "seasonality_mode": "multiplicative",
+    "changepoint_range": 0.8,
+    "yearly_fourier": 10,
+    "holiday_windows": False,  # extra regressors: holiday week, spring break, Thanksgiving weekend
+    "summer_weekly": False,  # separate weekly pattern for Jun-Aug
+    "cap_outliers": None,  # cap training days above k x the 29-day rolling median
+    "log_y": False,
+}
 
 
 def prophet_forecast(sd: StoreData, origin: pd.Timestamp, last_month: pd.Period,
-                     n_samples: int = 0, seed: int = 0, log_y: bool = False, **overrides):
+                     n_samples: int = 0, seed: int = 0, cfg: dict | None = None):
     from prophet import Prophet
 
+    c = {**PROPHET_DEFAULT, **(cfg or {})}
     logging.getLogger("cmdstanpy").setLevel(logging.ERROR)
     logging.getLogger("prophet").setLevel(logging.ERROR)
-    m = Prophet(**{**PROPHET_PARAMS, **overrides}, holidays=HOLIDAYS, uncertainty_samples=n_samples)
+    m = Prophet(
+        growth="linear",
+        seasonality_mode=c["seasonality_mode"],
+        yearly_seasonality=int(c["yearly_fourier"]),
+        weekly_seasonality=not c["summer_weekly"],
+        daily_seasonality=False,
+        holidays=HOLIDAYS,
+        changepoint_prior_scale=c["changepoint_prior_scale"],
+        seasonality_prior_scale=c["seasonality_prior_scale"],
+        holidays_prior_scale=c["holidays_prior_scale"],
+        changepoint_range=c["changepoint_range"],
+        uncertainty_samples=n_samples,
+    )
     train = sd.train_days(origin)
-    if log_y:
+    if c["cap_outliers"]:
+        ceiling = train.y.rolling(29, center=True, min_periods=10).median() * c["cap_outliers"]
+        train = train.assign(y=np.minimum(train.y, ceiling.fillna(np.inf)))
+    if c["log_y"]:
         train = train.assign(y=np.log(train.y))
-    m.fit(train)
+
     months = _months_after(origin, last_month)
     future = pd.DataFrame({"ds": pd.date_range(months[0].start_time, months[-1].end_time.normalize())})
+
+    def add_features(df: pd.DataFrame) -> pd.DataFrame:
+        df = df.reset_index(drop=True)
+        if c["summer_weekly"]:
+            summer = is_summer(df.ds)
+            df = df.assign(is_summer=summer, not_summer=~summer)
+        if c["holiday_windows"]:
+            df = pd.concat([df, event_features(df.ds)], axis=1)
+        return df
+
+    if c["summer_weekly"]:
+        m.add_seasonality("weekly_summer", period=7, fourier_order=3, condition_name="is_summer")
+        m.add_seasonality("weekly_rest", period=7, fourier_order=3, condition_name="not_summer")
+    if c["holiday_windows"]:
+        for col in EVENT_COLUMNS:
+            m.add_regressor(col, prior_scale=c["holidays_prior_scale"])
+    m.fit(add_features(train))
+    future = add_features(future)
+
     open_ = sd.open_flags(future.ds)
     month_of_day = future.ds.dt.to_period("M").to_numpy()
     yhat = m.predict(future).yhat.to_numpy()
-    daily = (np.exp(yhat) if log_y else yhat.clip(min=0)) * open_
+    daily = (np.exp(yhat) if c["log_y"] else yhat.clip(min=0)) * open_
     point = pd.Series(daily, index=month_of_day).groupby(level=0).sum().reindex(months)
     samples = None
     if n_samples:
         np.random.seed(seed)
         draws = m.predictive_samples(future)["yhat"]
-        draws = (np.exp(draws) if log_y else np.clip(draws, 0, None)) * open_[:, None]
+        draws = (np.exp(draws) if c["log_y"] else np.clip(draws, 0, None)) * open_[:, None]
         samples = pd.DataFrame(draws, index=month_of_day).groupby(level=0).sum().reindex(months)
     return point, samples
 
 
-SARIMA_CANDIDATES = [
-    ((0, 0, 0), (0, 1, 0, 12)),  # seasonal naive with drift
-    ((1, 0, 0), (0, 1, 0, 12)),
-    ((1, 0, 0), (0, 1, 1, 12)),
-    ((0, 0, 1), (0, 1, 1, 12)),
-    ((1, 0, 1), (0, 1, 1, 12)),
-    ((2, 0, 0), (0, 1, 1, 12)),
-]
+SARIMA_DEFAULT = {
+    "trend": "drift",  # drift: seasonal differencing + linear trend (constant YoY growth)
+    #                    none: seasonal differencing, no growth term; local: also first-differenced
+    "candidates": "small",  # small: 6 orders; extended: p<=2, q<=1, Q<=1
+    "criterion": "aicc",  # or "bic"
+    "transform": "log",  # or "none"
+    "td_adjust": "weekday",  # or "calendar"
+}
+_SARIMA_SMALL = [((0, 0), 0), ((1, 0), 0), ((1, 0), 1), ((0, 1), 1), ((1, 1), 1), ((2, 0), 1)]  # ((p,q),Q)
+_SARIMA_EXTENDED = [((p, q), Q) for p in (0, 1, 2) for q in (0, 1) for Q in (0, 1)]
 
 
 def sarima_forecast(sd: StoreData, origin: pd.Timestamp, last_month: pd.Period,
-                    n_samples: int = 0, seed: int = 0):
+                    n_samples: int = 0, seed: int = 0, cfg: dict | None = None):
     from statsmodels.tsa.arima.model import ARIMA
 
+    c = {**SARIMA_DEFAULT, **(cfg or {})}
     hist = sd.monthly_clean(origin)
-    y = np.log(hist.to_numpy() / sd.trading_days(hist.index, origin))
-    best, best_spec = None, None
-    for order, seasonal in SARIMA_CANDIDATES:
+    rate = hist.to_numpy() / sd.trading_days(hist.index, origin, c["td_adjust"])
+    y = np.log(rate) if c["transform"] == "log" else rate
+    d, trend = {"drift": (0, "t"), "none": (0, "n"), "local": (1, "n")}[c["trend"]]
+    candidates = _SARIMA_SMALL if c["candidates"] == "small" else _SARIMA_EXTENDED
+    best, best_spec, best_score = None, None, np.inf
+    for (p, q), Q in candidates:
         with warnings.catch_warnings():
             warnings.simplefilter("ignore")
             try:
-                res = ARIMA(y, order=order, seasonal_order=seasonal, trend="t").fit()
+                res = ARIMA(y, order=(p, d, q), seasonal_order=(0, 1, Q, 12), trend=trend).fit()
             except Exception:
                 continue
-        if np.isfinite(res.aicc) and (best is None or res.aicc < best.aicc):
-            best, best_spec = res, (order, seasonal)
+        score = res.aicc if c["criterion"] == "aicc" else res.bic
+        if np.isfinite(score) and score < best_score:
+            best, best_spec, best_score = res, ((p, d, q), (0, 1, Q)), score
     months = _months_after(origin, last_month)
-    td = sd.trading_days(months, origin)
-    point = pd.Series(np.exp(best.forecast(len(months))) * td, index=months)
+    td = sd.trading_days(months, origin, c["td_adjust"])
+    inverse = np.exp if c["transform"] == "log" else (lambda v: np.clip(v, 0, None))
+    point = pd.Series(inverse(best.forecast(len(months))) * td, index=months)
     samples = None
     if n_samples:
         sims = best.simulate(len(months), repetitions=n_samples, anchor="end",
                              rng=np.random.default_rng(seed))
         sims = np.asarray(sims).reshape(len(months), n_samples)
-        samples = pd.DataFrame(np.exp(sims) * td[:, None], index=months)
-    point.attrs["spec"] = f"SARIMA{best_spec[0]}{best_spec[1][:3]}12 + drift"
+        samples = pd.DataFrame(inverse(sims) * td[:, None], index=months)
+    drift = " + drift" if trend == "t" else ""
+    point.attrs["spec"] = f"SARIMA{best_spec[0]}{best_spec[1]}12{drift}"
     return point, samples
 
 
+HW_DEFAULT = {
+    "trend": "add",  # or None
+    "damped": True,
+    "phi": None,  # damping factor; None = estimated
+    "seasonal": "mul",  # or "add"
+    "boxcox": False,  # or "log"
+    "init": "estimated",  # or "heuristic"
+    "td_adjust": "weekday",  # or "calendar"
+}
+
+
 def holt_winters_forecast(sd: StoreData, origin: pd.Timestamp, last_month: pd.Period,
-                          n_samples: int = 0, seed: int = 0):
+                          n_samples: int = 0, seed: int = 0, cfg: dict | None = None):
     from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
+    c = {**HW_DEFAULT, **(cfg or {})}
     hist = sd.monthly_clean(origin)
-    rate = hist.to_numpy() / sd.trading_days(hist.index, origin)
+    rate = hist.to_numpy() / sd.trading_days(hist.index, origin, c["td_adjust"])
+    damped = bool(c["trend"]) and c["damped"]
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         res = ExponentialSmoothing(
-            rate, trend="add", damped_trend=True, seasonal="mul", seasonal_periods=12,
-            initialization_method="estimated",
-        ).fit(optimized=True)
+            rate, trend=c["trend"], damped_trend=damped, seasonal=c["seasonal"], seasonal_periods=12,
+            initialization_method=c["init"], use_boxcox=c["boxcox"],
+        ).fit(optimized=True, damping_trend=c["phi"] if damped else None)
     months = _months_after(origin, last_month)
-    td = sd.trading_days(months, origin)
-    point = pd.Series(res.forecast(len(months)) * td, index=months)
+    td = sd.trading_days(months, origin, c["td_adjust"])
+    point = pd.Series(np.clip(res.forecast(len(months)), 0, None) * td, index=months)
     samples = None
     if n_samples:
         with warnings.catch_warnings():
@@ -315,6 +425,29 @@ FORECASTERS = {
     "SARIMA": sarima_forecast,
     "Holt-Winters": holt_winters_forecast,
 }
+DEFAULT_CONFIGS = {"Prophet": PROPHET_DEFAULT, "SARIMA": SARIMA_DEFAULT, "Holt-Winters": HW_DEFAULT}
+
+
+def load_configs() -> dict:
+    """Adopted settings from src/tune.py if present, else the round-1 defaults.
+
+    Returns {"models": {model: cfg}, "blend": "mean" | "median" | weights dict}.
+    """
+    if TUNED_CONFIGS.exists():
+        adopted = json.loads(TUNED_CONFIGS.read_text())["adopted"]
+        return {"models": {m: {**DEFAULT_CONFIGS[m], **adopted["models"][m]} for m in MODELS},
+                "blend": adopted["blend"]}
+    return {"models": {m: dict(DEFAULT_CONFIGS[m]) for m in MODELS}, "blend": "mean"}
+
+
+def combine(frame: pd.DataFrame, rule) -> pd.Series:
+    """Blend the three model columns: simple mean, median, or fixed weights."""
+    if rule == "mean":
+        return frame[MODELS].mean(axis=1)
+    if rule == "median":
+        return frame[MODELS].median(axis=1)
+    w = pd.Series(rule)[MODELS]
+    return frame[MODELS].mul(w / w.sum(), axis=1).sum(axis=1)
 
 
 # --------------------------------------------------------------------------------------------

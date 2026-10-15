@@ -231,6 +231,39 @@ def model_dots(labels, values, reference, reference_label, best_label, size=(4.5
     return to_svg(fig, name)
 
 
+def dumbbells(labels, panels, size=(9.7, 2.5)) -> str:
+    """Before -> after per model, one panel per metric (lower is better).
+
+    panels: list of (title, before_values, after_values).
+    """
+    fig, axes = plt.subplots(1, len(panels), figsize=size, sharey=True)
+    y = np.arange(len(labels))[::-1]
+    for ax, (title, before, after) in zip(np.atleast_1d(axes), panels):
+        hi = max(max(before), max(after))
+        for yi, b, a in zip(y, before, after):
+            ax.plot([b, a], [yi, yi], color=G300, lw=2, zorder=1)
+            ax.plot(b, yi, "o", ms=8, color=G400, mec="white", mew=2, zorder=2)
+            ax.plot(a, yi, "o", ms=9, color=PINK if a < b else INK, mec="white", mew=2, zorder=3)
+            ax.annotate(f"{a:.1%}", (a, yi), xytext=(0, 9), textcoords="offset points", ha="center",
+                        fontsize=8, color=G900)
+        ax.set_title(title, fontsize=9, color=G900, loc="left", pad=8, fontweight=600)
+        ax.set_xlim(0, hi * 1.2)
+        ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:.0%}"))
+        ax.set_ylim(-0.7, len(labels) - 0.3)
+        ax.grid(True, axis="x")
+        ax.grid(False, axis="y")
+    axes = np.atleast_1d(axes)
+    axes[0].set_yticks(y)
+    axes[0].set_yticklabels(labels)
+    # legend: gray = before, pink = after (improved)
+    from matplotlib.lines import Line2D
+    handles = [Line2D([], [], ls="", marker="o", ms=7, color=G400, mec="white"),
+               Line2D([], [], ls="", marker="o", ms=8, color=PINK, mec="white")]
+    _legend(axes[-1], handles, ["Round 1 settings", "Tuned settings"], loc="lower right", ncol=2)
+    fig.subplots_adjust(wspace=0.1)
+    return to_svg(fig, "dumbbells")
+
+
 def growth_bars(labels, deltas, pcts, size=(4.6, 4.95)) -> str:
     """Dollar growth 2027 vs 2026E by cafe (single series, sorted)."""
     fig, ax = plt.subplots(figsize=size)

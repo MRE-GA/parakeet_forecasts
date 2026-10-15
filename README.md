@@ -49,9 +49,9 @@ and are **not** in the forecast.
 
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-.venv/bin/python src/backtest.py             # outputs/backtest_*.csv
-.venv/bin/python src/prophet_sensitivity.py  # outputs/prophet_sensitivity.csv
-.venv/bin/python src/forecast_2027.py        # outputs/forecast_*.csv, october_check.csv
+.venv/bin/python src/backtest.py             # round 1 back-test, default settings
+.venv/bin/python src/tune.py --trials 150    # round 2: tuning + 2026 holdout -> outputs/tuned_configs.json
+.venv/bin/python src/forecast_2027.py        # 2027 forecast with the adopted settings
 .venv/bin/python report/build_report.py --ds /path/to/parakeet-cafe-design   # the PDF
 ```
 
@@ -66,10 +66,10 @@ for each window listed in the file, then `python src/build_dataset.py <dump file
 ```
 data/raw/parakeet_toast_daily.csv   daily net sales and checks by café (14,239 café-days)
 data/sql/                           extraction query
-src/forecasting.py                  data prep + the three models + metrics
-src/backtest.py                     rolling-origin back-test
-src/prophet_sensitivity.py          Prophet configuration check
-src/forecast_2027.py                final fit and 2027 forecast
+src/forecasting.py                  data prep + the three models (config-driven) + metrics
+src/backtest.py                     round 1 rolling-origin back-test (default settings)
+src/tune.py                         round 2 hyperparameter/feature tuning with a 2026 holdout
+src/forecast_2027.py                final fit and 2027 forecast (adopted settings)
 report/                             charts, HTML template, PDF renderer
 outputs/                            CSV results and the PDF
 ```
