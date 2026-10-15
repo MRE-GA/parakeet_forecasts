@@ -281,7 +281,7 @@ def quarterly_growth(labels, values, partial, budget_g, plan_g, size=(6.9, 3.35)
 # Run-rate review and manager targets deck
 # ------------------------------------------------------------------------------------------
 def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=(), n_q4=3, money="k",
-                    size=(7.5, 3.75), name="rr") -> str:
+                    label27="Run-rate 2027 (no growth)", size=(7.5, 3.75), name="rr") -> str:
     """Actuals by month, then today's run-rate held flat with normal seasons (Oct-Dec 2026 dotted, 2027
     solid) and the budget (its Oct-Dec 2026 estimate and 2027 objective; None if not budgeted)."""
     fig, ax = plt.subplots(figsize=size)
@@ -293,7 +293,7 @@ def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=
     (l26,) = ax.plot(xf[: n_q4 + 1], np.r_[a_last, runrate[:n_q4]], color=PINK, lw=2.2, ls=(0, (1.1, 1.6)))
     (l27,) = ax.plot(xf[n_q4:], runrate[n_q4 - 1:], color=PINK, lw=2.2)
     handles += [l26, l27]
-    labels += ["Run-rate, Oct–Dec 2026", "Run-rate 2027 (no growth)"]
+    labels += ["Run-rate, Oct–Dec 2026", label27]
     if budget is not None:
         (lb,) = ax.plot(xf, np.r_[a_last, budget], color=BUDGET, lw=1.8, ls=(0, (4, 2.5)), zorder=1)
         handles.append(lb)
@@ -324,11 +324,12 @@ def target_bars(labels, last, last_is_estimate, target, size=(7.4, 3.6), name="t
                     fontsize=7.4, color=G900)
     ax.set_xticks(x)
     ax.set_xticklabels(labels)
-    ax.set_ylim(0, max(np.max(target), np.max(last)) * 1.2)
+    ax.set_ylim(0, max(np.max(target), np.max(last)) * 1.12)
     ax.yaxis.set_major_formatter(FuncFormatter(money_k))
     ax.yaxis.set_major_locator(plt.MaxNLocator(5))
     handles = [Patch(color=G500), Patch(color=G300), Patch(color=PINK)]
-    _legend(ax, handles, ["2026 actual", "2026 estimate (run-rate)", "2027 target"], loc="upper left", ncol=3)
+    _legend(ax, handles, ["2026 actual", "2026 estimate (run-rate)", "2027 target"], loc="lower left", ncol=3,
+            bbox_to_anchor=(0, 1.02))
     return to_svg(fig, name)
 
 

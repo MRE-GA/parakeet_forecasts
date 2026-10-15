@@ -71,6 +71,28 @@ includes a juicery through March 2025; Beverly Hills' Jan–Sep 2026 sales repor
 
 Café-level figures behind the deck: `outputs/budget_review_by_cafe.csv`.
 
+## Run-rate review and manager targets (`outputs/Parakeet_2027_Run_Rate_and_Targets.pdf`)
+
+A 31-slide deck in two parts covering the nine existing cafés and La Jolla Cove (Nautilus left out),
+with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.xlsx`).
+
+* **Part 1, today's run-rate**: the last 45 days of Toast sales (Aug 31 – Oct 14, 2026), divided by
+  each café's seasonal pattern (from its Prophet fit) and held flat (`src/runrate_scenario.py`). The
+  nine cafés finish 2026 at $27.79M (−0.3% against the budget's $27.88M) and sell $28.71M in 2027
+  (−0.4% against $28.82M): in total the budget is a no-growth plan, but not café by café. Setting
+  each café to its own run-rate raises Beverly Hills, Del Mar, Carlsbad and Little Italy (+$338K)
+  and lowers Coronado, Newport Beach, La Jolla Juicery, La Jolla Café and Brentwood (−$443K). La Jolla
+  Cove runs at its run-rate to September 2027, then at the budget's remodeled $125K a month ($868K,
+  in line with the budget). One page per store with what we found.
+* **Part 2, 2027 manager targets**: our plan (the blend of the three models, shaded 0.9% down), by
+  month: $31.30M for the nine (+12.6% on the 2026 finish, 9.0% over today's run-rate) and $897K for
+  La Jolla Cove (plan to September, then $125K a month), $32.19M in all. One page per store with
+  monthly and quarterly targets and what each asks over today's level.
+* **Workbook**: `Targets 2027` (by store and month), `Monthly tracking` (managers enter actuals; the
+  variance fills in), `Year to date` (against target, months entered only) and `Reference` (2026
+  finish and 2027 under the budget, today's run-rate and the target). Recalculated with LibreOffice
+  on build; zero formula errors.
+
 ## Approach
 
 * **Data**: daily net sales per café from `bronze.toast_checks/orders/selections`, using the same
@@ -102,6 +124,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python src/hold_scenario.py        # 'no growth after September' scenario for the budget review
 .venv/bin/python src/runrate_scenario.py     # 2027 at today's deseasonalized run-rate (last 45 days)
 .venv/bin/python report/build_deck.py --ds /path/to/parakeet-cafe-design     # the budget-review deck
+.venv/bin/python report/build_targets.py --ds /path/to/parakeet-cafe-design  # run-rate review + manager targets (PDF, xlsx)
 ```
 
 The report needs the Parakeet Cafe design-system skill (brand fonts, logo, photography; not
@@ -122,6 +145,9 @@ src/tune.py                         round 2 hyperparameter/feature tuning with a
 src/feature_ablation.py             one-feature-at-a-time ablation (tuning set and holdout)
 src/forecast_2027.py                final fit and 2027 forecast (adopted settings)
 src/hold_scenario.py                2027 with each café's trend held at its Sep 30, 2026 level
-report/                             charts, HTML templates, PDF renderer (report and budget deck)
+src/import_budget.py                imports the investor budget workbook into data/
+src/runrate_scenario.py             2026 finish and 2027 at today's deseasonalized run-rate (last 45 days)
+report/build_targets.py             the run-rate review and manager-targets deck, and the targets workbook
+report/                             charts, HTML templates, PDF renderer (report and both decks)
 outputs/                            CSV results and the PDF
 ```

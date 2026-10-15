@@ -97,7 +97,7 @@ def main() -> None:
     df["runrate_minus_budget"] = df.runrate_2027 - df.budget_2027
     df.to_csv(OUT, float_format="%.4f")
     pd.concat({r["store"]: r["monthly"] for r in out}, axis=1).T.to_csv(OUT.with_name("runrate_45d_2027_by_month.csv"),
-                                                                          float_format="%.0f")
+                                                                          float_format="%.2f")
     show = df[["cafe", "growth_last_45_days", "runrate_2026E", "budget_2026_finish", "runrate_2027", "check_runrate_2027",
                "budget_2027",
                "runrate_minus_budget", "our_plan_2027", "runrate_vs_2026"]].copy()
