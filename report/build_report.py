@@ -374,7 +374,66 @@ def collect_tuning() -> dict:
         })
     base27 = by_setting[(by_setting.settings == "baseline")].set_index("model").forecast_2027
     t["baseline_2027"] = base27.to_dict()
+    narrate(t)
     return t
+
+
+def _list(items: list[str]) -> str:
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def narrate(t: dict) -> None:
+    """Plain-English verdicts generated from the tuning numbers."""
+    p1 = lambda x: pct(x, 1, False)  # noqa: E731
+    adopted = [r for r in t["models"] if r["adopted"]]
+    kept = [r for r in t["models"] if not r["adopted"]]
+    parts = []
+    if adopted:
+        parts.append("<b>Verdict.</b> Tuning carried over to 2026 for " + _list(
+            [f"{r['model']} (café-month error {p1(r['baseline_wape'])} → {p1(r['tuned_wape'])}, "
+             f"brand {p1(r['baseline_brand_wape'])} → {p1(r['tuned_brand_wape'])})" for r in adopted]) + ".")
+    else:
+        parts.append("<b>Verdict.</b> No tuned setting beat round 1 on the 2026 holdout.")
+    if kept:
+        parts.append(_list([r["model"] for r in kept]) + (" keeps" if len(kept) == 1 else " keep")
+                     + " round-1 settings: the tuned version looked better on 2025 but did worse on 2026.")
+    bb, ba = t["blend_before"], t["blend_after"]
+    parts.append(f"<b>The blend</b> moves from {p1(bb['holdout_wape'])} to {p1(ba['holdout_wape'])} café-month error "
+                 f"and from {p1(bb['holdout_brand_wape'])} to {p1(ba['holdout_brand_wape'])} at brand level; "
+                 f"its average miss on the period total is {p1(ba['holdout_window_abs_error'])} "
+                 f"(was {p1(bb['holdout_window_abs_error'])}).")
+    t["verdict"] = " ".join(parts)
+
+    f = pd.DataFrame(t["features"])
+    helps = f[f.verdict == "helps"]
+    hurts = f[f.verdict == "hurts"]
+    lede = ("Features were switched on and off inside the search, so each one had to earn its place on the "
+            "2025 tuning set. ")
+    if len(helps):
+        lede += "What helped: " + _list([f"{r.feature.split(':')[0].split(' (')[0].lower()} ({r.model})"
+                                         for r in helps.itertuples()]) + ". "
+    if len(hurts):
+        lede += "What hurt: " + _list([f"{r.feature.split(':')[0].split(' (')[0].lower()} ({r.model})"
+                                       for r in hurts.itertuples()]) + "."
+    t["features_lede"] = lede.strip()
+
+    rows = t["topdown_rows"]
+    better_cafe = [r for r in rows if r["per_cafe_mape"] <= r["total_mape"]]
+    gap27 = [r["total_2027"] / r["per_cafe_2027"] - 1 for r in rows]
+    t["topdown_lede"] = ("Round 1 fitted every model once per café and added the results up. Here each model "
+                         "is also fitted once to the cafés' combined sales, and both are scored on the same "
+                         "2026 holdout.")
+    verdict = (f"<b>One model per café wins for {len(better_cafe)} of 3 models</b> on brand monthly error"
+               if len(better_cafe) >= 2 else
+               f"<b>One model for all cafés wins for {3 - len(better_cafe)} of 3 models</b> on brand monthly error")
+    verdict += (f". For 2027 the single models land within {pct(min(gap27), 1)} to {pct(max(gap27), 1)} of the "
+                "per-café totals, so the headline barely depends on the choice. ")
+    verdict += ("We keep one model per café: it is at least as accurate, it gives every café its own forecast, "
+                "and it is not thrown off when a café opens (the combined series only starts in April 2024, "
+                "when the eleventh café opened)." if len(better_cafe) >= 2 else
+                "A single model is competitive on the total, but we keep one model per café: it gives every café "
+                "its own forecast and is not thrown off when a café opens.")
+    t["topdown_verdict"] = verdict
 
 
 def date_span(a: str, b: str) -> str:
@@ -437,9 +496,9 @@ def make_charts(n: dict) -> dict:
     plan = f"Plan: blend of 3 models"
     scenarios = [
         ("Like-for-like cools to +8%", n["slow_case"]),
-        ("Conservative: Holt-Winters", n["f2027"]["Holt-Winters"]),
+        (f"Conservative: {n['low_model']}", n["low"]),
         (plan, n["f2027"][ENSEMBLE]),
-        ("Stretch: SARIMA", n["f2027"]["SARIMA"]),
+        (f"Stretch: {n['high_model']}", n["high"]),
         ("Plan + 1 new café from July*", n["f2027"][ENSEMBLE] + n["new_cafe_half_year"]),
     ]
     out["scenarios"] = charts.model_dots([s for s, _ in scenarios], [v for _, v in scenarios],

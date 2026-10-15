@@ -133,7 +133,7 @@ ul.tight li{margin:0 0 5px}
     <img class="bird" src="assets/parrot-map.png" alt="">
     <div class="eyebrow">Sales forecast · October 2026</div>
     <div class="cover-title">2027 Sales<br>Forecast</div>
-    <p class="cover-sub">Prophet, SARIMA and Holt-Winters, tested head-to-head on four years of Toast sales from our eleven cafés.</p>
+    <p class="cover-sub">Prophet, SARIMA and Holt-Winters, {{ "tuned and " if n.tuning else "" }}tested head-to-head on four years of Toast sales from our eleven cafés.</p>
     <div class="cover-meta">
       Toast POS net sales via MCP Andersons · {{ "{:,}".format(n.store_days) }} café-days ·
       {{ n.first_day.strftime("%b %Y") }} – {{ n.last_day.strftime("%b %-d, %Y") }}<br>
@@ -147,7 +147,11 @@ ul.tight li{margin:0 0 5px}
 <section class="page">
   <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">A bird's-eye view</span></div>
   <h1>2027 net sales: {{ n.f2027[ENSEMBLE] | fm }}, {{ n.g2027[ENSEMBLE] | pct }} on 2026</h1>
+  {% if n.tuning %}
+  <p class="lede">We forecast each café's sales with three time-series models, tuned their settings and features on 2025, confirmed the gains on January–September 2026, and recommend the blend of the three, the most accurate option in every round.</p>
+  {% else %}
   <p class="lede">We forecast each café's sales with three time-series models, scored them in five back-tests, and recommend the average of the three, which was the most accurate on every measure.</p>
+  {% endif %}
   <div class="row" style="margin-top:14px;align-items:flex-start">
     <div class="col" style="flex:1.05">
       <div class="hero">{{ n.f2027[ENSEMBLE] | fm }}</div>
@@ -167,8 +171,12 @@ ul.tight li{margin:0 0 5px}
   <div class="findings">
     <div class="finding"><div class="num">01</div><p><b>The flock keeps growing.</b> 2026 is landing near {{ n.e2026 | fm }} ({{ n.g2026 | pct }}). Like-for-like sales are up {{ n.lfl[2].sales | pct }} this year on {{ n.lfl[2].checks | pct }} more checks: the growth is traffic, not price.</p></div>
     <div class="finding"><div class="num">02</div><p><b>The three models agree within a narrow band.</b> Prophet {{ n.f2027["Prophet"] | fm }}, SARIMA {{ n.f2027["SARIMA"] | fm }}, Holt-Winters {{ n.f2027["Holt-Winters"] | fm }}: all expect another year of double-digit growth ({{ n.g2027[n.low_model] | pct }} to {{ n.g2027[n.high_model] | pct }}).</p></div>
+    {% if n.tuning %}{% set T = n.tuning %}
+    <div class="finding"><div class="num">03</div><p><b>Tuning sharpened the forecast.</b> After {{ T.n_prophet + T.n_sarima + T.n_hw }} settings were tried on 2025, the blend's error on the untouched Jan–Sep 2026 holdout fell from {{ T.blend_before.holdout_wape | pct(1, False) }} to {{ T.blend_after.holdout_wape | pct(1, False) }} per café-month and from {{ T.blend_before.holdout_brand_wape | pct(1, False) }} to {{ T.blend_after.holdout_brand_wape | pct(1, False) }} for the brand total.</p></div>
+    {% else %}
     <div class="finding"><div class="num">03</div><p><b>The back-tests favor the blend.</b> {{ n.best_single }} was the best single model, a nose ahead of Prophet ({{ n.bt[2].wape | pct(1, False) }} vs {{ n.bt[0].wape | pct(1, False) }} café-month error). Averaging all three cut the brand's monthly error to {{ n.bt[3].mape | pct(1, False) }} and missed period totals by {{ n.bt[3].abs_err | pct(1, False) }} on average.</p></div>
-    <div class="finding"><div class="num">04</div><p><b>Plan on {{ n.f2027[ENSEMBLE] | fm }}, with {{ n.low | fm }} as the conservative case.</b> New cafés (Manhattan Beach, Studio City, Enclave) are not in the number. Our last four openings each added {{ n.analogs | map(attribute="first12") | min | fm }}–{{ (n.analogs | map(attribute="first12") | max / 1e6) | round(1) }}M in their first year.</p></div>
+    {% endif %}
+    <div class="finding"><div class="num">04</div><p><b>Plan on {{ n.f2027[ENSEMBLE] | fm }}, with {{ n.low | fm }} ({{ n.low_model }}) as the conservative case.</b> New cafés (Manhattan Beach, Studio City, Enclave) are not in the number. Our last four openings each added {{ n.analogs | map(attribute="first12") | min | fm }}–{{ (n.analogs | map(attribute="first12") | max / 1e6) | round(1) }}M in their first year.</p></div>
   </div>
   <div class="strip pin-bottom"><span class="lab">Live check</span><span>October 1–14, 2026, after the data the models were trained on: Toast recorded {{ n.live.actual | fm(2) }} and the blend forecast was {{ n.live[ENSEMBLE] | pct(1) }} off (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).</span></div>
   <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS (after discounts; excludes tax, tips and gift-card sales) · data through Oct 14, 2026</span><span class="pn"></span></div>
@@ -223,8 +231,8 @@ ul.tight li{margin:0 0 5px}
       <dl>
         <dt>Sees</dt><dd>Daily sales per café, so weekends and holidays are learned directly (Mother's Day {{ n.holiday["Mother's Day"] | pct }}, Memorial Day {{ n.holiday["Memorial Day"] | pct }}, Christmas Eve {{ n.holiday["Christmas Eve"] | pct }}).</dd>
         <dt>Assumes about growth</dt><dd>The recent trend continues in a straight line, adding similar dollars each year.</dd>
-        <dt>Watch-out</dt><dd>Ran about {{ n.bt[0].bias | pct(0, False) }} hot on average in the back-tests.</dd>
-        <dt>Back-test score</dt><dd>{{ n.bt[0].wape | pct(1, False) }} café-month error · {{ n.bt[0].mape | pct(1, False) }} brand monthly error</dd>
+        <dt>Watch-out</dt><dd>Ran about {{ n.bt[0].bias | pct(0, False) }} hot on average in the round-1 back-tests{% if n.high_model == "Prophet" %}; the highest 2027 forecast{% elif n.low_model == "Prophet" %}; the lowest 2027 forecast{% endif %}.</dd>
+        <dt>Round-1 back-test</dt><dd>{{ n.bt[0].wape | pct(1, False) }} café-month error · {{ n.bt[0].mape | pct(1, False) }} brand monthly error</dd>{% if n.tuning %}{% set r = n.tuning.models[0] %}<dt>2026 holdout, settings used</dt><dd>{{ (r.tuned_wape if r.adopted else r.baseline_wape) | pct(1, False) }} café-month error · {{ (r.tuned_brand_wape if r.adopted else r.baseline_brand_wape) | pct(1, False) }} brand error{{ " (tuned)" if r.adopted else " (round-1 settings kept)" }}</dd>{% endif %}
       </dl>
       <div class="result"><b>{{ n.f2027["Prophet"] | fm }}</b>2027 · {{ n.g2027["Prophet"] | pct }}</div>
     </div>
@@ -234,9 +242,9 @@ ul.tight li{margin:0 0 5px}
       <div class="how">Seasonal ARIMA: next year looks like last year, scaled by the café's average year-on-year growth.</div>
       <dl>
         <dt>Sees</dt><dd>Monthly sales per café, adjusted for how many Saturdays, Sundays and closed days each month has.</dd>
-        <dt>Assumes about growth</dt><dd>The café's average year-on-year growth rate carries on, compounding.</dd>
-        <dt>Watch-out</dt><dd>Least precise café by café; the most optimistic forecast for 2027.</dd>
-        <dt>Back-test score</dt><dd>{{ n.bt[1].wape | pct(1, False) }} café-month error · {{ n.bt[1].mape | pct(1, False) }} brand monthly error</dd>
+        <dt>Assumes about growth</dt><dd>{% set st = n.tuning.adopted.models["SARIMA"].trend if n.tuning else "drift" %}{% if st == "drift" %}The café's average year-on-year growth rate carries on, compounding.{% elif st == "local" %}Growth follows the café's recent year-on-year trend, re-estimated as each month lands, rather than its long-run average.{% else %}No growth term: next year repeats this year's level, plus short-term momentum.{% endif %}</dd>
+        <dt>Watch-out</dt><dd>The least precise café by café in round 1{% if n.high_model == "SARIMA" %}; the highest 2027 forecast{% elif n.low_model == "SARIMA" %}; the lowest 2027 forecast{% endif %}.</dd>
+        <dt>Round-1 back-test</dt><dd>{{ n.bt[1].wape | pct(1, False) }} café-month error · {{ n.bt[1].mape | pct(1, False) }} brand monthly error</dd>{% if n.tuning %}{% set r = n.tuning.models[1] %}<dt>2026 holdout, settings used</dt><dd>{{ (r.tuned_wape if r.adopted else r.baseline_wape) | pct(1, False) }} café-month error · {{ (r.tuned_brand_wape if r.adopted else r.baseline_brand_wape) | pct(1, False) }} brand error{{ " (tuned)" if r.adopted else " (round-1 settings kept)" }}</dd>{% endif %}
       </dl>
       <div class="result"><b>{{ n.f2027["SARIMA"] | fm }}</b>2027 · {{ n.g2027["SARIMA"] | pct }}</div>
     </div>
@@ -246,9 +254,9 @@ ul.tight li{margin:0 0 5px}
       <div class="how">Tracks a level, a trend and a seasonal pattern, giving the latest months the most weight.</div>
       <dl>
         <dt>Sees</dt><dd>The same trading-day-adjusted monthly sales as SARIMA.</dd>
-        <dt>Assumes about growth</dt><dd>A damped trend: growth continues but gradually flattens out.</dd>
-        <dt>Watch-out</dt><dd>The most conservative model; under-forecast in four of five back-tests.</dd>
-        <dt>Back-test score</dt><dd>{{ n.bt[2].wape | pct(1, False) }} café-month error · {{ n.bt[2].mape | pct(1, False) }} brand monthly error</dd>
+        <dt>Assumes about growth</dt><dd>{% set hw = n.tuning.adopted.models["Holt-Winters"] if n.tuning else {"trend": "add", "damped": true, "phi": none} %}{% if not hw.trend %}No trend: next year repeats the latest level and seasonal pattern.{% elif not hw.damped %}A straight-line trend: the recent monthly gain continues.{% elif hw.phi %}A damped trend (φ = {{ hw.phi }}): growth continues but fades over the following months.{% else %}A damped trend: growth continues but gradually flattens out.{% endif %}</dd>
+        <dt>Watch-out</dt><dd>Under-forecast in four of five round-1 back-tests{% if n.low_model == "Holt-Winters" %}; the lowest 2027 forecast{% elif n.high_model == "Holt-Winters" %}; the highest 2027 forecast{% endif %}.</dd>
+        <dt>Round-1 back-test</dt><dd>{{ n.bt[2].wape | pct(1, False) }} café-month error · {{ n.bt[2].mape | pct(1, False) }} brand monthly error</dd>{% if n.tuning %}{% set r = n.tuning.models[2] %}<dt>2026 holdout, settings used</dt><dd>{{ (r.tuned_wape if r.adopted else r.baseline_wape) | pct(1, False) }} café-month error · {{ (r.tuned_brand_wape if r.adopted else r.baseline_brand_wape) | pct(1, False) }} brand error{{ " (tuned)" if r.adopted else " (round-1 settings kept)" }}</dd>{% endif %}
       </dl>
       <div class="result"><b>{{ n.f2027["Holt-Winters"] | fm }}</b>2027 · {{ n.g2027["Holt-Winters"] | pct }}</div>
     </div>
@@ -465,13 +473,13 @@ ul.tight li{margin:0 0 5px}
       <h3>Momentum is the big bet</h3>
       <div class="big">{{ n.slow_case | fm }}</div>
       <div class="cap">2027 if like-for-like growth cools to +8%</div>
-      <p>All three models extend like-for-like growth of +10%, +20% and +15% (2024–26). If 2027 growth slows to +8%, sales land near {{ n.slow_case | fm }}, just below the lowest model. Track like-for-like monthly from January.</p>
+      <p>All three models extend like-for-like growth of +10%, +20% and +15% (2024–26). If 2027 growth slows to +8%, sales land near {{ n.slow_case | fm }}{% if n.slow_case < n.low %}, below the lowest model{% else %}, inside the model range{% endif %}. Track like-for-like monthly from January.</p>
     </div>
     <div class="col risk">
       <h3>Growth is concentrated</h3>
       <div class="big">{{ n.top3_share | pct(0, False) }}</div>
       <div class="cap">of 2027 growth comes from three cafés</div>
-      <p>{{ n.fast2[0].store }} ({{ n.fast2[0].growth | pct }}) and {{ n.fast2[1].store }} ({{ n.fast2[1].growth | pct }}, stepped up in March 2026) lead. If both grew +10% instead, 2027 would land near {{ n.fast2_case | fm }}, about where Holt-Winters sits.</p>
+      <p>{{ n.fast2[0].store }} ({{ n.fast2[0].growth | pct }}) and {{ n.fast2[1].store }} ({{ n.fast2[1].growth | pct }}, stepped up in March 2026) lead. If both grew +10% instead, 2027 would land near {{ n.fast2_case | fm }} ({{ (n.fast2_case / n.f2027[ENSEMBLE] - 1) | pct(1) }} vs the blend).</p>
     </div>
     <div class="col risk">
       <h3>Price is an open lever</h3>
@@ -487,7 +495,7 @@ ul.tight li{margin:0 0 5px}
       {{ svg.scenarios }}
     </div>
     <div class="col rules" style="flex:1;flex-direction:column;gap:12px;margin:0">
-      <div><h3>How to use it</h3>Budget at <b>{{ n.f2027[ENSEMBLE] | fm }}</b> (the blend), with Holt-Winters' <b>{{ n.low | fm }}</b> as the conservative case and SARIMA's <b>{{ n.high | fm }}</b> as the stretch. Add new cafés on top as their opening dates firm up.</div>
+      <div><h3>How to use it</h3>Budget at <b>{{ n.f2027[ENSEMBLE] | fm }}</b> (the blend), with {{ n.low_model }}'s <b>{{ n.low | fm }}</b> as the conservative case and {{ n.high_model }}'s <b>{{ n.high | fm }}</b> as the stretch. Add new cafés on top as their opening dates firm up.</div>
       <div><h3>Watch first</h3>Q1 2027 like-for-like against the forecast's {{ n.q1_growth | pct }}. A gap of more than 3 points is the signal to revisit.</div>
       <div><h3>Keep it fresh</h3>Re-run monthly as Toast data lands; the full pipeline (extract, back-test, forecast, this report) runs in minutes from the repo.</div>
     </div>
