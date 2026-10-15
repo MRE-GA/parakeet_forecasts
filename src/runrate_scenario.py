@@ -10,7 +10,10 @@ Cross-check (no model): the 12-month centred average of monthly sales around Sep
 of seasonality; lifting it by the café's growth over the last 45 days against the same weekdays a
 year earlier gives the same underlying level today, held for 12 months.
 
-    python src/runrate_scenario.py      -> outputs/runrate_45d_2027.csv
+    python src/runrate_scenario.py      -> outputs/runrate_45d_2027.csv (per café)
+                                           outputs/runrate_45d_2027_by_month.csv (run-rate by whole month,
+                                           Oct 2026 - Dec 2027; the October 1-14 part is also in the per-café
+                                           file, so it can be swapped for actual sales)
 """
 from __future__ import annotations
 
@@ -27,6 +30,7 @@ ORIGIN = pd.Timestamp("2026-09-30")  # Prophet is fitted through here, like the 
 WINDOW = pd.date_range("2026-08-31", "2026-10-14")  # last 45 days of Toast data
 LAG = pd.Timedelta(days=364)  # same weekdays a year earlier
 YEAR = pd.date_range("2027-01-01", "2027-12-31")
+TO_DATE = pd.date_range("2026-10-01", "2026-10-14")  # October days already in the actuals
 REST = pd.date_range("2026-10-15", "2026-12-31")  # rest of 2026 after the last day of data
 CFG = {**PROPHET_DEFAULT, **load_configs()["models"]["Prophet"]}
 OUT = OUTPUTS / "runrate_45d_2027.csv"
@@ -53,12 +57,12 @@ def seasonal_runrate(sd, window_sales: np.ndarray) -> dict:
         p = m.predict(pd.DataFrame({"ds": dates}))
         return (1 + p.multiplicative_terms.to_numpy()) * sd.open_flags(dates)
 
-    f_window, f_rest, f_year = factors(WINDOW), factors(REST), factors(YEAR)
+    f_window, f_td, f_rest, f_year = factors(WINDOW), factors(TO_DATE), factors(REST), factors(YEAR)
     level = window_sales.sum() / f_window.sum()  # underlying sales per normal trading day
-    days = REST.append(YEAR)
-    monthly = pd.Series(level * np.r_[f_rest, f_year], index=days.to_period("M")).groupby(level=0).sum()
+    days = TO_DATE.append(REST).append(YEAR)  # whole months: October 2026 includes the days already in the actuals
+    monthly = pd.Series(level * np.r_[f_td, f_rest, f_year], index=days.to_period("M")).groupby(level=0).sum()
     return {"store": sd.store, "level_per_day": level, "runrate_2027": level * f_year.sum(),
-            "runrate_rest_2026": level * f_rest.sum(), "monthly": monthly}
+            "runrate_oct_to_date": level * f_td.sum(), "runrate_rest_2026": level * f_rest.sum(), "monthly": monthly}
 
 
 def main() -> None:
@@ -83,7 +87,8 @@ def main() -> None:
         to_date = raw[(raw.store == s) & raw.date.between("2026-01-01", WINDOW[-1])].net_sales.sum()
         rows.append({
             "store": s, "cafe": budget.budget_name.get(s, s),
-            "actual_2026_to_oct14": to_date, "runrate_rest_2026": r["runrate_rest_2026"],
+            "actual_2026_to_oct14": to_date, "runrate_oct_to_date": r["runrate_oct_to_date"],
+            "runrate_rest_2026": r["runrate_rest_2026"],
             "runrate_2026E": to_date + r["runrate_rest_2026"],
             "sales_last_45_days": cur.sum(), "growth_last_45_days": growth,
             "runrate_2027": r["runrate_2027"], "check_runrate_2027": base * (1 + growth),

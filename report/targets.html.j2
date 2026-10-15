@@ -200,7 +200,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
   <div class="row" style="margin-top:8px">
     <div class="col" style="flex:1.75">
       <div class="chart-title">Monthly net sales</div>
-      <div class="chart-sub">{% if c.key == "La Jolla Cove" %}Actual to Sep 2026 · today's run-rate from Oct 2026, then the remodeled $125K a month from Oct 2027 · the budget{% else %}Actual to Sep 2026 · today's run-rate from Oct 2026 (dotted to Dec, then 2027) · the budget's Oct–Dec 2026 estimate and 2027 objective{% endif %}</div>
+      <div class="chart-sub">{% if c.key == "La Jolla Cove" %}Actual to Sep 2026 · run-rate from Oct 2026, remodeled $125K a month from Oct 2027 · budget · 2026E counts actual sales to Oct 14{% else %}Actual to Sep 2026 · run-rate from Oct 2026 (dotted to Dec, then 2027) · the budget · 2026E counts actual sales to Oct 14{% endif %}</div>
       {{ svg.cafe[c.key].rr }}
     </div>
     <div class="col side" style="flex:1">
@@ -278,7 +278,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
   <div class="row" style="margin-top:6px">
     <div class="col" style="flex:1.6">
       <div class="chart-title">Nine existing cafés by month: 2026 and the 2027 target</div>
-      <div class="chart-sub">2026: actual January–September, run-rate estimate October–December</div>
+      <div class="chart-sub">2026: actual January–September; October–December estimated (actual sales to Oct 14, then the run-rate)</div>
       {{ svg.targets9 }}
     </div>
     <div class="col" style="flex:1">
@@ -307,7 +307,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
   <div class="row" style="margin-top:8px">
     <div class="col" style="flex:1.55">
       <div class="chart-title">Monthly net sales: 2026 and the 2027 target</div>
-      <div class="chart-sub">2026: actual January–September, run-rate estimate October–December{% if c.key == "La Jolla Cove" %} · 2027 October–December: the remodeled $125K a month{% endif %}</div>
+      <div class="chart-sub">2026: actual Jan–Sep; Oct–Dec estimated (actual sales to Oct 14, then the run-rate){% if c.key == "La Jolla Cove" %} · 2027 Oct–Dec: the remodeled $125K a month{% endif %}</div>
       {{ svg.cafe[c.key].targets }}
       <p style="font-size:12px;line-height:1.5;margin:8px 0 0">{{ c.t_text }}</p>
     </div>
@@ -326,7 +326,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
       </div>
     </div>
   </div>
-  {{ foot("2026 Oct–Dec in italics: run-rate estimate · " ~ SRC) }}
+  {{ foot("2026 Oct–Dec in italics: estimate (actual to Oct 14, then the run-rate) · " ~ SRC) }}
 </section>
 {% endfor %}
 

@@ -92,22 +92,24 @@ def collect() -> dict:
         w45 = window_45(raw, s)
         g45, chk45 = w45["s_cur"] / w45["s_prev"] - 1, w45["c_cur"] / w45["c_prev"] - 1
         r = rr.loc[s]
-        # run-rate by month, Oct 2026 - Dec 2027 (October adds the actual Oct 1-14 to the run-rate for the rest)
+        # run-rate by whole month, Oct 2026 - Dec 2027: the model alone, so 2026 and 2027 share one seasonality
         run = np.array(rrm.loc[s].reindex(FC), dtype=float)
-        run[0] += oct_to_date[s]
+        # the 2026 estimate by month: October swaps the run-rate for Oct 1-14 for the actual sales
+        est26 = run[:3].copy()
+        est26[0] += oct_to_date[s] - r.runrate_oct_to_date
         # the budget by month (workbook): Oct-Dec 2026 estimate, then the 2027 objective
         budget = np.asarray(c0["b_months"], dtype=float)
         # 2027 targets: our plan; the Cove switches to the budget's remodeled rate from its reopening
         target = plan.loc[s].reindex(M27).to_numpy().copy()
         if s == COVE:
             target[9:] = budget[12:15]
-        months26 = np.r_[raw_m.loc[s].reindex(M26[:9]).to_numpy(), run[:3]]
+        months26 = np.r_[raw_m.loc[s].reindex(M26[:9]).to_numpy(), est26]
         c.update(
             g45=g45, chk45=chk45, w45=w45, to_date=r.actual_2026_to_oct14, rest26=r.runrate_rest_2026,
             rr26=r.runrate_2026E, rr27=r.runrate_2027, rr27_check=r.check_runrate_2027, run=run, budget=budget,
             target=target, months26=months26, target27=target.sum(), act=raw_m.loc[s],
         )
-        assert abs(run[:3].sum() + c["ytd26"] - c["rr26"]) < 1, s  # Jan-Sep + Oct-Dec = run-rate 2026 finish
+        assert abs(est26.sum() + c["ytd26"] - c["rr26"]) < 1, s  # Jan-Sep + Oct-Dec = run-rate 2026 finish
         assert abs(months26.sum() - c["rr26"]) < 1, s
         assert abs(run[3:].sum() - c["rr27"]) < 1, s
         # the proposed 2027 objective, by month: the run-rate; the Cove switches to the budget's remodeled rate

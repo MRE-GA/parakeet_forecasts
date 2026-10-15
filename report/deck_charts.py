@@ -328,7 +328,7 @@ def target_bars(labels, last, last_is_estimate, target, size=(7.4, 3.6), name="t
     ax.yaxis.set_major_formatter(FuncFormatter(money_k))
     ax.yaxis.set_major_locator(plt.MaxNLocator(5))
     handles = [Patch(color=G500), Patch(color=G300), Patch(color=PINK)]
-    _legend(ax, handles, ["2026 actual", "2026 estimate (run-rate)", "2027 target"], loc="lower left", ncol=3,
+    _legend(ax, handles, ["2026 actual", "2026 estimate", "2027 target"], loc="lower left", ncol=3,
             bbox_to_anchor=(0, 1.02))
     return to_svg(fig, name)
 
