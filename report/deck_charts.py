@@ -275,3 +275,90 @@ def quarterly_growth(labels, values, partial, budget_g, plan_g, size=(6.9, 3.35)
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:.0%}".replace("-", "−")))
     ax.yaxis.set_major_locator(plt.MaxNLocator(5))
     return to_svg(fig, name)
+
+
+# ------------------------------------------------------------------------------------------
+# Run-rate review and manager targets deck
+# ------------------------------------------------------------------------------------------
+def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=(), n_q4=3, money="k",
+                    size=(7.5, 3.75), name="rr") -> str:
+    """Actuals by month, then today's run-rate held flat with normal seasons (Oct-Dec 2026 dotted, 2027
+    solid) and the budget (its Oct-Dec 2026 estimate and 2027 objective; None if not budgeted)."""
+    fig, ax = plt.subplots(figsize=size)
+    n_a = len(months_act)
+    (la,) = ax.plot(np.arange(n_a), actual, color=INK, lw=2)
+    xf = np.arange(n_a - 1, n_a + len(runrate))
+    a_last = actual[-1]
+    handles, labels = [la], ["Actual"]
+    (l26,) = ax.plot(xf[: n_q4 + 1], np.r_[a_last, runrate[:n_q4]], color=PINK, lw=2.2, ls=(0, (1.1, 1.6)))
+    (l27,) = ax.plot(xf[n_q4:], runrate[n_q4 - 1:], color=PINK, lw=2.2)
+    handles += [l26, l27]
+    labels += ["Run-rate, Oct–Dec 2026", "Run-rate 2027 (no growth)"]
+    if budget is not None:
+        (lb,) = ax.plot(xf, np.r_[a_last, budget], color=BUDGET, lw=1.8, ls=(0, (4, 2.5)), zorder=1)
+        handles.append(lb)
+        labels.append("Budget")
+    months = list(months_act) + list(months_fc)
+    ref_hi = [np.max(actual), np.max(runrate)] + ([np.max(budget)] if budget is not None else [])
+    ref_lo = [np.min(actual), np.min(runrate)] + ([np.min(budget)] if budget is not None else [])
+    for (y0, y1, label) in year_labels:
+        ax.text((y0 + y1) / 2, 1.03, esc(label), ha="center", va="bottom", fontsize=8.2, color=G700, linespacing=1.4,
+                transform=ax.get_xaxis_transform())
+    ax.set_ylim(min(ref_lo) * 0.55, max(ref_hi) * 1.08)
+    ax.yaxis.set_major_formatter(FuncFormatter(money_k if money == "k" else money_m))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
+    _month_axis(ax, months)
+    _legend(ax, handles, labels, loc="upper left", ncol=len(labels), bbox_to_anchor=(0, -0.09), columnspacing=1.1)
+    return to_svg(fig, name)
+
+
+def target_bars(labels, last, last_is_estimate, target, size=(7.4, 3.6), name="tb") -> str:
+    """By month: the same month of 2026 (actual, or estimate where flagged) next to the 2027 target."""
+    fig, ax = plt.subplots(figsize=size)
+    x = np.arange(len(labels))
+    w = 0.38
+    ax.bar(x - w / 2 - 0.01, last, width=w, color=[G300 if e else G500 for e in last_is_estimate], linewidth=0)
+    ax.bar(x + w / 2 + 0.01, target, width=w, color=PINK, linewidth=0)
+    for xi, v in zip(x, target):
+        ax.annotate(esc(money_k(v)), (xi + w / 2 + 0.01, v), xytext=(0, 4), textcoords="offset points", ha="center",
+                    fontsize=7.4, color=G900)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.set_ylim(0, max(np.max(target), np.max(last)) * 1.2)
+    ax.yaxis.set_major_formatter(FuncFormatter(money_k))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
+    handles = [Patch(color=G500), Patch(color=G300), Patch(color=PINK)]
+    _legend(ax, handles, ["2026 actual", "2026 estimate (run-rate)", "2027 target"], loc="upper left", ncol=3)
+    return to_svg(fig, name)
+
+
+def growth_dots(names, series, label_series=-1, size=(7.4, 4.0), name="growth-dots") -> str:
+    """Per row, 2027 growth under several views on one axis.
+
+    series: list of (legend label, values, marker, colour); the values of series[label_series] are labelled.
+    """
+    fig, ax = plt.subplots(figsize=size)
+    y = np.arange(len(names))[::-1]
+    allv = np.array([v for _, vals, _, _ in series for v in vals])
+    for i, yi in enumerate(y):
+        vals = [s[1][i] for s in series]
+        ax.plot([min(vals), max(vals)], [yi, yi], color=G100, lw=3, zorder=1, solid_capstyle="butt")
+    handles = []
+    for k, (label, vals, marker, color) in enumerate(series):
+        h = ax.plot(vals, y, ls="", marker=marker, ms=8 if marker == "o" else 7, color=color, mec="white", mew=1.5,
+                    zorder=3 + k)[0]
+        handles.append(h)
+    lab = series[label_series]
+    for yi, v in zip(y, lab[1]):
+        row = [s[1][list(y).index(yi)] for s in series]
+        ax.annotate(f"{v:+.0%}".replace("-", "−"), (max(row), yi), xytext=(9, 0), textcoords="offset points",
+                    va="center", fontsize=8.5, color=lab[3], fontweight=600)
+    ax.set_yticks(y)
+    ax.set_yticklabels(names)
+    ax.set_xlim(min(0, allv.min()) - 0.04, allv.max() + 0.07)
+    ax.axvline(0, color=G300, lw=0.75)
+    ax.xaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:.0%}".replace("-", "−")))
+    ax.grid(True, axis="x")
+    ax.grid(False, axis="y")
+    _legend(ax, handles, [s[0] for s in series], loc="lower right", ncol=len(series), bbox_to_anchor=(1.0, 1.02))
+    return to_svg(fig, name)
