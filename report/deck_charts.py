@@ -25,7 +25,8 @@ def to_svg(fig, name: str) -> str:
     svg = _to_svg(fig, name)
     head, rest = svg.split(">", 1)
     head = re.sub(r'\s(width|height)="[^"]*"', "", head)
-    return head + ' width="100%">' + rest
+    # if a page caps the chart's height, shrink it from the top-left corner rather than centring it
+    return head + ' width="100%" preserveAspectRatio="xMinYMin meet">' + rest
 
 
 def esc(text: str) -> str:
@@ -280,11 +281,65 @@ def quarterly_growth(labels, values, partial, budget_g, plan_g, size=(6.9, 3.35)
 # ------------------------------------------------------------------------------------------
 # Run-rate review and manager targets deck
 # ------------------------------------------------------------------------------------------
+def _pct_label(v: float) -> str:
+    return "0%" if round(v * 100) == 0 else f"{v:+.0%}".replace("-", "−")
+
+
+def _growth_strip(ax, n_a: int, growth: dict) -> list:
+    """Growth vs the same month a year earlier under the monthly chart: actual months (gray bars), the
+    run-rate (pink bars) and the budget (diamonds), with the last 45 days as a dot. The scale follows the
+    actual months; anything far beyond it (a base month hit by a closure, a remodel) is cut and labelled."""
+    ga, gr = np.asarray(growth["actual"], dtype=float), np.asarray(growth["run"], dtype=float)
+    gb = np.asarray(growth["budget"], dtype=float) if growth.get("budget") is not None else np.full(len(gr), np.nan)
+    xa, xf = np.arange(n_a), np.arange(n_a, n_a + len(gr))
+    hist = ga[~np.isnan(ga)]
+    allv = np.r_[hist, gr[~np.isnan(gr)], gb[~np.isnan(gb)], [growth["g45"]]]
+    cap = max(0.25, 1.5 * np.percentile(hist, 90)) if len(hist) else max(0.25, np.nanmax(allv))
+    top = max(cap, allv.max() * 1.08) if allv.max() <= cap * 1.15 else cap
+    bottom = min(0.0, allv.min() * 1.25) - 0.04 * (top - min(0.0, allv.min()))
+    ax.bar(xa, np.minimum(ga, top), width=0.72, color=G500, linewidth=0, zorder=2)
+    ax.bar(xf, np.minimum(gr, top), width=0.72, color=PINK, alpha=0.5, linewidth=0, zorder=2)
+    keep = gb <= top
+    ax.plot(xf[keep], gb[keep], ls="", marker="D", ms=3.4, color=G900, zorder=3)
+    ax.plot([n_a - 0.5], [min(growth["g45"], top)], "o", ms=5.5, color=INK, mec="white", mew=1.1, zorder=4)
+    # label bars cut at the top (one label per run of neighbouring months)
+    cut = [(x, v) for x, v in zip(np.r_[xa, xf], np.r_[ga, gr]) if not np.isnan(v) and v > top]
+    groups = []
+    for x, v in cut:
+        if groups and x - groups[-1][-1][0] == 1:
+            groups[-1].append((x, v))
+        else:
+            groups.append([(x, v)])
+    for g in groups:
+        vs = [v for _, v in g]
+        txt = _pct_label(vs[0]) if len(g) == 1 else f"{_pct_label(min(vs))} to {_pct_label(max(vs))}"
+        ax.annotate(txt, (g[0][0] - 0.45, top), xytext=(-2, -1), textcoords="offset points", ha="right", va="top",
+                    fontsize=7, color=G700)
+    ax.set_ylim(bottom, top)
+    ax.axhline(0, color=G400, lw=0.8, zorder=1)
+    ax.yaxis.set_major_locator(plt.MaxNLocator(3, steps=[1, 2, 2.5, 5, 10]))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: _pct_label(v)))
+    ax.grid(True, axis="y")
+    ax.grid(False, axis="x")
+    ax.set_ylabel("vs last year", fontsize=7.6, color=G700, labelpad=6)
+    return [Patch(color=G500), Patch(color=PINK, alpha=0.5), Line2D([], [], ls="", marker="D", ms=4, color=G900),
+            Line2D([], [], ls="", marker="o", ms=5.5, color=INK, mec="white")]
+
+
 def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=(), n_q4=3, money="k",
-                    label27="Run-rate 2027 (no growth)", size=(7.5, 3.75), name="rr") -> str:
+                    label27="Run-rate 2027 (no growth)", growth=None, size=(7.5, 3.75), name="rr") -> str:
     """Actuals by month, then today's run-rate held flat with normal seasons (Oct-Dec 2026 dotted, 2027
-    solid) and the budget (its Oct-Dec 2026 estimate and 2027 objective; None if not budgeted)."""
-    fig, ax = plt.subplots(figsize=size)
+    solid) and the budget (its Oct-Dec 2026 estimate and 2027 objective; None if not budgeted).
+
+    growth (optional): dict of 'actual' (per actual month, NaN where there is no full month a year earlier),
+    'run' and 'budget' (per forecast month) and 'g45' (the last 45 days), shown as a strip under the chart."""
+    if growth is None:
+        fig, ax = plt.subplots(figsize=size)
+    else:
+        fig = plt.figure(figsize=size)
+        gs = fig.add_gridspec(2, 1, height_ratios=[2.75, 1], hspace=0.06)
+        ax = fig.add_subplot(gs[0])
+        ax2 = fig.add_subplot(gs[1], sharex=ax)
     n_a = len(months_act)
     (la,) = ax.plot(np.arange(n_a), actual, color=INK, lw=2)
     xf = np.arange(n_a - 1, n_a + len(runrate))
@@ -304,11 +359,28 @@ def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=
     for (y0, y1, label) in year_labels:
         ax.text((y0 + y1) / 2, 1.03, esc(label), ha="center", va="bottom", fontsize=8.2, color=G700, linespacing=1.4,
                 transform=ax.get_xaxis_transform())
-    ax.set_ylim(min(ref_lo) * 0.55, max(ref_hi) * 1.08)
+    ax.set_ylim(min(ref_lo) * (0.55 if growth is None else 0.7), max(ref_hi) * 1.08)
     ax.yaxis.set_major_formatter(FuncFormatter(money_k if money == "k" else money_m))
-    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(5 if growth is None else 4))
     _month_axis(ax, months)
-    _legend(ax, handles, labels, loc="upper left", ncol=len(labels), bbox_to_anchor=(0, -0.09), columnspacing=1.1)
+    if growth is None:
+        _legend(ax, handles, labels, loc="upper left", ncol=len(labels), bbox_to_anchor=(0, -0.09),
+                columnspacing=1.1)
+        return to_svg(fig, name)
+    ax.tick_params(labelbottom=False)
+    h2 = _growth_strip(ax2, n_a, growth)
+    _month_axis(ax2, months)
+    l2 = ["Growth vs last year", "Growth at run-rate", "Growth in the budget",
+          f"Last 45 days {_pct_label(growth['g45'])}"]
+    if budget is None:
+        h2, l2 = h2[:2] + h2[3:], l2[:2] + l2[3:]
+    # two rows, filled row by row: the lines on top, the growth strip's marks below
+    cols = max(len(handles), len(h2))
+    pad = lambda hs, ls: (hs + [Line2D([], [], lw=0)] * (cols - len(hs)), ls + [""] * (cols - len(ls)))  # noqa: E731
+    (h1, l1), (h2, l2) = pad(handles, labels), pad(h2, l2)
+    order = [i for pair in zip(range(cols), range(cols, 2 * cols)) for i in pair]
+    hs, ls = [(h1 + h2)[i] for i in order], [(l1 + l2)[i] for i in order]
+    _legend(ax2, hs, ls, loc="upper left", ncol=cols, bbox_to_anchor=(0, -0.42), columnspacing=1.1)
     return to_svg(fig, name)
 
 

@@ -83,7 +83,9 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
   each café to its own run-rate raises Beverly Hills, Del Mar, Carlsbad and Little Italy (+$338K)
   and lowers Coronado, Newport Beach, La Jolla Juicery, La Jolla Café and Brentwood (−$443K). La Jolla
   Cove runs at its run-rate to September 2027, then at the budget's remodeled $125K a month ($868K,
-  in line with the budget). One page per store with what we found.
+  in line with the budget). One page per store with what we found. Under each monthly chart, a strip
+  shows growth against the same month a year earlier (same-store for the nine): actual months, then
+  what the run-rate and the budget imply, with the last 45 days marked.
 * **Part 2, 2027 manager targets**: our plan (the blend of the three models, shaded 0.9% down), by
   month: $31.30M for the nine (+12.6% on the 2026 finish, 9.0% over today's run-rate) and $897K for
   La Jolla Cove (plan to September, then $125K a month), $32.19M in all. One page per store with

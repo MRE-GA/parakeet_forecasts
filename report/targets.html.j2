@@ -22,6 +22,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
 .steps{counter-reset:st;margin:0;padding:0;list-style:none}
 .steps li{counter-increment:st;display:flex;gap:12px;font-size:12.5px;line-height:1.5;margin:0 0 12px}
 .steps li::before{content:counter(st, decimal-leading-zero);font-family:var(--sans);font-weight:700;font-size:16px;color:var(--pink);min-width:24px;line-height:1.25}
+.rrchart svg{display:block;max-height:4.42in}
 </style>
 </head>
 <body>
@@ -101,7 +102,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
   <div class="row">
     <div class="col" style="flex:1.7">
       <div class="chart-title">Monthly net sales, nine existing cafés</div>
-      <div class="chart-sub">Actual through September 2026 · from October: today's run-rate held flat, and the budget</div>
+      <div class="chart-sub">Actual through September 2026 · from October: today's run-rate held flat, and the budget · bars: growth vs the same month last year, same cafés</div>
       {{ svg.brand_rr }}
     </div>
     <div class="col" style="flex:1">
@@ -201,7 +202,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
     <div class="col" style="flex:1.75">
       <div class="chart-title">Monthly net sales</div>
       <div class="chart-sub">{% if c.key == "La Jolla Cove" %}Actual to Sep 2026 · run-rate from Oct 2026, remodeled $125K a month from Oct 2027 · budget · 2026E counts actual sales to Oct 14{% else %}Actual to Sep 2026 · run-rate from Oct 2026 (dotted to Dec, then 2027) · the budget · 2026E counts actual sales to Oct 14{% endif %}</div>
-      {{ svg.cafe[c.key].rr }}
+      <div class="rrchart">{{ svg.cafe[c.key].rr }}</div>
     </div>
     <div class="col side" style="flex:1">
       {% set cv = c.key == "La Jolla Cove" %}

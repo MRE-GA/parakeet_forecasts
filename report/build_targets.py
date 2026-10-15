@@ -79,6 +79,8 @@ def collect() -> dict:
     plan = pd.read_csv(OUTPUTS / "forecast_by_store_month.csv")
     plan = plan.assign(month=pd.PeriodIndex(plan.month, freq="M")).set_index(["store", "month"])[bd.PLAN]
     oct_to_date = raw[raw.date.between("2026-10-01", WINDOW[-1])].groupby("store").net_sales.sum()
+    bm = pd.read_csv(ROOT / "data" / "cfo_budget_2027_monthly.csv")
+    bm26 = bm[bm.month.str.startswith("2026")].set_index(["store", "month"]).value
 
     nine = n0["nine"]
     stores = nine + [COVE]
@@ -108,7 +110,11 @@ def collect() -> dict:
             g45=g45, chk45=chk45, w45=w45, to_date=r.actual_2026_to_oct14, rest26=r.runrate_rest_2026,
             rr26=r.runrate_2026E, rr27=r.runrate_2027, rr27_check=r.check_runrate_2027, run=run, budget=budget,
             target=target, months26=months26, target27=target.sum(), act=raw_m.loc[s],
+            # the budget's own 2026 by month (Jan-Sep sales report, Oct-Dec estimate): the base of its 2027 growth
+            b26_months=np.array([bm26[(s, f"2026-{i:02d}")] for i in range(1, 13)], dtype=float),
+            first_full=pd.Timestamp(STORE_START[s]).to_period("M") + (0 if pd.Timestamp(STORE_START[s]).day == 1 else 1),
         )
+        assert abs(c["b26_months"].sum() - c["b26"]) < 1, s
         assert abs(est26.sum() + c["ytd26"] - c["rr26"]) < 1, s  # Jan-Sep + Oct-Dec = run-rate 2026 finish
         assert abs(months26.sum() - c["rr26"]) < 1, s
         assert abs(run[3:].sum() - c["rr27"]) < 1, s
@@ -298,6 +304,27 @@ def chart_start(store: str) -> pd.Period:
     return max(pd.Period("2024-01", "M"), start.to_period("M") + (0 if start.day == 1 else 1))
 
 
+def growth_vs_last_year(group: list[dict], months_act, g45: float) -> dict:
+    """Growth vs the same month a year earlier, for one café or a group of cafés, for the strip under the
+    run-rate charts. Actual months are same-store: a café counts in a month only if it traded the whole month
+    a year earlier. Forecast months compare the run-rate (or the budget) with the same month a year earlier:
+    actual sales, or the run-rate for Oct-Dec 2026; the budget's 2027 is compared with the budget's own 2026."""
+    def actual(p):
+        ok = [c for c in group if p - 12 >= c["first_full"]]
+        if not ok:
+            return np.nan
+        return sum(c["act"].get(p, 0.0) for c in ok) / sum(c["act"].get(p - 12, 0.0) for c in ok) - 1
+
+    def base(c, q):  # a café's sales in an earlier month: actual, or the run-rate after September 2026
+        return c["run"][FC.get_loc(q)] if q >= FC[0] else c["act"][q]
+
+    run = [sum(c["path"][i] for c in group) / sum(base(c, p - 12) for c in group) - 1 for i, p in enumerate(FC)]
+    budget = [sum(c["budget"][i] for c in group)
+              / sum(c["act"][p - 12] if p.year == 2026 else c["b26_months"][p.month - 1] for c in group) - 1
+              for i, p in enumerate(FC)]
+    return {"actual": [actual(p) for p in months_act], "run": run, "budget": budget, "g45": g45}
+
+
 def make_charts(n: dict) -> dict:
     out = {"cafe": {}}
     t9 = n["t9"]
@@ -308,7 +335,8 @@ def make_charts(n: dict) -> dict:
         [m.to_timestamp() for m in act9.index], act9.to_numpy(), [m.to_timestamp() for m in FC], t9["run"],
         t9["budget"], year_labels(months, {2025: f"2025\n{fm(t9['fy25'])}", 2026: f"2026E\n{fm(t9['rr26'])}",
                                            2027: f"2027\nrun-rate {fm(t9['rr27'])} · budget {fm(t9['b27'])}"}),
-        money="m", size=(7.4, 3.6), name="brand-rr")
+        money="m", growth=growth_vs_last_year([n["C"][s] for s in n["nine"]], act9.index, t9["g45"]),
+        size=(7.4, 4.0), name="brand-rr")
     nine = [n["C"][s] for s in n["nine"]]
     adj = sorted(nine, key=lambda c: -c["adj"])
     out["adjust"] = dc.gap_bars([c["short"] for c in adj], [c["adj"] for c in adj],
@@ -333,7 +361,8 @@ def make_charts(n: dict) -> dict:
                                       [m.to_timestamp() for m in FC], c["path"], c["budget"],
                                       year_labels(months, labels),
                                       label27="Run-rate 2027 + remodel" if cove else "Run-rate 2027 (no growth)",
-                                      size=(7.5, 3.75), name=f"rr-{c['key']}")
+                                      growth=growth_vs_last_year([c], act.index, c["g45"]),
+                                      size=(7.5, 4.1), name=f"rr-{c['key']}")
         tb = dc.target_bars([m.strftime("%b") for m in M27], c["months26"], [False] * 9 + [True] * 3, c["target"],
                             size=(7.4, 3.9), name=f"tb-{c['key']}")
         out["cafe"][c["key"]] = {"rr": rr_chart, "targets": tb}
