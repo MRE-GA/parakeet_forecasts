@@ -14,6 +14,8 @@ year earlier gives the same underlying level today, held for 12 months.
                                            outputs/runrate_45d_2027_by_month.csv (run-rate by whole month,
                                            Oct 2026 - Dec 2027; the October 1-14 part is also in the per-café
                                            file, so it can be swapped for actual sales)
+                                           outputs/runrate_45d_seasonal_by_month.csv (the seasonal pattern summed
+                                           by month, with actual sales on the same days: sales without the season)
 """
 from __future__ import annotations
 
@@ -31,6 +33,7 @@ WINDOW = pd.date_range("2026-08-31", "2026-10-14")  # last 45 days of Toast data
 LAG = pd.Timedelta(days=364)  # same weekdays a year earlier
 YEAR = pd.date_range("2027-01-01", "2027-12-31")
 TO_DATE = pd.date_range("2026-10-01", "2026-10-14")  # October days already in the actuals
+HIST_START = pd.Timestamp("2023-01-01")  # monthly seasonal factors from here, for 'sales without the season'
 REST = pd.date_range("2026-10-15", "2026-12-31")  # rest of 2026 after the last day of data
 CFG = {**PROPHET_DEFAULT, **load_configs()["models"]["Prophet"]}
 OUT = OUTPUTS / "runrate_45d_2027.csv"
@@ -61,8 +64,25 @@ def seasonal_runrate(sd, window_sales: np.ndarray) -> dict:
     level = window_sales.sum() / f_window.sum()  # underlying sales per normal trading day
     days = TO_DATE.append(REST).append(YEAR)  # whole months: October 2026 includes the days already in the actuals
     monthly = pd.Series(level * np.r_[f_td, f_rest, f_year], index=days.to_period("M")).groupby(level=0).sum()
+
+    # the same seasonal pattern summed by month, so any monthly figure can be shown without the season (figure /
+    # factor sum = sales per normal day): history on normal trading days, with the actual sales of those days,
+    # then the run-rate months on the days the café is expected to trade
+    hist = pd.date_range(max(HIST_START, sd.daily.index[0]), ORIGIN)
+    d = sd.daily.reindex(hist)
+    normal = ((d.open == 1) & ~d.anomaly.astype(bool)).to_numpy()
+    f_hist = (1 + m.predict(pd.DataFrame({"ds": hist})).multiplicative_terms.to_numpy()) * normal
+    f_fut = np.r_[f_td, f_rest, f_year]
+    seasonal = pd.concat([
+        pd.DataFrame({"factor_sum": f_hist, "sales": np.where(normal, d.sales.to_numpy(), 0.0), "days": normal * 1},
+                     index=hist.to_period("M")).groupby(level=0).sum(),
+        pd.DataFrame({"factor_sum": f_fut, "sales": np.nan, "days": (f_fut > 0) * 1},
+                     index=days.to_period("M")).groupby(level=0).sum(min_count=1),
+    ])
+    seasonal.index.name = "month"
     return {"store": sd.store, "level_per_day": level, "runrate_2027": level * f_year.sum(),
-            "runrate_oct_to_date": level * f_td.sum(), "runrate_rest_2026": level * f_rest.sum(), "monthly": monthly}
+            "runrate_oct_to_date": level * f_td.sum(), "runrate_rest_2026": level * f_rest.sum(), "monthly": monthly,
+            "seasonal": seasonal}
 
 
 def main() -> None:
@@ -103,6 +123,8 @@ def main() -> None:
     df.to_csv(OUT, float_format="%.4f")
     pd.concat({r["store"]: r["monthly"] for r in out}, axis=1).T.to_csv(OUT.with_name("runrate_45d_2027_by_month.csv"),
                                                                           float_format="%.2f")
+    pd.concat({r["store"]: r["seasonal"] for r in out}, names=["store"]).to_csv(
+        OUT.with_name("runrate_45d_seasonal_by_month.csv"), float_format="%.4f")
     show = df[["cafe", "growth_last_45_days", "runrate_2026E", "budget_2026_finish", "runrate_2027", "check_runrate_2027",
                "budget_2027",
                "runrate_minus_budget", "our_plan_2027", "runrate_vs_2026"]].copy()

@@ -47,6 +47,7 @@ M27 = pd.period_range("2027-01", "2027-12", freq="M")
 FC = pd.period_range("2026-10", "2027-12", freq="M")  # forecast months shown on the charts
 BADGE = {"raise": "Raise to run-rate", "lower": "Lower to run-rate", "remodel": "Run-rate + remodel"}
 RECALC = Path.home() / ".claude" / "skills"  # the xlsx skill's LibreOffice recalculation script lives here
+DPM = 365.25 / 12  # days in an average month: sales per normal day, shown as a monthly figure
 
 
 # ------------------------------------------------------------------------------------------
@@ -81,6 +82,10 @@ def collect() -> dict:
     oct_to_date = raw[raw.date.between("2026-10-01", WINDOW[-1])].groupby("store").net_sales.sum()
     bm = pd.read_csv(ROOT / "data" / "cfo_budget_2027_monthly.csv")
     bm26 = bm[bm.month.str.startswith("2026")].set_index(["store", "month"]).value
+    # the run-rate's seasonal pattern summed by month (and actual sales on the same normal days): the base for
+    # 'sales without the season'
+    sea = pd.read_csv(OUTPUTS / "runrate_45d_seasonal_by_month.csv")
+    sea = sea.assign(month=pd.PeriodIndex(sea.month, freq="M")).set_index(["store", "month"])
 
     nine = n0["nine"]
     stores = nine + [COVE]
@@ -140,6 +145,14 @@ def collect() -> dict:
         c["quarters_t"] = [target[i:i + 3].sum() for i in (0, 3, 6, 9)]
         qf = fk if max(c["quarters_t"]) < 1e6 else fm
         c["quarters_s"] = [qf(q) for q in c["quarters_t"]]
+        # sales without the season, as a monthly equivalent: history (actual sales on normal days over the
+        # seasonal factors of those days), the factor sums for the run-rate months, and today's level
+        se = sea.loc[s]
+        f_hist = se.factor_sum.loc[:pd.Period("2026-09", "M")]
+        c["sa_hist"] = se.sales.loc[f_hist.index] / f_hist.where(f_hist > 0) * DPM
+        c["ff"] = se.factor_sum.reindex(FC).to_numpy()
+        c["level_m"] = c["rr27"] / c["ff"][3:].sum() * DPM
+        assert np.allclose(run, c["level_m"] / DPM * c["ff"], rtol=1e-4), s  # run-rate = today's level x seasons
         cafes.append(c)
     C = {c["key"]: c for c in cafes}
     n = {"cafes": cafes, "C": C, "nine": nine, "stores": stores, "plan_cfg": n0["plan_cfg"], "track": n0["track"],
@@ -269,22 +282,19 @@ def story(c: dict) -> dict:
                         "(today's run-rate, no further growth)."))
     # part 2
     o["t_h1"] = f"{name}: 2027 target {fa(c['target27'])}, {pct(c['tg'])} on 2026"
-    ask = f"{apct(c['ask'])} more than today's run-rate (about {fk(c['t_vs_rr'] / 12)} a month)"
+    # the summary line under the target page
+    ask = f"{apct(c['ask'])} over today's run-rate (about {fk(c['t_vs_rr'] / 12)} a month)"
     if s == COVE:
         js_ask = c["target"][:9].sum() / c["run"][3:12].sum() - 1
-        o["t_text"] = (f"Our plan for the Cove through September 2027 ({apct(js_ask)} more than today's run-rate), "
-                       f"then the budget's remodeled rate of $125K a month from the October 1 reopening. The year sits "
-                       f"{sfk(c['t_vs_rr'])} against the run-rate objective and {sfk(c['t_vs_b'])} against the budget.")
+        o["t_line"] = (f"{fa(c['target27'])} for 2027: our plan to September ({apct(js_ask)} over today's run-rate), "
+                       f"then the remodeled $125K a month from the October 1 reopening; {sfk(c['t_vs_b'])} against "
+                       f"the budget.")
     elif s == "Brentwood":
-        o["t_text"] = (f"The target is our plan for Brentwood: the blend of our three forecasting models, shaded down "
-                       f"to lean low. Brentwood has held flat since January, so the target asks for a return to "
-                       f"growth: {ask}. It sits {sfk(c['t_vs_b'])} against a budget that already allows for Leora "
-                       f"opening next door.")
+        o["t_line"] = (f"{fa(c['target27'])} for 2027 asks Brentwood to grow again after a flat 2026: {ask}, "
+                       f"{sfk(c['t_vs_b'])} against a budget that already allows for Leora.")
     else:
-        o["t_text"] = (f"The target is our plan for {name}: the blend of our three forecasting models, shaded down to "
-                       f"lean low, with the café's own seasons month by month. It asks for {ask} and sits "
-                       f"{sfk(c['t_vs_b'])} against the budget. Over the last 45 days, sales ran {pct(c['g45'])} on "
-                       f"the same days last year.")
+        o["t_line"] = (f"{fa(c['target27'])} for 2027: {pct(c['tg'])} on 2026, {ask} and {sfk(c['t_vs_b'])} against "
+                       f"the budget.")
     return o
 
 
@@ -325,6 +335,49 @@ def growth_vs_last_year(group: list[dict], months_act, g45: float) -> dict:
     return {"actual": [actual(p) for p in months_act], "run": run, "budget": budget, "g45": g45}
 
 
+def trend_parts(group: list[dict], months_act) -> tuple[dict, dict]:
+    """The two series behind the Part 2 chart, for one café or a group: monthly sales, and the same without the
+    season (each café's sales per normal day as a monthly equivalent, added up across the group). Oct-Dec 2026:
+    the estimate on top (actual to Oct 14, then the run-rate), the run-rate alone below."""
+    def total(f):
+        return np.sum([f(c) for c in group], axis=0)
+
+    def budget_level(c):  # the budget's level, season removed: for the year, or (Cove) before and after the reopening
+        out = np.empty(12)
+        for a, b in ([(3, 12), (12, 15)] if c["key"] == COVE else [(3, 15)]):
+            out[a - 3:b - 3] = c["budget"][a:b].sum() / c["ff"][a:b].sum() * DPM
+        return out
+
+    monthly = {"actual": total(lambda c: c["act"].reindex(months_act).to_numpy(dtype=float)),
+               "est26": total(lambda c: c["months26"][9:12]), "target": total(lambda c: c["target"]),
+               "run": total(lambda c: c["path"][3:]), "budget": total(lambda c: c["budget"][3:])}
+    trend = {"actual": total(lambda c: c["sa_hist"].reindex(months_act).to_numpy(dtype=float)),
+             "est26": total(lambda c: c["run"][:3] / c["ff"][:3] * DPM),
+             "target": total(lambda c: c["target"] / c["ff"][3:] * DPM),
+             "run": total(lambda c: c["path"][3:] / c["ff"][3:] * DPM), "budget": total(budget_level)}
+    return monthly, trend
+
+
+def target_year_labels(months, act: pd.Series, first_full: pd.Period, rr26: float, target27: float, tg: float,
+                       prop27: float, b27: float, cove: bool = False) -> list[tuple]:
+    """Year labels for the Part 2 charts: each year's sales with its growth on the year before (when both years
+    were traded in full), then the 2027 target against today's run-rate and the budget."""
+    full = lambda y: first_full <= pd.Period(f"{y}-01", "M")  # noqa: E731
+    tot = {y: act[act.index.year == y].sum() for y in range(2022, 2026)}
+    tot[2026] = rr26
+    labels = {}
+    for y in sorted({m.year for m in months}):
+        if y == 2027:
+            labels[y] = (f"2027 target {fa(target27)}, {pct(tg)}\n"
+                         f"{'with remodel' if cove else 'run-rate'} {fa(prop27)} · budget {fa(b27)}")
+        elif not full(y):
+            labels[y] = f"{y}\nfrom {months[0].strftime('%b')}"
+        else:
+            g = f", {pct(tot[y] / tot[y - 1] - 1)}" if full(y - 1) and tot.get(y - 1, 0) > 0 else ""
+            labels[y] = f"{'2026E' if y == 2026 else y}\n{fa(tot[y])}{g}"
+    return year_labels(months, labels)
+
+
 def make_charts(n: dict) -> dict:
     out = {"cafe": {}}
     t9 = n["t9"]
@@ -347,8 +400,11 @@ def make_charts(n: dict) -> dict:
          ("Today's run-rate", [c["rr_g"] for c in nine], "o", charts.INK),
          ("2027 target", [c["tg"] for c in nine], "o", charts.PINK)],
         size=(7.2, 4.0), name="targets-dots")
-    out["targets9"] = dc.target_bars([m.strftime("%b") for m in M27], t9["months26"], [False] * 9 + [True] * 3,
-                                     t9["target"], size=(7.4, 3.9), name="targets-nine")
+    mo, tr = trend_parts(nine, act9.index)
+    out["targets9"] = dc.target_trend(
+        months, mo, tr, target_year_labels(months, t9["act"], max(c["first_full"] for c in nine), t9["rr26"],
+                                           t9["target27"], t9["tg"], t9["prop27"], t9["b27"]),
+        money="m", name="targets-nine")
     for c in n["cafes"]:
         act = c["act"].loc[chart_start(c["key"]):pd.Period("2026-09", "M")]
         months = list(act.index) + list(FC)
@@ -363,9 +419,12 @@ def make_charts(n: dict) -> dict:
                                       label27="Run-rate 2027 + remodel" if cove else "Run-rate 2027 (no growth)",
                                       growth=growth_vs_last_year([c], act.index, c["g45"]),
                                       size=(7.5, 4.1), name=f"rr-{c['key']}")
-        tb = dc.target_bars([m.strftime("%b") for m in M27], c["months26"], [False] * 9 + [True] * 3, c["target"],
-                            size=(7.4, 3.9), name=f"tb-{c['key']}")
-        out["cafe"][c["key"]] = {"rr": rr_chart, "targets": tb}
+        mo, tr = trend_parts([c], act.index)
+        tt = dc.target_trend(months, mo, tr,
+                             target_year_labels(months, c["act"], c["first_full"], c["rr26"], c["target27"], c["tg"],
+                                                c["prop27"], c["b27"], cove=cove),
+                             run_label="Run-rate + remodel" if cove else "Today's run-rate", name=f"tt-{c['key']}")
+        out["cafe"][c["key"]] = {"rr": rr_chart, "targets": tt}
     return out
 
 

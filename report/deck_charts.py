@@ -384,24 +384,53 @@ def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=
     return to_svg(fig, name)
 
 
-def target_bars(labels, last, last_is_estimate, target, size=(7.4, 3.6), name="tb") -> str:
-    """By month: the same month of 2026 (actual, or estimate where flagged) next to the 2027 target."""
-    fig, ax = plt.subplots(figsize=size)
-    x = np.arange(len(labels))
-    w = 0.38
-    ax.bar(x - w / 2 - 0.01, last, width=w, color=[G300 if e else G500 for e in last_is_estimate], linewidth=0)
-    ax.bar(x + w / 2 + 0.01, target, width=w, color=PINK, linewidth=0)
-    for xi, v in zip(x, target):
-        ax.annotate(esc(money_k(v)), (xi + w / 2 + 0.01, v), xytext=(0, 4), textcoords="offset points", ha="center",
-                    fontsize=7.4, color=G900)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels)
-    ax.set_ylim(0, max(np.max(target), np.max(last)) * 1.12)
-    ax.yaxis.set_major_formatter(FuncFormatter(money_k))
-    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
-    handles = [Patch(color=G500), Patch(color=G300), Patch(color=PINK)]
-    _legend(ax, handles, ["2026 actual", "2026 estimate", "2027 target"], loc="lower left", ncol=3,
-            bbox_to_anchor=(0, 1.02))
+def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", run_label="Today's run-rate",
+                 size=(7.4, 4.45), name="tt") -> str:
+    """The 2027 target as the continuation of the café's trend.
+
+    Top: monthly sales, from the actual months to the Oct-Dec 2026 estimate (dotted) and the 2027 target (pink),
+    with today's run-rate (light gray) and the budget (dashed) for reference. Bottom: the same without the season
+    (each month divided by its usual seasonal pattern, as a monthly equivalent), so the target's slope can be read
+    against the café's own trend.
+
+    monthly / trend: dicts of 'actual' (per actual month), 'est26' (Oct-Dec 2026), and 'target', 'run', 'budget'
+    (per 2027 month); months: the actual months followed by Oct 2026 - Dec 2027."""
+    fmt = FuncFormatter(money_k if money == "k" else money_m)
+    fig = plt.figure(figsize=size)
+    gs = fig.add_gridspec(2, 1, height_ratios=[2.45, 1.55], hspace=0.08)
+    ax = fig.add_subplot(gs[0])
+    ax2 = fig.add_subplot(gs[1], sharex=ax)
+    n = len(monthly["actual"])
+    x26, x27 = np.arange(n - 1, n + 3), np.arange(n + 2, n + 15)
+    for a, s in ((ax, monthly), (ax2, trend)):
+        act, est = np.asarray(s["actual"], dtype=float), np.asarray(s["est26"], dtype=float)
+        a.plot(np.arange(n), act, color=INK, lw=2)
+        a.plot(x26, np.r_[act[-1], est], color=INK, lw=1.8, ls=(0, (1.1, 1.6)))
+        a.plot(x27, np.r_[est[-1], s["run"]], color=G400, lw=1.5, zorder=1)
+        a.plot(x27, np.r_[est[-1], s["budget"]], color=BUDGET, lw=1.6, ls=(0, (4, 2.5)), zorder=1)
+        a.plot(x27, np.r_[est[-1], s["target"]], color=PINK, lw=2.5, zorder=3)
+        a.yaxis.set_major_formatter(fmt)
+        _month_axis(a, months)
+    ys = np.r_[monthly["actual"], monthly["est26"], monthly["target"], monthly["run"], monthly["budget"]]
+    ax.set_ylim(np.nanmin(ys) * 0.7, np.nanmax(ys) * 1.08)
+    ax.yaxis.set_major_locator(plt.MaxNLocator(4))
+    ax.tick_params(labelbottom=False)
+    for (y0, y1, label) in year_labels:
+        ax.text((y0 + y1) / 2, 1.03, esc(label), ha="center", va="bottom", fontsize=8.2, color=G700, linespacing=1.4,
+                transform=ax.get_xaxis_transform())
+    ys = np.r_[trend["actual"], trend["est26"], trend["target"], trend["run"], trend["budget"]]
+    lo, hi = np.nanmin(ys), np.nanmax(ys)
+    ax2.set_ylim(lo - 0.08 * (hi - lo), hi + 0.2 * (hi - lo))
+    ax2.yaxis.set_major_locator(plt.MaxNLocator(3))
+    ax2.grid(True, axis="y")
+    ax2.grid(False, axis="x")
+    ax2.text(0.005, 0.97, "Without the season (monthly equivalent)", transform=ax2.transAxes, ha="left", va="top",
+             fontsize=7.8, color=G700)
+    _legend(ax2, [Line2D([], [], color=INK, lw=2), Line2D([], [], color=INK, lw=1.8, ls=(0, (1.1, 1.6))),
+                  Line2D([], [], color=PINK, lw=2.5), Line2D([], [], color=G400, lw=1.5),
+                  Line2D([], [], color=BUDGET, lw=1.6, ls=(0, (4, 2.5)))],
+            ["Actual", "Estimate, Oct–Dec 2026", "2027 target", run_label, "Budget"],
+            loc="upper left", ncol=5, bbox_to_anchor=(0, -0.2), columnspacing=1.1)
     return to_svg(fig, name)
 
 

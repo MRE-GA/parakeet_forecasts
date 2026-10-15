@@ -89,7 +89,10 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
 * **Part 2, 2027 manager targets**: our plan (the blend of the three models, shaded 0.9% down), by
   month: $31.30M for the nine (+12.6% on the 2026 finish, 9.0% over today's run-rate) and $897K for
   La Jolla Cove (plan to September, then $125K a month), $32.19M in all. One page per store with
-  monthly and quarterly targets and what each asks over today's level.
+  monthly and quarterly targets and what each asks over today's level. Each page's chart runs from the
+  2024 actuals to the 2027 target (today's run-rate and the budget for reference), with the same history
+  without the season underneath, so the target can be read against the café's own trend (seasonal
+  factors from the run-rate's Prophet fit: `outputs/runrate_45d_seasonal_by_month.csv`).
 * **Workbook**: `Targets 2027` (by store and month), `Monthly tracking` (managers enter actuals; the
   variance fills in), `Year to date` (against target, months entered only) and `Reference` (2026
   finish and 2027 under the budget, today's run-rate and the target). Recalculated with LibreOffice
