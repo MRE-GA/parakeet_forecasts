@@ -220,6 +220,13 @@ def check(n: dict) -> None:
     ticket = (1 + bh["g45"]) / (1 + bh["chk45"]) - 1
     assert abs(np.log1p(ticket) - np.log1p(bh["chk45"])) < 0.05  # "about half guests, half average check"
     assert C["Carlsbad"]["chk45"] > 0.85 * C["Carlsbad"]["g45"]  # "nearly all from more guests"
+    jj = C["La Jolla Juicery"]
+    sa = jj["sa_hist"]
+    assert sa.loc["2026-01":"2026-09"].min() > sa.loc["2025-01":"2025-12"].max()  # "stepped up in January 2026"
+    assert abs(jj["level_m"] / sa.loc["2026-01":"2026-09"].mean() - 1) < 0.03  # "today's level is its 2026 average"
+    d = jj["run"][3:] - jj["months26"]  # 2027 at today's level minus 2026, by month
+    assert d[2] + d[7] < jj["rr27"] - jj["rr26"] < 0 and np.delete(d, [2, 7]).sum() > -2000  # "repeats 2026 except
+    # March and August"
     assert abs(n["up_total"] + n["down_total"] - t9["adj"]) < 1
 
 
@@ -260,9 +267,13 @@ def story(c: dict) -> dict:
                       f"({pct0(c['q3'])} in Q3); {trend}. {level}: the budget needs {apct(c['need'])} growth over "
                       f"today's level.")
     elif s == "La Jolla Juicery":
-        o["found"] = (f"The Juicery is small and volatile: {pct(c['ytd_g'])} for January–September but "
-                      f"{pct(c['oct_g'])} in early October; {trend}. {level}: the budget needs {apct(c['need'])} "
-                      f"growth over today's level.")
+        yo = lambda m: c["act"][pd.Period(f"2026-{m:02d}", "M")] / c["act"][pd.Period(f"2025-{m:02d}", "M")] - 1  # noqa: E731
+        o["found"] = (f"The Juicery stepped up in January 2026 and has held that level since, so every month beats "
+                      f"2025 ({pct(c['ytd_g'])} for January–September) but today's level is its 2026 average. Held "
+                      f"there, 2027 repeats 2026 month by month except March and August, two unusually strong months "
+                      f"({pct0(yo(3))} and {pct0(yo(8))} on last year): {fa(c['rr27'])}, {pct(c['rr_g'])} on 2026 and "
+                      f"{fk(c['adj'])} less than the budget's {fa(c['b27'])}, which needs {apct(c['need'])} growth "
+                      f"over today's level.")
     elif s == "Little Italy":
         o["found"] = (f"Little Italy stepped up in March and is still climbing: {trend}, so almost all the growth "
                       f"is more guests. {level}.")
