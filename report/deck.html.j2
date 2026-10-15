@@ -208,7 +208,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
   <h1>2026 holds up. The 2027 objectives assume our cafés stop growing.</h1>
   <div class="row" style="margin-top:12px">
     <div class="col flist" style="flex:1.5">
-      <div class="finding"><div class="num">01</div><p><b>2026 holds up.</b> The budget's {{ t.b26 | fm }} finish for the nine cafés is within {{ t.d26 | apct }} of Toast, and within 2% café by café; {{ "%.0f" | format(t.booked_share * 100) }}% of the year is already booked. The one gap is scope: Nautilus ({{ C["Nautilus"].e26 | fm }}) is not in the budget.</p></div>
+      <div class="finding"><div class="num">01</div><p><b>2026 holds up.</b> The budget's {{ t.b26 | fm }} finish for the nine cafés is within {{ t.d26 | apct }} of ours (Toast to September plus our October–December forecast) and within 2% café by café; {{ "%.0f" | format(t.booked_share * 100) }}% of the year is already booked. The one gap is scope: Nautilus ({{ C["Nautilus"].e26 | fm }}) is not in the budget.</p></div>
       <div class="finding"><div class="num">02</div><p><b>2027 assumes growth stops.</b> {{ t.bg | pct }} is about what the nine cafés would sell if they simply held their September level ({{ t.hold_lo | pct(0) }} to {{ t.hold_hi | pct(0) }}). They are growing {{ t.ytd_g | apct(0) }} this year and {{ t.oct_g | apct(0) }} in October.</p></div>
       <div class="finding"><div class="num">03</div><p><b>Five cafés carry most of the gap.</b> {{ n.strong.names[:-1] | join(", ") }} and {{ n.strong.names[-1] }} are growing {{ n.strong.ytd_lo | apct(0) }}–{{ n.strong.ytd_hi | apct(0) }} this year and are budgeted at {{ n.strong.bg_lo | apct(0) }}–{{ n.strong.bg_hi | apct(0) }}: {{ "%.0f" | format(n.strong.share * 100) }}% of the {{ t.gap | fm(1) }} gap between the budget and our plan.</p></div>
       <div class="finding"><div class="num">04</div><p><b>The budget is bolder than we are on new cafés.</b> Manhattan Beach and Sportsmen's Lodge are budgeted at {{ n.bridge27.new_budget | fm }}, {{ (n.bridge27.new_budget / n.bridge27.new_track - 1) | apct(0) }} more than an average opening of ours would bring ({{ n.bridge27.new_track | fm }}). We would also wait for the Cove remodel to trade before counting it.</p></div>
@@ -219,7 +219,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
         <div class="s budget"><div class="k">Budget</div><div class="v">{{ t.b27 | fm }}</div><div class="g">{{ t.bg | pct }}</div></div>
         <div class="s"><div class="k">What we suggest</div><div class="v">{{ n.suggest.nine | fm }}</div><div class="g">{{ (n.suggest.nine / t.e26 - 1) | pct }}</div></div>
         <div class="s plan"><div class="k">Our plan</div><div class="v">{{ t.plan27 | fm }}</div><div class="g">{{ t.pg | pct }}</div></div>
-        <p class="note" style="margin-top:10px">Growth on each one's 2026 finish ({{ t.b26 | fm }} budget, {{ t.e26 | fm }} Toast). What we suggest = our plan where the data backs it, the budget where it doesn't. Our plan = three forecasting models, leaning low on purpose.</p>
+        <p class="note" style="margin-top:10px">Growth on each one's 2026 finish ({{ t.b26 | fm }} budget, {{ t.e26 | fm }} ours). What we suggest = our plan where the data backs it, the budget where it doesn't. Our plan = three forecasting models, leaning low on purpose.</p>
       </div>
     </div>
   </div>
@@ -235,8 +235,9 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
     <p class="div-sub">With two and a half months to go, how far off can the 2026 estimate be?</p>
     <ul class="div-list">
       <li><span>01</span>{{ "%.0f" | format(t.booked_share * 100) }}% of the year is already booked</li>
-      <li><span>02</span>Café by café: the budget against Toast</li>
-      <li><span>03</span>The only real gap: Nautilus</li>
+      <li><span>02</span>Our forecast for October–December</li>
+      <li><span>03</span>Café by café: the budget against our finish</li>
+      <li><span>04</span>The only real gap: Nautilus</li>
     </ul>
     <img class="bird" src="assets/parrot-map.png" alt="">
   </div>
@@ -251,7 +252,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
   <div class="row">
     <div class="col" style="flex:1.7">
       <div class="chart-title">2026 net sales by month, nine existing cafés</div>
-      <div class="chart-sub">October–December at the budget's estimate</div>
+      <div class="chart-sub">October–December: the budget's estimate (gray) and our forecast (pink marks)</div>
       {{ svg.booked }}
     </div>
     <div class="col" style="flex:1">
@@ -260,19 +261,53 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
       <div class="stat pinktop"><div class="lab">If those eleven weeks miss by 5%</div><div class="val">±{{ (t.to_come * 0.05) | fm }}</div><div class="cap">±{{ "%.1f" | format(t.to_come * 0.05 / t.b26 * 100) }}% on the year</div></div>
     </div>
   </div>
-  <div class="strip pin-bottom"><span class="lab">How it's estimated</span><span>The budget grows each café's October–December 2025 sales at its Q3 2026 rate ({{ t.q3_g | pct }} for the nine). We reproduced it to within {{ (t.q4_method - t.q4_b) | fk }}. Our three models put Q4 {{ (t.q4_o - t.q4_b) | fk }} higher; October to date is running {{ t.oct_g | pct }}, which would add about {{ (t.q4_oct_pace - t.q4_b) | fk }}.</span></div>
+  <div class="strip pin-bottom"><span class="lab">How it's estimated</span><span>The budget grows each café's October–December 2025 sales at its Q3 2026 rate ({{ t.q3_g | pct }} for the nine); we reproduced it to within {{ (t.q4_method - t.q4_b) | fk }}. Our own forecast for the quarter, from the same three models we use for 2027, is on the next page.</span></div>
   {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 4b OUR Q4 FORECAST #}
+{% set Q = n.q4 %}
+<section class="page">
+  {{ head("Part 1 · The 2026 finish") }}
+  <h1>Our own forecast for October–December lands within {{ "%.0f" | format(((Q.ours_total / Q.budget_total - 1) | abs) * 100 + 0.5) }}% of the budget's</h1>
+  <p class="lede">We forecast the rest of 2026 with the same three models we use for 2027. For the nine existing cafés they expect {{ Q.ours_total | fm }} in October–December, {{ (Q.ours_total - Q.budget_total) | fk }} ({{ (Q.ours_total / Q.budget_total - 1) | pct }}) {{ "more" if Q.ours_total > Q.budget_total else "less" }} than the budget, and October so far is running slightly ahead of both.</p>
+  <div class="row">
+    <div class="col" style="flex:1.65">
+      <div class="chart-title">October–December 2026 by month, nine existing cafés</div>
+      <div class="chart-sub">Net sales · whisker: lowest to highest of our three models</div>
+      {{ svg.q4 }}
+    </div>
+    <div class="col" style="flex:1">
+      <table class="roomy">
+        <thead><tr><th class="l">Oct–Dec</th><th>Net sales</th><th>vs 2025</th></tr></thead>
+        <tbody>
+          <tr><td>Same months, 2025</td><td>{{ Q.ly_total | fm }}</td><td class="dim">—</td></tr>
+          <tr><td>Budget estimate</td><td>{{ Q.budget_total | fm }}</td><td>{{ (Q.budget_total / Q.ly_total - 1) | pct }}</td></tr>
+          <tr><td><b>Our forecast</b></td><td class="pink"><b>{{ Q.ours_total | fm }}</b></td><td>{{ (Q.ours_total / Q.ly_total - 1) | pct }}</td></tr>
+          <tr><td class="dim">Our three models</td><td class="dim">{{ Q.lo_total | frange(Q.hi_total) }}</td><td class="dim">{{ (Q.lo_total / Q.ly_total - 1) | pct(0) }} to {{ (Q.hi_total / Q.ly_total - 1) | pct(0) }}</td></tr>
+        </tbody>
+      </table>
+      <h3 style="margin-top:22px">October so far (1–14)</h3>
+      <div class="minis">
+        <div class="m"><div class="lab">Actual</div><div class="val">{{ Q.oct_actual | fm }}</div></div>
+        <div class="m"><div class="lab">Our forecast</div><div class="val">{{ Q.oct_ours | fm }}</div><div class="sub">actual {{ (Q.oct_actual / Q.oct_ours - 1) | pct }}</div></div>
+        <div class="m"><div class="lab">Budget's rule</div><div class="val">{{ Q.oct_rule | fm }}</div><div class="sub">actual {{ (Q.oct_actual / Q.oct_rule - 1) | pct }}</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="strip pin-bottom"><span class="lab">2026 finish</span><span>Our forecast makes the nine cafés' 2026 <b>{{ t.e26 | fm }}</b> (Toast to September plus our October–December), against the budget's {{ t.b26 | fm }}: {{ t.d26 | pct }}. If October's pace ({{ t.oct_g | pct }} on last year) held for the quarter, it would add about {{ (t.q4_oct_pace - t.q4_b) | fk }} to the budget's figure.</span></div>
+  {{ foot("Our forecast: blend of Prophet, SARIMA and Holt-Winters fitted through Sep 30, 2026 · " ~ SRC) }}
 </section>
 
 {# ================================================================== 5 TABLE #}
 <section class="page">
   {{ head("Part 1 · The 2026 finish") }}
-  <h1>Café by café, the budget's 2026 finish matches Toast within 2%</h1>
+  <h1>Café by café, the budget's 2026 finish matches ours within 2%</h1>
   <p class="lede">Both start from the same January–September actuals and differ only in how October–December is estimated: the budget's Q3-growth rule against our three forecasting models.</p>
   <table class="roomy">
     <thead><tr>
       <th class="l">Café</th><th>Jan–Sep 2026<br>actual</th><th>vs Jan–Sep<br>2025</th><th>Oct–Dec<br>budget</th><th>Oct–Dec<br>our models</th>
-      <th>2026 finish<br>budget</th><th>2026 finish<br>Toast-based</th><th>Difference</th><th>Oct 1–14<br>vs 2025</th>
+      <th>2026 finish<br>budget</th><th>2026 finish<br>ours</th><th>Difference</th><th>Oct 1–14<br>vs 2025</th>
     </tr></thead>
     <tbody>
     {% for s in n.nine %}{% set c = C[s] %}
@@ -288,7 +323,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
         <td class="dim">—</td><td>{{ na.e26 | fm }}</td><td class="dim">—</td><td>{{ na.oct_g | pct }}</td></tr>
     </tbody>
   </table>
-  <p class="note pin-bottom">Toast-based finish = January–September actual + our models' October–December forecast. Del Mar Café appears as Carmel Valley in Toast.</p>
+  <p class="note pin-bottom">Our finish = January–September Toast actuals + our models' October–December forecast. Del Mar Café appears as Carmel Valley in Toast.</p>
   {{ foot(SRC) }}
 </section>
 
@@ -297,7 +332,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
 <section class="page">
   {{ head("Part 1 · The 2026 finish") }}
   <h1>The only real 2026 gap is scope: Nautilus is not in the budget</h1>
-  <p class="lede">The budget's total-company 2026 is {{ B.budget_total | fm }}; Toast puts all eleven cafés at {{ B.ours | fm }}. {{ "%.0f" | format(B.nautilus / (B.ours - B.budget_total) * 100) }}% of the {{ (B.ours - B.budget_total) | fk }} difference is one café the budget leaves out.</p>
+  <p class="lede">The budget's total-company 2026 is {{ B.budget_total | fm }}; our finish for all eleven cafés is {{ B.ours | fm }}. {{ "%.0f" | format(B.nautilus / (B.ours - B.budget_total) * 100) }}% of the {{ (B.ours - B.budget_total) | fk }} difference is one café the budget leaves out.</p>
   <div class="row" style="margin-top:8px">
     <div class="col" style="flex:1.5">
       <div class="ledger">
@@ -306,7 +341,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
         <div class="r tot"><div class="what">= Budget: total company</div><div><div class="bar base" style="width:{{ B.budget_total / bmax * 100 }}%"></div></div><div class="amt">{{ B.budget_total | fm }}</div></div>
         <div class="r"><div class="what">+ Nautilus<small>trading all year; not in the budget</small></div><div><div class="bar plus" style="width:{{ B.nautilus / bmax * 100 * 8 }}%"></div></div><div class="amt pink">{{ B.nautilus | sfm }}</div></div>
         <div class="r"><div class="what">+ October–December estimates<small>our models vs the budget's rule, eleven cafés</small></div><div><div class="bar plus" style="width:{{ B.diff / bmax * 100 * 8 }}%;background:var(--g400)"></div></div><div class="amt">{{ B.diff | sfm }}</div></div>
-        <div class="r tot final"><div class="what">= Toast-based 2026 finish, all eleven cafés</div><div><div class="bar ours" style="width:100%"></div></div><div class="amt">{{ B.ours | fm }}</div></div>
+        <div class="r tot final"><div class="what">= Our 2026 finish, all eleven cafés<small>Toast to September + our October–December forecast</small></div><div><div class="bar ours" style="width:100%"></div></div><div class="amt">{{ B.ours | fm }}</div></div>
       </div>
       <p class="note" style="margin-top:8px">Bars for the adjustments are drawn at 8× scale so they are visible next to the totals.</p>
     </div>
@@ -348,7 +383,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
   <div class="row">
     <div class="col" style="flex:1.75">
       <div class="chart-title">Monthly net sales, nine existing cafés</div>
-      <div class="chart-sub">Budget 2027 = each month of 2026 + {{ t.bg | apct }} · band: no growth after September 2026 (two estimates)</div>
+      <div class="chart-sub">From October 2026: our forecast and the budget's · gray band: no growth after September 2026 (two estimates)</div>
       {{ svg.brand }}
     </div>
     <div class="col" style="flex:1">
@@ -540,7 +575,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
       <thead><tr><th class="l">Café</th><th>Budget</th><th>Our plan</th><th class="l">Our read</th><th>Page</th></tr></thead>
       <tbody>
       {% for c in n.cafes %}
-        <tr><td>{{ c.name }}</td><td>{{ (c.b27 | fm) if c.b27 else "—" }}</td><td>{{ c.plan27 | fm }}</td><td class="l">{{ badge(c.verdict) }}</td><td>{{ 15 + 2 * loop.index0 }}</td></tr>
+        <tr><td>{{ c.name }}</td><td>{{ (c.b27 | fm) if c.b27 else "—" }}</td><td>{{ c.plan27 | fm }}</td><td class="l">{{ badge(c.verdict) }}</td><td>{{ 16 + 2 * loop.index0 }}</td></tr>
       {% endfor %}
       </tbody>
     </table>
@@ -557,7 +592,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
   <div class="row" style="margin-top:8px">
     <div class="col" style="flex:1.75">
       <div class="chart-title">Monthly net sales</div>
-      <div class="chart-sub">Actual through September 2026 · our estimate for October–December · 2027: our plan and the range of our three models{% if c.key == "La Jolla Cove" %}; budget = January–September 2026 repeated, then $125K a month{% elif c.b27 %}; budget = each 2026 month {{ c.bg | pct }}{% endif %}</div>
+      <div class="chart-sub">Actual to Sep 2026 · our forecast from Oct 2026 (dotted to Dec, then the 2027 plan){% if c.key == "La Jolla Cove" %} · budget 2027 = Jan–Sep 2026 repeated, then $125K a month{% elif c.b27 %} · budget 2027 = each 2026 month {{ c.bg | pct }}{% endif %}</div>
       {{ svg.cafe[c.key].monthly }}
     </div>
     <div class="col side" style="flex:1">

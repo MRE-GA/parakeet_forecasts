@@ -86,7 +86,8 @@ def _month_ticks(ax, months, every=3, fmt="%b %y"):
 
 def _legend(ax, handles, labels, **kw):
     leg = ax.legend(handles, labels, loc=kw.pop("loc", "upper left"), ncol=kw.pop("ncol", len(labels)),
-                    fontsize=8.5, handlelength=1.6, columnspacing=1.4, borderaxespad=0, **kw)
+                    fontsize=8.5, handlelength=1.6, columnspacing=kw.pop("columnspacing", 1.4), borderaxespad=0,
+                    **kw)
     for t in leg.get_texts():
         t.set_color(G900)
     return leg

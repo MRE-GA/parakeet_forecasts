@@ -182,7 +182,7 @@ def collect() -> dict:
             "ytd26": ytd26, "ytd_g": ytd26 / ytd25 - 1, "chk_g": c26 / c25 - 1,
             "tkt_g": (ytd26 / c26) / (ytd25 / c25) - 1,
             "q1": q_g[1], "q2": q_g[2], "q3": q_g[3],
-            "oct_sales": oct26, "oct_g": oct26 / oct25 - 1, "oct_chk_g": oc26 / oc25 - 1,
+            "oct_sales": oct26, "oct25": oct25, "oct_g": oct26 / oct25 - 1, "oct_chk_g": oc26 / oc25 - 1,
             "q4_25": q4_25, "q4_method": q4_25 * (1 + q_g[3]),
             "e26": e26, "q4_o": e26 - ytd26,
             "plan27": a[f"{PLAN} 2027"], "best27": a[f"{BLEND} 2027"], "low27": min(model27), "high27": max(model27),
@@ -253,9 +253,10 @@ def collect() -> dict:
     q4_budget_m = profile / profile.sum() * t["q4_b"]
     booked += [o26, 0.0, 0.0]
     to_come = [0.0] * 9 + [q4_budget_m.iloc[0] - o26, q4_budget_m.iloc[1], q4_budget_m.iloc[2]]
-    n["booked_months"] = {"months": [m.to_timestamp() for m in months], "booked": booked, "to_come": to_come}
+    n["booked_months"] = {"months": [m.to_timestamp() for m in months], "booked": booked, "to_come": to_come,
+                          "ours": [None] * 9 + list(profile.to_numpy())}
 
-    # ---- 2026 bridge: budget -> Toast-based finish for all eleven cafés -----------------------
+    # ---- 2026 bridge: budget -> our finish for all eleven cafés ------------------------------
     cove, naut = C["La Jolla Cove"], C["Nautilus"]
     all26 = sum(c["e26"] for c in cafes)
     n["bridge26"] = {
@@ -263,17 +264,46 @@ def collect() -> dict:
         "diff": all26 - (b26 + cove["b26"]) - naut["e26"], "ours": all26,
     }
 
-    # ---- nine cafés by month: history, Q4 estimate, 2027 plan / budget / no-growth band -------
-    act = raw_m.loc[nine].groupby(level="month").sum().loc[pd.Period("2025-01", "M"):pd.Period("2026-09", "M")]
-    f9 = by_store[by_store.store.isin(nine)].groupby("month")[[BLEND, PLAN]].sum()
-    est = f9.loc[pd.Period("2026-10", "M"):pd.Period("2026-12", "M"), BLEND]
+    # La Jolla Cove: the budget = Jan-Sep 2026 held flat + $125K a month for Oct-Dec 2027
+    cv = by_store[by_store.store == "La Jolla Cove"].set_index("month")[PLAN]
+    cove_q4_b = 3 * 125_000
+    cove.update(b_js=cove["b27"] - cove_q4_b, b_q4=cove_q4_b,
+                p_js=cv.loc[pd.Period("2027-01", "M"):pd.Period("2027-09", "M")].sum(),
+                p_q4=cv.loc[pd.Period("2027-10", "M"):pd.Period("2027-12", "M")].sum())
+    assert abs(cove["b_js"] - cove["ytd26"]) < 1_000, "budget Cove Jan-Sep should equal 2026 Jan-Sep actual"
+
+    # ---- monthly series: each café, and the nine cafés together ---------------------------
+    for c in cafes:
+        c["series"] = cafe_series(c, raw_m, by_store)
+    ser9 = [C[s_]["series"] for s_ in nine]
+    months_fc = pd.period_range("2026-10", "2027-12", freq="M")
+    models9 = by_store[by_store.store.isin(nine)].groupby("month")[MODELS].sum().reindex(months_fc)
     m27 = pd.period_range("2027-01", "2027-12", freq="M")
-    months26 = pd.concat([act.loc[pd.Period("2026-01", "M"):], est])
     hc = sum(hold_c[s_] for s_ in nine)
     hp = hold_p.loc[nine].groupby(level="month").sum().reindex(m27)
-    n["brand"] = {"act": act, "est": est, "plan": f9.loc[m27, PLAN], "budget": months26.to_numpy() * (b27 / e26),
-                  "hold_lo": np.minimum(hc.to_numpy(), hp.to_numpy()),
-                  "hold_hi": np.maximum(hc.to_numpy(), hp.to_numpy())}
+    n["brand"] = {
+        "act": raw_m.loc[nine].groupby(level="month").sum().loc[pd.Period("2025-01", "M"):pd.Period("2026-09", "M")],
+        "months_fc": list(months_fc), "ours": sum(x["ours"] for x in ser9), "budget": sum(x["budget"] for x in ser9),
+        "low": models9.min(axis=1).to_numpy(), "high": models9.max(axis=1).to_numpy(),
+        "hold_lo": np.minimum(hc.to_numpy(), hp.to_numpy()), "hold_hi": np.maximum(hc.to_numpy(), hp.to_numpy()),
+    }
+    bb = n["brand"]
+    assert abs(bb["budget"][3:].sum() - b27) < 1 and abs(bb["budget"][:3].sum() - t["q4_b"]) < 1
+
+    # ---- our October-December 2026 forecast, nine cafés -------------------------------------
+    q4m = months_fc[:3]
+    q4_models = models9.loc[q4m]
+    last_year = raw_m.loc[nine].groupby(level="month").sum().reindex(q4m - 12)
+    oc = pd.read_csv(OUTPUTS / "october_check.csv").set_index("store")
+    n["q4"] = {
+        "labels": [m.strftime("%B") for m in q4m], "last_year": last_year.to_numpy(),
+        "budget": bb["budget"][:3], "ours": bb["ours"][:3], "lo": bb["low"][:3], "hi": bb["high"][:3],
+        "ly_total": last_year.sum(), "budget_total": bb["budget"][:3].sum(), "ours_total": bb["ours"][:3].sum(),
+        "models": q4_models.sum().to_dict(), "lo_total": q4_models.sum().min(), "hi_total": q4_models.sum().max(),
+        "oct_actual": oc.loc[nine, "actual_oct_1_14"].sum(), "oct_ours": oc.loc[nine, BLEND].sum(),
+        "oct_rule": sum(C[s_]["oct25"] * (1 + C[s_]["q3"]) for s_ in nine),
+    }
+    assert abs(n["q4"]["ours_total"] - t["q4_o"]) < 1  # our 2026 finish uses this forecast
     n["comp"] = comp
 
     # ---- track record: Jan-Sep 2026 forecast made in Sep 2025 ---------------------------------
@@ -312,14 +342,6 @@ def collect() -> dict:
     n["openings"] = {"analogs": analogs, "avg": avg, "new": new, "tbd": tbd.budget_name.tolist(),
                      "best_name": max(analogs, key=lambda a: a[12])["store"],
                      "check_lift_23": 1 / price_idx.loc[2023] - 1, "check_lift_24": 1 / price_idx.loc[2024] - 1}
-
-    # La Jolla Cove: the budget = Jan-Sep 2026 held flat + $125K a month for Oct-Dec 2027
-    cv = by_store[by_store.store == "La Jolla Cove"].set_index("month")[PLAN]
-    cove_q4_b = 3 * 125_000
-    cove.update(b_js=cove["b27"] - cove_q4_b, b_q4=cove_q4_b,
-                p_js=cv.loc[pd.Period("2027-01", "M"):pd.Period("2027-09", "M")].sum(),
-                p_q4=cv.loc[pd.Period("2027-10", "M"):pd.Period("2027-12", "M")].sum())
-    assert abs(cove["b_js"] - cove["ytd26"]) < 1_000, "budget Cove Jan-Sep should equal 2026 Jan-Sep actual"
 
     # ---- total company 2027 ---------------------------------------------------------------
     new_b = sum(x["budget"] for x in new)
@@ -519,18 +541,32 @@ def story(c: dict, n: dict) -> dict:
 # Charts
 # ------------------------------------------------------------------------------------------
 def cafe_series(c: dict, raw_m: pd.Series, by_store: pd.DataFrame) -> dict:
+    """Monthly series for a café's chart, October 2026 to December 2027.
+
+    ours: our forecast (best estimate for Oct-Dec 2026, as in our 2026 finish; then the 2027 plan);
+    low/high: lowest and highest of our three models; budget: the budget's Oct-Dec 2026 estimate
+    (its Q4 total spread like our forecast) then its 2027 objective (each 2026 month + its growth).
+    """
     s = c["key"]
     start = max(pd.Period("2024-01", "M"), pd.Timestamp(STORE_START[s]).to_period("M")
                 + (0 if pd.Timestamp(STORE_START[s]).day == 1 else 1))
     act = raw_m.loc[s].loc[start:pd.Period("2026-09", "M")]
     f = by_store[by_store.store == s].set_index("month")
-    est = f.loc[pd.Period("2026-10", "M"):pd.Period("2026-12", "M"), BLEND]
+    q4 = f.loc[pd.Period("2026-10", "M"):pd.Period("2026-12", "M")]
     fc = f.loc[pd.Period("2027-01", "M"):pd.Period("2027-12", "M")]
-    months26 = pd.concat([raw_m.loc[s].loc[pd.Period("2026-01", "M"):pd.Period("2026-09", "M")], est])
-    budget = months26.to_numpy() * (c["b27"] / months26.sum()) if c["b27"] else None
-    if s == "La Jolla Cove":
-        budget = np.r_[months26.to_numpy()[:9], [c["b_q4"] / 3] * 3]
-    return {"act": act, "est": est, "fc": fc, "budget": budget, "start": start}
+    budget = None
+    if c["b26"] is not None:
+        jan_sep = raw_m.loc[s].loc[pd.Period("2026-01", "M"):pd.Period("2026-09", "M")].to_numpy()
+        q4_b = q4[BLEND].to_numpy() / q4[BLEND].sum() * c["q4_b"]
+        b27 = np.r_[jan_sep, q4_b] * (c["b27"] / c["b26"])
+        if s == "La Jolla Cove":  # flat to Jan-Sep 2026, then $125K a month after the remodel
+            b27 = np.r_[jan_sep, [c["b_q4"] / 3] * 3]
+        budget = np.r_[q4_b, b27]
+    return {"act": act, "months_fc": list(q4.index) + list(fc.index),
+            "ours": np.r_[q4[BLEND].to_numpy(), fc[PLAN].to_numpy()],
+            "low": np.r_[q4[MODELS].min(axis=1).to_numpy(), fc[MODELS].min(axis=1).to_numpy()],
+            "high": np.r_[q4[MODELS].max(axis=1).to_numpy(), fc[MODELS].max(axis=1).to_numpy()],
+            "budget": budget}
 
 
 def year_labels(c: dict, months: list[pd.Period]) -> list[tuple]:
@@ -553,13 +589,11 @@ def year_labels(c: dict, months: list[pd.Period]) -> list[tuple]:
 
 
 def make_charts(n: dict) -> dict:
-    raw = load_daily()
-    raw_m = raw.assign(month=raw.date.dt.to_period("M")).groupby(["store", "month"]).net_sales.sum()
-    by_store = pd.read_csv(OUTPUTS / "forecast_by_store_month.csv")
-    by_store["month"] = pd.PeriodIndex(by_store.month, freq="M")
     out = {}
     bm = n["booked_months"]
-    out["booked"] = dc.booked_bars(bm["months"], bm["booked"], bm["to_come"], size=(7.4, 3.5))
+    out["booked"] = dc.booked_bars(bm["months"], bm["booked"], bm["to_come"], bm["ours"], size=(7.4, 3.5))
+    q = n["q4"]
+    out["q4"] = dc.q4_months(q["labels"], q["last_year"], q["budget"], q["ours"], q["lo"], q["hi"], size=(7.4, 3.6))
     t = n["t"]
     comp = n["comp"]
     out["comp"] = dc.growth_by_year(
@@ -568,10 +602,8 @@ def make_charts(n: dict) -> dict:
         [charts.INK, charts.INK, charts.INK, dc.BUDGET, charts.PINK], size=(4.3, 2.5))
     b = n["brand"]
     out["brand"] = dc.brand_monthly(
-        [m.to_timestamp() for m in b["act"].index], b["act"].to_numpy(),
-        [m.to_timestamp() for m in b["est"].index], b["est"].to_numpy(),
-        [m.to_timestamp() for m in b["plan"].index], b["plan"].to_numpy(), b["budget"], b["hold_lo"], b["hold_hi"],
-        size=(7.4, 3.3))
+        [m.to_timestamp() for m in b["act"].index], b["act"].to_numpy(), [m.to_timestamp() for m in b["months_fc"]],
+        b["ours"], b["low"], b["high"], b["budget"], b["hold_lo"], b["hold_hi"], size=(7.4, 3.5))
     nine = sorted([n["C"][s] for s in n["nine"]], key=lambda c: -c["ytd_g"])
     out["dumbbell"] = dc.cafe_dumbbell([c["short"] for c in nine], [c["bg"] for c in nine],
                                        [c["ytd_g"] for c in nine], [c["pg"] for c in nine], size=(7.2, 3.9))
@@ -581,16 +613,12 @@ def make_charts(n: dict) -> dict:
                               [color[c["verdict"]] for c in gaps], size=(5.2, 4.3))
     out["cafe"] = {}
     for c in n["cafes"]:
-        sr = cafe_series(c, raw_m, by_store)
-        fc = sr["fc"]
-        months = list(sr["act"].index) + list(sr["est"].index) + list(fc.index)
+        sr = c["series"]
+        months = list(sr["act"].index) + sr["months_fc"]
         monthly = dc.cafe_monthly(
-            [m.to_timestamp() for m in sr["act"].index], sr["act"].to_numpy(),
-            [m.to_timestamp() for m in sr["est"].index], sr["est"].to_numpy(),
-            [m.to_timestamp() for m in fc.index], fc[PLAN].to_numpy(), fc[MODELS].min(axis=1).to_numpy(),
-            fc[MODELS].max(axis=1).to_numpy(),
-            sr["budget"],
-            year_labels(c, months), size=(7.5, 4.2), name=f"m-{c['key']}")
+            [m.to_timestamp() for m in sr["act"].index], sr["act"].to_numpy(), [m.to_timestamp() for m in sr["months_fc"]],
+            sr["ours"], sr["low"], sr["high"], sr["budget"], year_labels(c, months), size=(7.5, 3.75),
+            name=f"m-{c['key']}")
         q = dc.quarterly_growth([lab.replace(" 20", " ’") for lab, _ in c["quarters"]], [v for _, v in c["quarters"]],
                                 ("Oct 1–14", c["oct_g"]), c["bg"], c["pg"], size=(7.0, 4.3), name=f"q-{c['key']}")
         out["cafe"][c["key"]] = {"monthly": monthly, "quarterly": q}
@@ -609,7 +637,7 @@ def export_csv(n: dict) -> None:
     df = df.rename(columns={
         "name": "cafe", "fy25": "actual_2025", "ytd_g": "growth_jan_sep_2026", "q3": "growth_q3_2026",
         "oct_g": "growth_oct_1_14_2026", "chk_g": "checks_growth_jan_sep_2026", "tkt_g": "avg_check_growth_jan_sep_2026",
-        "b26": "budget_2026_finish", "e26": "toast_2026_finish", "d26": "toast_vs_budget_2026",
+        "b26": "budget_2026_finish", "e26": "our_2026_finish", "d26": "ours_vs_budget_2026",
         "q4_b": "budget_oct_dec_2026", "q4_o": "our_oct_dec_2026", "b27": "budget_2027", "bg": "budget_growth_2027",
         "low27": "lowest_model_2027", "plan27": "our_plan_2027", "best27": "best_estimate_2027",
         "high27": "highest_model_2027", "pg": "our_plan_growth_2027", "gap": "plan_minus_budget_2027",

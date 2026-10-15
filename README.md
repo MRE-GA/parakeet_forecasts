@@ -49,12 +49,13 @@ sales yet and are **not** in the forecast.
 
 ## Budget review deck (`outputs/Parakeet_2027_Budget_Review.pdf`)
 
-A non-technical, 37-slide review of the investor budget ("2027 Sales Objectives by Café –
+A non-technical, 38-slide review of the investor budget ("2027 Sales Objectives by Café –
 Investors", October 2026; figures keyed in to `data/cfo_budget_2027.csv`), in three parts:
 
-* **2026 finish**: the budget's $27.88M for the nine existing cafés matches Toast within 0.2%
-  (within 2% café by café), and 79% of the year is booked. The only real gap is scope: Nautilus
-  ($0.49M) is not in the budget.
+* **2026 finish**: our own October–December forecast (the same three models, $6.92M for the nine
+  existing cafés) lands within 0.7% of the budget's $6.88M, so the budget's $27.88M finish matches
+  ours ($27.93M: Toast to September plus that forecast) within 0.2%, and within 2% café by café.
+  79% of the year is booked. The only real gap is scope: Nautilus ($0.49M) is not in the budget.
 * **2027**: the budget's +3.4% is about what the nine cafés would sell if growth stopped in
   September (+1% to +4%, two estimates). Our plan is $31.30M (+12.1%) against $28.82M; five cafés
   carry 79% of the $2.48M gap. The budget is bolder than our track record on the two new cafés

@@ -44,22 +44,27 @@ def pct0(x, _=None):
 
 
 # ------------------------------------------------------------------------------------------
-def booked_bars(months, booked, to_come, size=(7.6, 3.3)) -> str:
-    """2026 by month: sales already booked (ink) and still to come (light gray)."""
+def booked_bars(months, booked, to_come, ours, size=(7.6, 3.3)) -> str:
+    """2026 by month: sales already booked (ink), still to come at the budget's estimate (light gray)
+    and our own forecast for those months (pink marks). ours: None for months already booked."""
     fig, ax = plt.subplots(figsize=size)
     x = np.arange(len(months))
     ax.bar(x, booked, width=0.62, color=INK, linewidth=0)
     ax.bar(x, to_come, bottom=booked, width=0.62, color=G300, linewidth=0)
+    for i, v in enumerate(ours):
+        if v is not None:
+            ax.plot([i - 0.4, i + 0.4], [v, v], color=PINK, lw=2.6, solid_capstyle="butt", zorder=4)
     top = max(b + t for b, t in zip(booked, to_come))
     for i, (b, t) in enumerate(zip(booked, to_come)):
-        ax.annotate(money_m(b + t), (i, b + t), xytext=(0, 4), textcoords="offset points", ha="center",
+        ax.annotate(money_m(b + t), (i, b + t), xytext=(0, 5), textcoords="offset points", ha="center",
                     fontsize=8, color=G700)
     ax.set_xticks(x)
     ax.set_xticklabels([m.strftime("%b") for m in months])
     ax.set_ylim(0, top * 1.16)
     ax.set_yticks([])
     ax.grid(False)
-    _legend(ax, [Patch(color=INK), Patch(color=G300)], ["Booked in Toast (through Oct 14)", "Still to come (estimate)"],
+    _legend(ax, [Patch(color=INK), Patch(color=G300), Line2D([], [], color=PINK, lw=2.6)],
+            ["Booked in Toast (through Oct 14)", "Still to come: budget's estimate", "Our forecast"],
             loc="upper left")
     return to_svg(fig, "booked")
 
@@ -80,36 +85,49 @@ def growth_by_year(labels, values, colors, size=(5.6, 3.3), name="growth-years")
     return to_svg(fig, name)
 
 
-def brand_monthly(months_act, actual, months_est, estimate, months_fc, plan, budget, hold_lo, hold_hi,
-                  size=(7.5, 3.55)) -> str:
-    """Nine cafés by month: actuals, Q4-2026 estimate, and 2027 as our plan, the budget and a
-    'no growth after September' band (two estimates)."""
-    fig, ax = plt.subplots(figsize=size)
-    n_a, n_e = len(months_act), len(months_est)
-    xa = np.arange(n_a)
-    xe = np.arange(n_a - 1, n_a + n_e)
-    xf = np.arange(n_a + n_e - 1, n_a + n_e + len(months_fc))
-    last = estimate[-1]
-    band = ax.fill_between(xf, np.r_[last, hold_lo], np.r_[last, hold_hi], color=G400, alpha=0.45, linewidth=0)
-    (lbud,) = ax.plot(xf, np.r_[last, budget], color=G700, lw=1.8, ls=(0, (4, 2.5)))
-    (lp,) = ax.plot(xf, np.r_[last, plan], color=PINK, lw=2.2)
-    (le,) = ax.plot(xe, np.r_[actual[-1], estimate], color=INK, lw=1.6, ls=(0, (1.5, 2)))
-    (la,) = ax.plot(xa, actual, color=INK, lw=2)
-    months = list(months_act) + list(months_est) + list(months_fc)
+def _forecast_lines(ax, n_a, a_last, ours, low, high, budget, n_q4):
+    """Our forecast from the last actual month: Oct-Dec 2026 dotted, 2027 plan solid, the range of
+    our three models as a band, and the budget (its Oct-Dec 2026 estimate and 2027 objective)."""
+    xf = np.arange(n_a - 1, n_a + len(ours))
+    band = ax.fill_between(xf, np.r_[a_last, low], np.r_[a_last, high], color=PINK, alpha=0.13, linewidth=0)
+    lb = None
+    if budget is not None:
+        (lb,) = ax.plot(xf, np.r_[a_last, budget], color=BUDGET, lw=1.8, ls=(0, (4, 2.5)))
+    (l26,) = ax.plot(xf[: n_q4 + 1], np.r_[a_last, ours[:n_q4]], color=PINK, lw=2.2, ls=(0, (1.1, 1.6)))
+    (l27,) = ax.plot(xf[n_q4:], ours[n_q4 - 1:], color=PINK, lw=2.2)
+    return xf, band, lb, l26, l27
+
+
+def _month_axis(ax, months):
     for i, m in enumerate(months):
         if m.month == 1 and i > 0:
             ax.axvline(i - 0.5, color=G100, lw=1, zorder=0)
-    top = max(np.max(plan), np.max(actual)) * 1.12
-    ax.set_ylim(min(np.min(actual), np.min(hold_lo)) * 0.6, top)
-    ax.yaxis.set_major_formatter(FuncFormatter(money_m))
-    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
     idx = [i for i, m in enumerate(months) if m.month in (1, 7)]
     ax.set_xticks(idx)
     ax.set_xticklabels([months[i].strftime("%b %y") for i in idx])
     ax.set_xlim(-0.5, len(months) - 0.4)
-    _legend(ax, [la, le, lp, lbud, band], ["Actual", "Oct–Dec 2026 estimate", "Our 2027 plan", "Budget 2027",
-                                           "No growth after September"],
-            loc="upper left", ncol=5, bbox_to_anchor=(0, -0.09))
+
+
+def brand_monthly(months_act, actual, months_fc, ours, low, high, budget, hold_lo, hold_hi, n_q4=3,
+                  size=(7.5, 3.55)) -> str:
+    """Nine cafés by month: actuals; our forecast (Oct-Dec 2026, then the 2027 plan) with the range of
+    our three models; the budget; and a 'no growth after September' band for 2027 (two estimates)."""
+    fig, ax = plt.subplots(figsize=size)
+    n_a = len(months_act)
+    (la,) = ax.plot(np.arange(n_a), actual, color=INK, lw=2)
+    xf, band, lb, l26, l27 = _forecast_lines(ax, n_a, actual[-1], ours, low, high, budget, n_q4)
+    hold = ax.fill_between(xf[n_q4:], np.r_[ours[n_q4 - 1], hold_lo], np.r_[ours[n_q4 - 1], hold_hi], color=G400,
+                           alpha=0.45, linewidth=0)
+    months = list(months_act) + list(months_fc)
+    _month_axis(ax, months)
+    top = max(np.max(high), np.max(actual)) * 1.1
+    ax.set_ylim(min(np.min(actual), np.min(hold_lo)) * 0.6, top)
+    ax.yaxis.set_major_formatter(FuncFormatter(money_m))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
+    _legend(ax, [la, l26, l27, band, lb, hold],
+            ["Actual", "Our forecast, Oct–Dec 2026", "Our 2027 plan", "Range of our 3 models",
+             "Budget: Oct–Dec 2026 and 2027", "No growth after September"],
+            loc="upper left", ncol=3, bbox_to_anchor=(0, -0.09))
     return to_svg(fig, "brand-monthly")
 
 
@@ -164,46 +182,58 @@ def gap_bars(names, gaps, colors, size=(5.3, 3.9)) -> str:
 
 
 # ------------------------------------------------------------------------------------------
-def cafe_monthly(months_act, actual, months_est, estimate, months_fc, plan, low, high, budget,
-                 year_labels, size=(7.7, 3.55), name="cafe") -> str:
-    """One cafe by month: actuals, the Q4-2026 estimate, 2027 plan (+ model range) and the budget."""
+def cafe_monthly(months_act, actual, months_fc, ours, low, high, budget, year_labels, n_q4=3,
+                 size=(7.7, 3.55), name="cafe") -> str:
+    """One café by month: actuals; our forecast (Oct-Dec 2026 dotted, 2027 plan solid) with the range of
+    our three models; and the budget's Oct-Dec 2026 estimate and 2027 objective (None if not budgeted)."""
     fig, ax = plt.subplots(figsize=size)
-    n_a, n_e = len(months_act), len(months_est)
-    xa = np.arange(n_a)
-    xe = np.arange(n_a - 1, n_a + n_e)
-    xf = np.arange(n_a + n_e - 1, n_a + n_e + len(months_fc))
-    last_est = estimate[-1]
-    band = ax.fill_between(xf, np.r_[last_est, low], np.r_[last_est, high], color=PINK, alpha=0.13, linewidth=0)
-    handles, labels = [], []
-    if budget is not None:
-        (lbud,) = ax.plot(xf, np.r_[last_est, budget], color=BUDGET, lw=1.8, ls=(0, (4, 2.5)))
-    (lp,) = ax.plot(xf, np.r_[last_est, plan], color=PINK, lw=2.2)
-    (le,) = ax.plot(xe, np.r_[actual[-1], estimate], color=INK, lw=1.6, ls=(0, (1.5, 2)))
-    (la,) = ax.plot(xa, actual, color=INK, lw=2)
-    handles = [la, le, lp, band] + ([lbud] if budget is not None else [])
-    labels = ["Actual", "Oct–Dec 2026 estimate", "Our 2027 plan", "Range of our 3 models"] + (
-        ["Budget 2027"] if budget is not None else [])
-    months = list(months_act) + list(months_est) + list(months_fc)
+    n_a = len(months_act)
+    (la,) = ax.plot(np.arange(n_a), actual, color=INK, lw=2)
+    _, band, lb, l26, l27 = _forecast_lines(ax, n_a, actual[-1], ours, low, high, budget, n_q4)
+    handles = [la, l26, l27, band] + ([lb] if lb is not None else [])
+    labels = ["Actual", "Our forecast, Oct–Dec 2026", "Our 2027 plan", "Range of our 3 models"] + (
+        ["Budget"] if lb is not None else [])
+    months = list(months_act) + list(months_fc)
     ref = [np.max(high), np.max(actual)] + ([np.max(budget)] if budget is not None else [])
-    top = max(ref) * 1.08
     low_ref = [np.min(actual), np.min(low)] + ([np.min(budget)] if budget is not None else [])
-    bottom = min(low_ref) * 0.55
-    # year separators with the annual totals
-    for i, m in enumerate(months):
-        if m.month == 1 and i > 0:
-            ax.axvline(i - 0.5, color=G100, lw=1, zorder=0)
+    top, bottom = max(ref) * 1.08, min(low_ref) * 0.55
     for (y0, y1, label) in year_labels:
         ax.text((y0 + y1) / 2, 1.03, esc(label), ha="center", va="bottom", fontsize=8.2, color=G700, linespacing=1.4,
                 transform=ax.get_xaxis_transform())
     ax.set_ylim(bottom, top)
     ax.yaxis.set_major_formatter(FuncFormatter(money_k))
     ax.yaxis.set_major_locator(plt.MaxNLocator(5))
-    idx = [i for i, m in enumerate(months) if m.month in (1, 7)]
-    ax.set_xticks(idx)
-    ax.set_xticklabels([months[i].strftime("%b %y") for i in idx])
-    ax.set_xlim(-0.5, len(months) - 0.4)
-    _legend(ax, handles, labels, loc="upper left", ncol=len(labels), bbox_to_anchor=(0, -0.09))
+    _month_axis(ax, months)
+    _legend(ax, handles, labels, loc="upper left", ncol=len(labels), bbox_to_anchor=(0, -0.09), columnspacing=1.1)
     return to_svg(fig, name)
+
+
+def q4_months(labels, last_year, budget, ours, lo, hi, size=(7.4, 3.6)) -> str:
+    """October-December 2026 by month: last year, the budget's estimate and our forecast (with the
+    range of our three models as a whisker)."""
+    fig, ax = plt.subplots(figsize=size)
+    x = np.arange(len(labels))
+    w = 0.25
+    series = [("Same month 2025", last_year, G300), ("Budget estimate", budget, BUDGET), ("Our forecast", ours, PINK)]
+    handles = []
+    for k, (lab, vals, col) in enumerate(series):
+        xs = x + (k - 1) * (w + 0.03)
+        handles.append(ax.bar(xs, vals, width=w, color=col, linewidth=0))
+        for xi, v in zip(xs, vals):
+            ax.annotate(f"${v / 1e6:.2f}M", (xi, v), xytext=(0, 5 if k < 2 else 11),
+                        textcoords="offset points", ha="center", fontsize=8.2, color=G900 if k else G700)
+    xo = x + (w + 0.03)
+    ax.vlines(xo, lo, hi, color=INK, lw=1.2, zorder=4)
+    for xi, a, b in zip(xo, lo, hi):
+        ax.hlines([a, b], xi - 0.05, xi + 0.05, color=INK, lw=1.2, zorder=4)
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.set_ylim(0, max(np.max(hi), np.max(budget)) * 1.22)
+    ax.set_yticks([])
+    ax.grid(False)
+    handles.append(Line2D([], [], color=INK, lw=1.2))
+    _legend(ax, handles, [s[0] for s in series] + ["Range of our 3 models"], loc="upper left", ncol=4)
+    return to_svg(fig, "q4-months")
 
 
 def quarterly_growth(labels, values, partial, budget_g, plan_g, size=(6.9, 3.35), name="q") -> str:
