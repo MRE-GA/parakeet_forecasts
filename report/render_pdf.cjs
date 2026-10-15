@@ -1,18 +1,20 @@
-// Print the report HTML to PDF with headless Chromium (Playwright).
-// usage: node report/render_pdf.cjs <report.html> <out.pdf> [screenshot_dir]
+// Print a report/deck HTML to PDF with headless Chromium (Playwright).
+// usage: node report/render_pdf.cjs <page.html> <out.pdf> [screenshot_dir] [width] [height]
+// width/height default to US Letter landscape (11in x 8.5in); pass "" to skip screenshots.
 const path = require("path");
 const { chromium } = require("playwright");
 
 (async () => {
-  const [htmlPath, pdfPath, shotDir] = process.argv.slice(2);
+  const [htmlPath, pdfPath, shotDir, width = "11in", height = "8.5in"] = process.argv.slice(2);
+  const px = (v) => Math.round(parseFloat(v) * 96);
   const browser = await chromium.launch();
-  const page = await browser.newPage({ viewport: { width: 1056, height: 816 } });
+  const page = await browser.newPage({ viewport: { width: px(width), height: px(height) } });
   await page.goto("file://" + path.resolve(htmlPath), { waitUntil: "networkidle" });
   await page.evaluate(() => document.fonts.ready);
   await page.pdf({
     path: pdfPath,
-    width: "11in",
-    height: "8.5in",
+    width,
+    height,
     printBackground: true,
     preferCSSPageSize: true,
     margin: { top: 0, right: 0, bottom: 0, left: 0 },

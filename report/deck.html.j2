@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Parakeet Café · 2027 Sales Objectives: A Second Look</title>
+<style>
+@font-face{font-family:"Monarcha";src:url("assets/Monarcha-Bold.otf") format("opentype");font-weight:100 900}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-400.woff2") format("woff2");font-weight:400;font-style:normal}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-400i.woff2") format("woff2");font-weight:400;font-style:italic}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-700.woff2") format("woff2");font-weight:700;font-style:normal}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-900.woff2") format("woff2");font-weight:900;font-style:normal}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-400.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-500.woff2") format("woff2");font-weight:500}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-600.woff2") format("woff2");font-weight:600}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-700.woff2") format("woff2");font-weight:700}
+
+:root{
+  --pink:#ef4b81;--pink-soft:#f59ab8;--ink:#000;--paper:#fff;
+  --g900:#373a3c;--g700:#565a5c;--g500:#82888a;--g400:#b0b3b4;--g300:#ccc;--g100:#eceeef;--g50:#f2f2f2;
+  --soft:rgba(221,221,221,.6);
+  --display:"Monarcha","Playfair Display",serif;
+  --body:"Playfair Display",Georgia,serif;
+  --sans:"Josefin Sans","Helvetica Neue",sans-serif;
+}
+@page{size:13.333in 7.5in;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:13px;line-height:1.5;letter-spacing:.2px;counter-reset:pg;
+     -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:13.333in;height:7.5in;padding:.4in .62in .62in;position:relative;overflow:hidden;break-after:page;
+      display:flex;flex-direction:column;counter-increment:pg}
+.page:last-child{break-after:auto}
+.page .pin-bottom{margin-top:auto}
+.pn::after{content:counter(pg)}
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+
+/* chrome */
+.head{display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--ink)}
+.head img{height:20px;display:block}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:9.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--g700)}
+.eyebrow::before{content:"";display:inline-block;width:18px;height:2px;background:var(--pink);vertical-align:middle;margin:-3px 8px 0 0}
+h1{font-family:var(--display);font-weight:700;font-size:27px;line-height:1.16;letter-spacing:.5px;margin:16px 0 6px;max-width:11.9in}
+h3{font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:0 0 6px;color:var(--ink)}
+.lede{font-size:14px;line-height:1.5;color:var(--g900);margin:2px 0 14px;max-width:11.6in}
+.foot{position:absolute;left:.62in;right:.62in;bottom:.24in;display:flex;justify-content:space-between;gap:18px;
+      font-family:var(--sans);font-size:8.5px;letter-spacing:.4px;color:var(--g500);border-top:1px solid var(--soft);padding-top:6px}
+.row{display:flex;gap:.4in}
+.col{flex:1;min-width:0}
+.pink{color:var(--pink)}
+.muted{color:var(--g700)}
+.note{font-family:var(--sans);font-size:9px;color:var(--g500);letter-spacing:.2px;line-height:1.45}
+.chart-title{font-family:var(--sans);font-weight:600;font-size:10.5px;letter-spacing:.3px;color:var(--ink);margin:0 0 4px}
+.chart-sub{font-family:var(--sans);font-size:9px;color:var(--g500);margin:0 0 6px}
+.strip{display:flex;align-items:center;gap:16px;background:var(--g50);padding:11px 18px;font-size:12px;line-height:1.5}
+.strip .lab{font-family:var(--sans);font-weight:700;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap}
+b,strong{font-weight:700}
+
+/* numbers */
+.stat{border-top:2px solid var(--ink);padding-top:9px;margin-bottom:22px}
+.stat.pinktop{border-top-color:var(--pink)}
+.stat .lab{font-family:var(--sans);font-size:10px;letter-spacing:.3px;color:var(--g700)}
+.stat .val{font-family:var(--sans);font-weight:600;font-size:34px;line-height:1.05;margin-top:5px;letter-spacing:-.3px}
+.stat .cap{font-family:var(--sans);font-size:10px;color:var(--g700);margin-top:4px}
+.trio{display:flex;gap:0;border-top:1px solid var(--ink);margin-top:6px}
+.trio .t{flex:1;padding:12px 18px 0 0}
+.trio .t + .t{padding-left:20px;border-left:1px solid var(--soft)}
+.trio .lab{font-family:var(--sans);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--g700)}
+.trio .big{font-family:var(--sans);font-weight:600;font-size:46px;line-height:1;letter-spacing:-.5px;margin-top:8px}
+.trio .t.budget .big{color:var(--g500)}
+.trio .t.plan .big{color:var(--pink)}
+.trio .cap{font-family:var(--sans);font-size:10.5px;color:var(--g700);margin-top:6px}
+
+/* tables */
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:11px;font-variant-numeric:tabular-nums}
+th{font-weight:600;font-size:8.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--g700);text-align:right;padding:0 8px 6px;border-bottom:1px solid var(--ink);vertical-align:bottom;line-height:1.3}
+td{padding:5px 8px;text-align:right;border-bottom:1px solid var(--soft);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td.l,th.l{text-align:left}
+tr.total td{font-weight:700;border-top:1px solid var(--ink);border-bottom:none}
+tr.sep td{border-top:1px solid var(--g300);padding-top:9px}
+td.dim{color:var(--g500)}
+table.roomy td{padding-top:7px;padding-bottom:7px}
+
+/* badges (verdicts) */
+.badge{display:inline-block;font-family:var(--sans);font-weight:700;font-size:8.5px;letter-spacing:1.2px;text-transform:uppercase;padding:4px 8px 3px;border:1px solid;white-space:nowrap;line-height:1.2}
+.badge.too_low{background:var(--pink);border-color:var(--pink);color:#fff}
+.badge.slightly_low{color:var(--pink);border-color:var(--pink);background:#fff}
+.badge.defensible{color:var(--ink);border-color:var(--ink);background:#fff}
+.badge.in_line{background:var(--g100);border-color:var(--g100);color:var(--ink)}
+.badge.above{background:var(--g700);border-color:var(--g700);color:#fff}
+.badge.missing{background:var(--ink);border-color:var(--ink);color:#fff}
+
+/* findings */
+.flist .finding{padding:17px 0;border-bottom:1px solid var(--soft)}
+.flist .finding:first-child{padding-top:4px}
+.flist .finding p{font-size:14.5px;line-height:1.6}
+.score{border-top:2px solid var(--ink);padding-top:10px}
+.score .slab{font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.score .s{display:grid;grid-template-columns:1fr auto;align-items:end;border-bottom:1px solid var(--soft);padding:18px 0 14px}
+.score .k{font-family:var(--sans);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--g700);grid-column:1/3}
+.score .v{font-family:var(--sans);font-weight:600;font-size:50px;line-height:1.05;letter-spacing:-.5px;margin-top:4px}
+.score .g{font-family:var(--sans);font-weight:600;font-size:16px;color:var(--g700);padding-bottom:6px}
+.score .s.budget .v{color:var(--g500)}
+.score .s.plan .v,.score .s.plan .g{color:var(--pink)}
+.findings{display:grid;grid-template-columns:1fr 1fr;gap:18px .45in;margin-top:22px}
+.finding{display:flex;gap:14px}
+.finding .num{font-family:var(--sans);font-weight:700;font-size:22px;color:var(--pink);line-height:1;min-width:30px}
+.finding p{margin:0;font-size:12.5px;line-height:1.55}
+
+/* ledger (bridges) */
+.ledger{width:100%;font-family:var(--sans);font-size:13px}
+.ledger .r{display:grid;grid-template-columns:3.4in 1fr 1.1in;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--soft)}
+.ledger .r .what{line-height:1.3}
+.ledger .r .what small{display:block;font-size:10px;color:var(--g500);letter-spacing:.2px;margin-top:2px}
+.ledger .r .amt{text-align:right;font-weight:600;font-variant-numeric:tabular-nums}
+.ledger .r.tot{border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);font-weight:700}
+.ledger .r.tot .what{font-weight:700}
+.ledger .r.final .amt{color:var(--pink);font-size:17px}
+.bar{height:14px;background:var(--g300)}
+.ledger.compact .r{padding:7px 0;grid-template-columns:2.9in 1fr .9in;font-size:12px}
+.bar.plus{background:var(--pink)}
+.bar.minus{background:var(--g500)}
+.bar.base{background:var(--g700)}
+.bar.ours{background:var(--pink)}
+
+/* callouts */
+.callout{border-left:2px solid var(--pink);padding:2px 0 2px 16px}
+.box{background:var(--g50);padding:16px 18px}
+.box p{margin:0 0 9px;font-size:12.5px;line-height:1.55}
+.box p:last-child{margin-bottom:0}
+ul.tight{margin:6px 0 0;padding-left:17px}
+ul.tight li{margin:0 0 7px;font-size:12.5px;line-height:1.5}
+ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
+
+/* cover & dividers */
+.cover{padding:0;flex-direction:row}
+.cover-left{width:55%;padding:.7in .6in .55in .75in;position:relative;display:flex;flex-direction:column}
+.cover-left .logo{width:2.3in;display:block}
+.cover-left .eyebrow{margin-top:.95in}
+.cover-title{font-family:var(--display);font-weight:700;font-size:54px;line-height:1.04;letter-spacing:1px;margin:14px 0 18px}
+.cover-sub{font-style:italic;font-size:17px;line-height:1.5;color:var(--g900);margin:0;max-width:5.6in}
+.cover-meta{margin-top:auto;font-family:var(--sans);font-size:10px;letter-spacing:.4px;color:var(--g700);line-height:1.65;border-top:1px solid var(--ink);padding-top:10px;max-width:5.9in}
+.cover-right{width:45%;height:100%}
+.cover-right img,.div-right img{width:100%;height:100%;object-fit:cover;display:block}
+
+.divider{padding:0;flex-direction:row}
+.div-left{width:56%;padding:.75in .7in .6in .75in;display:flex;flex-direction:column;justify-content:center;position:relative}
+.div-right{width:44%;height:100%}
+.part{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:var(--pink)}
+.div-title{font-family:var(--display);font-weight:700;font-size:50px;line-height:1.05;margin:12px 0 14px}
+.div-sub{font-style:italic;font-size:17px;line-height:1.5;color:var(--g900);margin:0 0 26px;max-width:5.9in}
+.div-list{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink);max-width:5.9in}
+.div-list li{font-family:var(--sans);font-size:13px;padding:10px 0;border-bottom:1px solid var(--soft);display:flex;gap:14px}
+.div-list li span{color:var(--pink);font-weight:700;min-width:22px}
+.divider .bird{position:absolute;width:1.05in;right:.45in;bottom:.5in}
+
+/* café pages */
+.cafe-tag{display:flex;align-items:center;gap:12px;margin-top:14px}
+.cafe-tag .name{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.cafe-tag + h1{margin-top:8px}
+.side table td{padding:6px 8px}
+.side .num-big{font-family:var(--sans);font-weight:600;font-size:15px}
+.walk{margin-top:14px;font-family:var(--sans);font-size:10.5px;line-height:1.6;color:var(--g900)}
+.walk div{display:flex;justify-content:space-between;border-bottom:1px solid var(--soft);padding:4px 0}
+.walk div span:last-child{font-variant-numeric:tabular-nums;font-weight:600}
+.says h3{margin-bottom:4px}
+.quote{font-style:italic;font-size:16px;margin:0 0 14px;color:var(--g900)}
+.says p{margin:0 0 12px;font-size:12.5px;line-height:1.55}
+.minis{display:flex;border-top:1px solid var(--ink);margin-top:4px}
+.minis .m{flex:1;padding:8px 10px 0 0}
+.minis .m + .m{padding-left:12px;border-left:1px solid var(--soft)}
+.minis .lab{font-family:var(--sans);font-size:9px;letter-spacing:.3px;color:var(--g700);line-height:1.3}
+.minis .val{font-family:var(--sans);font-weight:600;font-size:20px;margin-top:4px}
+.minis .sub{font-family:var(--sans);font-size:9px;color:var(--g500);margin-top:2px}
+.verdict{display:flex;align-items:center;gap:16px;border-top:2px solid var(--ink);padding-top:11px;font-size:13px;line-height:1.5}
+.verdict .badge{font-size:9.5px;padding:5px 10px 4px}
+.method h3{margin-top:2px}
+.method p{font-size:13.5px;line-height:1.6;margin:0 0 12px}
+.method h3{margin-top:18px}
+.method .col > h3:first-child{margin-top:2px}
+</style>
+</head>
+<body>
+{% set t = n.t %}{% set C = n.C %}
+{% macro head(eyebrow) %}<div class="head"><img src="assets/logo-bird.png" alt="Parakeet Café"><span class="eyebrow">{{ eyebrow }}</span></div>{% endmacro %}
+{% macro foot(note) %}<div class="foot"><span>Parakeet Café · 2027 Sales Objectives: A Second Look</span><span>{{ note }}</span><span class="pn"></span></div>{% endmacro %}
+{% macro badge(v) %}<span class="badge {{ v }}">{{ VERDICT_LABEL[v] }}</span>{% endmacro %}
+{% set SRC = "Toast POS net sales through Oct 14, 2026 · budget: “2027 Sales Objectives by Café – Investors”, Oct 2026" %}
+
+{# ================================================================== 1 COVER #}
+<section class="page cover">
+  <div class="cover-left">
+    <img class="logo" src="assets/logo-bird.png" alt="Parakeet Café">
+    <div class="eyebrow">Budget review · October 2026</div>
+    <div class="cover-title">2027 Sales<br>Objectives:<br>A Second Look</div>
+    <p class="cover-sub">The 2026 finish holds up. The 2027 objectives assume our cafés stop growing. What four years of Toast sales say, café by café.</p>
+    <div class="cover-meta">
+      Reviewing “2027 Sales Objectives by Café – Investors” (prepared by the CFO, October 2026)<br>
+      Toast POS net sales, {{ n.first_day.strftime("%B %Y") }} – {{ n.last_day.strftime("%B %-d, %Y") }} · prepared October 15, 2026
+    </div>
+  </div>
+  <div class="cover-right"><img src="assets/hero-3.jpg" alt=""></div>
+</section>
+
+{# ================================================================== 2 SUMMARY #}
+<section class="page">
+  {{ head("The short version") }}
+  <h1>2026 holds up. The 2027 objectives assume our cafés stop growing.</h1>
+  <div class="row" style="margin-top:12px">
+    <div class="col flist" style="flex:1.5">
+      <div class="finding"><div class="num">01</div><p><b>2026 holds up.</b> The budget's {{ t.b26 | fm }} finish for the nine cafés is within {{ t.d26 | apct }} of Toast, and within 2% café by café; {{ "%.0f" | format(t.booked_share * 100) }}% of the year is already booked. The one gap is scope: Nautilus ({{ C["Nautilus"].e26 | fm }}) is not in the budget.</p></div>
+      <div class="finding"><div class="num">02</div><p><b>2027 assumes growth stops.</b> {{ t.bg | pct }} is about what the nine cafés would sell if they simply held their September level ({{ t.hold_lo | pct(0) }} to {{ t.hold_hi | pct(0) }}). They are growing {{ t.ytd_g | apct(0) }} this year and {{ t.oct_g | apct(0) }} in October.</p></div>
+      <div class="finding"><div class="num">03</div><p><b>Five cafés carry most of the gap.</b> {{ n.strong.names[:-1] | join(", ") }} and {{ n.strong.names[-1] }} are growing {{ n.strong.ytd_lo | apct(0) }}–{{ n.strong.ytd_hi | apct(0) }} this year and are budgeted at {{ n.strong.bg_lo | apct(0) }}–{{ n.strong.bg_hi | apct(0) }}: {{ "%.0f" | format(n.strong.share * 100) }}% of the {{ t.gap | fm(1) }} gap between the budget and our plan.</p></div>
+      <div class="finding"><div class="num">04</div><p><b>The budget is bolder than we are on new cafés.</b> Manhattan Beach and Sportsmen's Lodge are budgeted at {{ n.bridge27.new_budget | fm }}, {{ (n.bridge27.new_budget / n.bridge27.new_track - 1) | apct(0) }} more than an average opening of ours would bring ({{ n.bridge27.new_track | fm }}). We would also wait for the Cove remodel to trade before counting it.</p></div>
+    </div>
+    <div class="col" style="flex:1">
+      <div class="score">
+        <div class="slab">2027 net sales · nine existing cafés</div>
+        <div class="s budget"><div class="k">Budget</div><div class="v">{{ t.b27 | fm }}</div><div class="g">{{ t.bg | pct }}</div></div>
+        <div class="s"><div class="k">What we suggest</div><div class="v">{{ n.suggest.nine | fm }}</div><div class="g">{{ (n.suggest.nine / t.e26 - 1) | pct }}</div></div>
+        <div class="s plan"><div class="k">Our plan</div><div class="v">{{ t.plan27 | fm }}</div><div class="g">{{ t.pg | pct }}</div></div>
+        <p class="note" style="margin-top:10px">Growth on each one's 2026 finish ({{ t.b26 | fm }} budget, {{ t.e26 | fm }} Toast). What we suggest = our plan where the data backs it, the budget where it doesn't. Our plan = three forecasting models, leaning low on purpose.</p>
+      </div>
+    </div>
+  </div>
+  <div class="strip pin-bottom"><span class="lab">We suggest</span><span><b>{{ n.suggest.total | fm }}</b> for the total company in 2027, {{ n.suggest.total_change | sfm }} above the budget's {{ n.suggest.total_budget | fm }}: raise six café objectives, keep three, add Nautilus, and budget the new cafés on our opening record.</span></div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 3 DIVIDER 1 #}
+<section class="page divider">
+  <div class="div-left">
+    <div class="part">Part 1</div>
+    <div class="div-title">The 2026 finish</div>
+    <p class="div-sub">With two and a half months to go, how far off can the 2026 estimate be?</p>
+    <ul class="div-list">
+      <li><span>01</span>{{ "%.0f" | format(t.booked_share * 100) }}% of the year is already booked</li>
+      <li><span>02</span>Café by café: the budget against Toast</li>
+      <li><span>03</span>The only real gap: Nautilus</li>
+    </ul>
+    <img class="bird" src="assets/parrot-map.png" alt="">
+  </div>
+  <div class="div-right"><img src="assets/split-order.jpg" alt=""></div>
+</section>
+
+{# ================================================================== 4 BOOKED #}
+<section class="page">
+  {{ head("Part 1 · The 2026 finish") }}
+  <h1>{{ "%.0f" | format(t.booked_share * 100) }}% of 2026 is already booked, so the estimate can only move so much</h1>
+  <p class="lede">Through October 14, Toast has recorded {{ t.booked | fm }} for the nine existing cafés, {{ "%.0f" | format(t.booked_share * 100) }}% of the budget's {{ t.b26 | fm }} finish. The eleven weeks left would have to miss by 5% to move the year by about 1%.</p>
+  <div class="row">
+    <div class="col" style="flex:1.7">
+      <div class="chart-title">2026 net sales by month, nine existing cafés</div>
+      <div class="chart-sub">October–December at the budget's estimate</div>
+      {{ svg.booked }}
+    </div>
+    <div class="col" style="flex:1">
+      <div class="stat"><div class="lab">Booked, January 1 – October 14</div><div class="val">{{ t.booked | fm }}</div><div class="cap">{{ "%.0f" | format(t.booked_share * 100) }}% of the budget's 2026 finish</div></div>
+      <div class="stat"><div class="lab">Still to come, October 15 – December 31</div><div class="val">{{ t.to_come | fm }}</div><div class="cap">about eleven weeks of trading</div></div>
+      <div class="stat pinktop"><div class="lab">If those eleven weeks miss by 5%</div><div class="val">±{{ (t.to_come * 0.05) | fm }}</div><div class="cap">±{{ "%.1f" | format(t.to_come * 0.05 / t.b26 * 100) }}% on the year</div></div>
+    </div>
+  </div>
+  <div class="strip pin-bottom"><span class="lab">How it's estimated</span><span>The budget grows each café's October–December 2025 sales at its Q3 2026 rate ({{ t.q3_g | pct }} for the nine). We reproduced it to within {{ (t.q4_method - t.q4_b) | fk }}. Our three models put Q4 {{ (t.q4_o - t.q4_b) | fk }} higher; October to date is running {{ t.oct_g | pct }}, which would add about {{ (t.q4_oct_pace - t.q4_b) | fk }}.</span></div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 5 TABLE #}
+<section class="page">
+  {{ head("Part 1 · The 2026 finish") }}
+  <h1>Café by café, the budget's 2026 finish matches Toast within 2%</h1>
+  <p class="lede">Both start from the same January–September actuals and differ only in how October–December is estimated: the budget's Q3-growth rule against our three forecasting models.</p>
+  <table class="roomy">
+    <thead><tr>
+      <th class="l">Café</th><th>Jan–Sep 2026<br>actual</th><th>vs Jan–Sep<br>2025</th><th>Oct–Dec<br>budget</th><th>Oct–Dec<br>our models</th>
+      <th>2026 finish<br>budget</th><th>2026 finish<br>Toast-based</th><th>Difference</th><th>Oct 1–14<br>vs 2025</th>
+    </tr></thead>
+    <tbody>
+    {% for s in n.nine %}{% set c = C[s] %}
+      <tr><td>{{ c.name }}</td><td>{{ c.ytd26 | fm }}</td><td>{{ c.ytd_g | pct }}</td><td>{{ c.q4_b | fk }}</td><td>{{ c.q4_o | fk }}</td>
+        <td>{{ c.b26 | fm }}</td><td>{{ c.e26 | fm }}</td><td>{{ c.d26 | pct }}</td><td>{{ c.oct_g | pct }}</td></tr>
+    {% endfor %}
+      <tr class="total"><td>Nine existing cafés</td><td>{{ t.ytd26 | fm }}</td><td>{{ t.ytd_g | pct }}</td><td>{{ t.q4_b | fm }}</td><td>{{ t.q4_o | fm }}</td>
+        <td>{{ t.b26 | fm }}</td><td>{{ t.e26 | fm }}</td><td>{{ t.d26 | pct }}</td><td>{{ t.oct_g | pct }}</td></tr>
+      {% set cv = C["La Jolla Cove"] %}{% set na = C["Nautilus"] %}
+      <tr class="sep"><td class="dim">La Jolla Cove <small>(budget: remodels)</small></td><td class="dim">{{ cv.ytd26 | fm }}</td><td class="dim">{{ cv.ytd_g | pct }}</td><td class="dim">{{ cv.q4_b | fk }}</td><td class="dim">{{ cv.q4_o | fk }}</td>
+        <td class="dim">{{ cv.b26 | fm }}</td><td class="dim">{{ cv.e26 | fm }}</td><td class="dim">{{ cv.d26 | pct }}</td><td class="dim">{{ cv.oct_g | pct }}</td></tr>
+      <tr><td>Nautilus <small class="pink">(not in the budget)</small></td><td>{{ na.ytd26 | fm }}</td><td>{{ na.ytd_g | pct }}</td><td class="dim">—</td><td>{{ na.q4_o | fk }}</td>
+        <td class="dim">—</td><td>{{ na.e26 | fm }}</td><td class="dim">—</td><td>{{ na.oct_g | pct }}</td></tr>
+    </tbody>
+  </table>
+  <p class="note pin-bottom">Toast-based finish = January–September actual + our models' October–December forecast. Del Mar Café appears as Carmel Valley in Toast.</p>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 6 BRIDGE 2026 #}
+{% set B = n.bridge26 %}{% set bmax = B.ours %}
+<section class="page">
+  {{ head("Part 1 · The 2026 finish") }}
+  <h1>The only real 2026 gap is scope: Nautilus is not in the budget</h1>
+  <p class="lede">The budget's total-company 2026 is {{ B.budget_total | fm }}; Toast puts all eleven cafés at {{ B.ours | fm }}. {{ "%.0f" | format(B.nautilus / (B.ours - B.budget_total) * 100) }}% of the {{ (B.ours - B.budget_total) | fk }} difference is one café the budget leaves out.</p>
+  <div class="row" style="margin-top:8px">
+    <div class="col" style="flex:1.5">
+      <div class="ledger">
+        <div class="r"><div class="what">Budget: nine existing cafés</div><div><div class="bar base" style="width:{{ B.budget9 / bmax * 100 }}%"></div></div><div class="amt">{{ B.budget9 | fm }}</div></div>
+        <div class="r"><div class="what">+ La Jolla Cove<small>in the budget, listed under remodels</small></div><div><div class="bar plus" style="width:{{ B.cove / bmax * 100 * 8 }}%;background:var(--g400)"></div></div><div class="amt">{{ B.cove | sfm }}</div></div>
+        <div class="r tot"><div class="what">= Budget: total company</div><div><div class="bar base" style="width:{{ B.budget_total / bmax * 100 }}%"></div></div><div class="amt">{{ B.budget_total | fm }}</div></div>
+        <div class="r"><div class="what">+ Nautilus<small>trading all year; not in the budget</small></div><div><div class="bar plus" style="width:{{ B.nautilus / bmax * 100 * 8 }}%"></div></div><div class="amt pink">{{ B.nautilus | sfm }}</div></div>
+        <div class="r"><div class="what">+ October–December estimates<small>our models vs the budget's rule, eleven cafés</small></div><div><div class="bar plus" style="width:{{ B.diff / bmax * 100 * 8 }}%;background:var(--g400)"></div></div><div class="amt">{{ B.diff | sfm }}</div></div>
+        <div class="r tot final"><div class="what">= Toast-based 2026 finish, all eleven cafés</div><div><div class="bar ours" style="width:100%"></div></div><div class="amt">{{ B.ours | fm }}</div></div>
+      </div>
+      <p class="note" style="margin-top:8px">Bars for the adjustments are drawn at 8× scale so they are visible next to the totals.</p>
+    </div>
+    <div class="col" style="flex:1">
+      <div class="box">
+        <h3>Nautilus</h3>
+        <p>Our weekday-only café has traded all year: {{ C["Nautilus"].ytd26 | fm }} in January–September ({{ C["Nautilus"].ytd_g | pct }}) and {{ C["Nautilus"].oct_sales | fk }} in October 1–14 ({{ C["Nautilus"].oct_g | pct }}).</p>
+        <p>It appears nowhere in the budget, neither among the existing cafés nor under new and remodeled cafés.</p>
+        <p><b>Question for the budget:</b> is Nautilus closing, or reported somewhere else? If not, it adds {{ C["Nautilus"].e26 | fm }} to 2026 and about {{ C["Nautilus"].plan27 | fm }} to 2027.</p>
+      </div>
+    </div>
+  </div>
+  <div class="strip pin-bottom"><span class="lab">Bottom line</span><span>Excluding Nautilus, the budget's 2026 and ours differ by {{ B.diff | fk }} ({{ "%.1f" | format(B.diff / B.budget_total * 100) }}%). <b>We agree on 2026.</b> The disagreement is about 2027.</span></div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 7 DIVIDER 2 #}
+<section class="page divider">
+  <div class="div-left">
+    <div class="part">Part 2</div>
+    <div class="div-title">2027</div>
+    <p class="div-sub">The objectives assume our cafés stop growing in January. Their sales say otherwise.</p>
+    <ul class="div-list">
+      <li><span>01</span>The budget is a no-growth plan</li>
+      <li><span>02</span>Every café is growing faster than its objective</li>
+      <li><span>03</span>Where the gap sits, and where the budget is bolder</li>
+      <li><span>04</span>Total company and what we suggest</li>
+    </ul>
+    <img class="bird" src="assets/parrot-map.png" alt="">
+  </div>
+  <div class="div-right"><img src="assets/hero-1.jpg" alt=""></div>
+</section>
+
+{# ================================================================== 8 NO-GROWTH #}
+<section class="page">
+  {{ head("Part 2 · 2027") }}
+  <h1>The budget's {{ t.bg | pct }} is about what we'd sell if growth stopped today</h1>
+  <p class="lede">Holding each of the nine cafés at its September level for all of 2027, with its usual seasonal swings, gives {{ t.hold_lo | pct }} to {{ t.hold_hi | pct }} on 2026 (two estimates). The budget sits in that range. Our plan assumes growth slows to {{ t.pg | apct(0) }}, not to zero.</p>
+  <div class="row">
+    <div class="col" style="flex:1.75">
+      <div class="chart-title">Monthly net sales, nine existing cafés</div>
+      <div class="chart-sub">Budget 2027 = each month of 2026 + {{ t.bg | apct }} · band: no growth after September 2026 (two estimates)</div>
+      {{ svg.brand }}
+    </div>
+    <div class="col" style="flex:1">
+      <div class="chart-title">Same-store growth by year</div>
+      <div class="chart-sub">2024–2026E as reported in the budget · 2027 on the same nine cafés</div>
+      {{ svg.comp }}
+      <div class="callout" style="margin-top:10px"><p style="margin:0;font-size:12px">The cafés added <b>{{ t.added26 | fm(1) }}</b> in 2026. The budget adds <b>{{ t.added27_b | fm(1) }}</b> in 2027; our plan adds <b class="pink">{{ t.added27_p | fm(1) }}</b>.</p></div>
+    </div>
+  </div>
+  {{ foot("No-growth estimates: seasonal run-rate of Jul–Sep 2026 sales; and each café's Prophet trend held at its Sep 30, 2026 level") }}
+</section>
+
+{# ================================================================== 9 DUMBBELL #}
+<section class="page">
+  {{ head("Part 2 · 2027") }}
+  <h1>Every café is growing faster this year than the budget allows for 2027</h1>
+  <p class="lede">For all nine cafés, the budget's 2027 growth is below what the café is delivering in 2026. For {{ n.below_slowest | length }} of them it is below the café's slowest quarter on record.</p>
+  <div class="row">
+    <div class="col" style="flex:1.6">
+      <div class="chart-title">Sales growth: 2026 so far against 2027 in the budget and in our plan</div>
+      <div class="chart-sub">Jan–Sep 2026 vs Jan–Sep 2025 · 2027 vs each one's 2026 finish</div>
+      {{ svg.dumbbell }}
+    </div>
+    <div class="col" style="flex:1">
+      <div class="stat"><div class="lab">Cafés growing faster in 2026 than their 2027 objective</div><div class="val">{{ n.faster_than_budget | length }} of 9</div></div>
+      <div class="stat"><div class="lab">Objectives below the café's slowest quarter on record</div><div class="val">{{ n.below_slowest | length }} of 9</div><div class="cap">{{ n.below_slowest | join(", ") }}</div></div>
+      <div class="stat pinktop"><div class="lab">Volume, not price: Jan–Sep 2026, nine cafés</div><div class="val">{{ t.chk_g | pct }} <span style="font-size:15px;color:var(--g700)">checks</span></div><div class="cap">Average check {{ t.tkt_g | pct }}. The budget is volume only; volume alone grew {{ t.chk_g | apct(0) }} this year.</div></div>
+    </div>
+  </div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 10 GAP #}
+<section class="page">
+  {{ head("Part 2 · 2027") }}
+  <h1>Five cafés carry {{ "%.0f" | format(n.strong.share * 100) }}% of the {{ t.gap | fm(1) }} gap between the budget and our plan</h1>
+  <p class="lede">Our plan is the blend of three forecasting models, shaded down because over-forecasting costs us more than under-forecasting. For {{ n.below_low | length }} of the nine, the budget is below even our most cautious model. For three ({{ n.suggest.kept | join(", ") }}) we still think the budget's number is fair.</p>
+  <div class="row">
+    <div class="col" style="flex:1">
+      <div class="chart-title">Our 2027 plan minus the budget, by café</div>
+      <div class="chart-sub">Pink: objective too low · light pink: slightly low · gray: defensible or in line</div>
+      {{ svg.gaps }}
+    </div>
+    <div class="col" style="flex:1.25">
+      <table class="roomy">
+        <thead><tr><th class="l">Café</th><th>Budget<br>2027</th><th>Our plan<br>2027</th><th>Our three<br>models</th><th class="l">Our read</th></tr></thead>
+        <tbody>
+        {% for s in n.nine %}{% set c = C[s] %}
+          <tr><td>{{ c.name }}</td><td>{{ c.b27 | fm }}</td><td><b>{{ c.plan27 | fm }}</b></td><td class="dim">{{ c.low27 | frange(c.high27) }}</td><td class="l">{{ badge(c.verdict) }}</td></tr>
+        {% endfor %}
+          <tr class="total"><td>Nine existing cafés</td><td>{{ t.b27 | fm }}</td><td class="pink">{{ t.plan27 | fm }}</td><td>{{ t.low27 | frange(t.high27) }}</td><td class="l">{{ t.gap | sfm }}</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {{ foot("Our three models: Prophet, SARIMA and Holt-Winters, fitted café by café through Sep 2026 · plan = blend × " ~ ("%.3f" | format(n.plan_cfg.factor))) }}
+</section>
+
+{# ================================================================== 11 BOLDER #}
+{% set O = n.openings %}{% set cv = C["La Jolla Cove"] %}
+<section class="page">
+  {{ head("Part 2 · 2027") }}
+  <h1>Where the budget is bolder than we are: new cafés and the Cove remodel</h1>
+  <p class="lede">Our models cannot see openings or remodels, so we check these lines against our own track record. Both lean high, and both are worth budgeting more cautiously.</p>
+  <div class="row">
+    <div class="col" style="flex:1.35">
+      <h3>New cafés: budget against our last four openings</h3>
+      <table>
+        <thead><tr><th class="l">Opening</th><th>First 8<br>months</th><th>First 10<br>months</th><th>First 12<br>months</th></tr></thead>
+        <tbody>
+        {% for a in O.analogs %}
+          <tr><td>{{ a.store }} <span class="dim">({{ a.opened.strftime("%b %Y") }})</span></td><td>{{ a[8] | fm }}</td><td>{{ a[10] | fm }}</td><td>{{ a[12] | fm }}</td></tr>
+        {% endfor %}
+          <tr class="total"><td>Average opening</td><td>{{ O.avg[8] | fm }}</td><td>{{ O.avg[10] | fm }}</td><td>{{ O.avg[12] | fm }}</td></tr>
+        {% for x in O.new %}
+          <tr class="{{ 'sep' if loop.first else '' }}"><td class="pink">Budget: {{ x.name }} <span class="dim">(opens {{ x.opens.strftime("%b %-d") }}, {{ x.months }} months)</span></td>
+            <td>{{ (x.budget | fm) if x.months == 8 else "" }}</td><td>{{ (x.budget | fm) if x.months == 10 else "" }}</td><td class="dim">{{ x.first12 | replace(" first 12 months", "") }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% set nb = n.bridge27.new_budget %}{% set best = O.new | sum(attribute="best") %}{% set la = O.new | sum(attribute="la") %}
+      <h3 style="margin-top:16px">Both openings in 2027</h3>
+      <div class="ledger compact">
+        <div class="r"><div class="what">Budget</div><div><div class="bar base" style="width:{{ nb / best * 100 }}%"></div></div><div class="amt">{{ nb | fm }}</div></div>
+        <div class="r"><div class="what">If both open like {{ O.best_name }}, our best</div><div><div class="bar" style="width:100%"></div></div><div class="amt">{{ best | fm }}</div></div>
+        <div class="r"><div class="what">If both open like our average opening</div><div><div class="bar ours" style="width:{{ n.bridge27.new_track / best * 100 }}%"></div></div><div class="amt pink">{{ n.bridge27.new_track | fm }}</div></div>
+        <div class="r"><div class="what">If both open like our LA openings</div><div><div class="bar" style="width:{{ la / best * 100 }}%"></div></div><div class="amt">{{ la | fm }}</div></div>
+      </div>
+      <p class="note" style="margin-top:6px">Openings restated at 2026 prices (average check up {{ "%.0f" | format(O.check_lift_23 * 100) }}% since 2023 and {{ "%.0f" | format(O.check_lift_24 * 100) }}% since 2024). {{ O.tbd | join(", ") }} has no volume in the budget and none here.</p>
+    </div>
+    <div class="col" style="flex:1">
+      <h3>La Jolla Cove remodel</h3>
+      <div class="minis" style="margin-bottom:12px">
+        <div class="m"><div class="lab">Average month, 2026</div><div class="val">{{ cv.avg_m | fk }}</div></div>
+        <div class="m"><div class="lab">Best month ever</div><div class="val">{{ cv.best_m | fk }}</div><div class="sub">{{ cv.best_m_label }}</div></div>
+        <div class="m"><div class="lab">Budget, Oct–Dec 2027</div><div class="val pink">$125K</div><div class="sub">a month</div></div>
+      </div>
+      <table class="roomy" style="margin-bottom:12px">
+        <thead><tr><th class="l">La Jolla Cove, 2027</th><th>Budget</th><th>Current trend</th></tr></thead>
+        <tbody>
+          <tr><td>January–September</td><td>{{ cv.b_js | fm }}</td><td>{{ cv.p_js | fm }}</td></tr>
+          <tr><td>October–December</td><td class="pink">{{ cv.b_q4 | fm }}</td><td>{{ cv.p_q4 | fm }}</td></tr>
+          <tr class="total"><td>Year</td><td>{{ cv.b27 | fm }}</td><td>{{ cv.plan27 | fm }}</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12.5px;margin:0 0 10px">The budget holds January–September flat to 2026, close to our view. The difference is October–December: {{ "%.1f" | format(cv.ratio) }}× today's monthly sales once the remodel is done.</p>
+      <p style="font-size:12.5px;margin:0">No café of ours has a remodel in its history, so we cannot test the lift. We would budget the trend and add the lift once the Cove reopens and trades.</p>
+    </div>
+  </div>
+  {{ foot("Openings measured from the first trading day · new-café months open in 2027 per the budget") }}
+</section>
+
+{# ================================================================== 12 TOTAL COMPANY #}
+{% set Z = n.bridge27 %}{% set zmax = Z.ours %}
+<section class="page">
+  {{ head("Part 2 · 2027") }}
+  <h1>Total company: {{ Z.ours | fm(1) }} in our plan against {{ Z.budget | fm(1) }} in the budget</h1>
+  <p class="lede">The existing cafés and Nautilus add {{ (Z.existing + Z.nautilus) | fm(1) }}; a more cautious view of the Cove remodel and the two openings takes back {{ (-(Z.cove + Z.new)) | fm(1) }}. Net, the budget is {{ (Z.ours - Z.budget) | fm(1) }} below our plan.</p>
+  <div class="row" style="margin-top:6px">
+    <div class="col" style="flex:1.5">
+      <div class="ledger">
+        <div class="r"><div class="what">Budget 2027: total company<small>nine cafés, Cove, Manhattan Beach, Sportsmen's Lodge</small></div><div><div class="bar base" style="width:{{ Z.budget / zmax * 100 }}%"></div></div><div class="amt">{{ Z.budget | fm }}</div></div>
+        <div class="r"><div class="what">+ Nine existing cafés at our plan<small>{{ t.plan27 | fm }} against {{ t.b27 | fm }}</small></div><div><div class="bar plus" style="width:{{ Z.existing / zmax * 100 * 4 }}%"></div></div><div class="amt pink">{{ Z.existing | sfm }}</div></div>
+        <div class="r"><div class="what">+ Nautilus<small>not in the budget</small></div><div><div class="bar plus" style="width:{{ Z.nautilus / zmax * 100 * 4 }}%"></div></div><div class="amt pink">{{ Z.nautilus | sfm }}</div></div>
+        <div class="r"><div class="what">− La Jolla Cove on its current trend<small>remodel lift left out until it trades</small></div><div><div class="bar minus" style="width:{{ -Z.cove / zmax * 100 * 4 }}%"></div></div><div class="amt">{{ Z.cove | sfm }}</div></div>
+        <div class="r"><div class="what">− New cafés at our average opening<small>{{ Z.new_track | fm }} against {{ Z.new_budget | fm }}</small></div><div><div class="bar minus" style="width:{{ -Z.new / zmax * 100 * 4 }}%"></div></div><div class="amt">{{ Z.new | sfm }}</div></div>
+        <div class="r tot final"><div class="what">= Our plan 2027: total company</div><div><div class="bar ours" style="width:100%"></div></div><div class="amt">{{ Z.ours | fm }}</div></div>
+      </div>
+      <p class="note" style="margin-top:8px">Adjustment bars at 4× scale. Boulangerie (opens April) has no volume in the budget or here. Growth on 2026: budget {{ (Z.budget / n.budget_total26 - 1) | pct }}, our plan {{ (Z.ours / n.all26 - 1) | pct }} (on each one's 2026 total).</p>
+    </div>
+    <div class="col" style="flex:1">
+      <h3>Risks to our plan</h3>
+      <ul class="tight big">
+        <li><b>Brentwood has gone flat.</b> Sales have held near {{ C["Brentwood"].avg_m | fk }} a month since January; if that continues, our plan is about {{ C["Brentwood"].gap | fk }} high there.</li>
+        <li><b>Coronado is cooling.</b> Growth fell from {{ C["Coronado"].q1 | pct(0) }} in Q1 to {{ C["Coronado"].oct_g | pct(0) }} in October; our lowest model puts it at {{ C["Coronado"].low27 | fm }}.</li>
+        <li><b>Competitors next door.</b> The budget expects them at Del Mar and Brentwood. Our models cannot see them; we would carry them as explicit risk lines.</li>
+        <li><b>A broad slowdown</b> would hit every café at once. Our plan already assumes growth eases from {{ t.g26 | apct(0) }} to {{ t.pg | apct(0) }}.</li>
+      </ul>
+    </div>
+  </div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 13 WHAT WE SUGGEST #}
+{% set S = n.suggest %}
+<section class="page">
+  {{ head("Part 2 · 2027") }}
+  <h1>What we suggest: {{ S.total | fm }} for 2027, {{ S.total_change | sfm }} above the budget</h1>
+  <div class="row" style="margin-top:6px">
+    <div class="col" style="flex:1.7">
+      <table class="roomy">
+        <thead><tr><th class="l">Café or line</th><th>Budget 2027</th><th>Suggested</th><th>Change</th><th class="l">Basis</th></tr></thead>
+        <tbody>
+        {% for s in n.nine %}{% set c = C[s] %}
+          <tr><td>{{ c.name }}</td><td>{{ c.b27 | fm }}</td><td><b>{{ c.suggest | fm }}</b></td><td>{{ (c.suggest - c.b27) | sfk if (c.suggest - c.b27) | abs > 1 else "—" }}</td>
+            <td class="l">{% if c.verdict in ["defensible", "in_line"] %}<span class="dim">Keep the budget ({{ VERDICT_LABEL[c.verdict] | lower }})</span>{% else %}Our plan{% endif %}</td></tr>
+        {% endfor %}
+          <tr class="total"><td>Nine existing cafés</td><td>{{ t.b27 | fm }}</td><td>{{ S.nine | fm }}</td><td>{{ S.nine_change | sfm }}</td><td class="l">{{ (S.nine / t.e26 - 1) | pct }} on 2026</td></tr>
+          <tr class="sep"><td>Nautilus</td><td class="dim">—</td><td><b>{{ C["Nautilus"].plan27 | fm }}</b></td><td>{{ C["Nautilus"].plan27 | sfk }}</td><td class="l">Our plan; not in the budget</td></tr>
+          <tr><td>La Jolla Cove</td><td>{{ cv.b27 | fm }}</td><td><b>{{ cv.plan27 | fm }}</b></td><td>{{ (cv.plan27 - cv.b27) | sfk }}</td><td class="l">Current trend; add the remodel lift once it trades</td></tr>
+          {% for x in O.new %}
+          <tr><td>{{ x.name }}</td><td>{{ x.budget | fm }}</td><td><b>{{ x.track | fm }}</b></td><td>{{ (x.track - x.budget) | sfk }}</td><td class="l">Our average opening, {{ x.months }} months</td></tr>
+          {% endfor %}
+          <tr class="total"><td>Total company</td><td>{{ S.total_budget | fm }}</td><td class="pink">{{ S.total | fm }}</td><td>{{ S.total_change | sfm }}</td><td class="l">{{ S.total_g | pct }} on 2026</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col" style="flex:1">
+      <h3>How we got there</h3>
+      <ul class="tight big">
+        <li><b>Raise six objectives</b> to our plan: {{ S.raised | join(", ") }}.</li>
+        <li><b>Keep three</b> where the budget's caution has support: {{ S.kept | join(", ") }}.</li>
+        <li><b>Show judgment calls as their own lines</b>: competitors next door, the Cove remodel and openings beyond our track record are upside or risk, not the base.</li>
+        <li><b>Re-forecast every month</b> as actuals land; the models update themselves.</li>
+      </ul>
+      <div class="callout" style="margin-top:14px"><p style="margin:0;font-size:12px">Even the suggested {{ S.nine | fm }} for the nine cafés assumes growth slows from {{ t.g26 | apct(0) }} to {{ (S.nine / t.e26 - 1) | apct(0) }}.</p></div>
+    </div>
+  </div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== 14 DIVIDER 3 + INDEX #}
+<section class="page divider">
+  <div class="div-left" style="padding-right:.5in">
+    <div class="part">Part 3</div>
+    <div class="div-title" style="font-size:44px">Café by café</div>
+    <p class="div-sub" style="margin-bottom:16px">Two pages each: the numbers, then the evidence behind our read.</p>
+    <table style="font-size:11.5px">
+      <thead><tr><th class="l">Café</th><th>Budget</th><th>Our plan</th><th class="l">Our read</th><th>Page</th></tr></thead>
+      <tbody>
+      {% for c in n.cafes %}
+        <tr><td>{{ c.name }}</td><td>{{ (c.b27 | fm) if c.b27 else "—" }}</td><td>{{ c.plan27 | fm }}</td><td class="l">{{ badge(c.verdict) }}</td><td>{{ 15 + 2 * loop.index0 }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <div class="div-right"><img src="assets/tout-mission.jpg" alt=""></div>
+</section>
+
+{# ================================================================== 15+ CAFÉ PAGES #}
+{% for c in n.cafes %}
+<section class="page">
+  {{ head("Café by café · " ~ c.name ~ " · the numbers") }}
+  <div class="cafe-tag"><span class="name">{{ c.name }}</span>{{ badge(c.verdict) }}</div>
+  <h1>{{ c.h1 }}</h1>
+  <div class="row" style="margin-top:8px">
+    <div class="col" style="flex:1.75">
+      <div class="chart-title">Monthly net sales</div>
+      <div class="chart-sub">Actual through September 2026 · our estimate for October–December · 2027: our plan and the range of our three models{% if c.key == "La Jolla Cove" %}; budget = January–September 2026 repeated, then $125K a month{% elif c.b27 %}; budget = each 2026 month {{ c.bg | pct }}{% endif %}</div>
+      {{ svg.cafe[c.key].monthly }}
+    </div>
+    <div class="col side" style="flex:1">
+      <table>
+        <thead><tr><th class="l"></th><th>Budget</th><th>Ours</th></tr></thead>
+        <tbody>
+          <tr><td>2026 finish</td><td>{{ (c.b26 | fm) if c.b26 else "—" }}</td><td>{{ c.e26 | fm }}</td></tr>
+          <tr><td><b>2027</b></td><td><span class="num-big">{{ (c.b27 | fm) if c.b27 else "—" }}</span></td><td><span class="num-big pink">{{ c.plan27 | fm }}</span></td></tr>
+          <tr><td>Growth on 2026</td><td>{{ (c.bg | pct) if c.b27 else "—" }}</td><td>{{ c.pg | pct }}</td></tr>
+          <tr><td>Added in 2027</td><td>{{ (c.added27_b | sfk) if c.b27 else "—" }}</td><td>{{ c.added27_p | sfk }}</td></tr>
+          <tr><td>Our three models</td><td></td><td>{{ c.low27 | frange(c.high27) }}</td></tr>
+        </tbody>
+      </table>
+      <div class="walk">
+        <div><span>2025 actual</span><span>{{ c.fy25 | fm }}{% if c.g25 is not none %} ({{ c.g25 | pct }}){% endif %}</span></div>
+        <div><span>Jan–Sep 2026 actual</span><span>{{ c.ytd26 | fm }} ({{ c.ytd_g | pct }})</span></div>
+        <div><span>Oct–Dec 2026: budget · ours</span><span>{{ (c.q4_b | fk) if c.q4_b else "—" }} · {{ c.q4_o | fk }}</span></div>
+        <div><span>Added in 2026</span><span>{{ c.added26 | sfk }}</span></div>
+        {% if c.b27 %}<div><span>Our plan minus the budget, 2027</span><span class="{{ 'pink' if c.gap > 0 else '' }}">{{ c.gap | sfk }}</span></div>{% endif %}
+      </div>
+    </div>
+  </div>
+  {{ foot(SRC) }}
+</section>
+
+<section class="page">
+  {{ head("Café by café · " ~ c.name ~ " · the evidence") }}
+  <div class="cafe-tag"><span class="name">{{ c.name }}</span>{{ badge(c.verdict) }}</div>
+  <h1>{{ c.h2 }}</h1>
+  <div class="row" style="margin-top:8px">
+    <div class="col" style="flex:1.5">
+      <div class="chart-title">Sales growth against the same quarter a year earlier</div>
+      <div class="chart-sub">Quarters since the café's first anniversary · gray bar: October 1–14, 2026 · dashed lines: 2027 growth{% if c.b27 %} in the budget and{% endif %} in our plan</div>
+      {{ svg.cafe[c.key].quarterly }}
+    </div>
+    <div class="col says" style="flex:1">
+      <h3>The budget says</h3>
+      <p class="quote">{% if c.b27 %}“{{ c.key_assumption }}” · {{ c.bg | pct }}{% else %}Not included{% endif %}</p>
+      <h3>The sales say</h3>
+      <p>{{ c.says }}</p>
+      <div class="minis">
+        <div class="m"><div class="lab">Guests (checks)<br>Jan–Sep vs 2025</div><div class="val">{{ c.chk_g | pct }}</div></div>
+        <div class="m"><div class="lab">Average check<br>Jan–Sep vs 2025</div><div class="val">{{ c.tkt_g | pct }}</div></div>
+        <div class="m"><div class="lab">Slowest quarter<br>on record</div><div class="val">{{ c.slowest | pct }}</div><div class="sub">{{ c.slowest_q }}</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="verdict pin-bottom">{{ badge(c.verdict) }}<span>{{ c.verdict_line }}</span></div>
+  {{ foot("Quarterly growth from " ~ c.first_q ~ " · " ~ SRC) }}
+</section>
+{% endfor %}
+
+{# ================================================================== METHOD #}
+<section class="page">
+  {{ head("How we built our numbers") }}
+  <h1>How we built our numbers</h1>
+  <div class="row method" style="margin-top:12px">
+    <div class="col">
+      <h3>The data</h3>
+      <p>Daily net sales and checks for every café from Toast POS (after discounts; excluding tax, tips and gift-card sales), {{ n.first_day.strftime("%B %Y") }} to {{ n.last_day.strftime("%B %-d, %Y") }}: {{ "{:,}".format(n.store_days) }} café-days.</p>
+      <p>The budget's 2026 estimates match these figures within 2% café by café, so both sides are measuring the same sales.</p>
+      <h3>Growth measures</h3>
+      <p>Growth always compares the same days, months or quarters a year apart. Checks count guests' tickets; average check = net sales ÷ checks.</p>
+    </div>
+    <div class="col">
+      <h3>Our forecast</h3>
+      <p>Three standard forecasting models (Prophet, SARIMA and Holt-Winters) are fitted to each café separately and added up. Their settings were tuned on 2025 and tested on January–September 2026.</p>
+      <p><b>Our plan</b> is the blend of the three, shaded {{ "%.1f" | format((1 - n.plan_cfg.factor) * 100) }}% down: over-forecasting costs us about {{ n.plan_cfg.over_cost }}× more than under-forecasting, so the plan leans low on purpose.</p>
+      <p><b>Track record:</b> forecasting January–September 2026 from September 2025, the blend came in {{ n.track.bias | apct }} {{ "below" if n.track.bias < 0 else "above" }} actual sales across the {{ n.track.cafes | words }} cafés with two years of history at the time.</p>
+    </div>
+    <div class="col">
+      <h3>What the models cannot see</h3>
+      <p>New competitors, remodels, openings, closures and price changes. We treat these as judgment calls and show them as separate lines.</p>
+      <h3>No growth after September</h3>
+      <p>Two estimates of 2027 at today's level: Jul–Sep 2026 sales adjusted for each café's seasonal pattern and annualised; and each café's Prophet trend held at its September 30 level.</p>
+      <h3>New-café track record</h3>
+      <p>Sales in the first 8, 10 and 12 months from the first trading day of Newport, Beverly Hills, Brentwood and Carlsbad, restated at 2026 average checks.</p>
+    </div>
+  </div>
+  <p class="note pin-bottom">Code and data: parakeet_forecasts repository (report/build_deck.py, src/hold_scenario.py; budget figures in data/cfo_budget_2027.csv). Café-level figures: outputs/budget_review_by_cafe.csv.</p>
+  {{ foot(SRC) }}
+</section>
+
+</body>
+</html>
