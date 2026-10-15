@@ -365,15 +365,15 @@ ul.tight li{margin:0 0 5px}
   <div class="row">
     <div class="col" style="flex:1.55">
       <table>
-        <thead><tr><th class="l">Model</th><th class="l">Feature</th><th>Best score<br>with it</th><th>Best score<br>without</th><th class="l" style="padding-left:14px">Verdict</th></tr></thead>
+        <thead><tr><th class="l">Model</th><th class="l">Feature</th><th>Effect on<br>2025 score</th><th>Effect on<br>2026 holdout</th><th class="l" style="padding-left:14px">Verdict</th></tr></thead>
         <tbody>
         {% for f in T.features %}
-          <tr><td>{{ f.model }}</td><td class="l" style="white-space:normal">{{ f.feature }}</td><td>{{ f.with | pct(2, False) }}</td><td>{{ f.without | pct(2, False) }}</td>
-            <td class="l" style="padding-left:14px">{% if f.verdict == "helps" %}<b>Helps</b>{% elif f.verdict == "hurts" %}Hurts{% else %}<span class="muted">No real difference</span>{% endif %}</td></tr>
+          <tr><td>{{ f.model }}</td><td class="l" style="white-space:normal">{{ f.feature }}{% if f.in_best %} <span class="muted">· used</span>{% endif %}</td><td>{{ f.d_tune | pct(0) }}</td><td>{{ f.d_hold | pct(0) }}</td>
+            <td class="l" style="padding-left:14px">{% if f.verdict == "helps" %}<b>Helps</b>{% elif f.verdict == "hurts" %}Hurts{% else %}<span class="muted">Mixed</span>{% endif %}</td></tr>
         {% endfor %}
         </tbody>
       </table>
-      <p class="note" style="margin-top:6px">Score = average of café-month and brand-month error on the 2025 tuning set (lower is better), for the best setting found with and without each feature. Weather could not be tested: this environment's network policy blocks the weather archive.</p>
+      <p class="note" style="margin-top:6px">Each feature switched on vs off with every other setting at the model's best; effect = change in score (average of café-month and brand-month error) when it is on, so negative is better. "Helps" or "Hurts" only when 2025 and 2026 agree. Weather could not be tested: this environment's network policy blocks the weather archive.</p>
     </div>
     <div class="col">
       <h3>How much growth to extrapolate?</h3>

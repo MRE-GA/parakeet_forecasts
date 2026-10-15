@@ -236,24 +236,6 @@ def collect() -> dict:
 # Tuning round
 # ------------------------------------------------------------------------------------------
 TUNING = OUTPUTS / "tuning"
-# (column, label, value when on, value when off)
-FEATURES = {
-    "Prophet": [
-        ("holiday_windows", "Holiday periods: Christmas week, spring break, Thanksgiving weekend", "True", "False"),
-        ("summer_weekly", "Separate weekly pattern for summer", "True", "False"),
-        ("cap_outliers", "Cap catering spikes at 3× the 29-day median", "3.0", "0.0"),
-        ("seasonality_mode", "Multiplicative rather than additive seasonality", "multiplicative", "additive"),
-    ],
-    "SARIMA": [
-        ("td_adjust", "Weekday-weighted trading days (vs plain day count)", "weekday", "calendar"),
-        ("transform", "Log transform", "log", "none"),
-    ],
-    "Holt-Winters": [
-        ("td_adjust", "Weekday-weighted trading days (vs plain day count)", "weekday", "calendar"),
-        ("boxcox", "Log transform", "log", "False"),
-        ("seasonal", "Multiplicative rather than additive seasonality", "mul", "add"),
-    ],
-}
 SARIMA_TREND = {"drift": "Constant growth (drift)", "none": "No growth term", "local": "Local trend (re-estimated)"}
 
 
@@ -336,16 +318,21 @@ def collect_tuning() -> dict:
     t["describe"] = {m: describe(m, {**DEFAULT_CONFIGS[m], **cfg["adopted"]["models"][m]}) for m in MODELS}
     t["describe_best"] = {m: describe(m, {**DEFAULT_CONFIGS[m], **cfg["best_on_tuning_set"][m]}) for m in MODELS}
 
+    # one-at-a-time ablation from the best settings (src/feature_ablation.py)
+    ab = pd.read_csv(TUNING / "feature_ablation.csv")
     feats = []
-    for m, specs in FEATURES.items():
-        tr = trials[m]
-        for col, label, yes, no in specs:
-            with_ = tr.loc[tr[col] == yes, "objective"].min()
-            without = tr.loc[tr[col] == no, "objective"].min()
-            change = with_ / without - 1
-            verdict = "helps" if change < -0.02 else "hurts" if change > 0.02 else "no real difference"
-            feats.append({"model": m, "feature": label, "with": with_, "without": without,
-                          "change": change, "verdict": verdict})
+    for r in ab.itertuples():
+        d_tune = r.tune_on / r.tune_off - 1
+        d_hold = r.holdout_on / r.holdout_off - 1
+        if d_tune < -0.01 and d_hold < -0.01:
+            verdict = "helps"
+        elif d_tune > 0.01 and d_hold > 0.01:
+            verdict = "hurts"
+        else:
+            verdict = "mixed"
+        feats.append({"model": r.model, "feature": r.feature, "in_best": bool(r.in_best),
+                      "tune_on": r.tune_on, "tune_off": r.tune_off, "hold_on": r.holdout_on,
+                      "hold_off": r.holdout_off, "d_tune": d_tune, "d_hold": d_hold, "verdict": verdict})
     t["features"] = feats
     t["sarima_trends"] = (trials["SARIMA"].groupby("trend").objective.min()
                           .rename(index=SARIMA_TREND).sort_values().to_dict())
@@ -407,8 +394,8 @@ def narrate(t: dict) -> None:
     f = pd.DataFrame(t["features"])
     helps = f[f.verdict == "helps"]
     hurts = f[f.verdict == "hurts"]
-    lede = ("Features were switched on and off inside the search, so each one had to earn its place on the "
-            "2025 tuning set. ")
+    lede = ("Starting from each model's best settings, every feature was switched on and off on its own and "
+            "scored on 2025 and on the 2026 holdout. ")
     if len(helps):
         lede += "What helped: " + _list([f"{r.feature.split(':')[0].split(' (')[0].lower()} ({r.model})"
                                          for r in helps.itertuples()]) + ". "
