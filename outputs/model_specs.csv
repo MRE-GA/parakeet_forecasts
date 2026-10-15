@@ -1,0 +1,12 @@
+store,sarima_spec
+Carmel Valley,"SARIMA(2, 0, 0)(0, 1, 1)12 + drift"
+La Jolla,"SARIMA(2, 0, 0)(0, 1, 1)12 + drift"
+La Jolla Juicery,"SARIMA(1, 0, 1)(0, 1, 1)12 + drift"
+Little Italy,"SARIMA(1, 0, 0)(0, 1, 0)12 + drift"
+Coronado,"SARIMA(2, 0, 0)(0, 1, 1)12 + drift"
+La Jolla Cove,"SARIMA(1, 0, 0)(0, 1, 1)12 + drift"
+Nautilus,"SARIMA(2, 0, 0)(0, 1, 1)12 + drift"
+Newport,"SARIMA(1, 0, 0)(0, 1, 0)12 + drift"
+Beverly Hills,"SARIMA(0, 0, 1)(0, 1, 1)12 + drift"
+Brentwood,"SARIMA(1, 0, 0)(0, 1, 0)12 + drift"
+Carlsbad,"SARIMA(0, 0, 1)(0, 1, 1)12 + drift"

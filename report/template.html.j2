@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Parakeet Cafe · 2027 Sales Forecast</title>
+<style>
+@font-face{font-family:"Monarcha";src:url("assets/Monarcha-Bold.otf") format("opentype");font-weight:100 900}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-400.woff2") format("woff2");font-weight:400;font-style:normal}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-400i.woff2") format("woff2");font-weight:400;font-style:italic}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-700.woff2") format("woff2");font-weight:700;font-style:normal}
+@font-face{font-family:"Playfair Display";src:url("assets/PlayfairDisplay-900.woff2") format("woff2");font-weight:900;font-style:normal}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-400.woff2") format("woff2");font-weight:400}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-500.woff2") format("woff2");font-weight:500}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-600.woff2") format("woff2");font-weight:600}
+@font-face{font-family:"Josefin Sans";src:url("assets/JosefinSans-700.woff2") format("woff2");font-weight:700}
+
+:root{
+  --pink:#ef4b81;--ink:#000;--paper:#fff;
+  --g900:#373a3c;--g700:#565a5c;--g500:#82888a;--g300:#ccc;--g250:#ddd;--g100:#eceeef;--g50:#f2f2f2;
+  --soft:rgba(221,221,221,.6);
+  --display:"Monarcha","Playfair Display",serif;
+  --body:"Playfair Display",Georgia,serif;
+  --sans:"Josefin Sans","Helvetica Neue",sans-serif;
+}
+@page{size:11in 8.5in;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--paper);color:var(--ink)}
+body{font-family:var(--body);font-size:12px;line-height:1.5;letter-spacing:.2px;
+     -webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:11in;height:8.5in;padding:.48in .6in .62in;position:relative;overflow:hidden;break-after:page;
+      display:flex;flex-direction:column}
+.page .pin-bottom{margin-top:auto}
+table.roomy td{padding-top:7.5px;padding-bottom:7.5px}
+.page:last-child{break-after:auto}
+svg{display:block;max-width:100%;height:auto;overflow:visible}
+
+/* chrome */
+.head{display:flex;align-items:center;justify-content:space-between;padding-bottom:9px;border-bottom:1px solid var(--ink)}
+.head img{height:22px;display:block}
+.eyebrow{font-family:var(--sans);font-weight:600;font-size:9.5px;letter-spacing:2.2px;text-transform:uppercase;color:var(--g700)}
+.eyebrow::before{content:"";display:inline-block;width:18px;height:2px;background:var(--pink);vertical-align:middle;margin:-3px 8px 0 0}
+h1{font-family:var(--display);font-weight:700;font-size:28px;line-height:1.12;letter-spacing:.6px;margin:18px 0 6px}
+h2{font-family:var(--display);font-weight:700;font-size:17px;letter-spacing:.4px;margin:0 0 6px;line-height:1.2}
+h3{font-family:var(--sans);font-weight:700;font-size:10px;letter-spacing:1.6px;text-transform:uppercase;margin:0 0 6px;color:var(--ink)}
+.lede{font-size:13.5px;color:var(--g900);max-width:9.3in;margin:0 0 16px}
+.foot{position:absolute;left:.6in;right:.6in;bottom:.26in;display:flex;justify-content:space-between;gap:18px;
+      font-family:var(--sans);font-size:8.5px;letter-spacing:.4px;color:var(--g500);border-top:1px solid var(--soft);padding-top:6px}
+.muted{color:var(--g700)}
+.small{font-size:10.5px;line-height:1.45}
+.note{font-family:var(--sans);font-size:9px;color:var(--g500);letter-spacing:.2px;line-height:1.4}
+b,strong{font-weight:700}
+.pink{color:var(--pink)}
+.row{display:flex;gap:.35in}
+.col{flex:1;min-width:0}
+.rule-top{border-top:2px solid var(--ink);padding-top:9px}
+.rule-pink{border-top-color:var(--pink)}
+.callout{border-left:2px solid var(--pink);padding:2px 0 2px 14px}
+
+/* numbers */
+.hero{font-family:var(--sans);font-weight:600;font-size:78px;line-height:1;letter-spacing:-.5px;color:var(--pink);margin-top:8px}
+.hero-cap{font-family:var(--sans);font-size:11px;letter-spacing:.4px;color:var(--g700);margin-top:8px}
+.tiles{display:flex;gap:0;margin-top:18px;border-top:1px solid var(--ink)}
+.tile{flex:1;padding:10px 12px 0 0}
+.tile + .tile{padding-left:14px;border-left:1px solid var(--soft)}
+.tile .lab{font-family:var(--sans);font-size:9.5px;letter-spacing:.3px;color:var(--g700)}
+.tile .val{font-family:var(--sans);font-weight:600;font-size:22px;margin-top:4px;letter-spacing:-.2px}
+.tile .delta{font-family:var(--sans);font-size:9.5px;color:var(--g700);margin-top:2px}
+
+/* tables */
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:10.5px;font-variant-numeric:tabular-nums}
+th{font-weight:600;font-size:8.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--g700);text-align:right;padding:0 7px 6px;border-bottom:1px solid var(--ink);vertical-align:bottom}
+td{padding:5px 7px;text-align:right;border-bottom:1px solid var(--soft);white-space:nowrap}
+th:first-child,td:first-child{text-align:left;padding-left:0}
+td.l,th.l{text-align:left}
+tr.total td{font-weight:700;border-top:1px solid var(--ink);border-bottom:none}
+tr.hl td{font-weight:700}
+.key{display:inline-block;width:9px;height:9px;margin-right:7px;vertical-align:0}
+.key.pink{background:var(--pink)}.key.ink{background:var(--ink)}.key.gray{background:var(--g500)}
+.best{font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--paper);background:var(--pink);padding:2px 5px 1px;margin-left:6px;vertical-align:1px}
+
+/* findings */
+.findings{display:grid;grid-template-columns:1fr 1fr;gap:20px .4in;margin-top:30px}
+.finding{display:flex;gap:12px}
+.finding .num{font-family:var(--sans);font-weight:700;font-size:22px;color:var(--pink);line-height:1;min-width:28px}
+.finding p{margin:0;font-size:12.5px;line-height:1.55}
+.strip{display:flex;align-items:center;gap:14px;background:var(--g50);padding:10px 16px;font-size:11px}
+.strip .lab{font-family:var(--sans);font-weight:700;font-size:9px;letter-spacing:1.4px;text-transform:uppercase;white-space:nowrap}
+
+/* model cards */
+.cards{display:flex;gap:.3in;margin-top:10px}
+.card{flex:1;border-top:2px solid var(--ink);padding-top:10px}
+.card .tag{font-family:var(--sans);font-size:9px;letter-spacing:1.4px;text-transform:uppercase;color:var(--g700)}
+.card .how{font-style:italic;font-size:13px;color:var(--g900);margin:4px 0 12px;min-height:58px}
+.card dl{margin:0;font-size:11.5px;line-height:1.5}
+.card dt{font-family:var(--sans);font-weight:700;font-size:8.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink);margin-top:8px}
+.card dd{margin:2px 0 0}
+.card .result{margin-top:12px;padding-top:8px;border-top:1px solid var(--soft);font-family:var(--sans);font-size:10px;color:var(--g700)}
+.card .result b{font-size:17px;color:var(--ink);font-weight:600;margin-right:6px}
+.rules{margin-top:20px;background:var(--g50);padding:14px 18px;display:flex;gap:.3in}
+.rules > div{flex:1;font-size:11px;line-height:1.5}
+
+/* cover */
+.cover{padding:0;display:flex;flex-direction:row}
+.cover-left{width:56%;padding:.75in .6in .6in .75in;position:relative;display:flex;flex-direction:column}
+.cover-left .logo{width:2.35in;display:block}
+.cover-left .eyebrow{margin-top:1.05in}
+.cover-title{font-family:var(--display);font-weight:700;font-size:56px;line-height:1.02;letter-spacing:1px;margin:14px 0 16px}
+.cover-sub{font-style:italic;font-size:17px;line-height:1.45;color:var(--g900);margin:0;max-width:4.6in}
+.cover-meta{margin-top:auto;font-family:var(--sans);font-size:9.5px;letter-spacing:.4px;color:var(--g700);line-height:1.6;border-top:1px solid var(--ink);padding-top:10px;max-width:4.6in}
+.cover-right{width:44%;height:100%}
+.cover-right img{width:100%;height:100%;object-fit:cover;display:block}
+.cover .bird{position:absolute;width:1.25in;right:.35in;top:.55in;opacity:.95}
+
+.chart-title{font-family:var(--sans);font-weight:600;font-size:10px;letter-spacing:.3px;color:var(--ink);margin:0 0 6px}
+.chart-sub{font-family:var(--sans);font-size:9px;color:var(--g500);margin:-3px 0 6px}
+ul.tight{margin:6px 0 0;padding-left:16px}
+ul.tight li{margin:0 0 5px}
+.risk{border-top:2px solid var(--ink);padding-top:9px}
+.risk p{margin:10px 0 0;font-size:12px;line-height:1.55}
+.risk .big{font-family:var(--sans);font-weight:600;font-size:30px;line-height:1;margin-top:10px}
+.risk .cap{font-family:var(--sans);font-size:9.5px;color:var(--g700);margin-top:5px;letter-spacing:.2px}
+</style>
+</head>
+<body>
+
+{# ======================================================================= COVER #}
+<section class="page cover">
+  <div class="cover-left">
+    <img class="logo" src="assets/logo-bird.png" alt="Parakeet Cafe">
+    <img class="bird" src="assets/parrot-map.png" alt="">
+    <div class="eyebrow">Sales forecast · October 2026</div>
+    <div class="cover-title">2027 Sales<br>Forecast</div>
+    <p class="cover-sub">Prophet, SARIMA and Holt-Winters, tested head-to-head on four years of Toast sales from our eleven cafés.</p>
+    <div class="cover-meta">
+      Toast POS net sales via MCP Andersons · {{ "{:,}".format(n.store_days) }} café-days ·
+      {{ n.first_day.strftime("%b %Y") }} – {{ n.last_day.strftime("%b %-d, %Y") }}<br>
+      Prepared October 15, 2026
+    </div>
+  </div>
+  <div class="cover-right"><img src="assets/hero-2.jpg" alt=""></div>
+</section>
+
+{# ======================================================================= SUMMARY #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">A bird's-eye view</span></div>
+  <h1>2027 net sales: {{ n.f2027[ENSEMBLE] | fm }}, {{ n.g2027[ENSEMBLE] | pct }} on 2026</h1>
+  <p class="lede">We forecast each café's sales with three time-series models, scored them in five back-tests, and recommend the average of the three, which was the most accurate on every measure.</p>
+  <div class="row" style="margin-top:14px;align-items:flex-start">
+    <div class="col" style="flex:1.05">
+      <div class="hero">{{ n.f2027[ENSEMBLE] | fm }}</div>
+      <div class="hero-cap">2027 net sales forecast · blend of Prophet, SARIMA and Holt-Winters · existing 11 cafés</div>
+      <div class="tiles">
+        <div class="tile"><div class="lab">2025 actual</div><div class="val">{{ n.a2025 | fm }}</div><div class="delta">{{ (n.a2025 / n.a2024 - 1) | pct }} vs 2024</div></div>
+        <div class="tile"><div class="lab">2026 estimate</div><div class="val">{{ n.e2026 | fm }}</div><div class="delta">{{ n.g2026 | pct }} vs 2025</div></div>
+        <div class="tile"><div class="lab">2027 model range</div><div class="val">${{ (n.low / 1e6) | round(1) }}–{{ (n.high / 1e6) | round(1) }}M</div><div class="delta">{{ n.g2027[n.low_model] | pct }} to {{ n.g2027[n.high_model] | pct }}</div></div>
+      </div>
+    </div>
+    <div class="col" style="flex:.95">
+      <div class="chart-title">2027 forecast by model</div>
+      <div class="chart-sub">Net sales, 11 cafés · % change vs 2026 estimate</div>
+      {{ svg.dots }}
+    </div>
+  </div>
+  <div class="findings">
+    <div class="finding"><div class="num">01</div><p><b>The flock keeps growing.</b> 2026 is landing near {{ n.e2026 | fm }} ({{ n.g2026 | pct }}). Like-for-like sales are up {{ n.lfl[2].sales | pct }} this year on {{ n.lfl[2].checks | pct }} more checks: the growth is traffic, not price.</p></div>
+    <div class="finding"><div class="num">02</div><p><b>The three models agree within a narrow band.</b> Prophet {{ n.f2027["Prophet"] | fm }}, SARIMA {{ n.f2027["SARIMA"] | fm }}, Holt-Winters {{ n.f2027["Holt-Winters"] | fm }}: all expect another year of double-digit growth ({{ n.g2027[n.low_model] | pct }} to {{ n.g2027[n.high_model] | pct }}).</p></div>
+    <div class="finding"><div class="num">03</div><p><b>The back-tests favor the blend.</b> {{ n.best_single }} was the best single model, a nose ahead of Prophet ({{ n.bt[2].wape | pct(1, False) }} vs {{ n.bt[0].wape | pct(1, False) }} café-month error). Averaging all three cut the brand's monthly error to {{ n.bt[3].mape | pct(1, False) }} and missed period totals by {{ n.bt[3].abs_err | pct(1, False) }} on average.</p></div>
+    <div class="finding"><div class="num">04</div><p><b>Plan on {{ n.f2027[ENSEMBLE] | fm }}, with {{ n.low | fm }} as the conservative case.</b> New cafés (Manhattan Beach, Studio City, Enclave) are not in the number. Our last four openings each added {{ n.analogs | map(attribute="first12") | min | fm }}–{{ (n.analogs | map(attribute="first12") | max / 1e6) | round(1) }}M in their first year.</p></div>
+  </div>
+  <div class="strip pin-bottom"><span class="lab">Live check</span><span>October 1–14, 2026, after the data the models were trained on: Toast recorded {{ n.live.actual | fm(2) }} and the blend forecast was {{ n.live[ENSEMBLE] | pct(1) }} off (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).</span></div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS (after discounts; excludes tax, tips and gift-card sales) · data through Oct 14, 2026</span><span>2</span></div>
+</section>
+
+{# ======================================================================= HISTORY #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Where we stand</span></div>
+  <h1>Four years of growth: first new cafés, now the same cafés</h1>
+  <p class="lede">Sales stepped up as Newport, Beverly Hills, Brentwood and Carlsbad opened in 2023–24. No café has opened since March 2024, so nearly all of the gains in 2025 and 2026 came from the same eleven cafés selling more.</p>
+  <div class="row">
+    <div class="col" style="flex:1.75">
+      <div class="chart-title">Monthly net sales, all cafés</div>
+      <div class="chart-sub">Oct 2022 – Sep 2026 · pink dots mark café openings</div>
+      {{ svg.history }}
+    </div>
+    <div class="col" style="flex:1">
+      <div class="chart-title">Annual net sales</div>
+      <div class="chart-sub">2026E = Jan–Sep actual + Q4 forecast · 2027F = blend</div>
+      {{ svg.annual }}
+    </div>
+  </div>
+  <div class="row" style="margin-top:16px">
+    <div class="col" style="flex:1.75">
+      <h3>Like-for-like growth: same cafés, same months</h3>
+      <table>
+        <thead><tr><th class="l">Period</th><th>Cafés</th><th>Net sales</th><th>Checks (traffic)</th><th>Avg. check</th><th>Avg. check ($)</th></tr></thead>
+        <tbody>
+        {% for r in n.lfl %}
+          <tr><td>{{ r.period }}</td><td>{{ r.cafes }}</td><td><b>{{ r.sales | pct(1) }}</b></td><td>{{ r.checks | pct(1) }}</td><td>{{ r.ticket | pct(1) }}</td><td>${{ "%.2f" | format(r.avg_ticket) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col callout small" style="flex:1;align-self:center">
+      <b>The mix of growth has shifted.</b> In 2024 it was all price (+10% average check, flat traffic). In 2026 it is almost all traffic ({{ n.lfl[2].checks | pct }} checks, {{ n.lfl[2].ticket | pct }} average check). Busier cafés are a sturdier base for 2027 than price alone.
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Like-for-like = cafés trading the full Jan–Sep period in both years · checks = Toast checks</span><span>3</span></div>
+</section>
+
+{# ======================================================================= MODELS #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">The models</span></div>
+  <h1>Three ways to read the same history</h1>
+  <p class="lede">Each model is fitted to every café separately and the eleven forecasts are added up, so a new opening is never mistaken for organic growth. The models differ mainly in how they extend the trend.</p>
+  <div class="cards">
+    <div class="card rule-pink">
+      <div class="tag">Requested model · Meta</div>
+      <h2>Prophet</h2>
+      <div class="how">Splits daily sales into a trend, a weekly rhythm, a yearly season and holiday effects, then extends each one.</div>
+      <dl>
+        <dt>Sees</dt><dd>Daily sales per café, so weekends and holidays are learned directly (Mother's Day {{ n.holiday["Mother's Day"] | pct }}, Memorial Day {{ n.holiday["Memorial Day"] | pct }}, Christmas Eve {{ n.holiday["Christmas Eve"] | pct }}).</dd>
+        <dt>Assumes about growth</dt><dd>The recent trend continues in a straight line, adding similar dollars each year.</dd>
+        <dt>Watch-out</dt><dd>Ran about {{ n.bt[0].bias | pct(0, False) }} hot on average in the back-tests.</dd>
+        <dt>Back-test score</dt><dd>{{ n.bt[0].wape | pct(1, False) }} café-month error · {{ n.bt[0].mape | pct(1, False) }} brand monthly error</dd>
+      </dl>
+      <div class="result"><b>{{ n.f2027["Prophet"] | fm }}</b>2027 · {{ n.g2027["Prophet"] | pct }}</div>
+    </div>
+    <div class="card">
+      <div class="tag">Classic statistics · Box–Jenkins</div>
+      <h2>SARIMA</h2>
+      <div class="how">Seasonal ARIMA: next year looks like last year, scaled by the café's average year-on-year growth.</div>
+      <dl>
+        <dt>Sees</dt><dd>Monthly sales per café, adjusted for how many Saturdays, Sundays and closed days each month has.</dd>
+        <dt>Assumes about growth</dt><dd>The café's average year-on-year growth rate carries on, compounding.</dd>
+        <dt>Watch-out</dt><dd>Least precise café by café; the most optimistic forecast for 2027.</dd>
+        <dt>Back-test score</dt><dd>{{ n.bt[1].wape | pct(1, False) }} café-month error · {{ n.bt[1].mape | pct(1, False) }} brand monthly error</dd>
+      </dl>
+      <div class="result"><b>{{ n.f2027["SARIMA"] | fm }}</b>2027 · {{ n.g2027["SARIMA"] | pct }}</div>
+    </div>
+    <div class="card">
+      <div class="tag">Classic statistics · exponential smoothing</div>
+      <h2>Holt-Winters</h2>
+      <div class="how">Tracks a level, a trend and a seasonal pattern, giving the latest months the most weight.</div>
+      <dl>
+        <dt>Sees</dt><dd>The same trading-day-adjusted monthly sales as SARIMA.</dd>
+        <dt>Assumes about growth</dt><dd>A damped trend: growth continues but gradually flattens out.</dd>
+        <dt>Watch-out</dt><dd>The most conservative model; under-forecast in four of five back-tests.</dd>
+        <dt>Back-test score</dt><dd>{{ n.bt[2].wape | pct(1, False) }} café-month error · {{ n.bt[2].mape | pct(1, False) }} brand monthly error</dd>
+      </dl>
+      <div class="result"><b>{{ n.f2027["Holt-Winters"] | fm }}</b>2027 · {{ n.g2027["Holt-Winters"] | pct }}</div>
+    </div>
+  </div>
+  <div class="rules" style="margin-top:26px">
+    <div><h3>Same data</h3>Toast net sales for 11 cafés, {{ n.first_day.strftime("%b %Y") }} to Sep 2026; models fitted on data through Sep 30, 2026.</div>
+    <div><h3>Same clean-up</h3>One-off disruptions are removed from training (Tropical Storm Hilary, Aug 2023; the LA fires at Brentwood, Jan 2025; closure days) but still count as actual sales in every test.</div>
+    <div><h3>Same scoring</h3>Every model faces the same five back-tests and is judged against real Toast sales.</div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Technical settings for each model are in the appendix</span><span>4</span></div>
+</section>
+
+{# ======================================================================= BACKTEST #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Back-testing</span></div>
+  <h1>Five dress rehearsals: which model would have called it?</h1>
+  <p class="lede">We rewound the clock five times (Sep 2024, Dec 2024, Mar 2025, Jun 2025, Sep 2025). Each time, every model saw only the data known on that date and forecast months 4 to 15 ahead, the same gap that separates today from 2027. That gave {{ n.bt_store_months }} café-months to score against what Toast actually recorded.</p>
+  {{ svg.accuracy }}
+  <div class="row" style="margin-top:14px">
+    <div class="col" style="flex:1.6">
+      <table>
+        <thead><tr><th class="l">Model</th><th>Café-month error<br>(WAPE)</th><th>Brand monthly error<br>(MAPE)</th><th>Avg. miss on<br>period total</th><th>Worst miss on<br>period total</th><th>Average bias</th></tr></thead>
+        <tbody>
+        {% for r in n.bt %}
+          <tr class="{{ 'hl' if r.key == ENSEMBLE else '' }}"><td><span class="key {{ 'pink' if r.key == ENSEMBLE else 'gray' }}"></span>{{ r.model }}{% if r.key == ENSEMBLE %}<span class="best">Best</span>{% endif %}</td>
+            <td>{{ r.wape | pct(1, False) }}</td><td>{{ r.mape | pct(1, False) }}</td><td>{{ r.abs_err | pct(1, False) }}</td><td>{{ r.max_err | pct(1, False) }}</td><td>{{ r.bias | pct(1) }} {{ 'over' if r.bias > 0 else 'under' }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:6px">Lower is better. WAPE = total absolute error ÷ total sales, over all café-months. MAPE = average % error of the 11-café monthly total. Period total = the 12 months each rehearsal covered (9 for the last one).</p>
+    </div>
+    <div class="col callout small" style="flex:1">
+      <b>Verdict.</b> {{ n.best_single }} is the most accurate single model month to month, a nose ahead of Prophet; the two are effectively tied café by café. SARIMA is the best of the three on period totals but the least precise café by café. Prophet tends to run a little hot and Holt-Winters a little cold, so their errors partly cancel. <b>The blend beat every single model on every measure</b>, and its worst miss on a period total was {{ n.bt[3].max_err | pct(1, False) }}.
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Cafés enter a rehearsal once they have 24 full months of history (5 cafés in Sep 2024, 7 from Dec 2024, 9 in Sep 2025)</span><span>5</span></div>
+</section>
+
+{# ======================================================================= REHEARSALS #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Back-testing</span></div>
+  <h1>The rehearsals up close</h1>
+  <p class="lede">Rehearsals 1 and 5 bracket the test: the oldest forecast, made with two years of history, and the newest. The shaded band is the spread between the three models; the pink line is their average.</p>
+  <div class="row">
+    <div class="col">{{ svg.rehearsal[0] }}</div>
+    <div class="col">{{ svg.rehearsal[1] }}</div>
+  </div>
+  <div class="row" style="margin-top:12px">
+    <div class="col">
+      <h3>Miss on the period total, by rehearsal</h3>
+      <table>
+        <thead><tr><th class="l">Rehearsal (data through)</th><th>Cafés</th><th>Months</th>{% for m in MODELS %}<th>{{ m }}</th>{% endfor %}<th>Blend</th></tr></thead>
+        <tbody>
+        {% for origin, r in n.bt_folds.iterrows() %}
+          <tr><td>{{ loop.index }} · {{ n.fold_label[origin] }}</td><td>{{ n.bt_fold_meta.loc[origin, "stores"] }}</td><td>{{ n.bt_fold_meta.loc[origin, "months"] }}</td>
+          {% for m in MODELS %}<td>{{ r[m] | pct(1) }}</td>{% endfor %}<td><b>{{ r[ENSEMBLE] | pct(1) }}</b></td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col callout small" style="flex:.62;align-self:center">
+      <b>Live check, October 1–14, 2026.</b> These two weeks came after the data the final models were trained on. Toast recorded {{ n.live.actual | fm(2) }}; the blend forecast was {{ n.live[ENSEMBLE] | pct(1) }} off (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Positive = over-forecast · October check prorates each model's October forecast by trading days</span><span>6</span></div>
+</section>
+
+{# ======================================================================= MONTHLY FORECAST #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">The forecast</span></div>
+  <h1>2027, month by month</h1>
+  <p class="lede">The seasonal shape holds: a March lift, a July–August summer peak, then the September dip. Every month of 2027 is forecast {{ n.m_growth_min | pct(0, False) }}–{{ n.m_growth_max | pct(0, False) }} above the same month of 2026.</p>
+  {{ svg.forecast }}
+  <table style="margin-top:12px">
+    <thead><tr><th class="l">$ thousands</th>{% for r in n.months27 %}<th>{{ r.month }}</th>{% endfor %}<th>2027</th></tr></thead>
+    <tbody>
+    {% for m in MODELS %}
+      <tr><td><span class="key gray"></span>{{ m }}</td>{% for r in n.months27 %}<td>{{ "{:,.0f}".format(r[m] / 1e3) }}</td>{% endfor %}<td>{{ n.f2027[m] | fm(2) }}</td></tr>
+    {% endfor %}
+      <tr class="hl"><td><span class="key pink"></span>Blend</td>{% for r in n.months27 %}<td>{{ "{:,.0f}".format(r[ENSEMBLE] / 1e3) }}</td>{% endfor %}<td>{{ n.f2027[ENSEMBLE] | fm(2) }}</td></tr>
+      <tr><td class="muted">2026 (Q4 estimate)</td>{% for r in n.months27 %}<td class="muted">{{ "{:,.0f}".format(r.ref2026 / 1e3) }}</td>{% endfor %}<td class="muted">{{ n.e2026 | fm(2) }}</td></tr>
+      <tr><td class="muted">Blend vs 2026</td>{% for r in n.months27 %}<td class="muted">{{ (r[ENSEMBLE] / r.ref2026 - 1) | pct }}</td>{% endfor %}<td class="muted">{{ n.g2027[ENSEMBLE] | pct }}</td></tr>
+    </tbody>
+  </table>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>2026 row: Jan–Sep actual, Oct–Dec blended forecast</span><span>7</span></div>
+</section>
+
+{# ======================================================================= BY CAFE #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">The forecast</span></div>
+  <h1>2027, café by café</h1>
+  <p class="lede">{{ n.top3[0] }}, {{ n.top3[1] }} and {{ n.top3[2] }} deliver {{ n.top3_share | pct(0, False) }} of the {{ n.growth_total | fm }} of growth. Coronado and the La Jolla Juicery are the slowest, at under +5%.</p>
+  <div class="row">
+    <div class="col" style="flex:1.45">
+      <table class="roomy">
+        <thead><tr><th class="l">Café</th><th class="l">Region</th><th>2025<br>actual</th><th>2026<br>estimate</th><th>2027<br>forecast</th><th>vs<br>2026</th><th>Model range<br>(low–high)</th><th>Share<br>of 2027</th></tr></thead>
+        <tbody>
+        {% for c in n.cafes %}
+          <tr><td>{{ c.store }}</td><td class="l muted">{{ c.region }}</td><td>{{ "%.2f" | format(c.a2025 / 1e6) }}</td><td>{{ "%.2f" | format(c.e2026 / 1e6) }}</td><td><b>{{ "%.2f" | format(c.f2027 / 1e6) }}</b></td><td>{{ c.growth | pct }}</td><td>{{ "%.2f" | format(c.low / 1e6) }}–{{ "%.2f" | format(c.high / 1e6) }}</td><td>{{ c.share | pct(0, False) }}</td></tr>
+        {% endfor %}
+          <tr class="total"><td>All cafés</td><td></td><td>{{ "%.2f" | format(n.a2025 / 1e6) }}</td><td>{{ "%.2f" | format(n.e2026 / 1e6) }}</td><td>{{ "%.2f" | format(n.f2027[ENSEMBLE] / 1e6) }}</td><td>{{ n.g2027[ENSEMBLE] | pct }}</td><td>{{ "%.2f" | format(n.low / 1e6) }}–{{ "%.2f" | format(n.high / 1e6) }}</td><td>100%</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:6px">$ millions, net sales. Model range = lowest and highest of Prophet, SARIMA and Holt-Winters for that café (café ranges do not add up to the total range).</p>
+    </div>
+    <div class="col">
+      <div class="chart-title">Where the extra {{ n.growth_total | fm }} comes from</div>
+      <div class="chart-sub">2027 forecast minus 2026 estimate, by café</div>
+      {{ svg.growth }}
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Forecasts by café and model: outputs/forecast_by_store_month.csv</span><span>8</span></div>
+</section>
+
+{# ======================================================================= RISKS #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Risks &amp; assumptions</span></div>
+  <h1>What could ruffle the forecast</h1>
+  <p class="lede">The models know only the past. They see no new cafés, price changes or local events, and they assume the habits of 2024–26 continue. These four things would move the 2027 number.</p>
+  <div class="row" style="gap:.3in;margin-top:6px">
+    <div class="col risk">
+      <h3>New cafés are upside</h3>
+      <div class="big">+{{ n.analog_avg | fm }}</div>
+      <div class="cap">average first-year sales of a new café</div>
+      <p>Manhattan Beach is set up in Toast and Studio City and Enclave in R365, but none has sales yet, so none is in the forecast. Recent openings did {% for a in n.analogs %}{{ a.store }} {{ a.first12 | fm }}{{ ", " if not loop.last else "" }}{% endfor %} in their first 12 months. Add each one, prorated by the months it trades in 2027.</p>
+    </div>
+    <div class="col risk">
+      <h3>Momentum is the big bet</h3>
+      <div class="big">{{ n.slow_case | fm }}</div>
+      <div class="cap">2027 if like-for-like growth cools to +8%</div>
+      <p>All three models extend like-for-like growth of +10%, +20% and +15% (2024–26). If 2027 growth slows to +8%, sales land near {{ n.slow_case | fm }}, just below the lowest model. Track like-for-like monthly from January.</p>
+    </div>
+    <div class="col risk">
+      <h3>Growth is concentrated</h3>
+      <div class="big">{{ n.top3_share | pct(0, False) }}</div>
+      <div class="cap">of 2027 growth comes from three cafés</div>
+      <p>{{ n.fast2[0].store }} ({{ n.fast2[0].growth | pct }}) and {{ n.fast2[1].store }} ({{ n.fast2[1].growth | pct }}, stepped up in March 2026) lead. If both grew +10% instead, 2027 would land near {{ n.fast2_case | fm }}, about where Holt-Winters sits.</p>
+    </div>
+    <div class="col risk">
+      <h3>Price is an open lever</h3>
+      <div class="big">{{ n.lfl[2].ticket | pct(1) }}</div>
+      <div class="cap">average check, Jan–Sep 2026 vs 2025</div>
+      <p>2026 growth is traffic. The average check was nearly flat at ${{ "%.2f" | format(n.lfl[2].avg_ticket) }}. The models only extend sales trends and know nothing about menu prices, so a 2027 price increase is a lever on top of this forecast, provided traffic holds.</p>
+    </div>
+  </div>
+  <div class="row" style="align-items:flex-end;margin-top:30px">
+    <div class="col" style="flex:1.25">
+      <div class="chart-title">2027 under different assumptions</div>
+      <div class="chart-sub">Net sales, existing 11 cafés unless stated · % vs 2026 estimate</div>
+      {{ svg.scenarios }}
+    </div>
+    <div class="col rules" style="flex:1;flex-direction:column;gap:12px;margin:0">
+      <div><h3>How to use it</h3>Budget at <b>{{ n.f2027[ENSEMBLE] | fm }}</b> (the blend), with Holt-Winters' <b>{{ n.low | fm }}</b> as the conservative case and SARIMA's <b>{{ n.high | fm }}</b> as the stretch. Add new cafés on top as their opening dates firm up.</div>
+      <div><h3>Watch first</h3>Q1 2027 like-for-like against the forecast's {{ n.q1_growth | pct }}. A gap of more than 3 points is the signal to revisit.</div>
+      <div><h3>Keep it fresh</h3>Re-run monthly as Toast data lands; the full pipeline (extract, back-test, forecast, this report) runs in minutes from the repo.</div>
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>* Illustrative: half of the average first-year sales of our last four openings ({{ n.new_cafe_half_year | fm }}); opening dates are not yet set</span><span>9</span></div>
+</section>
+
+{# ======================================================================= APPENDIX A #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Appendix</span></div>
+  <h1>Method and data</h1>
+  <div class="row small" style="margin-top:12px;gap:.32in">
+    <div class="col">
+      <h3>Data</h3>
+      <p style="margin:0 0 10px">Toast POS tables in the Grupo Anderson's BI warehouse, read through MCP Andersons. Net sales follow the official <i>silver.v_toast_sales_daily</i> definition: check amounts on non-voided, non-deleted checks and orders, minus Toast gift-card sales. {{ "{:,}".format(n.store_days) }} café-days ({{ n.total_sales | fm }}) from {{ n.first_day.strftime("%b %-d, %Y") }} to {{ n.last_day.strftime("%b %-d, %Y") }}, validated month by month against checksums computed in SQL.</p>
+      <h3>Modelling window</h3>
+      <p style="margin:0 0 10px">Toast history starts with the Sep 2022 POS migration, so modelling starts Oct 2022. Cafés opened since then skip their 2–4 week opening ramp. Nautilus (a weekday corporate-campus café) trades Monday–Friday and closes on five holidays; the forecasts respect that calendar.</p>
+      <h3>One-off disruptions</h3>
+      <ul class="tight" style="margin-top:0">
+      {% for line in n.anomalies %}<li>{{ line }}</li>{% endfor %}
+        <li>Any other day below 25% of the café's 29-day median (partial closures)</li>
+      </ul>
+      <p class="note" style="margin-top:6px">Excluded from Prophet's training; imputed (same weekday, nearby weeks) for the monthly models; kept in the actuals used for scoring.</p>
+    </div>
+    <div class="col">
+      <h3>Prophet</h3>
+      <p style="margin:0 0 10px">Daily net sales per café. Linear trend (changepoint prior 0.05), multiplicative weekly and yearly seasonality (10 Fourier terms), US federal holidays plus Valentine's Day, Easter, Mother's and Father's Day, Black Friday, Christmas Eve and New Year's Eve. Monthly totals = sum of daily forecasts on trading days.</p>
+      <h3>SARIMA</h3>
+      <p style="margin:0 0 10px">Monthly log sales rate per café (sales ÷ weekday-weighted trading days). Seasonal differencing with drift (average year-on-year growth). Order chosen by AICc from six candidates; the selected order for each café is listed on the next page.</p>
+      <h3>Holt-Winters</h3>
+      <p style="margin:0 0 10px">Same monthly rate. Additive damped trend, multiplicative seasonality (12 months); smoothing parameters and initial states estimated by least squares.</p>
+      <h3>Blend</h3>
+      <p style="margin:0">Simple average of the three, café by café and month by month, with equal weights (not tuned).</p>
+    </div>
+    <div class="col">
+      <h3>Is Prophet set up fairly?</h3>
+      <p style="margin:0 0 8px">We kept Prophet's standard settings and checked four common alternatives on the same back-tests. No alternative wins on every measure. A stiffer trend helps the brand total but hurts accuracy café by café, so the default stands.</p>
+      <table>
+        <thead><tr><th class="l">Prophet setting</th><th>WAPE</th><th>MAPE</th><th>Avg. miss</th></tr></thead>
+        <tbody>
+        {% for _, r in n.sens.iterrows() %}
+          <tr class="{{ 'hl' if loop.first else '' }}"><td style="white-space:normal">{{ r.variant | replace(" (baseline)", " · used") }}</td><td>{{ r.store_month_wape | pct(1, False) }}</td><td>{{ r.brand_month_mape | pct(1, False) }}</td><td>{{ r.brand_window_abs_error | pct(1, False) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Code and outputs: github.com/mre-ga/parakeet_forecasts</span><span>10</span></div>
+</section>
+
+{# ======================================================================= APPENDIX B #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Appendix</span></div>
+  <h1>2027 forecast by café and model</h1>
+  <table style="margin-top:14px">
+    <thead><tr><th class="l">Café</th><th class="l">Region</th><th>2025 actual</th><th>2026 estimate</th><th>Prophet</th><th>SARIMA</th><th>Holt-Winters</th><th>Blend</th><th class="l" style="padding-left:16px">SARIMA order chosen (AICc)</th></tr></thead>
+    <tbody>
+    {% for c in n.cafes %}
+      <tr><td>{{ c.store }}</td><td class="l muted">{{ c.region }}</td><td>{{ c.a2025 | fm(2) }}</td><td>{{ c.e2026 | fm(2) }}</td><td>{{ c.prophet | fm(2) }}</td><td>{{ c.sarima | fm(2) }}</td><td>{{ c.hw | fm(2) }}</td><td><b>{{ c.f2027 | fm(2) }}</b></td><td class="l muted" style="padding-left:16px">{{ c.sarima_spec }}</td></tr>
+    {% endfor %}
+      <tr class="total"><td>All cafés</td><td></td><td>{{ n.a2025 | fm(2) }}</td><td>{{ n.e2026 | fm(2) }}</td><td>{{ n.f2027["Prophet"] | fm(2) }}</td><td>{{ n.f2027["SARIMA"] | fm(2) }}</td><td>{{ n.f2027["Holt-Winters"] | fm(2) }}</td><td>{{ n.f2027[ENSEMBLE] | fm(2) }}</td><td></td></tr>
+    </tbody>
+  </table>
+  <div class="row small" style="margin-top:22px;gap:.32in">
+    <div class="col"><h3>Files in the repo</h3>
+      <ul class="tight" style="margin-top:0">
+        <li><i>data/raw/parakeet_toast_daily.csv</i>: daily net sales and checks by café</li>
+        <li><i>outputs/forecast_by_store_month.csv</i>: Oct 2026 – Dec 2027 by café, month and model</li>
+        <li><i>outputs/forecast_brand_month.csv</i>: brand totals with simulation ranges</li>
+        <li><i>outputs/backtest_forecasts.csv</i>, <i>backtest_metrics.csv</i>: every rehearsal forecast and score</li>
+      </ul></div>
+    <div class="col"><h3>Reading the ranges</h3>The low–high model range is the practical planning band. Each model's own 80% interval for the 2027 total (in <i>forecast_annual.csv</i>) ranges from ±{{ n.pi_halfwidth["Prophet"] | pct(0, False) }} for Prophet to ±{{ n.pi_halfwidth["Holt-Winters"] | pct(0, False) }} for Holt-Winters. They disagree too much, and Prophet's is far tighter than its back-test misses, so we don't headline them.</div>
+    <div class="col"><h3>Reproduce</h3><i>python src/backtest.py</i> → <i>python src/prophet_sensitivity.py</i> → <i>python src/forecast_2027.py</i> → <i>python report/build_report.py</i>. Data refresh: <i>data/sql/extract_parakeet_daily.sql</i> via MCP Andersons.</div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS · $ millions</span><span>11</span></div>
+</section>
+
+</body>
+</html>
