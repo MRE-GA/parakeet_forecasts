@@ -23,6 +23,10 @@ table.compact td.est{color:var(--g500);font-style:italic}
 .steps li{counter-increment:st;display:flex;gap:12px;font-size:12.5px;line-height:1.5;margin:0 0 12px}
 .steps li::before{content:counter(st, decimal-leading-zero);font-family:var(--sans);font-weight:700;font-size:16px;color:var(--pink);min-width:24px;line-height:1.25}
 .rrchart svg{display:block;max-height:4.42in}
+table.qgrid td{padding:6px 7px}
+table.qgrid sup{font-size:8px;color:var(--g500);margin-left:1px}
+table.qgrid tr.rr td{color:var(--pink);font-weight:700}
+table.qgrid tr.dimrow td{color:var(--g500)}
 </style>
 </head>
 <body>
@@ -86,8 +90,9 @@ table.compact td.est{color:var(--g500);font-style:italic}
     <ul class="div-list">
       <li><span>01</span>How we read the last 45 days</li>
       <li><span>02</span>2026 finish and 2027 at today's level</li>
-      <li><span>03</span>Adjustments between stores</li>
-      <li><span>04</span>What we found, store by store</li>
+      <li><span>03</span>Growth by quarter</li>
+      <li><span>04</span>Adjustments between stores</li>
+      <li><span>05</span>What we found, store by store</li>
     </ul>
     <img class="bird" src="assets/parrot-map.png" alt="">
   </div>
@@ -160,6 +165,36 @@ table.compact td.est{color:var(--g500);font-style:italic}
     </tbody>
   </table>
   <p class="note pin-bottom">Growth the budget needs = budget 2027 ÷ 2027 at today's run-rate − 1. A negative figure means the budget sits below today's level: it is met even if sales slip by that much.</p>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== GROWTH BY QUARTER #}
+{% set Q = n.qtr %}
+<section class="page">
+  {{ head("Part 1 · Today's run-rate") }}
+  <h1>Growth has held at {{ Q.lo | pct0 }} to {{ Q.hi | pct0 }} a quarter; at today's level it fades to zero in 2027</h1>
+  <p class="lede">Same-store sales of the nine existing cafés against the same quarter a year earlier. Held at today's level, growth fades through 2027 ({{ Q.quarters[2027][0][0] | pct }} in Q1, {{ Q.quarters[2027][3][0] | pct }} in Q4) as each quarter meets a 2026 quarter already at that level. The budget drops to {{ Q.budget[0] | pct }} from the first quarter; the targets in Part 2 keep {{ Q.target | min | pct0 }} to {{ Q.target | max | pct0 }}.</p>
+  <div class="row">
+    <div class="col" style="flex:1.5">
+      <div class="chart-title">Same-store growth vs the same quarter a year earlier, nine existing cafés</div>
+      <div class="chart-sub">Actual to Q3 2026 · Q4 2026 estimated (actual to Oct 14, then the run-rate) · 2027 at today's run-rate, with the budget and the targets</div>
+      <div class="rrchart">{{ svg.qtrend }}</div>
+    </div>
+    <div class="col" style="flex:1">
+      <table class="compact qgrid">
+        <thead><tr><th class="l"></th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Year</th></tr></thead>
+        <tbody>
+        {% for y in [2024, 2025, 2026] %}
+          <tr><td>{{ "2026E" if y == 2026 else y }}</td>{% for g, k in Q.quarters[y] %}<td class="{{ 'est' if y == 2026 and loop.index == 4 else '' }}">{{ g | pct }}{% if k < 9 %}<sup>{{ k }}</sup>{% endif %}</td>{% endfor %}<td><b>{{ Q.years[y][0] | pct }}</b>{% if Q.years[y][1] < 9 %}<sup>{{ Q.years[y][1] }}</sup>{% endif %}</td></tr>
+        {% endfor %}
+          <tr class="total rr"><td>2027 at run-rate</td>{% for g, k in Q.quarters[2027] %}<td>{{ g | pct }}</td>{% endfor %}<td>{{ Q.years[2027][0] | pct }}</td></tr>
+          <tr class="dimrow"><td>2027 budget</td>{% for g in Q.budget %}<td>{{ g | pct }}</td>{% endfor %}<td>{{ Q.budget_year | pct }}</td></tr>
+          <tr><td>2027 target</td>{% for g in Q.target %}<td>{{ g | pct }}</td>{% endfor %}<td>{{ Q.target_year | pct }}</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:10px">Same-store: a café counts once it traded the same period in full a year earlier. Small figures give the number of cafés when fewer than nine (Newport Beach and Beverly Hills opened in 2023, Brentwood and Carlsbad in 2024). 2026 Q4 in italics: estimate. Budget: against its own 2026. Target: Part 2, against the 2026 finish.</p>
+    </div>
+  </div>
   {{ foot(SRC) }}
 </section>
 

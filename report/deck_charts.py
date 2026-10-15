@@ -384,6 +384,47 @@ def runrate_monthly(months_act, actual, months_fc, runrate, budget, year_labels=
     return to_svg(fig, name)
 
 
+def quarter_trend(years, actual, estimate, run, budget, target, size=(7.4, 3.7), name="qtrend") -> str:
+    """Same-store growth against the same quarter a year earlier, by quarter: actual quarters (gray), the current
+    quarter's estimate (light gray), the next year at today's run-rate (pink), with the budget (diamonds) and the
+    targets (rings) for the same quarters.
+
+    years: the years shown, four quarters each; actual: growth for the quarters with actual sales; estimate: the
+    current quarter; run, budget, target: the four quarters of the last year."""
+    vals = np.r_[actual, [estimate], run]
+    x = np.arange(len(vals))
+    n_a = len(actual)
+    fig, ax = plt.subplots(figsize=size)
+    colors = [G500] * n_a + [G300] + [PINK] * len(run)
+    ax.bar(x, vals, width=0.62, color=colors, linewidth=0, zorder=2)
+    for xi, v in zip(x, vals):
+        ax.annotate(_pct_label(v), (xi, max(v, 0)), xytext=(0, 3), textcoords="offset points", ha="center",
+                    va="bottom", fontsize=7.4, color=G900, zorder=6)
+    xf = x[-len(run):]
+    ax.plot(xf, budget, ls="", marker="D", ms=5, color=G900, zorder=5)
+    ax.plot(xf, target, ls="", marker="o", ms=7.5, mfc="white", mec=INK, mew=1.6, zorder=5)
+    for i in range(1, len(years)):
+        ax.axvline(4 * i - 0.5, color=G100, lw=1, zorder=0)
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Q{q}" for _ in years for q in (1, 2, 3, 4)], fontsize=8)
+    for i, y in enumerate(years):
+        ax.text(4 * i + 1.5, -0.13, str(y), ha="center", va="top", fontsize=8.6, color=INK, fontweight=600,
+                transform=ax.get_xaxis_transform())
+    ax.axhline(0, color=G400, lw=0.8, zorder=1)
+    top = max(np.max(vals), np.max(target)) * 1.18
+    ax.set_ylim(min(0.0, np.min(vals)) - 0.01, top)
+    ax.set_xlim(-0.6, len(vals) - 0.4)
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: _pct_label(v)))
+    ax.yaxis.set_major_locator(plt.MaxNLocator(5))
+    ax.grid(False, axis="x")
+    _legend(ax, [Patch(color=G500), Patch(color=G300), Patch(color=PINK),
+                 Line2D([], [], ls="", marker="D", ms=5, color=G900),
+                 Line2D([], [], ls="", marker="o", ms=7, mfc="white", mec=INK, mew=1.6)],
+            ["Actual", "Q4 2026 estimate", "2027 at today's run-rate", "Budget", "2027 target"],
+            loc="upper left", ncol=5, bbox_to_anchor=(0, -0.2), columnspacing=1.2)
+    return to_svg(fig, name)
+
+
 def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", run_label="Today's run-rate",
                  size=(7.4, 4.45), name="tt") -> str:
     """The 2027 target as the continuation of the café's trend.

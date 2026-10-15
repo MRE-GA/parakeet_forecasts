@@ -196,10 +196,42 @@ def collect() -> dict:
     n["down_total"] = sum(c["adj"] for c in down)
     by_ask = sorted((C[s] for s in nine), key=lambda c: c["ask"])
     n["ask_lo"], n["ask_hi"] = by_ask[0], by_ask[-2:][::-1]
+    n["qtr"] = quarterly_same_store([C[s] for s in nine])
     for c in cafes:
         c.update(story(c))
     check(n)
     return n
+
+
+def quarterly_same_store(group: list[dict]) -> dict:
+    """Same-store growth against the same quarter (and year) a year earlier, 2024-2027, for the slide on growth by
+    quarter. Monthly sales: actual to September 2026, the Oct-Dec 2026 estimate (actual to Oct 14, then the
+    run-rate), then 2027 at today's run-rate, or the target. A café counts in a period once it traded the whole
+    period a year earlier; the budget's 2027 is compared with the budget's own 2026."""
+    def series(c, kind):
+        tail = np.r_[c["months26"][9:12], c["run"][3:] if kind == "run" else c["target"]]
+        return pd.concat([c["act"].loc[:pd.Period("2026-09", "M")],
+                          pd.Series(tail, index=pd.period_range("2026-10", "2027-12", freq="M"))])
+    ser = {kind: {c["key"]: series(c, kind) for c in group} for kind in ("run", "target")}
+
+    def growth(months, kind="run"):
+        ok = [c for c in group if months[0] - 12 >= c["first_full"]]
+        cur = sum(ser[kind][c["key"]].reindex(months).sum() for c in ok)
+        prev = sum(ser[kind][c["key"]].reindex(months - 12).sum() for c in ok)
+        return cur / prev - 1, len(ok)
+
+    qmonths = lambda y, q: pd.period_range(f"{y}-{3 * q - 2:02d}", periods=3, freq="M")  # noqa: E731
+    out = {"quarters": {y: [growth(qmonths(y, q)) for q in (1, 2, 3, 4)] for y in (2024, 2025, 2026, 2027)},
+           "years": {y: growth(pd.period_range(f"{y}-01", periods=12, freq="M")) for y in (2024, 2025, 2026, 2027)},
+           "target": [growth(qmonths(2027, q), "target")[0] for q in (1, 2, 3, 4)],
+           "budget": [sum(c["budget"][3 * q:3 * q + 3].sum() for c in group)
+                      / sum(c["b26_months"][3 * q - 3:3 * q].sum() for c in group) - 1 for q in (1, 2, 3, 4)]}
+    out["target_year"] = sum(c["target27"] for c in group) / sum(c["rr26"] for c in group) - 1
+    out["budget_year"] = sum(c["b27"] for c in group) / sum(c["b26"] for c in group) - 1
+    # the quarters since late 2024, when most cafés compare: actual, then the Q4 2026 estimate
+    since = [g for y in (2024, 2025, 2026) for q, (g, _) in enumerate(out["quarters"][y], 1) if (y, q) >= (2024, 4)]
+    out["lo"], out["hi"] = min(since), max(since)
+    return out
 
 
 def check(n: dict) -> None:
@@ -228,6 +260,12 @@ def check(n: dict) -> None:
     assert d[2] + d[7] < jj["rr27"] - jj["rr26"] < 0 and np.delete(d, [2, 7]).sum() > -2000  # "repeats 2026 except
     # March and August"
     assert abs(n["up_total"] + n["down_total"] - t9["adj"]) < 1
+    q = n["qtr"]
+    run27 = [g for g, _ in q["quarters"][2027]]
+    assert all(a > b for a, b in zip(run27, run27[1:])) and abs(run27[-1]) < 0.015  # "fades to about zero"
+    assert abs(q["years"][2026][0] - (t9["rr26"] / t9["fy25"] - 1)) < 1e-6  # 2026E: all nine cafés
+    assert abs(q["years"][2027][0] - t9["rr_g"]) < 1e-9 and abs(q["target_year"] - t9["tg"]) < 1e-9
+    assert max(q["budget"]) - min(q["budget"]) < 0.005  # "the same every quarter"
 
 
 def story(c: dict) -> dict:
@@ -402,6 +440,10 @@ def make_charts(n: dict) -> dict:
         money="m", growth=growth_vs_last_year([n["C"][s] for s in n["nine"]], act9.index, t9["g45"]),
         size=(7.4, 4.0), name="brand-rr")
     nine = [n["C"][s] for s in n["nine"]]
+    q = n["qtr"]["quarters"]
+    out["qtrend"] = dc.quarter_trend(
+        [2024, 2025, 2026, 2027], [g for y in (2024, 2025) for g, _ in q[y]] + [g for g, _ in q[2026][:3]],
+        q[2026][3][0], [g for g, _ in q[2027]], n["qtr"]["budget"], n["qtr"]["target"], name="qtrend")
     adj = sorted(nine, key=lambda c: -c["adj"])
     out["adjust"] = dc.gap_bars([c["short"] for c in adj], [c["adj"] for c in adj],
                                 [charts.PINK if c["adj"] > 0 else charts.G400 for c in adj], size=(5.2, 4.2))
