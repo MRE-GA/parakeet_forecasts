@@ -50,7 +50,11 @@ sales yet and are **not** in the forecast.
 ## Budget review deck (`outputs/Parakeet_2027_Budget_Review.pdf`)
 
 A non-technical, 38-slide review of the investor budget ("2027 Sales Objectives by Café –
-Investors", October 2026; figures keyed in to `data/cfo_budget_2027.csv`), in three parts:
+Investors", October 2026), in three parts. Budget figures come from the budget workbook
+(`2027_Sales_budget_Investors.xlsx`, not committed), imported by `src/import_budget.py` into
+`data/cfo_budget_2027.csv`, `data/cfo_budget_2027_monthly.csv` (2025–2027 by month) and
+`data/cfo_budget_2027_comp_trend.csv`. Its actuals match Toast within 0.1% (exceptions: Coronado's 2025
+includes a juicery through March 2025; Beverly Hills' Jan–Sep 2026 sales report is $18K below Toast).
 
 * **2026 finish**: our own October–December forecast (the same three models, $6.92M for the nine
   existing cafés) lands within 0.7% of the budget's $6.88M, so the budget's $27.88M finish matches
@@ -94,7 +98,9 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python src/feature_ablation.py     # one-feature-at-a-time check from the best settings
 .venv/bin/python src/forecast_2027.py        # 2027 forecast with the adopted settings
 .venv/bin/python report/build_report.py --ds /path/to/parakeet-cafe-design   # the PDF
+.venv/bin/python -I src/import_budget.py path/to/2027_Sales_budget_Investors.xlsx   # budget workbook -> data/
 .venv/bin/python src/hold_scenario.py        # 'no growth after September' scenario for the budget review
+.venv/bin/python src/runrate_scenario.py     # 2027 at today's deseasonalized run-rate (last 45 days)
 .venv/bin/python report/build_deck.py --ds /path/to/parakeet-cafe-design     # the budget-review deck
 ```
 
@@ -108,7 +114,7 @@ for each window listed in the file, then `python src/build_dataset.py <dump file
 
 ```
 data/raw/parakeet_toast_daily.csv   daily net sales and checks by café (14,239 café-days)
-data/cfo_budget_2027*.csv           the investor budget, keyed in from its PDF
+data/cfo_budget_2027*.csv           the investor budget, imported from its workbook (src/import_budget.py)
 data/sql/                           extraction query
 src/forecasting.py                  data prep + the three models (config-driven) + metrics
 src/backtest.py                     round 1 rolling-origin back-test (default settings)

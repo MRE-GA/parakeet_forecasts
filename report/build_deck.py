@@ -143,7 +143,9 @@ def collect() -> dict:
     ann = pd.read_csv(OUTPUTS / "forecast_annual.csv").set_index("store")
     by_store = pd.read_csv(OUTPUTS / "forecast_by_store_month.csv")
     by_store["month"] = pd.PeriodIndex(by_store.month, freq="M")
-    budget = pd.read_csv(DATA / "cfo_budget_2027.csv")
+    budget = pd.read_csv(DATA / "cfo_budget_2027.csv")  # src/import_budget.py, from the budget workbook
+    bmonth = pd.read_csv(DATA / "cfo_budget_2027_monthly.csv")
+    bmonth = bmonth.assign(month=pd.PeriodIndex(bmonth.month, freq="M")).set_index(["budget_name", "month"]).value
     comp = pd.read_csv(DATA / "cfo_budget_2027_comp_trend.csv")
     configs = load_configs()
     hold_p = pd.read_csv(OUTPUTS / "hold_scenario_2027.csv")  # src/hold_scenario.py
@@ -183,7 +185,7 @@ def collect() -> dict:
             "tkt_g": (ytd26 / c26) / (ytd25 / c25) - 1,
             "q1": q_g[1], "q2": q_g[2], "q3": q_g[3],
             "oct_sales": oct26, "oct25": oct25, "oct_g": oct26 / oct25 - 1, "oct_chk_g": oc26 / oc25 - 1,
-            "q4_25": q4_25, "q4_method": q4_25 * (1 + q_g[3]),
+            "q4_25": q4_25,
             "e26": e26, "q4_o": e26 - ytd26,
             "plan27": a[f"{PLAN} 2027"], "best27": a[f"{BLEND} 2027"], "low27": min(model27), "high27": max(model27),
             "quarters": [(qlabel(p), v) for p, v in yoy.items()],
@@ -202,15 +204,21 @@ def collect() -> dict:
         if s in bud.index:
             b = bud.loc[s]
             c.update(b26=b.est_2026, b27=b.objective_2027, bg=b.objective_2027 / b.est_2026 - 1,
-                     key_assumption=b.key_assumption)
-            c["q4_b"] = c["b26"] - ytd26
+                     key_assumption=b.key_assumption, b25=b.actual_2025)
+            bm = bmonth.loc[b.budget_name]
+            q3 = lambda y: bm.loc[pd.Period(f"{y}-07", "M"):pd.Period(f"{y}-09", "M")].sum()  # noqa: E731
+            c.update(b_ytd=bm.loc[pd.Period("2026-01", "M"):pd.Period("2026-09", "M")].sum(),
+                     q4_b=bm.loc[pd.Period("2026-10", "M"):pd.Period("2026-12", "M")].sum(),
+                     b_q3=q3(2026) / q3(2025) - 1, b_q3_26=q3(2026), b_q3_25=q3(2025),
+                     b_months=bm.loc[pd.Period("2026-10", "M"):pd.Period("2027-12", "M")].to_numpy())
+            assert len(c["b_months"]) == 15 and abs(c["b_ytd"] + c["q4_b"] - c["b26"]) < 0.05, s
             c["d26"] = e26 / c["b26"] - 1
             c["gap"] = c["plan27"] - c["b27"]
             c["gap_low"] = c["low27"] - c["b27"]
             c["added27_b"] = c["b27"] - c["b26"]
         else:
             c.update(b26=None, b27=None, bg=None, key_assumption=None, q4_b=None, d26=None, gap=None,
-                     gap_low=None, added27_b=None)
+                     gap_low=None, added27_b=None, b25=None, b_ytd=None, b_q3=None, b_months=None)
         cafes.append(c)
     C = {c["key"]: c for c in cafes}
     n = {"cafes": cafes, "C": C, "nine": nine, "order": order}
@@ -226,7 +234,8 @@ def collect() -> dict:
         "best27": best27, "high27": tot("high27"), "gap": plan27 - b27, "gap_low": low27 - b27,
         "fy25": tot("fy25"), "g26": e26 / tot("fy25") - 1, "added26": e26 - tot("fy25"), "added27_b": b27 - b26,
         "added27_p": plan27 - e26, "ytd26": tot("ytd26"),
-        "q4_b": tot("q4_b"), "q4_o": tot("q4_o"), "q4_method": tot("q4_method"), "q4_25": tot("q4_25"),
+        "q4_b": tot("q4_b"), "q4_o": tot("q4_o"), "q4_25": tot("q4_25"),
+        "b_q3": tot("b_q3_26") / tot("b_q3_25") - 1,
     }
     t = n["t"]
     s26, c26 = window(raw, nine, "2026-01-01", "2026-09-30")
@@ -250,7 +259,7 @@ def collect() -> dict:
     booked = [raw_m.loc[nine].groupby(level="month").sum().get(m, 0.0) for m in months[:9]]
     q4_fc = by_store[by_store.store.isin(nine) & (by_store.month <= pd.Period("2026-12", "M"))]
     profile = q4_fc.groupby("month")[BLEND].sum()
-    q4_budget_m = profile / profile.sum() * t["q4_b"]
+    q4_budget_m = sum(pd.Series(C[s_]["b_months"][:3]) for s_ in nine)
     booked += [o26, 0.0, 0.0]
     to_come = [0.0] * 9 + [q4_budget_m.iloc[0] - o26, q4_budget_m.iloc[1], q4_budget_m.iloc[2]]
     n["booked_months"] = {"months": [m.to_timestamp() for m in months], "booked": booked, "to_come": to_come,
@@ -266,8 +275,7 @@ def collect() -> dict:
 
     # La Jolla Cove: the budget = Jan-Sep 2026 held flat + $125K a month for Oct-Dec 2027
     cv = by_store[by_store.store == "La Jolla Cove"].set_index("month")[PLAN]
-    cove_q4_b = 3 * 125_000
-    cove.update(b_js=cove["b27"] - cove_q4_b, b_q4=cove_q4_b,
+    cove.update(b_js=cove["b_months"][3:12].sum(), b_q4=cove["b_months"][12:].sum(),
                 p_js=cv.loc[pd.Period("2027-01", "M"):pd.Period("2027-09", "M")].sum(),
                 p_q4=cv.loc[pd.Period("2027-10", "M"):pd.Period("2027-12", "M")].sum())
     assert abs(cove["b_js"] - cove["ytd26"]) < 1_000, "budget Cove Jan-Sep should equal 2026 Jan-Sep actual"
@@ -301,7 +309,7 @@ def collect() -> dict:
         "ly_total": last_year.sum(), "budget_total": bb["budget"][:3].sum(), "ours_total": bb["ours"][:3].sum(),
         "models": q4_models.sum().to_dict(), "lo_total": q4_models.sum().min(), "hi_total": q4_models.sum().max(),
         "oct_actual": oc.loc[nine, "actual_oct_1_14"].sum(), "oct_ours": oc.loc[nine, BLEND].sum(),
-        "oct_rule": sum(C[s_]["oct25"] * (1 + C[s_]["q3"]) for s_ in nine),
+        "oct_rule": sum(C[s_]["oct25"] * (1 + C[s_]["b_q3"]) for s_ in nine),
     }
     assert abs(n["q4"]["ours_total"] - t["q4_o"]) < 1  # our 2026 finish uses this forecast
     n["comp"] = comp
@@ -335,9 +343,11 @@ def collect() -> dict:
         opens = pd.Timestamp(b.opens)
         months_open = 13 - opens.month
         la = [a[months_open] for a in analogs if a["store"] in ("Beverly Hills", "Brentwood")]
+        ramp = bmonth.loc[b.budget_name].loc[pd.Period(opens, "M"):pd.Period("2027-12", "M")]
         new.append({"name": b.budget_name, "opens": opens, "months": months_open, "budget": b.objective_2027,
                     "first12": b.key_assumption, "track": avg[months_open],
-                    "best": max(a[months_open] for a in analogs), "la": np.mean(la)})
+                    "best": max(a[months_open] for a in analogs), "la": np.mean(la),
+                    "first_month": ramp.iloc[0], "peak": ramp.max(), "peak_month": ramp.idxmax().strftime("%B")})
     tbd = budget[(budget.status == "new") & budget.objective_2027.isna() & (budget.opens.str.len() > 4)]
     n["openings"] = {"analogs": analogs, "avg": avg, "new": new, "tbd": tbd.budget_name.tolist(),
                      "best_name": max(analogs, key=lambda a: a[12])["store"],
@@ -380,8 +390,23 @@ def collect() -> dict:
     n["first_day"], n["last_day"], n["store_days"] = raw.date.min(), raw.date.max(), len(raw)
     for c in cafes:
         c.update(story(c, n))
+        c["note"] = source_note(c)
     check_verdicts(n)
     return n
+
+
+def source_note(c: dict) -> str | None:
+    """Where the budget workbook's actuals differ from Toast by more than 0.5%, say so on the café page."""
+    notes = []
+    if c["b25"] is not None and abs(c["b25"] / c["fy25"] - 1) > 0.005:
+        why = (" because it includes the Coronado juicery through March 2025" if c["key"] == "Coronado" else "")
+        notes.append(f"The budget's 2025 is {fk(c['b25'] - c['fy25'])} {'above' if c['b25'] > c['fy25'] else 'below'} "
+                     f"Toast{why}.")
+    if c["b_ytd"] is not None and abs(c["b_ytd"] / c["ytd26"] - 1) > 0.005:
+        notes.append(f"The budget's January–September 2026 (its September sales report) is {fk(c['b_ytd'] - c['ytd26'])} "
+                     f"{'above' if c['b_ytd'] > c['ytd26'] else 'below'} Toast, so its Q3 growth reads {pct(c['b_q3'])} "
+                     f"against {pct(c['q3'])} in Toast.")
+    return " ".join(notes) or None
 
 
 def check_verdicts(n: dict) -> None:
@@ -438,8 +463,9 @@ def story(c: dict, n: dict) -> dict:
                      f"{pct(c['oct_chk_g'])} on a year ago. If sales hold this level, 2027 lands close to 2026, which "
                      f"is where the budget sits. Our models ({pct(c['lowg'], 0)} to {pct(c['highg'], 0)}) still lean on "
                      f"the 2024–25 ramp.")
-        o["verdict_line"] = (f"We'd keep the budget's {fm(c['b27'])}: it matches today's level. Our models' "
-                             f"{fm(c['plan27'])} needs growth to resume, so we count it as upside, not plan.")
+        o["verdict_line"] = (f"We'd keep the budget's {fm(c['b27'])}: it matches today's level and allows for Leora "
+                             f"opening next door. Our models' {fm(c['plan27'])} needs growth to resume, so we count it "
+                             f"as upside, not plan.")
     elif s == "Carlsbad":
         o["h1"] = f"Carlsbad: the budget adds {fk(c['added27_b'])} in 2027; the café added {fk(c['added26'])} in 2026"
         o["h2"] = (f"Growing about 10% a year, quarter after quarter. The budget's {pct(c['bg'])} is about a third "
@@ -466,12 +492,12 @@ def story(c: dict, n: dict) -> dict:
         impact = 1 - c["b27"] / c["plan27"]
         o["h1"] = (f"Del Mar Café: the budget adds {fk(c['added27_b'])} in 2027; the café added "
                    f"{fk(c['added26'])} in 2026")
-        o["h2"] = (f"No sign of the competitor yet: up {apct(c['oct_g'], 0)} in early October. A {pct(c['bg'])} budget "
-                   f"books a {impact:.0%} hit before it happens")
+        o["h2"] = (f"Up {apct(c['oct_g'], 0)} in early October, yet the {pct(c['bg'])} budget books a {impact:.0%} hit "
+                   f"from Goop Kitchen next door")
         o["says"] = (f"Del Mar is our largest café and one of the steadiest: every quarter since late 2023 has grown "
                      f"at least {pct(c['slowest'])}, and October 1–14 is running {pct(c['oct_g'])} with checks "
-                     f"{pct(c['oct_chk_g'])}. The budget's {pct(c['bg'])} assumes a competitor next door takes about "
-                     f"{impact:.0%} of the sales our plan expects. That may happen, but nothing in the sales shows it yet.")
+                     f"{pct(c['oct_chk_g'])}. The budget's {pct(c['bg'])} assumes Goop Kitchen next door takes about "
+                     f"{impact:.0%} of the sales our plan expects. Nothing in Del Mar's sales shows that so far.")
         o["verdict_line"] = (f"Our plan: {fm(c['plan27'])} ({pct(c['pg'])}), {fk(c['gap'])} above the budget. "
                              f"We'd show the competitor as its own risk line rather than lower the base.")
     elif s == "La Jolla":
@@ -517,11 +543,12 @@ def story(c: dict, n: dict) -> dict:
         ratio = 125_000 / c["avg_m"]
         o["h1"] = f"La Jolla Cove: the budget is {fk(c['gap'])} above our plan, all of it from the remodel"
         o["h2"] = "Flat this year; the remodel would have to more than double monthly sales"
-        o["says"] = (f"The Cove is {'down' if c['ytd_g'] < 0 else 'up'} {apct(c['ytd_g'])} this year and "
-                     f"averages {fk(c['avg_m'])} a month; its best month ever was {fk(c['best_m'])} "
-                     f"({c['best_m_label']}). The budget holds January–September 2027 flat to 2026, which matches "
-                     f"our view, then assumes $125K a month for October–December 2027 after the remodel: "
-                     f"{ratio:.1f}× today's average. We have no sales history that can test a remodel.")
+        o["says"] = (f"The hotel around the Cove has been under remodel since March 2026, so the café is open but "
+                     f"soft: {'down' if c['ytd_g'] < 0 else 'up'} {apct(c['ytd_g'])} this year at about "
+                     f"{fk(c['avg_m'])} a month (best month ever: {fk(c['best_m'])}, {c['best_m_label']}). The budget "
+                     f"holds January–September 2027 flat to 2026, which matches our view, then assumes a $1.5M annual "
+                     f"rate ($125K a month) from the remodeled reopening on October 1, 2027: {ratio:.1f}× today's "
+                     f"average. We have no sales history that can test a remodel.")
         o["verdict_line"] = (f"We'd budget the Cove on its current trend ({fm(c['plan27'])}) and add the remodel "
                              f"lift once it reopens and trades.")
         o["ratio"] = ratio
@@ -544,8 +571,8 @@ def cafe_series(c: dict, raw_m: pd.Series, by_store: pd.DataFrame) -> dict:
     """Monthly series for a café's chart, October 2026 to December 2027.
 
     ours: our forecast (best estimate for Oct-Dec 2026, as in our 2026 finish; then the 2027 plan);
-    low/high: lowest and highest of our three models; budget: the budget's Oct-Dec 2026 estimate
-    (its Q4 total spread like our forecast) then its 2027 objective (each 2026 month + its growth).
+    low/high: lowest and highest of our three models; budget: the budget workbook's Oct-Dec 2026
+    estimate then its 2027 objective by month (None for a café the budget leaves out).
     """
     s = c["key"]
     start = max(pd.Period("2024-01", "M"), pd.Timestamp(STORE_START[s]).to_period("M")
@@ -554,14 +581,7 @@ def cafe_series(c: dict, raw_m: pd.Series, by_store: pd.DataFrame) -> dict:
     f = by_store[by_store.store == s].set_index("month")
     q4 = f.loc[pd.Period("2026-10", "M"):pd.Period("2026-12", "M")]
     fc = f.loc[pd.Period("2027-01", "M"):pd.Period("2027-12", "M")]
-    budget = None
-    if c["b26"] is not None:
-        jan_sep = raw_m.loc[s].loc[pd.Period("2026-01", "M"):pd.Period("2026-09", "M")].to_numpy()
-        q4_b = q4[BLEND].to_numpy() / q4[BLEND].sum() * c["q4_b"]
-        b27 = np.r_[jan_sep, q4_b] * (c["b27"] / c["b26"])
-        if s == "La Jolla Cove":  # flat to Jan-Sep 2026, then $125K a month after the remodel
-            b27 = np.r_[jan_sep, [c["b_q4"] / 3] * 3]
-        budget = np.r_[q4_b, b27]
+    budget = c["b_months"]  # the budget workbook's Oct-Dec 2026 estimate and 2027 objective, by month
     return {"act": act, "months_fc": list(q4.index) + list(fc.index),
             "ours": np.r_[q4[BLEND].to_numpy(), fc[PLAN].to_numpy()],
             "low": np.r_[q4[MODELS].min(axis=1).to_numpy(), fc[MODELS].min(axis=1).to_numpy()],

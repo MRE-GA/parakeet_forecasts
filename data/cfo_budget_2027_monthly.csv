@@ -1,0 +1,385 @@
+budget_name,store,month,basis,value
+Beverly Hills,Beverly Hills,2025-01,actual,139098.79
+Beverly Hills,Beverly Hills,2025-02,actual,143370.74
+Beverly Hills,Beverly Hills,2025-03,actual,169850.60
+Beverly Hills,Beverly Hills,2025-04,actual,160669.00
+Beverly Hills,Beverly Hills,2025-05,actual,169538.32
+Beverly Hills,Beverly Hills,2025-06,actual,157321.92
+Beverly Hills,Beverly Hills,2025-07,actual,155097.31
+Beverly Hills,Beverly Hills,2025-08,actual,165481.13
+Beverly Hills,Beverly Hills,2025-09,actual,156923.29
+Beverly Hills,Beverly Hills,2025-10,actual,165255.73
+Beverly Hills,Beverly Hills,2025-11,actual,165782.89
+Beverly Hills,Beverly Hills,2025-12,actual,162528.66
+Brentwood,Brentwood,2025-01,actual,101410.08
+Brentwood,Brentwood,2025-02,actual,131823.21
+Brentwood,Brentwood,2025-03,actual,159639.91
+Brentwood,Brentwood,2025-04,actual,154261.89
+Brentwood,Brentwood,2025-05,actual,170097.13
+Brentwood,Brentwood,2025-06,actual,145868.92
+Brentwood,Brentwood,2025-07,actual,146515.20
+Brentwood,Brentwood,2025-08,actual,161381.21
+Brentwood,Brentwood,2025-09,actual,161302.31
+Brentwood,Brentwood,2025-10,actual,178575.47
+Brentwood,Brentwood,2025-11,actual,186380.57
+Brentwood,Brentwood,2025-12,actual,170430.79
+Carlsbad,Carlsbad,2025-01,actual,269514.36
+Carlsbad,Carlsbad,2025-02,actual,238208.11
+Carlsbad,Carlsbad,2025-03,actual,269854.92
+Carlsbad,Carlsbad,2025-04,actual,265901.87
+Carlsbad,Carlsbad,2025-05,actual,303795.33
+Carlsbad,Carlsbad,2025-06,actual,290267.84
+Carlsbad,Carlsbad,2025-07,actual,317628.91
+Carlsbad,Carlsbad,2025-08,actual,293477.87
+Carlsbad,Carlsbad,2025-09,actual,245381.76
+Carlsbad,Carlsbad,2025-10,actual,258544.21
+Carlsbad,Carlsbad,2025-11,actual,283826.40
+Carlsbad,Carlsbad,2025-12,actual,303439.10
+Coronado,Coronado,2025-01,actual,250460.93
+Coronado,Coronado,2025-02,actual,234117.08
+Coronado,Coronado,2025-03,actual,278045.70
+Coronado,Coronado,2025-04,actual,280657.21
+Coronado,Coronado,2025-05,actual,301132.85
+Coronado,Coronado,2025-06,actual,332710.36
+Coronado,Coronado,2025-07,actual,435677.49
+Coronado,Coronado,2025-08,actual,381386.83
+Coronado,Coronado,2025-09,actual,253944.72
+Coronado,Coronado,2025-10,actual,261455.16
+Coronado,Coronado,2025-11,actual,265570.02
+Coronado,Coronado,2025-12,actual,301704.05
+Del Mar Café,Carmel Valley,2025-01,actual,362470.22
+Del Mar Café,Carmel Valley,2025-02,actual,306163.19
+Del Mar Café,Carmel Valley,2025-03,actual,366158.22
+Del Mar Café,Carmel Valley,2025-04,actual,333105.07
+Del Mar Café,Carmel Valley,2025-05,actual,383910.24
+Del Mar Café,Carmel Valley,2025-06,actual,356732.86
+Del Mar Café,Carmel Valley,2025-07,actual,368050.20
+Del Mar Café,Carmel Valley,2025-08,actual,375827.59
+Del Mar Café,Carmel Valley,2025-09,actual,329957.25
+Del Mar Café,Carmel Valley,2025-10,actual,339549.50
+Del Mar Café,Carmel Valley,2025-11,actual,349225.64
+Del Mar Café,Carmel Valley,2025-12,actual,361429.51
+La Jolla Café,La Jolla,2025-01,actual,227242.58
+La Jolla Café,La Jolla,2025-02,actual,206824.71
+La Jolla Café,La Jolla,2025-03,actual,234005.53
+La Jolla Café,La Jolla,2025-04,actual,234892.94
+La Jolla Café,La Jolla,2025-05,actual,247690.51
+La Jolla Café,La Jolla,2025-06,actual,231713.12
+La Jolla Café,La Jolla,2025-07,actual,230347.26
+La Jolla Café,La Jolla,2025-08,actual,242508.83
+La Jolla Café,La Jolla,2025-09,actual,208423.86
+La Jolla Café,La Jolla,2025-10,actual,220789.70
+La Jolla Café,La Jolla,2025-11,actual,222929.64
+La Jolla Café,La Jolla,2025-12,actual,230464.05
+La Jolla Juicery,La Jolla Juicery,2025-01,actual,60092.48
+La Jolla Juicery,La Jolla Juicery,2025-02,actual,55640.87
+La Jolla Juicery,La Jolla Juicery,2025-03,actual,68405.28
+La Jolla Juicery,La Jolla Juicery,2025-04,actual,68958.26
+La Jolla Juicery,La Jolla Juicery,2025-05,actual,73926.27
+La Jolla Juicery,La Jolla Juicery,2025-06,actual,68224.95
+La Jolla Juicery,La Jolla Juicery,2025-07,actual,78982.36
+La Jolla Juicery,La Jolla Juicery,2025-08,actual,77879.22
+La Jolla Juicery,La Jolla Juicery,2025-09,actual,63386.37
+La Jolla Juicery,La Jolla Juicery,2025-10,actual,62477.25
+La Jolla Juicery,La Jolla Juicery,2025-11,actual,55853.68
+La Jolla Juicery,La Jolla Juicery,2025-12,actual,59305.78
+La Jolla Cove,La Jolla Cove,2025-01,actual,43495.85
+La Jolla Cove,La Jolla Cove,2025-02,actual,44947.88
+La Jolla Cove,La Jolla Cove,2025-03,actual,57532.30
+La Jolla Cove,La Jolla Cove,2025-04,actual,57263.00
+La Jolla Cove,La Jolla Cove,2025-05,actual,61197.65
+La Jolla Cove,La Jolla Cove,2025-06,actual,63046.15
+La Jolla Cove,La Jolla Cove,2025-07,actual,64934.50
+La Jolla Cove,La Jolla Cove,2025-08,actual,66095.83
+La Jolla Cove,La Jolla Cove,2025-09,actual,49780.64
+La Jolla Cove,La Jolla Cove,2025-10,actual,46802.52
+La Jolla Cove,La Jolla Cove,2025-11,actual,48381.67
+La Jolla Cove,La Jolla Cove,2025-12,actual,44813.55
+Little Italy Café,Little Italy,2025-01,actual,204800.98
+Little Italy Café,Little Italy,2025-02,actual,198920.89
+Little Italy Café,Little Italy,2025-03,actual,232420.79
+Little Italy Café,Little Italy,2025-04,actual,227170.26
+Little Italy Café,Little Italy,2025-05,actual,216239.77
+Little Italy Café,Little Italy,2025-06,actual,190836.10
+Little Italy Café,Little Italy,2025-07,actual,237403.33
+Little Italy Café,Little Italy,2025-08,actual,250549.81
+Little Italy Café,Little Italy,2025-09,actual,185986.16
+Little Italy Café,Little Italy,2025-10,actual,196601.05
+Little Italy Café,Little Italy,2025-11,actual,213690.50
+Little Italy Café,Little Italy,2025-12,actual,214938.20
+Newport Beach,Newport,2025-01,actual,261402.74
+Newport Beach,Newport,2025-02,actual,229518.66
+Newport Beach,Newport,2025-03,actual,266018.82
+Newport Beach,Newport,2025-04,actual,258984.24
+Newport Beach,Newport,2025-05,actual,296374.44
+Newport Beach,Newport,2025-06,actual,283004.20
+Newport Beach,Newport,2025-07,actual,298103.39
+Newport Beach,Newport,2025-08,actual,308008.97
+Newport Beach,Newport,2025-09,actual,233506.41
+Newport Beach,Newport,2025-10,actual,243036.76
+Newport Beach,Newport,2025-11,actual,243288.24
+Newport Beach,Newport,2025-12,actual,253173.42
+Beverly Hills,Beverly Hills,2026-01,actual,189450.20
+Beverly Hills,Beverly Hills,2026-02,actual,183431.33
+Beverly Hills,Beverly Hills,2026-03,actual,199362.86
+Beverly Hills,Beverly Hills,2026-04,actual,197094.66
+Beverly Hills,Beverly Hills,2026-05,actual,220579.03
+Beverly Hills,Beverly Hills,2026-06,actual,216875.04
+Beverly Hills,Beverly Hills,2026-07,actual,226151.30
+Beverly Hills,Beverly Hills,2026-08,actual,236029.46
+Beverly Hills,Beverly Hills,2026-09,actual,211756.31
+Beverly Hills,Beverly Hills,2026-10,estimate,233238.87
+Beverly Hills,Beverly Hills,2026-11,estimate,233982.89
+Beverly Hills,Beverly Hills,2026-12,estimate,229389.93
+Brentwood,Brentwood,2026-01,actual,197615.90
+Brentwood,Brentwood,2026-02,actual,185092.87
+Brentwood,Brentwood,2026-03,actual,196509.37
+Brentwood,Brentwood,2026-04,actual,187856.05
+Brentwood,Brentwood,2026-05,actual,203308.85
+Brentwood,Brentwood,2026-06,actual,182078.52
+Brentwood,Brentwood,2026-07,actual,177687.27
+Brentwood,Brentwood,2026-08,actual,192128.72
+Brentwood,Brentwood,2026-09,actual,185078.92
+Brentwood,Brentwood,2026-10,estimate,211191.15
+Brentwood,Brentwood,2026-11,estimate,220421.81
+Brentwood,Brentwood,2026-12,estimate,201558.90
+Carlsbad,Carlsbad,2026-01,actual,300304.35
+Carlsbad,Carlsbad,2026-02,actual,265874.64
+Carlsbad,Carlsbad,2026-03,actual,321263.98
+Carlsbad,Carlsbad,2026-04,actual,315843.19
+Carlsbad,Carlsbad,2026-05,actual,342808.34
+Carlsbad,Carlsbad,2026-06,actual,302651.37
+Carlsbad,Carlsbad,2026-07,actual,310586.33
+Carlsbad,Carlsbad,2026-08,actual,326466.28
+Carlsbad,Carlsbad,2026-09,actual,292800.24
+Carlsbad,Carlsbad,2026-10,estimate,280690.35
+Carlsbad,Carlsbad,2026-11,estimate,308138.14
+Carlsbad,Carlsbad,2026-12,estimate,329430.81
+Coronado,Coronado,2026-01,actual,290218.49
+Coronado,Coronado,2026-02,actual,264732.39
+Coronado,Coronado,2026-03,actual,368471.60
+Coronado,Coronado,2026-04,actual,331309.57
+Coronado,Coronado,2026-05,actual,367314.29
+Coronado,Coronado,2026-06,actual,345490.89
+Coronado,Coronado,2026-07,actual,467979.21
+Coronado,Coronado,2026-08,actual,401254.90
+Coronado,Coronado,2026-09,actual,284535.66
+Coronado,Coronado,2026-10,estimate,281658.74
+Coronado,Coronado,2026-11,estimate,286091.57
+Coronado,Coronado,2026-12,estimate,325017.81
+Del Mar Café,Carmel Valley,2026-01,actual,386586.25
+Del Mar Café,Carmel Valley,2026-02,actual,348913.45
+Del Mar Café,Carmel Valley,2026-03,actual,405133.57
+Del Mar Café,Carmel Valley,2026-04,actual,375584.61
+Del Mar Café,Carmel Valley,2026-05,actual,406956.94
+Del Mar Café,Carmel Valley,2026-06,actual,379542.34
+Del Mar Café,Carmel Valley,2026-07,actual,393438.73
+Del Mar Café,Carmel Valley,2026-08,actual,433574.03
+Del Mar Café,Carmel Valley,2026-09,actual,366382.22
+Del Mar Café,Carmel Valley,2026-10,estimate,377354.67
+Del Mar Café,Carmel Valley,2026-11,estimate,388108.15
+Del Mar Café,Carmel Valley,2026-12,estimate,401670.78
+La Jolla Café,La Jolla,2026-01,actual,236170.58
+La Jolla Café,La Jolla,2026-02,actual,218775.99
+La Jolla Café,La Jolla,2026-03,actual,253473.94
+La Jolla Café,La Jolla,2026-04,actual,233991.41
+La Jolla Café,La Jolla,2026-05,actual,263359.80
+La Jolla Café,La Jolla,2026-06,actual,232873.34
+La Jolla Café,La Jolla,2026-07,actual,252491.32
+La Jolla Café,La Jolla,2026-08,actual,267259.67
+La Jolla Café,La Jolla,2026-09,actual,227198.13
+La Jolla Café,La Jolla,2026-10,estimate,242071.81
+La Jolla Café,La Jolla,2026-11,estimate,244418.02
+La Jolla Café,La Jolla,2026-12,estimate,252678.68
+La Jolla Juicery,La Jolla Juicery,2026-01,actual,66989.92
+La Jolla Juicery,La Jolla Juicery,2026-02,actual,62331.74
+La Jolla Juicery,La Jolla Juicery,2026-03,actual,81724.93
+La Jolla Juicery,La Jolla Juicery,2026-04,actual,72130.05
+La Jolla Juicery,La Jolla Juicery,2026-05,actual,79517.36
+La Jolla Juicery,La Jolla Juicery,2026-06,actual,76549.33
+La Jolla Juicery,La Jolla Juicery,2026-07,actual,91253.90
+La Jolla Juicery,La Jolla Juicery,2026-08,actual,93301.59
+La Jolla Juicery,La Jolla Juicery,2026-09,actual,70905.97
+La Jolla Juicery,La Jolla Juicery,2026-10,estimate,72466.19
+La Jolla Juicery,La Jolla Juicery,2026-11,estimate,64783.63
+La Jolla Juicery,La Jolla Juicery,2026-12,estimate,68787.66
+La Jolla Cove,La Jolla Cove,2026-01,actual,47159.54
+La Jolla Cove,La Jolla Cove,2026-02,actual,46724.21
+La Jolla Cove,La Jolla Cove,2026-03,actual,56870.72
+La Jolla Cove,La Jolla Cove,2026-04,actual,55189.53
+La Jolla Cove,La Jolla Cove,2026-05,actual,57249.10
+La Jolla Cove,La Jolla Cove,2026-06,actual,54666.97
+La Jolla Cove,La Jolla Cove,2026-07,actual,62574.93
+La Jolla Cove,La Jolla Cove,2026-08,actual,60369.86
+La Jolla Cove,La Jolla Cove,2026-09,actual,51954.26
+La Jolla Cove,La Jolla Cove,2026-10,estimate,45272.23
+La Jolla Cove,La Jolla Cove,2026-11,estimate,46799.75
+La Jolla Cove,La Jolla Cove,2026-12,estimate,43348.30
+Little Italy Café,Little Italy,2026-01,actual,225816.40
+Little Italy Café,Little Italy,2026-02,actual,219362.68
+Little Italy Café,Little Italy,2026-03,actual,290095.98
+Little Italy Café,Little Italy,2026-04,actual,282656.13
+Little Italy Café,Little Italy,2026-05,actual,292454.37
+Little Italy Café,Little Italy,2026-06,actual,273557.76
+Little Italy Café,Little Italy,2026-07,actual,303720.93
+Little Italy Café,Little Italy,2026-08,actual,324273.32
+Little Italy Café,Little Italy,2026-09,actual,259004.37
+Little Italy Café,Little Italy,2026-10,estimate,258754.55
+Little Italy Café,Little Italy,2026-11,estimate,281246.66
+Little Italy Café,Little Italy,2026-12,estimate,282888.81
+Newport Beach,Newport,2026-01,actual,279148.00
+Newport Beach,Newport,2026-02,actual,242787.18
+Newport Beach,Newport,2026-03,actual,299977.17
+Newport Beach,Newport,2026-04,actual,277230.20
+Newport Beach,Newport,2026-05,actual,319504.26
+Newport Beach,Newport,2026-06,actual,298928.85
+Newport Beach,Newport,2026-07,actual,324512.05
+Newport Beach,Newport,2026-08,actual,340245.26
+Newport Beach,Newport,2026-09,actual,266085.98
+Newport Beach,Newport,2026-10,estimate,269442.69
+Newport Beach,Newport,2026-11,estimate,269721.49
+Newport Beach,Newport,2026-12,estimate,280680.69
+Beverly Hills,Beverly Hills,2027-01,objective,202711.71
+Beverly Hills,Beverly Hills,2027-02,objective,196271.52
+Beverly Hills,Beverly Hills,2027-03,objective,213318.26
+Beverly Hills,Beverly Hills,2027-04,objective,210891.29
+Beverly Hills,Beverly Hills,2027-05,objective,236019.56
+Beverly Hills,Beverly Hills,2027-06,objective,232056.29
+Beverly Hills,Beverly Hills,2027-07,objective,241981.89
+Beverly Hills,Beverly Hills,2027-08,objective,252551.52
+Beverly Hills,Beverly Hills,2027-09,objective,226579.25
+Beverly Hills,Beverly Hills,2027-10,objective,249565.59
+Beverly Hills,Beverly Hills,2027-11,objective,250361.69
+Beverly Hills,Beverly Hills,2027-12,objective,245447.23
+Brentwood,Brentwood,2027-01,objective,199592.06
+Brentwood,Brentwood,2027-02,objective,186943.80
+Brentwood,Brentwood,2027-03,objective,198474.46
+Brentwood,Brentwood,2027-04,objective,189734.61
+Brentwood,Brentwood,2027-05,objective,205341.94
+Brentwood,Brentwood,2027-06,objective,183899.31
+Brentwood,Brentwood,2027-07,objective,179464.14
+Brentwood,Brentwood,2027-08,objective,194050.01
+Brentwood,Brentwood,2027-09,objective,186929.71
+Brentwood,Brentwood,2027-10,objective,213303.07
+Brentwood,Brentwood,2027-11,objective,222626.02
+Brentwood,Brentwood,2027-12,objective,203574.49
+Carlsbad,Carlsbad,2027-01,objective,309313.48
+Carlsbad,Carlsbad,2027-02,objective,273850.88
+Carlsbad,Carlsbad,2027-03,objective,330901.90
+Carlsbad,Carlsbad,2027-04,objective,325318.49
+Carlsbad,Carlsbad,2027-05,objective,353092.59
+Carlsbad,Carlsbad,2027-06,objective,311730.91
+Carlsbad,Carlsbad,2027-07,objective,319903.92
+Carlsbad,Carlsbad,2027-08,objective,336260.27
+Carlsbad,Carlsbad,2027-09,objective,301584.25
+Carlsbad,Carlsbad,2027-10,objective,289111.06
+Carlsbad,Carlsbad,2027-11,objective,317382.29
+Carlsbad,Carlsbad,2027-12,objective,339313.73
+Coronado,Coronado,2027-01,objective,298925.04
+Coronado,Coronado,2027-02,objective,272674.36
+Coronado,Coronado,2027-03,objective,379525.75
+Coronado,Coronado,2027-04,objective,341248.86
+Coronado,Coronado,2027-05,objective,378333.72
+Coronado,Coronado,2027-06,objective,355855.62
+Coronado,Coronado,2027-07,objective,482018.59
+Coronado,Coronado,2027-08,objective,413292.55
+Coronado,Coronado,2027-09,objective,293071.73
+Coronado,Coronado,2027-10,objective,290108.51
+Coronado,Coronado,2027-11,objective,294674.32
+Coronado,Coronado,2027-12,objective,334768.34
+Del Mar Café,Carmel Valley,2027-01,objective,390452.11
+Del Mar Café,Carmel Valley,2027-02,objective,352402.58
+Del Mar Café,Carmel Valley,2027-03,objective,409184.91
+Del Mar Café,Carmel Valley,2027-04,objective,379340.46
+Del Mar Café,Carmel Valley,2027-05,objective,411026.51
+Del Mar Café,Carmel Valley,2027-06,objective,383337.76
+Del Mar Café,Carmel Valley,2027-07,objective,397373.12
+Del Mar Café,Carmel Valley,2027-08,objective,437909.77
+Del Mar Café,Carmel Valley,2027-09,objective,370046.04
+Del Mar Café,Carmel Valley,2027-10,objective,381128.22
+Del Mar Café,Carmel Valley,2027-11,objective,391989.23
+Del Mar Café,Carmel Valley,2027-12,objective,405687.49
+La Jolla Café,La Jolla,2027-01,objective,245617.40
+La Jolla Café,La Jolla,2027-02,objective,227527.03
+La Jolla Café,La Jolla,2027-03,objective,263612.90
+La Jolla Café,La Jolla,2027-04,objective,243351.07
+La Jolla Café,La Jolla,2027-05,objective,273894.19
+La Jolla Café,La Jolla,2027-06,objective,242188.27
+La Jolla Café,La Jolla,2027-07,objective,262590.97
+La Jolla Café,La Jolla,2027-08,objective,277950.06
+La Jolla Café,La Jolla,2027-09,objective,236286.06
+La Jolla Café,La Jolla,2027-10,objective,251754.68
+La Jolla Café,La Jolla,2027-11,objective,254194.74
+La Jolla Café,La Jolla,2027-12,objective,262785.83
+La Jolla Juicery,La Jolla Juicery,2027-01,objective,69669.52
+La Jolla Juicery,La Jolla Juicery,2027-02,objective,64825.01
+La Jolla Juicery,La Jolla Juicery,2027-03,objective,84993.93
+La Jolla Juicery,La Jolla Juicery,2027-04,objective,75015.25
+La Jolla Juicery,La Jolla Juicery,2027-05,objective,82698.05
+La Jolla Juicery,La Jolla Juicery,2027-06,objective,79611.30
+La Jolla Juicery,La Jolla Juicery,2027-07,objective,94904.06
+La Jolla Juicery,La Jolla Juicery,2027-08,objective,97033.65
+La Jolla Juicery,La Jolla Juicery,2027-09,objective,73742.21
+La Jolla Juicery,La Jolla Juicery,2027-10,objective,75364.84
+La Jolla Juicery,La Jolla Juicery,2027-11,objective,67374.98
+La Jolla Juicery,La Jolla Juicery,2027-12,objective,71539.17
+Little Italy Café,Little Italy,2027-01,objective,237107.22
+Little Italy Café,Little Italy,2027-02,objective,230330.81
+Little Italy Café,Little Italy,2027-03,objective,304600.78
+Little Italy Café,Little Italy,2027-04,objective,296788.94
+Little Italy Café,Little Italy,2027-05,objective,307077.09
+Little Italy Café,Little Italy,2027-06,objective,287235.65
+Little Italy Café,Little Italy,2027-07,objective,318906.98
+Little Italy Café,Little Italy,2027-08,objective,340486.99
+Little Italy Café,Little Italy,2027-09,objective,271954.59
+Little Italy Café,Little Italy,2027-10,objective,271692.28
+Little Italy Café,Little Italy,2027-11,objective,295309.00
+Little Italy Café,Little Italy,2027-12,objective,297033.25
+Newport Beach,Newport,2027-01,objective,290313.92
+Newport Beach,Newport,2027-02,objective,252498.67
+Newport Beach,Newport,2027-03,objective,311976.26
+Newport Beach,Newport,2027-04,objective,288319.41
+Newport Beach,Newport,2027-05,objective,332284.43
+Newport Beach,Newport,2027-06,objective,310886.00
+Newport Beach,Newport,2027-07,objective,337492.53
+Newport Beach,Newport,2027-08,objective,353855.07
+Newport Beach,Newport,2027-09,objective,276729.42
+Newport Beach,Newport,2027-10,objective,280220.39
+Newport Beach,Newport,2027-11,objective,280510.35
+Newport Beach,Newport,2027-12,objective,291907.92
+Manhattan Beach,,2027-01,objective,0.00
+Manhattan Beach,,2027-02,objective,0.00
+Manhattan Beach,,2027-03,objective,141737.98
+Manhattan Beach,,2027-04,objective,159351.98
+Manhattan Beach,,2027-05,objective,202411.79
+Manhattan Beach,,2027-06,objective,227299.72
+Manhattan Beach,,2027-07,objective,263669.41
+Manhattan Beach,,2027-08,objective,270286.01
+Manhattan Beach,,2027-09,objective,202246.01
+Manhattan Beach,,2027-10,objective,201092.79
+Manhattan Beach,,2027-11,objective,199795.42
+Manhattan Beach,,2027-12,objective,219111.86
+Sportsmen's Lodge,,2027-01,objective,0.00
+Sportsmen's Lodge,,2027-02,objective,0.00
+Sportsmen's Lodge,,2027-03,objective,0.00
+Sportsmen's Lodge,,2027-04,objective,0.00
+Sportsmen's Lodge,,2027-05,objective,225000.00
+Sportsmen's Lodge,,2027-06,objective,229545.45
+Sportsmen's Lodge,,2027-07,objective,234090.91
+Sportsmen's Lodge,,2027-08,objective,238636.36
+Sportsmen's Lodge,,2027-09,objective,243181.82
+Sportsmen's Lodge,,2027-10,objective,247727.27
+Sportsmen's Lodge,,2027-11,objective,252272.73
+Sportsmen's Lodge,,2027-12,objective,256818.18
+La Jolla Cove,La Jolla Cove,2027-01,objective,47159.54
+La Jolla Cove,La Jolla Cove,2027-02,objective,46724.21
+La Jolla Cove,La Jolla Cove,2027-03,objective,56870.72
+La Jolla Cove,La Jolla Cove,2027-04,objective,55189.53
+La Jolla Cove,La Jolla Cove,2027-05,objective,57249.10
+La Jolla Cove,La Jolla Cove,2027-06,objective,54666.97
+La Jolla Cove,La Jolla Cove,2027-07,objective,62574.93
+La Jolla Cove,La Jolla Cove,2027-08,objective,60369.86
+La Jolla Cove,La Jolla Cove,2027-09,objective,51954.26
+La Jolla Cove,La Jolla Cove,2027-10,objective,125000.00
+La Jolla Cove,La Jolla Cove,2027-11,objective,125000.00
+La Jolla Cove,La Jolla Cove,2027-12,objective,125000.00

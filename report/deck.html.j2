@@ -261,7 +261,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
       <div class="stat pinktop"><div class="lab">If those eleven weeks miss by 5%</div><div class="val">±{{ (t.to_come * 0.05) | fm }}</div><div class="cap">±{{ "%.1f" | format(t.to_come * 0.05 / t.b26 * 100) }}% on the year</div></div>
     </div>
   </div>
-  <div class="strip pin-bottom"><span class="lab">How it's estimated</span><span>The budget grows each café's October–December 2025 sales at its Q3 2026 rate ({{ t.q3_g | pct }} for the nine); we reproduced it to within {{ (t.q4_method - t.q4_b) | fk }}. Our own forecast for the quarter, from the same three models we use for 2027, is on the next page.</span></div>
+  <div class="strip pin-bottom"><span class="lab">How it's estimated</span><span>The budget grows each café's October–December 2025 sales at its own Q3 2026 rate ({{ t.b_q3 | pct }} for the nine on the budget's figures). Our own forecast for the quarter, from the same three models we use for 2027, is on the next page.</span></div>
   {{ foot(SRC) }}
 </section>
 
@@ -303,7 +303,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
 <section class="page">
   {{ head("Part 1 · The 2026 finish") }}
   <h1>Café by café, the budget's 2026 finish matches ours within 2%</h1>
-  <p class="lede">Both start from the same January–September actuals and differ only in how October–December is estimated: the budget's Q3-growth rule against our three forecasting models.</p>
+  <p class="lede">Both start from January–September actuals that agree within 0.1% (the budget's September sales report against Toast) and differ in how October–December is estimated: the budget's Q3-growth rule against our three forecasting models.</p>
   <table class="roomy">
     <thead><tr>
       <th class="l">Café</th><th>Jan–Sep 2026<br>actual</th><th>vs Jan–Sep<br>2025</th><th>Oct–Dec<br>budget</th><th>Oct–Dec<br>our models</th>
@@ -323,7 +323,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
         <td class="dim">—</td><td>{{ na.e26 | fm }}</td><td class="dim">—</td><td>{{ na.oct_g | pct }}</td></tr>
     </tbody>
   </table>
-  <p class="note pin-bottom">Our finish = January–September Toast actuals + our models' October–December forecast. Del Mar Café appears as Carmel Valley in Toast.</p>
+  <p class="note pin-bottom">Our finish = January–September Toast actuals + our models' October–December forecast. Budget columns come from the budget workbook; its January–September for Beverly Hills is {{ (C["Beverly Hills"].ytd26 - C["Beverly Hills"].b_ytd) | fk }} below Toast, so the columns do not add across for that café. Del Mar Café appears as Carmel Valley in Toast.</p>
   {{ foot(SRC) }}
 </section>
 
@@ -472,7 +472,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
         <div class="r"><div class="what">If both open like our average opening</div><div><div class="bar ours" style="width:{{ n.bridge27.new_track / best * 100 }}%"></div></div><div class="amt pink">{{ n.bridge27.new_track | fm }}</div></div>
         <div class="r"><div class="what">If both open like our LA openings</div><div><div class="bar" style="width:{{ la / best * 100 }}%"></div></div><div class="amt">{{ la | fm }}</div></div>
       </div>
-      <p class="note" style="margin-top:6px">Openings restated at 2026 prices (average check up {{ "%.0f" | format(O.check_lift_23 * 100) }}% since 2023 and {{ "%.0f" | format(O.check_lift_24 * 100) }}% since 2024). {{ O.tbd | join(", ") }} has no volume in the budget and none here.</p>
+      <p class="note" style="margin-top:6px">Budget ramps: {% for x in O.new %}{{ x.name }} {{ x.first_month | fk }} in its first month, peaking at {{ x.peak | fk }} in {{ x.peak_month }}{{ "; " if not loop.last else ". " }}{% endfor %}Openings restated at 2026 prices (average check up {{ "%.0f" | format(O.check_lift_23 * 100) }}% since 2023 and {{ "%.0f" | format(O.check_lift_24 * 100) }}% since 2024). {{ O.tbd | join(", ") }} has no volume in the budget and none here.</p>
     </div>
     <div class="col" style="flex:1">
       <h3>La Jolla Cove remodel</h3>
@@ -489,7 +489,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
           <tr class="total"><td>Year</td><td>{{ cv.b27 | fm }}</td><td>{{ cv.plan27 | fm }}</td></tr>
         </tbody>
       </table>
-      <p style="font-size:12.5px;margin:0 0 10px">The budget holds January–September flat to 2026, close to our view. The difference is October–December: {{ "%.1f" | format(cv.ratio) }}× today's monthly sales once the remodel is done.</p>
+      <p style="font-size:12.5px;margin:0 0 10px">The hotel around the Cove has been under remodel since March 2026, so the café is open but soft. The budget holds January–September flat to 2026, close to our view; the difference is October–December, after the October 1, 2027 reopening: a $1.5M annual rate, {{ "%.1f" | format(cv.ratio) }}× today's monthly sales.</p>
       <p style="font-size:12.5px;margin:0">No café of ours has a remodel in its history, so we cannot test the lift. We would budget the trend and add the lift once the Cove reopens and trades.</p>
     </div>
   </div>
@@ -613,6 +613,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
         <div><span>Added in 2026</span><span>{{ c.added26 | sfk }}</span></div>
         {% if c.b27 %}<div><span>Our plan minus the budget, 2027</span><span class="{{ 'pink' if c.gap > 0 else '' }}">{{ c.gap | sfk }}</span></div>{% endif %}
       </div>
+      {% if c.note %}<p class="note" style="margin-top:10px">{{ c.note }}</p>{% endif %}
     </div>
   </div>
   {{ foot(SRC) }}
@@ -672,7 +673,7 @@ ul.tight.big li{margin:0 0 12px;font-size:13.5px;line-height:1.55}
       <p>Sales in the first 8, 10 and 12 months from the first trading day of Newport, Beverly Hills, Brentwood and Carlsbad, restated at 2026 average checks.</p>
     </div>
   </div>
-  <p class="note pin-bottom">Code and data: parakeet_forecasts repository (report/build_deck.py, src/hold_scenario.py; budget figures in data/cfo_budget_2027.csv). Café-level figures: outputs/budget_review_by_cafe.csv.</p>
+  <p class="note pin-bottom">Budget figures come from the budget workbook (2027_Sales_budget_Investors.xlsx), imported by src/import_budget.py into data/cfo_budget_2027*.csv. Code: report/build_deck.py, src/hold_scenario.py. Café-level figures: outputs/budget_review_by_cafe.csv.</p>
   {{ foot(SRC) }}
 </section>
 
