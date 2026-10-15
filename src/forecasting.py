@@ -400,11 +400,13 @@ def holt_winters_forecast(sd: StoreData, origin: pd.Timestamp, last_month: pd.Pe
     hist = sd.monthly_clean(origin)
     rate = hist.to_numpy() / sd.trading_days(hist.index, origin, c["td_adjust"])
     damped = bool(c["trend"]) and c["damped"]
+    # statsmodels wants True (estimate lambda), False, or a fixed lambda; log = Box-Cox lambda 0
+    boxcox = 0.0 if c["boxcox"] == "log" else bool(c["boxcox"])
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         res = ExponentialSmoothing(
             rate, trend=c["trend"], damped_trend=damped, seasonal=c["seasonal"], seasonal_periods=12,
-            initialization_method=c["init"], use_boxcox=c["boxcox"],
+            initialization_method=c["init"], use_boxcox=boxcox,
         ).fit(optimized=True, damping_trend=c["phi"] if damped else None)
     months = _months_after(origin, last_month)
     td = sd.trading_days(months, origin, c["td_adjust"])
@@ -431,13 +433,17 @@ DEFAULT_CONFIGS = {"Prophet": PROPHET_DEFAULT, "SARIMA": SARIMA_DEFAULT, "Holt-W
 def load_configs() -> dict:
     """Adopted settings from src/tune.py if present, else the round-1 defaults.
 
-    Returns {"models": {model: cfg}, "blend": "mean" | "median" | weights dict}.
+    Returns {"models": {model: cfg}, "blend": "mean" | "median" | weights dict,
+             "plan": {"over_cost": c, "factor": k}} -- the plan is the blend times k.
     """
     if TUNED_CONFIGS.exists():
-        adopted = json.loads(TUNED_CONFIGS.read_text())["adopted"]
+        tuned = json.loads(TUNED_CONFIGS.read_text())
+        adopted = tuned["adopted"]
         return {"models": {m: {**DEFAULT_CONFIGS[m], **adopted["models"][m]} for m in MODELS},
-                "blend": adopted["blend"]}
-    return {"models": {m: dict(DEFAULT_CONFIGS[m]) for m in MODELS}, "blend": "mean"}
+                "blend": adopted["blend"],
+                "plan": tuned.get("plan", {"over_cost": 1, "factor": 1.0})}
+    return {"models": {m: dict(DEFAULT_CONFIGS[m]) for m in MODELS}, "blend": "mean",
+            "plan": {"over_cost": 1, "factor": 1.0}}
 
 
 def combine(frame: pd.DataFrame, rule) -> pd.Series:

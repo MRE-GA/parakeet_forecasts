@@ -1,0 +1,101 @@
+{
+  "design": {
+    "tune_origins": [
+      "2024-09-30",
+      "2024-12-31",
+      "2025-03-31",
+      "2025-06-30"
+    ],
+    "tune_targets_through": "2025-12",
+    "holdout_origins": [
+      "2025-06-30",
+      "2025-09-30",
+      "2025-12-31"
+    ],
+    "holdout_targets": [
+      "2026-01",
+      "2026-09"
+    ],
+    "horizons": [
+      4,
+      15
+    ],
+    "prophet_trials": 150,
+    "sarima_grid": 48,
+    "hw_grid": 96
+  },
+  "best_on_tuning_set": {
+    "Prophet": {
+      "changepoint_prior_scale": 0.008462022646301968,
+      "seasonality_prior_scale": 0.017695073488015443,
+      "holidays_prior_scale": 2.809867497112638,
+      "seasonality_mode": "multiplicative",
+      "changepoint_range": 0.7442814976780926,
+      "yearly_fourier": 20,
+      "holiday_windows": false,
+      "summer_weekly": false,
+      "cap_outliers": 0.0
+    },
+    "SARIMA": {
+      "trend": "local",
+      "candidates": "extended",
+      "criterion": "aicc",
+      "transform": "none",
+      "td_adjust": "weekday"
+    },
+    "Holt-Winters": {
+      "trend": "add",
+      "damped": true,
+      "phi": 0.95,
+      "seasonal": "mul",
+      "boxcox": false,
+      "init": "estimated",
+      "td_adjust": "weekday"
+    }
+  },
+  "adopted": {
+    "models": {
+      "Prophet": {
+        "changepoint_prior_scale": 0.008462022646301968,
+        "seasonality_prior_scale": 0.017695073488015443,
+        "holidays_prior_scale": 2.809867497112638,
+        "seasonality_mode": "multiplicative",
+        "changepoint_range": 0.7442814976780926,
+        "yearly_fourier": 20,
+        "holiday_windows": false,
+        "summer_weekly": false,
+        "cap_outliers": 0.0
+      },
+      "SARIMA": {
+        "trend": "local",
+        "candidates": "extended",
+        "criterion": "aicc",
+        "transform": "none",
+        "td_adjust": "weekday"
+      },
+      "Holt-Winters": {
+        "trend": "add",
+        "damped": true,
+        "phi": null,
+        "seasonal": "mul",
+        "boxcox": false,
+        "init": "estimated",
+        "td_adjust": "weekday"
+      }
+    },
+    "blend": {
+      "Prophet": 20.28044264485434,
+      "SARIMA": 17.988379413620173,
+      "Holt-Winters": 19.174258243021416
+    },
+    "variant": {
+      "Prophet": "tuned",
+      "SARIMA": "tuned",
+      "Holt-Winters": "baseline"
+    }
+  },
+  "plan": {
+    "over_cost": 3,
+    "factor": 0.9910000000000002
+  }
+}

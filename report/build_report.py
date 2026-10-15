@@ -163,8 +163,9 @@ def collect() -> dict:
     n["bt_store_months"] = len(bt)
     n["n_folds"] = bt.origin.nunique()
 
-    lv = live[["actual_oct_1_14"] + all_models].sum()
-    n["live"] = {"actual": lv.actual_oct_1_14, **{m: lv[m] / lv.actual_oct_1_14 - 1 for m in all_models}}
+    live_cols = all_models + (["Plan"] if "Plan" in live else [])
+    lv = live[["actual_oct_1_14"] + live_cols].sum()
+    n["live"] = {"actual": lv.actual_oct_1_14, **{m: lv[m] / lv.actual_oct_1_14 - 1 for m in live_cols}}
 
     n["lfl"] = like_for_like(raw)
     n["holiday"] = holiday_lift(raw)
@@ -191,13 +192,16 @@ def collect() -> dict:
             "low": min(f[m] for m in MODELS), "high": max(f[m] for m in MODELS),
             "prophet": f["Prophet"], "sarima": f["SARIMA"], "hw": f["Holt-Winters"],
             "share": f[ENSEMBLE] / n["f2027"][ENSEMBLE], "sarima_spec": specs.set_index("store").loc[s, "sarima_spec"],
+            "plan": r["Plan 2027"] if "Plan 2027" in r.index else f[ENSEMBLE],
         })
+        cafes[-1]["plan_growth"] = cafes[-1]["plan"] / cafes[-1]["e2026"] - 1
     cafes.sort(key=lambda c: -c["f2027"])
     n["cafes"] = cafes
     top = sorted(cafes, key=lambda c: -(c["f2027"] - c["e2026"]))
     n["growth_total"] = n["f2027"][ENSEMBLE] - n["e2026"]
     n["top3_share"] = sum(c["f2027"] - c["e2026"] for c in top[:3]) / n["growth_total"]
     n["top3"] = [c["store"] for c in top[:3]]
+    n["slowest"] = sorted(cafes, key=lambda c: c["growth"])[:2]
 
     # brand months
     fc = brand_fc.assign(month=pd.PeriodIndex(brand_fc.month, freq="M"))
@@ -208,12 +212,13 @@ def collect() -> dict:
     ref26 = {p: raw_brand[p] if p.month <= 9 else fc.set_index("month").loc[p, ENSEMBLE]
              for p in pd.period_range("2026-01", "2026-12", freq="M")}
     n["months27"] = [{"month": r.month.strftime("%b"), **{m: r[m] for m in all_models},
-                      "ref2026": ref26[r.month - 12]}
+                      "plan": r["Plan"] if "Plan" in fc else r[ENSEMBLE], "ref2026": ref26[r.month - 12]}
                      for _, r in fc[fc.month.dt.year == 2027].iterrows()]
-    growth = [r[ENSEMBLE] / r["ref2026"] - 1 for r in n["months27"]]
+    headline = "plan" if "Plan" in fc else ENSEMBLE
+    growth = [r[headline] / r["ref2026"] - 1 for r in n["months27"]]
     n["m_growth_min"], n["m_growth_max"] = min(growth), max(growth)
     q1 = n["months27"][:3]
-    n["q1_growth"] = sum(r[ENSEMBLE] for r in q1) / sum(r["ref2026"] for r in q1) - 1
+    n["q1_growth"] = sum(r[headline] for r in q1) / sum(r["ref2026"] for r in q1) - 1
     # sensitivity: the two biggest growth contributors grow +10% instead
     fast = top[:2]
     n["fast2"] = fast
@@ -229,7 +234,62 @@ def collect() -> dict:
     n["anomalies"] = [f"{who or 'All cafés'}: {date_span(a, b)} ({why})" for who, a, b, why in ANOMALIES]
     n["fold_label"] = {o: pd.Timestamp(o).strftime("%b %-d, %Y") for o in n["bt_folds"].index}
     n["tuning"] = collect_tuning() if TUNED_CONFIGS.exists() else None
+    n["plan"] = collect_plan(n, annual, by_store) if (TUNING / "plan_calibration.csv").exists() else None
     return n
+
+
+def collect_plan(n: dict, annual: pd.DataFrame, by_store: pd.DataFrame) -> dict:
+    """Conservative plan: the blend times a factor calibrated on an asymmetric cost."""
+    cfg = json.loads(TUNED_CONFIGS.read_text())["plan"]
+    cal = pd.read_csv(TUNING / "plan_calibration.csv")
+    t = annual.loc["TOTAL"]
+    blend27 = t[f"{ENSEMBLE} 2027"]
+    rows = []
+    for r in cal.itertuples():
+        rows.append({"over_cost": int(r.over_cost), "factor_tuning": r.factor_tuning, "factor": r.factor_final,
+                     "cost_blend": r.holdout_cost_blend, "cost_plan": r.holdout_cost_plan,
+                     "over_blend": r.holdout_over_share_blend, "over_plan": r.holdout_over_share_plan,
+                     "bias_plan": r.holdout_bias_plan, "f2027": blend27 * r.factor_final,
+                     "chosen": int(r.over_cost) == int(cfg["over_cost"])})
+    chosen = next(r for r in rows if r["chosen"])
+    by_month = by_store.groupby("month")[["Plan"]].sum().Plan if "Plan" in by_store else None
+    # cafe-level and horizon detail from the adopted blend's tuning + holdout forecasts
+    from tune import best_factor
+    adf = pd.read_csv(TUNING / "adopted_forecasts.csv")
+    c = int(cfg["over_cost"])
+    b = adf.groupby(["set", "origin", "month", "horizon"])[["actual", "f"]].sum().reset_index()
+    hold = b[b.set == "holdout"]
+    return {"over_cost": c, "factor": cfg["factor"], "f2027": t["Plan 2027"],
+            "growth": t["Plan 2027"] / n["e2026"] - 1, "rows": rows, "chosen": chosen,
+            "gap": t["Plan 2027"] - blend27, "by_month": by_month,
+            "cafe_factor": best_factor(adf.actual, adf.f, c),
+            "near_factor": best_factor(b[b.horizon <= 9].actual, b[b.horizon <= 9].f, c),
+            "far_factor": best_factor(b[b.horizon >= 10].actual, b[b.horizon >= 10].f, c),
+            "holdout_bias_blend": hold.f.sum() / hold.actual.sum() - 1,
+            "holdout_months": len(hold)} | plan_narrative(rows, chosen, c, cfg["factor"], adf, b, hold, best_factor)
+
+
+def plan_narrative(rows, chosen, c, factor, adf, b, hold, best_factor) -> dict:
+    p1 = lambda x: pct(x, 1)  # noqa: E731
+    near = best_factor(b[b.horizon <= 9].actual, b[b.horizon <= 9].f, c)
+    far = best_factor(b[b.horizon >= 10].actual, b[b.horizon >= 10].f, c)
+    cafe = best_factor(adf.actual, adf.f, c)
+    hb = hold.f.sum() / hold.actual.sum() - 1
+    paid = chosen["cost_plan"] <= chosen["cost_blend"]
+    text = (f"<b>What the evidence says.</b> The tuned blend already leans slightly low: on the 2026 holdout it "
+            f"came in {pct(abs(hb), 1, False)} {'under' if hb < 0 else 'over'} actual sales and above them in "
+            f"{pct(chosen['over_blend'], 0, False)} of months. So the {c}:1 shade is modest, {p1(factor - 1)} "
+            f"overall: {p1(near - 1)} for months 4–9 ahead and {p1(far - 1)} for months 10–15 ahead, where misses "
+            f"grow. In 2026 it cut the months where the plan beat actual sales from "
+            f"{pct(chosen['over_blend'], 0, False)} to {pct(chosen['over_plan'], 0, False)}"
+            + (f" and lowered the {c}:1 cost ({pct(chosen['cost_blend'], 1, False)} → {pct(chosen['cost_plan'], 1, False)})."
+               if paid else
+               f"; because 2026 beat the forecast, it cost slightly more than it saved that year "
+               f"({pct(chosen['cost_blend'], 1, False)} → {pct(chosen['cost_plan'], 1, False)}). It is insurance for "
+               f"the year that disappoints.")
+            + f" Single cafés miss by far more than the total, so a café target each café should beat three months "
+              f"in four needs about {pct(cafe - 1, 0)}; such café targets add up to less than the brand plan by design.")
+    return {"narrative": text}
 
 
 # ------------------------------------------------------------------------------------------
@@ -239,12 +299,17 @@ TUNING = OUTPUTS / "tuning"
 SARIMA_TREND = {"drift": "Constant growth (drift)", "none": "No growth term", "local": "Local trend (re-estimated)"}
 
 
+def _missing(v) -> bool:
+    """None in a config, or the NaN pandas reads back for "None"/empty cells."""
+    return v is None or (isinstance(v, float) and np.isnan(v)) or str(v) in ("None", "nan", "NaN", "")
+
+
 def hw_trend_label(row) -> str:
-    if row["trend"] in ("None", None):
+    if _missing(row["trend"]):
         return "No trend"
     if str(row["damped"]) == "False":
         return "Straight-line trend"
-    return "Damped trend, φ estimated" if row["phi"] in ("None", None) else f"Damped trend, φ = {row['phi']}"
+    return "Damped trend, φ estimated" if _missing(row["phi"]) else f"Damped trend, φ = {float(row['phi']):g}"
 
 
 def describe(model: str, cfg: dict) -> list[tuple[str, str, str]]:
@@ -267,14 +332,14 @@ def describe(model: str, cfg: dict) -> list[tuple[str, str, str]]:
         rows = [
             ("Growth term", SARIMA_TREND[cfg["trend"]], SARIMA_TREND[base["trend"]]),
             ("Orders searched", "12 (extended)" if cfg["candidates"] == "extended" else "6", "6"),
-            ("Order chosen by", cfg["criterion"].upper(), base["criterion"].upper()),
+            ("Order chosen by", {"aicc": "AICc", "bic": "BIC"}[cfg["criterion"]],
+             {"aicc": "AICc", "bic": "BIC"}[base["criterion"]]),
             ("Transform", cfg["transform"], base["transform"]),
             ("Trading days", cfg["td_adjust"], base["td_adjust"]),
         ]
     else:
         rows = [
-            ("Trend", hw_trend_label({k: str(v) for k, v in cfg.items()}),
-             hw_trend_label({k: str(v) for k, v in base.items()})),
+            ("Trend", hw_trend_label(cfg), hw_trend_label(base)),
             ("Seasonality", {"mul": "multiplicative", "add": "additive"}[cfg["seasonal"]],
              {"mul": "multiplicative", "add": "additive"}[base["seasonal"]]),
             ("Transform", "log" if cfg["boxcox"] else "none", "log" if base["boxcox"] else "none"),
@@ -296,7 +361,8 @@ def collect_tuning() -> dict:
     for t in trials.values():
         t["objective"] = t["objective"].astype(float)
 
-    t = {"design": cfg["design"], "adopted": cfg["adopted"], "best": cfg["best_on_tuning_set"]}
+    t = {"design": cfg["design"], "adopted": cfg["adopted"], "best": cfg["best_on_tuning_set"],
+         "adopted_models": [m for m in MODELS if cfg["adopted"]["variant"][m] == "tuned"]}
     rows = []
     for m in MODELS:
         h = hold[hold.model == m].set_index("variant")
@@ -324,7 +390,9 @@ def collect_tuning() -> dict:
     for r in ab.itertuples():
         d_tune = r.tune_on / r.tune_off - 1
         d_hold = r.holdout_on / r.holdout_off - 1
-        if d_tune < -0.01 and d_hold < -0.01:
+        if abs(d_tune) < 0.01 and abs(d_hold) < 0.01:
+            verdict = "no difference"
+        elif d_tune < -0.01 and d_hold < -0.01:
             verdict = "helps"
         elif d_tune > 0.01 and d_hold > 0.01:
             verdict = "hurts"
@@ -361,6 +429,7 @@ def collect_tuning() -> dict:
         })
     base27 = by_setting[(by_setting.settings == "baseline")].set_index("model").forecast_2027
     t["baseline_2027"] = base27.to_dict()
+    t["baseline_spread"] = float(base27.max() - base27.min())
     narrate(t)
     return t
 
@@ -376,9 +445,15 @@ def narrate(t: dict) -> None:
     kept = [r for r in t["models"] if not r["adopted"]]
     parts = []
     if adopted:
-        parts.append("<b>Verdict.</b> Tuning carried over to 2026 for " + _list(
-            [f"{r['model']} (café-month error {p1(r['baseline_wape'])} → {p1(r['tuned_wape'])}, "
-             f"brand {p1(r['baseline_brand_wape'])} → {p1(r['tuned_brand_wape'])})" for r in adopted]) + ".")
+        def gains(r):
+            cafe = (r["baseline_wape"], r["tuned_wape"])
+            brand = (r["baseline_brand_wape"], r["tuned_brand_wape"])
+            better = [f"{lbl} error {p1(a)} → {p1(b)}" for lbl, (a, b) in (("café-month", cafe), ("brand", brand)) if b < a]
+            worse = [f"{lbl} {p1(a)} → {p1(b)}" for lbl, (a, b) in (("café-month", cafe), ("brand", brand)) if b >= a]
+            txt = f"{r['model']} improved its {_list(better)}"
+            return txt + (f" while giving back a little at the other level ({_list(worse)})" if worse else "")
+        parts.append("<b>Verdict.</b> On the 2026 holdout score, tuning won for " + _list([r["model"] for r in adopted])
+                     + ". " + "; ".join(gains(r) for r in adopted) + ".")
     else:
         parts.append("<b>Verdict.</b> No tuned setting beat round 1 on the 2026 holdout.")
     if kept:
@@ -472,25 +547,63 @@ def make_charts(n: dict) -> dict:
 
     act = rb.loc[pd.Period("2025-01", "M"):pd.Period("2026-09", "M")]
     fc = n["fc"]
+    P = n["plan"]
     out["forecast"] = charts.forecast([p.to_timestamp() for p in act.index], act.to_numpy(),
                                       [p.to_timestamp() for p in fc.month], fc[ENSEMBLE].to_numpy(),
-                                      fc.low.to_numpy(), fc.high.to_numpy())
-    out["dots"] = charts.model_dots([LABEL[m] for m in order], [n["f2027"][m] for m in order],
-                                    n["e2026"], f"2026E {fm(n['e2026'])}", BLEND)
+                                      fc.low.to_numpy(), fc.high.to_numpy(),
+                                      plan=fc["Plan"].to_numpy() if P and "Plan" in fc else None)
+    if P:
+        plan_label = f"Plan (leans low, {P['over_cost']}:1)"
+        out["dots"] = charts.model_dots(MODELS + ["Best estimate (blend)", plan_label],
+                                        [n["f2027"][m] for m in order] + [P["f2027"]],
+                                        n["e2026"], f"2026E {fm(n['e2026'])}", plan_label, size=(4.5, 3.0))
+    else:
+        out["dots"] = charts.model_dots([LABEL[m] for m in order], [n["f2027"][m] for m in order],
+                                        n["e2026"], f"2026E {fm(n['e2026'])}", BLEND)
     g = sorted(n["cafes"], key=lambda c: -(c["f2027"] - c["e2026"]))
     out["growth"] = charts.growth_bars([c["store"] for c in g], [c["f2027"] - c["e2026"] for c in g],
                                        [c["growth"] for c in g])
-    plan = f"Plan: blend of 3 models"
-    scenarios = [
-        ("Like-for-like cools to +8%", n["slow_case"]),
-        (f"Conservative: {n['low_model']}", n["low"]),
-        (plan, n["f2027"][ENSEMBLE]),
-        (f"Stretch: {n['high_model']}", n["high"]),
-        ("Plan + 1 new café from July*", n["f2027"][ENSEMBLE] + n["new_cafe_half_year"]),
-    ]
+    if P:
+        plan = f"Plan (leans low, {P['over_cost']}:1)"
+        scenarios = [
+            ("Like-for-like cools to +8%", n["slow_case"]),
+            (f"Conservative: {n['low_model']}", n["low"]),
+            (plan, P["f2027"]),
+            ("Best estimate: blend", n["f2027"][ENSEMBLE]),
+            (f"Stretch: {n['high_model']}", n["high"]),
+            ("Plan + 1 new café from July*", P["f2027"] + n["new_cafe_half_year"]),
+        ]
+    else:
+        plan = "Plan: blend of 3 models"
+        scenarios = [
+            ("Like-for-like cools to +8%", n["slow_case"]),
+            (f"Conservative: {n['low_model']}", n["low"]),
+            (plan, n["f2027"][ENSEMBLE]),
+            (f"Stretch: {n['high_model']}", n["high"]),
+            ("Plan + 1 new café from July*", n["f2027"][ENSEMBLE] + n["new_cafe_half_year"]),
+        ]
     out["scenarios"] = charts.model_dots([s for s, _ in scenarios], [v for _, v in scenarios],
-                                         n["e2026"], f"2026E {fm(n['e2026'])}", plan, size=(5.6, 2.55),
+                                         n["e2026"], f"2026E {fm(n['e2026'])}", plan, size=(5.6, 2.9),
                                          name="scenarios")
+    if n["tuning"]:
+        tdr = n["tuning"]["topdown_rows"]
+        out["topdown"] = charts.grouped_hbars(
+            MODELS, [("One model per café", [r["per_cafe_mape"] for r in tdr], charts.INK),
+                     ("One model on the total", [r["total_mape"] for r in tdr], charts.G400)],
+            size=(4.6, 2.3), name="topdown")
+    if P:
+        adf = pd.read_csv(TUNING / "adopted_forecasts.csv")
+        h = adf[(adf.set == "holdout") & (adf.origin == "2025-09-30")].groupby("month")[["actual", "f"]].sum()
+        k25 = P["chosen"]["factor_tuning"]
+        out["plan_backtest"] = charts.plan_backtest(
+            [pd.Period(m, "M").to_timestamp() for m in h.index], h.actual.to_numpy(), h.f.to_numpy(),
+            h.f.to_numpy() * k25, "Forecast made Sep 30, 2025 for Jan–Sep 2026 (9 cafés)")
+        rows = P["rows"]
+        labels = ["Best estimate (blend)"] + [f"{r['over_cost']}:1" + (" · plan" if r["chosen"] else "") for r in rows]
+        values = [n["f2027"][ENSEMBLE]] + [r["f2027"] for r in rows]
+        chosen_label = next(lbl for lbl in labels if lbl.endswith("· plan"))
+        out["plan_ladder"] = charts.model_dots(labels, values, n["e2026"], f"2026E {fm(n['e2026'])}",
+                                               chosen_label, size=(4.4, 2.9), name="plan-ladder")
     if n["tuning"]:
         T = n["tuning"]
         rows, bb, ba = T["models"], T["blend_before"], T["blend_after"]

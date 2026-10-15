@@ -125,6 +125,7 @@ ul.tight li{margin:0 0 5px}
 </style>
 </head>
 <body>
+{% set P = n.plan %}
 
 {# ======================================================================= COVER #}
 <section class="page cover">
@@ -146,7 +147,8 @@ ul.tight li{margin:0 0 5px}
 {# ======================================================================= SUMMARY #}
 <section class="page">
   <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">A bird's-eye view</span></div>
-  <h1>2027 net sales: {{ n.f2027[ENSEMBLE] | fm }}, {{ n.g2027[ENSEMBLE] | pct }} on 2026</h1>
+  {% if P %}<h1>2027 sales plan: {{ P.f2027 | fm }}, {{ P.growth | pct }} on 2026</h1>
+  {% else %}<h1>2027 net sales: {{ n.f2027[ENSEMBLE] | fm }}, {{ n.g2027[ENSEMBLE] | pct }} on 2026</h1>{% endif %}
   {% if n.tuning %}
   <p class="lede">We forecast each café's sales with three time-series models, tuned their settings and features on 2025, confirmed the gains on January–September 2026, and recommend the blend of the three, the most accurate option in every round.</p>
   {% else %}
@@ -154,10 +156,17 @@ ul.tight li{margin:0 0 5px}
   {% endif %}
   <div class="row" style="margin-top:14px;align-items:flex-start">
     <div class="col" style="flex:1.05">
+      {% if P %}
+      <div class="hero">{{ P.f2027 | fm }}</div>
+      <div class="hero-cap">2027 sales plan · best estimate {{ n.f2027[ENSEMBLE] | fm }} shaded {{ (P.factor - 1) | pct(1) }} because over-forecasting costs {{ P.over_cost }}× more · existing 11 cafés</div>
+      <div class="tiles">
+        <div class="tile"><div class="lab">2027 best estimate</div><div class="val">{{ n.f2027[ENSEMBLE] | fm }}</div><div class="delta">{{ n.g2027[ENSEMBLE] | pct }} · blend of 3 tuned models</div></div>
+      {% else %}
       <div class="hero">{{ n.f2027[ENSEMBLE] | fm }}</div>
       <div class="hero-cap">2027 net sales forecast · blend of Prophet, SARIMA and Holt-Winters · existing 11 cafés</div>
       <div class="tiles">
         <div class="tile"><div class="lab">2025 actual</div><div class="val">{{ n.a2025 | fm }}</div><div class="delta">{{ (n.a2025 / n.a2024 - 1) | pct }} vs 2024</div></div>
+      {% endif %}
         <div class="tile"><div class="lab">2026 estimate</div><div class="val">{{ n.e2026 | fm }}</div><div class="delta">{{ n.g2026 | pct }} vs 2025</div></div>
         <div class="tile"><div class="lab">2027 model range</div><div class="val">${{ (n.low / 1e6) | round(1) }}–{{ (n.high / 1e6) | round(1) }}M</div><div class="delta">{{ n.g2027[n.low_model] | pct }} to {{ n.g2027[n.high_model] | pct }}</div></div>
       </div>
@@ -170,15 +179,19 @@ ul.tight li{margin:0 0 5px}
   </div>
   <div class="findings">
     <div class="finding"><div class="num">01</div><p><b>The flock keeps growing.</b> 2026 is landing near {{ n.e2026 | fm }} ({{ n.g2026 | pct }}). Like-for-like sales are up {{ n.lfl[2].sales | pct }} this year on {{ n.lfl[2].checks | pct }} more checks: the growth is traffic, not price.</p></div>
-    <div class="finding"><div class="num">02</div><p><b>The three models agree within a narrow band.</b> Prophet {{ n.f2027["Prophet"] | fm }}, SARIMA {{ n.f2027["SARIMA"] | fm }}, Holt-Winters {{ n.f2027["Holt-Winters"] | fm }}: all expect another year of double-digit growth ({{ n.g2027[n.low_model] | pct }} to {{ n.g2027[n.high_model] | pct }}).</p></div>
+    <div class="finding"><div class="num">02</div><p><b>The three models agree within a narrow band.</b> Prophet {{ n.f2027["Prophet"] | fm }}, SARIMA {{ n.f2027["SARIMA"] | fm }}, Holt-Winters {{ n.f2027["Holt-Winters"] | fm }}: all expect another year of double-digit growth ({{ n.g2027[n.low_model] | pct }} to {{ n.g2027[n.high_model] | pct }}){% if n.tuning %}, now within {{ (n.high - n.low) | fm }} of each other (was {{ n.tuning.baseline_spread | fm }} before tuning){% endif %}.</p></div>
     {% if n.tuning %}{% set T = n.tuning %}
     <div class="finding"><div class="num">03</div><p><b>Tuning sharpened the forecast.</b> After {{ T.n_prophet + T.n_sarima + T.n_hw }} settings were tried on 2025, the blend's error on the untouched Jan–Sep 2026 holdout fell from {{ T.blend_before.holdout_wape | pct(1, False) }} to {{ T.blend_after.holdout_wape | pct(1, False) }} per café-month and from {{ T.blend_before.holdout_brand_wape | pct(1, False) }} to {{ T.blend_after.holdout_brand_wape | pct(1, False) }} for the brand total.</p></div>
     {% else %}
     <div class="finding"><div class="num">03</div><p><b>The back-tests favor the blend.</b> {{ n.best_single }} was the best single model, a nose ahead of Prophet ({{ n.bt[2].wape | pct(1, False) }} vs {{ n.bt[0].wape | pct(1, False) }} café-month error). Averaging all three cut the brand's monthly error to {{ n.bt[3].mape | pct(1, False) }} and missed period totals by {{ n.bt[3].abs_err | pct(1, False) }} on average.</p></div>
     {% endif %}
+    {% if P %}
+    <div class="finding"><div class="num">04</div><p><b>Plan on {{ P.f2027 | fm }}, leaning low on purpose.</b> Over-forecasting is {{ P.over_cost }}× costlier, so the plan shades the best estimate by {{ (P.factor - 1) | pct(1) }}; in 2026 that would have cut the months where the plan beat actual sales from {{ P.chosen.over_blend | pct(0, False) }} to {{ P.chosen.over_plan | pct(0, False) }}. New cafés are not in the number.</p></div>
+    {% else %}
     <div class="finding"><div class="num">04</div><p><b>Plan on {{ n.f2027[ENSEMBLE] | fm }}, with {{ n.low | fm }} ({{ n.low_model }}) as the conservative case.</b> New cafés (Manhattan Beach, Studio City, Enclave) are not in the number. Our last four openings each added {{ n.analogs | map(attribute="first12") | min | fm }}–{{ (n.analogs | map(attribute="first12") | max / 1e6) | round(1) }}M in their first year.</p></div>
+    {% endif %}
   </div>
-  <div class="strip pin-bottom"><span class="lab">Live check</span><span>October 1–14, 2026, after the data the models were trained on: Toast recorded {{ n.live.actual | fm(2) }} and the blend forecast was {{ n.live[ENSEMBLE] | pct(1) }} off (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).</span></div>
+  <div class="strip pin-bottom"><span class="lab">Live check</span><span>October 1–14, 2026, after the data the models were trained on: Toast recorded {{ n.live.actual | fm(2) }}; the best estimate was {{ n.live[ENSEMBLE] | pct(1) }} off{% if P %} and the plan {{ n.live["Plan"] | pct(1) }}{% endif %} (Prophet {{ n.live["Prophet"] | pct(1) }}, SARIMA {{ n.live["SARIMA"] | pct(1) }}, Holt-Winters {{ n.live["Holt-Winters"] | pct(1) }}).</span></div>
   <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS (after discounts; excludes tax, tips and gift-card sales) · data through Oct 14, 2026</span><span class="pn"></span></div>
 </section>
 
@@ -239,7 +252,7 @@ ul.tight li{margin:0 0 5px}
     <div class="card">
       <div class="tag">Classic statistics · Box–Jenkins</div>
       <h2>SARIMA</h2>
-      <div class="how">Seasonal ARIMA: next year looks like last year, scaled by the café's average year-on-year growth.</div>
+      <div class="how">{% if n.tuning and n.tuning.adopted.models["SARIMA"].trend == "local" %}Seasonal ARIMA: next year looks like last year, adjusted by the recent trend in the café's year-on-year changes.{% else %}Seasonal ARIMA: next year looks like last year, scaled by the café's average year-on-year growth.{% endif %}</div>
       <dl>
         <dt>Sees</dt><dd>Monthly sales per café, adjusted for how many Saturdays, Sundays and closed days each month has.</dd>
         <dt>Assumes about growth</dt><dd>{% set st = n.tuning.adopted.models["SARIMA"].trend if n.tuning else "drift" %}{% if st == "drift" %}The café's average year-on-year growth rate carries on, compounding.{% elif st == "local" %}Growth follows the café's recent year-on-year trend, re-estimated as each month lands, rather than its long-run average.{% else %}No growth term: next year repeats this year's level, plus short-term momentum.{% endif %}</dd>
@@ -369,11 +382,11 @@ ul.tight li{margin:0 0 5px}
         <tbody>
         {% for f in T.features %}
           <tr><td>{{ f.model }}</td><td class="l" style="white-space:normal">{{ f.feature }}{% if f.in_best %} <span class="muted">· used</span>{% endif %}</td><td>{{ f.d_tune | pct(0) }}</td><td>{{ f.d_hold | pct(0) }}</td>
-            <td class="l" style="padding-left:14px">{% if f.verdict == "helps" %}<b>Helps</b>{% elif f.verdict == "hurts" %}Hurts{% else %}<span class="muted">Mixed</span>{% endif %}</td></tr>
+            <td class="l" style="padding-left:14px">{% if f.verdict == "helps" %}<b>Helps</b>{% elif f.verdict == "hurts" %}Hurts{% elif f.verdict == "no difference" %}<span class="muted">No difference</span>{% else %}<span class="muted">Mixed</span>{% endif %}</td></tr>
         {% endfor %}
         </tbody>
       </table>
-      <p class="note" style="margin-top:6px">Each feature switched on vs off with every other setting at the model's best; effect = change in score (average of café-month and brand-month error) when it is on, so negative is better. "Helps" or "Hurts" only when 2025 and 2026 agree. Weather could not be tested: this environment's network policy blocks the weather archive.</p>
+      <p class="note" style="margin-top:6px">Each feature switched on vs off with every other setting at the model's best; effect = change in score (average of café-month and brand-month error) when it is on, so negative is better. "Helps" or "Hurts" only when 2025 and 2026 agree; "No difference" when both move less than 1%. Weather could not be tested: this environment's network policy blocks the weather archive.</p>
     </div>
     <div class="col">
       <h3>How much growth to extrapolate?</h3>
@@ -403,10 +416,51 @@ ul.tight li{margin:0 0 5px}
     </tbody>
   </table>
   <p class="note" style="margin-top:6px">Holdout Jan–Sep 2026. "One model" is fitted to the combined sales of the cafés in each test; for 2027 it only has history from April 2024, when the eleventh café opened.</p>
-  <div class="row" style="margin-top:18px">
+  <div class="row" style="margin-top:18px;align-items:center">
+    <div class="col">
+      <div class="chart-title">Brand monthly error on the 2026 holdout</div>
+      <div class="chart-sub">Lower is better · tuned settings</div>
+      {{ svg.topdown }}
+    </div>
     <div class="col callout small">{{ T.topdown_verdict }}</div>
   </div>
   <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Brand monthly error = MAPE of the combined monthly sales of the cafés in each test</span><span class="pn"></span></div>
+</section>
+{% endif %}
+
+{% if P %}
+{# ======================================================================= PLAN #}
+<section class="page">
+  <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">The plan</span></div>
+  <h1>Leaning low on purpose</h1>
+  <p class="lede">Over-forecasting sales costs more than under-forecasting: labor, purchasing and targets get set too high. So the plan sits below the best estimate. The models were not weakened to get there; they are still tuned only for accuracy. Instead we measured how the blend has actually missed, and set the plan where the expected cost is lowest when an over-forecast dollar costs {{ P.over_cost }} under-forecast dollars.</p>
+  <div class="row">
+    <div class="col" style="flex:1.5">
+      <table>
+        <thead><tr><th class="l">If over-forecasting costs</th><th>Shade the<br>best estimate</th><th>2027<br>plan</th><th>2026 months above actual<br>best estimate → plan</th><th>2026 cost<br>best estimate → plan</th></tr></thead>
+        <tbody>
+        {% for r in P.rows %}
+          <tr class="{{ 'hl' if r.chosen else '' }}"><td>{{ r.over_cost }}× under-forecasting{% if r.chosen %}<span class="best">Plan</span>{% endif %}</td><td>{{ (r.factor - 1) | pct(1) }}</td><td>{{ r.f2027 | fm(2) }}</td><td>{{ r.over_blend | pct(0, False) }} → {{ r.over_plan | pct(0, False) }}</td><td>{{ r.cost_blend | pct(1, False) }} → {{ r.cost_plan | pct(1, False) }}</td></tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:6px">Shade = the multiplier that minimises the asymmetric cost of monthly brand misses on forecasts made 4–15 months ahead (2025 and 2026 targets). The 2026 columns test the multiplier fitted on 2025 alone against Jan–Sep 2026 ({{ P.holdout_months }} brand-months). Cost = over-forecast dollars × ratio + under-forecast dollars, as a share of sales.</p>
+    </div>
+    <div class="col">
+      <div class="chart-title">2027 plan by cost of over-forecasting</div>
+      <div class="chart-sub">Net sales, 11 cafés · % vs 2026 estimate</div>
+      {{ svg.plan_ladder }}
+    </div>
+  </div>
+  <div class="row" style="margin-top:14px;align-items:center">
+    <div class="col" style="flex:1.1">
+      <div class="chart-title">How the plan would have tracked 2026</div>
+      <div class="chart-sub">Plan = best estimate × the {{ P.over_cost }}:1 shade fitted on 2025 only</div>
+      {{ svg.plan_backtest }}
+    </div>
+    <div class="col callout small">{{ P.narrative }}</div>
+  </div>
+  <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>outputs/tuning/plan_calibration.csv · plan factor in outputs/tuned_configs.json</span><span class="pn"></span></div>
 </section>
 {% endif %}
 
@@ -422,9 +476,16 @@ ul.tight li{margin:0 0 5px}
     {% for m in MODELS %}
       <tr><td><span class="key gray"></span>{{ m }}</td>{% for r in n.months27 %}<td>{{ "{:,.0f}".format(r[m] / 1e3) }}</td>{% endfor %}<td>{{ n.f2027[m] | fm(2) }}</td></tr>
     {% endfor %}
+      {% if P %}
+      <tr><td><span class="key ink"></span>Best estimate</td>{% for r in n.months27 %}<td>{{ "{:,.0f}".format(r[ENSEMBLE] / 1e3) }}</td>{% endfor %}<td>{{ n.f2027[ENSEMBLE] | fm(2) }}</td></tr>
+      <tr class="hl"><td><span class="key pink"></span>Plan</td>{% for r in n.months27 %}<td>{{ "{:,.0f}".format(r.plan / 1e3) }}</td>{% endfor %}<td>{{ P.f2027 | fm(2) }}</td></tr>
+      <tr><td class="muted">2026 (Q4 estimate)</td>{% for r in n.months27 %}<td class="muted">{{ "{:,.0f}".format(r.ref2026 / 1e3) }}</td>{% endfor %}<td class="muted">{{ n.e2026 | fm(2) }}</td></tr>
+      <tr><td class="muted">Plan vs 2026</td>{% for r in n.months27 %}<td class="muted">{{ (r.plan / r.ref2026 - 1) | pct }}</td>{% endfor %}<td class="muted">{{ P.growth | pct }}</td></tr>
+      {% else %}
       <tr class="hl"><td><span class="key pink"></span>Blend</td>{% for r in n.months27 %}<td>{{ "{:,.0f}".format(r[ENSEMBLE] / 1e3) }}</td>{% endfor %}<td>{{ n.f2027[ENSEMBLE] | fm(2) }}</td></tr>
       <tr><td class="muted">2026 (Q4 estimate)</td>{% for r in n.months27 %}<td class="muted">{{ "{:,.0f}".format(r.ref2026 / 1e3) }}</td>{% endfor %}<td class="muted">{{ n.e2026 | fm(2) }}</td></tr>
       <tr><td class="muted">Blend vs 2026</td>{% for r in n.months27 %}<td class="muted">{{ (r[ENSEMBLE] / r.ref2026 - 1) | pct }}</td>{% endfor %}<td class="muted">{{ n.g2027[ENSEMBLE] | pct }}</td></tr>
+      {% endif %}
     </tbody>
   </table>
   <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>2026 row: Jan–Sep actual, Oct–Dec blended forecast</span><span class="pn"></span></div>
@@ -434,16 +495,16 @@ ul.tight li{margin:0 0 5px}
 <section class="page">
   <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">The forecast</span></div>
   <h1>2027, café by café</h1>
-  <p class="lede">{{ n.top3[0] }}, {{ n.top3[1] }} and {{ n.top3[2] }} deliver {{ n.top3_share | pct(0, False) }} of the {{ n.growth_total | fm }} of growth. Coronado and the La Jolla Juicery are the slowest, at under +5%.</p>
+  <p class="lede">{{ n.top3[0] }}, {{ n.top3[1] }} and {{ n.top3[2] }} deliver {{ n.top3_share | pct(0, False) }} of the {{ n.growth_total | fm }} of growth. {{ n.slowest[0].store }} ({{ n.slowest[0].growth | pct }}) and {{ n.slowest[1].store }} ({{ n.slowest[1].growth | pct }}) grow the least.</p>
   <div class="row">
     <div class="col" style="flex:1.45">
       <table class="roomy">
-        <thead><tr><th class="l">Café</th><th class="l">Region</th><th>2025<br>actual</th><th>2026<br>estimate</th><th>2027<br>forecast</th><th>vs<br>2026</th><th>Model range<br>(low–high)</th><th>Share<br>of 2027</th></tr></thead>
+        <thead><tr><th class="l">Café</th><th class="l">Region</th><th>2025<br>actual</th><th>2026<br>estimate</th><th>2027 best<br>estimate</th><th>vs<br>2026</th>{% if P %}<th>2027<br>plan</th>{% endif %}<th>Model range<br>(low–high)</th>{% if not P %}<th>Share<br>of 2027</th>{% endif %}</tr></thead>
         <tbody>
         {% for c in n.cafes %}
-          <tr><td>{{ c.store }}</td><td class="l muted">{{ c.region }}</td><td>{{ "%.2f" | format(c.a2025 / 1e6) }}</td><td>{{ "%.2f" | format(c.e2026 / 1e6) }}</td><td><b>{{ "%.2f" | format(c.f2027 / 1e6) }}</b></td><td>{{ c.growth | pct }}</td><td>{{ "%.2f" | format(c.low / 1e6) }}–{{ "%.2f" | format(c.high / 1e6) }}</td><td>{{ c.share | pct(0, False) }}</td></tr>
+          <tr><td>{{ c.store }}</td><td class="l muted">{{ c.region }}</td><td>{{ "%.2f" | format(c.a2025 / 1e6) }}</td><td>{{ "%.2f" | format(c.e2026 / 1e6) }}</td><td>{{ "%.2f" | format(c.f2027 / 1e6) }}</td><td>{{ c.growth | pct }}</td>{% if P %}<td><b>{{ "%.2f" | format(c.plan / 1e6) }}</b></td>{% endif %}<td>{{ "%.2f" | format(c.low / 1e6) }}–{{ "%.2f" | format(c.high / 1e6) }}</td>{% if not P %}<td>{{ c.share | pct(0, False) }}</td>{% endif %}</tr>
         {% endfor %}
-          <tr class="total"><td>All cafés</td><td></td><td>{{ "%.2f" | format(n.a2025 / 1e6) }}</td><td>{{ "%.2f" | format(n.e2026 / 1e6) }}</td><td>{{ "%.2f" | format(n.f2027[ENSEMBLE] / 1e6) }}</td><td>{{ n.g2027[ENSEMBLE] | pct }}</td><td>{{ "%.2f" | format(n.low / 1e6) }}–{{ "%.2f" | format(n.high / 1e6) }}</td><td>100%</td></tr>
+          <tr class="total"><td>All cafés</td><td></td><td>{{ "%.2f" | format(n.a2025 / 1e6) }}</td><td>{{ "%.2f" | format(n.e2026 / 1e6) }}</td><td>{{ "%.2f" | format(n.f2027[ENSEMBLE] / 1e6) }}</td><td>{{ n.g2027[ENSEMBLE] | pct }}</td>{% if P %}<td>{{ "%.2f" | format(P.f2027 / 1e6) }}</td>{% endif %}<td>{{ "%.2f" | format(n.low / 1e6) }}–{{ "%.2f" | format(n.high / 1e6) }}</td>{% if not P %}<td>100%</td>{% endif %}</tr>
         </tbody>
       </table>
       <p class="note" style="margin-top:6px">$ millions, net sales. Model range = lowest and highest of Prophet, SARIMA and Holt-Winters for that café (café ranges do not add up to the total range).</p>
@@ -479,7 +540,7 @@ ul.tight li{margin:0 0 5px}
       <h3>Growth is concentrated</h3>
       <div class="big">{{ n.top3_share | pct(0, False) }}</div>
       <div class="cap">of 2027 growth comes from three cafés</div>
-      <p>{{ n.fast2[0].store }} ({{ n.fast2[0].growth | pct }}) and {{ n.fast2[1].store }} ({{ n.fast2[1].growth | pct }}, stepped up in March 2026) lead. If both grew +10% instead, 2027 would land near {{ n.fast2_case | fm }} ({{ (n.fast2_case / n.f2027[ENSEMBLE] - 1) | pct(1) }} vs the blend).</p>
+      <p>{% for c in n.fast2 %}{{ c.store }} ({{ c.growth | pct }}{% if c.store == "Little Italy" %}, after a step up in March 2026{% endif %}){{ " and " if loop.first else "" }}{% endfor %} lead. If both grew +10% instead, 2027 would land near {{ n.fast2_case | fm }} ({{ (n.fast2_case / n.f2027[ENSEMBLE] - 1) | pct(1) }} vs the blend).</p>
     </div>
     <div class="col risk">
       <h3>Price is an open lever</h3>
@@ -495,7 +556,8 @@ ul.tight li{margin:0 0 5px}
       {{ svg.scenarios }}
     </div>
     <div class="col rules" style="flex:1;flex-direction:column;gap:12px;margin:0">
-      <div><h3>How to use it</h3>Budget at <b>{{ n.f2027[ENSEMBLE] | fm }}</b> (the blend), with {{ n.low_model }}'s <b>{{ n.low | fm }}</b> as the conservative case and {{ n.high_model }}'s <b>{{ n.high | fm }}</b> as the stretch. Add new cafés on top as their opening dates firm up.</div>
+      {% if P %}<div><h3>How to use it</h3>Budget at the plan, <b>{{ P.f2027 | fm }}</b>; the best estimate is {{ n.f2027[ENSEMBLE] | fm }}. For café targets each café should beat three months in four, shade café forecasts by about {{ (P.cafe_factor - 1) | pct(0) }} (single cafés miss by more). Add new cafés on top as their opening dates firm up.</div>
+      {% else %}<div><h3>How to use it</h3>Budget at <b>{{ n.f2027[ENSEMBLE] | fm }}</b> (the blend), with {{ n.low_model }}'s <b>{{ n.low | fm }}</b> as the conservative case and {{ n.high_model }}'s <b>{{ n.high | fm }}</b> as the stretch. Add new cafés on top as their opening dates firm up.</div>{% endif %}
       <div><h3>Watch first</h3>Q1 2027 like-for-like against the forecast's {{ n.q1_growth | pct }}. A gap of more than 3 points is the signal to revisit.</div>
       <div><h3>Keep it fresh</h3>Re-run monthly as Toast data lands; the full pipeline (extract, back-test, forecast, this report) runs in minutes from the repo.</div>
     </div>
@@ -549,12 +611,12 @@ ul.tight li{margin:0 0 5px}
   <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Appendix</span></div>
   <h1>2027 forecast by café and model</h1>
   <table style="margin-top:14px">
-    <thead><tr><th class="l">Café</th><th class="l">Region</th><th>2025 actual</th><th>2026 estimate</th><th>Prophet</th><th>SARIMA</th><th>Holt-Winters</th><th>Blend</th><th class="l" style="padding-left:16px">SARIMA order chosen (AICc)</th></tr></thead>
+    <thead><tr><th class="l">Café</th><th class="l">Region</th><th>2025 actual</th><th>2026 estimate</th><th>Prophet</th><th>SARIMA</th><th>Holt-Winters</th><th>Blend</th>{% if P %}<th>Plan</th>{% endif %}<th class="l" style="padding-left:16px">SARIMA order chosen</th></tr></thead>
     <tbody>
     {% for c in n.cafes %}
-      <tr><td>{{ c.store }}</td><td class="l muted">{{ c.region }}</td><td>{{ c.a2025 | fm(2) }}</td><td>{{ c.e2026 | fm(2) }}</td><td>{{ c.prophet | fm(2) }}</td><td>{{ c.sarima | fm(2) }}</td><td>{{ c.hw | fm(2) }}</td><td><b>{{ c.f2027 | fm(2) }}</b></td><td class="l muted" style="padding-left:16px">{{ c.sarima_spec }}</td></tr>
+      <tr><td>{{ c.store }}</td><td class="l muted">{{ c.region }}</td><td>{{ c.a2025 | fm(2) }}</td><td>{{ c.e2026 | fm(2) }}</td><td>{{ c.prophet | fm(2) }}</td><td>{{ c.sarima | fm(2) }}</td><td>{{ c.hw | fm(2) }}</td><td><b>{{ c.f2027 | fm(2) }}</b></td>{% if P %}<td>{{ c.plan | fm(2) }}</td>{% endif %}<td class="l muted" style="padding-left:16px">{{ c.sarima_spec }}</td></tr>
     {% endfor %}
-      <tr class="total"><td>All cafés</td><td></td><td>{{ n.a2025 | fm(2) }}</td><td>{{ n.e2026 | fm(2) }}</td><td>{{ n.f2027["Prophet"] | fm(2) }}</td><td>{{ n.f2027["SARIMA"] | fm(2) }}</td><td>{{ n.f2027["Holt-Winters"] | fm(2) }}</td><td>{{ n.f2027[ENSEMBLE] | fm(2) }}</td><td></td></tr>
+      <tr class="total"><td>All cafés</td><td></td><td>{{ n.a2025 | fm(2) }}</td><td>{{ n.e2026 | fm(2) }}</td><td>{{ n.f2027["Prophet"] | fm(2) }}</td><td>{{ n.f2027["SARIMA"] | fm(2) }}</td><td>{{ n.f2027["Holt-Winters"] | fm(2) }}</td><td>{{ n.f2027[ENSEMBLE] | fm(2) }}</td>{% if P %}<td>{{ P.f2027 | fm(2) }}</td>{% endif %}<td></td></tr>
     </tbody>
   </table>
   <div class="row small" style="margin-top:22px;gap:.32in">
@@ -565,7 +627,7 @@ ul.tight li{margin:0 0 5px}
         <li><i>outputs/forecast_brand_month.csv</i>: brand totals with simulation ranges</li>
         <li><i>outputs/backtest_forecasts.csv</i>, <i>backtest_metrics.csv</i>: every rehearsal forecast and score</li>
       </ul></div>
-    <div class="col"><h3>Reading the ranges</h3>The low–high model range is the practical planning band. Each model's own 80% interval for the 2027 total (in <i>forecast_annual.csv</i>) ranges from ±{{ n.pi_halfwidth["Prophet"] | pct(0, False) }} for Prophet to ±{{ n.pi_halfwidth["Holt-Winters"] | pct(0, False) }} for Holt-Winters. They disagree too much, and Prophet's is far tighter than its back-test misses, so we don't headline them.</div>
+    <div class="col"><h3>Reading the ranges</h3>The low–high model range is the practical planning band. Each model's own 80% interval for the 2027 total (in <i>forecast_annual.csv</i>) ranges from ±{{ n.pi_halfwidth["Prophet"] | pct(1, False) }} for Prophet to ±{{ n.pi_halfwidth["Holt-Winters"] | pct(1, False) }} for Holt-Winters. They disagree too much, and Prophet's is far tighter than its back-test misses, so we don't headline them.</div>
     <div class="col"><h3>Reproduce</h3><i>python src/backtest.py</i> → <i>python src/tune.py</i> → <i>python src/forecast_2027.py</i> → <i>python report/build_report.py</i>. Data refresh: <i>data/sql/extract_parakeet_daily.sql</i> via MCP Andersons.</div>
   </div>
   <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>Net sales from Toast POS · $ millions</span><span class="pn"></span></div>
@@ -576,22 +638,17 @@ ul.tight li{margin:0 0 5px}
 <section class="page">
   <div class="head"><img src="assets/logo-bird.png" alt="Parakeet Cafe"><span class="eyebrow">Appendix</span></div>
   <h1>Settings: round 1 vs tuned</h1>
-  <div class="row" style="margin-top:14px;gap:.3in">
-  {% for m in MODELS %}
-    <div class="col">
-      <h3>{{ m }} · {{ "tuned settings adopted" if T.adopted.variant[m] == "tuned" else "round-1 settings kept" }}</h3>
-      <table>
-        <thead><tr><th class="l">Setting</th><th>Best found</th><th>Round 1</th></tr></thead>
-        <tbody>
-        {% for label, tuned, base in T.describe_best[m] %}
-          <tr class="{{ 'hl' if tuned != base else '' }}"><td style="white-space:normal">{{ label }}</td><td>{{ tuned }}</td><td class="muted">{{ base }}</td></tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  {% endfor %}
-  </div>
-  <p class="note" style="margin-top:12px">Bold rows changed. "Best found" is the top score on the 2025 tuning set; it is used for 2027 only where the model is marked "adopted" (it also won on the 2026 holdout). Trend flexibility, seasonality and holiday strength are Prophet's prior scales: higher lets that component bend more.{% if T.blend_weights %} Blend weights: {% for m in MODELS %}{{ m }} {{ T.blend_weights[m] | pct(0, False) }}{{ ", " if not loop.last else "." }}{% endfor %}{% endif %}</p>
+  <table style="margin-top:14px">
+    <thead><tr><th class="l">Model</th><th class="l">Setting</th><th class="l">Best found on 2025</th><th class="l">Round 1</th><th class="l">Used for 2027</th></tr></thead>
+    <tbody>
+    {% for m in MODELS %}
+      {% for label, tuned, base in T.describe_best[m] %}
+      <tr class="{{ 'hl' if tuned != base else '' }}"><td>{{ m if loop.first else "" }}</td><td class="l">{{ label }}</td><td class="l">{{ tuned }}</td><td class="l muted">{{ base }}</td><td class="l">{{ tuned if T.adopted.variant[m] == "tuned" else base }}</td></tr>
+      {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+  <p class="note" style="margin-top:10px">Bold rows changed. "Best found" is the top score on the 2025 tuning set; it is used for 2027 only where it also won on the 2026 holdout ({{ T.adopted_models | join(" and ") if T.adopted_models else "none" }}). Trend flexibility, seasonality and holiday strength are Prophet's prior scales: higher lets that component bend more.{% if T.blend_weights %} Blend weights: {% for m in MODELS %}{{ m }} {{ T.blend_weights[m] | pct(0, False) }}{{ ", " if not loop.last else "." }}{% endfor %}{% endif %}</p>
   <div class="foot"><span>Parakeet Cafe · 2027 Sales Forecast</span><span>outputs/tuned_configs.json holds the exact values</span><span class="pn"></span></div>
 </section>
 {% endif %}

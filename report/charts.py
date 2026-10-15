@@ -172,8 +172,8 @@ def rehearsal(months, actual, blend, low, high, title, size=(4.75, 3.4)) -> str:
     return to_svg(fig, "rehearsal-" + title[:12])
 
 
-def forecast(months_act, actual, months_fc, blend, low, high, size=(9.7, 3.55)) -> str:
-    """Actuals into the 2027 forecast (blend) with the spread across the three models."""
+def forecast(months_act, actual, months_fc, blend, low, high, plan=None, size=(9.7, 3.55)) -> str:
+    """Actuals into 2027: the plan (pink) when given, the blend, and the spread of the models."""
     fig, ax = plt.subplots(figsize=size)
     n_a = len(months_act)
     xa = np.arange(n_a)
@@ -181,8 +181,15 @@ def forecast(months_act, actual, months_fc, blend, low, high, size=(9.7, 3.55)) 
     blend_c = np.concatenate([[actual[-1]], blend])
     low_c = np.concatenate([[actual[-1]], low])
     high_c = np.concatenate([[actual[-1]], high])
-    band = ax.fill_between(xf, low_c, high_c, color=PINK, alpha=0.12, linewidth=0)
-    (lb,) = ax.plot(xf, blend_c, color=PINK, lw=2)
+    if plan is not None:
+        band = ax.fill_between(xf, low_c, high_c, color=G400, alpha=0.22, linewidth=0)
+        (lbe,) = ax.plot(xf, blend_c, color=G500, lw=1.5)
+        (lb,) = ax.plot(xf, np.concatenate([[actual[-1]], plan]), color=PINK, lw=2)
+        shown = plan
+    else:
+        band = ax.fill_between(xf, low_c, high_c, color=PINK, alpha=0.12, linewidth=0)
+        (lb,) = ax.plot(xf, blend_c, color=PINK, lw=2)
+        shown = blend
     (la,) = ax.plot(xa, actual, color=INK, lw=2)
     ax.axvline(n_a - 0.5, color=G300, lw=0.75)
     top = max(np.max(high), np.max(actual)) * 1.12
@@ -190,8 +197,8 @@ def forecast(months_act, actual, months_fc, blend, low, high, size=(9.7, 3.55)) 
     ax.text(n_a - 0.8, top * 0.985, "Actual", fontsize=8.5, color=G700, va="top", ha="right")
     # selective labels: last actual, the 2027 peak and the last forecast month
     months = list(months_act) + list(months_fc)
-    for i, v, dy in [(n_a - 1, actual[-1], -15), (n_a + int(np.argmax(blend)), np.max(blend), 10),
-                     (n_a + len(blend) - 1, blend[-1], 10)]:
+    for i, v, dy in [(n_a - 1, actual[-1], -15), (n_a + int(np.argmax(shown)), np.max(shown), 10),
+                     (n_a + len(shown) - 1, shown[-1], 10)]:
         ax.plot(i, v, "o", ms=6, color=INK if i < n_a else PINK, mec="white", mew=1.5, zorder=4)
         ax.annotate(f"{months[i].strftime('%b %y')}  {money_m(v)}", (i, v), xytext=(0, dy),
                     textcoords="offset points", ha="center", va="center", fontsize=8, color=G900)
@@ -200,8 +207,12 @@ def forecast(months_act, actual, months_fc, blend, low, high, size=(9.7, 3.55)) 
     ax.set_yticks(np.arange(0, top, 500_000))
     _month_ticks(ax, months, every=3)
     ax.set_xlim(-0.5, len(months) - 0.3)
-    _legend(ax, [la, lb, band], ["Actual net sales", "2027 forecast (blend of 3 models)",
-                                 "Range: lowest to highest model"], loc="lower left")
+    if plan is not None:
+        _legend(ax, [la, lb, lbe, band], ["Actual net sales", "2027 plan", "Best estimate (blend)",
+                                          "Range: lowest to highest model"], loc="lower left")
+    else:
+        _legend(ax, [la, lb, band], ["Actual net sales", "2027 forecast (blend of 3 models)",
+                                     "Range: lowest to highest model"], loc="lower left")
     return to_svg(fig, "forecast")
 
 
@@ -255,13 +266,57 @@ def dumbbells(labels, panels, size=(9.7, 2.5)) -> str:
     axes = np.atleast_1d(axes)
     axes[0].set_yticks(y)
     axes[0].set_yticklabels(labels)
-    # legend: gray = before, pink = after (improved)
+    # legend: gray = before, pink = tuned and better, ink = tuned but worse
     from matplotlib.lines import Line2D
     handles = [Line2D([], [], ls="", marker="o", ms=7, color=G400, mec="white"),
-               Line2D([], [], ls="", marker="o", ms=8, color=PINK, mec="white")]
-    _legend(axes[-1], handles, ["Round 1 settings", "Tuned settings"], loc="lower right", ncol=2)
+               Line2D([], [], ls="", marker="o", ms=8, color=PINK, mec="white"),
+               Line2D([], [], ls="", marker="o", ms=8, color=INK, mec="white")]
+    _legend(axes[-1], handles, ["Round 1", "Tuned, better", "Tuned, worse"], loc="lower right", ncol=3)
     fig.subplots_adjust(wspace=0.1)
     return to_svg(fig, "dumbbells")
+
+
+def grouped_hbars(categories, series, size=(4.6, 2.4), name="grouped") -> str:
+    """Horizontal bars, two or three series per category. series: list of (label, values, color)."""
+    fig, ax = plt.subplots(figsize=size)
+    k = len(series)
+    h = 0.8 / k
+    y = np.arange(len(categories))[::-1]
+    handles = []
+    for i, (label, values, color) in enumerate(series):
+        yy = y + (k - 1) / 2 * h - i * h
+        bars = ax.barh(yy, values, height=h * 0.86, color=color, linewidth=0)
+        handles.append(bars)
+        for yi, v in zip(yy, values):
+            ax.annotate(f"{v:.1%}", (v, yi), xytext=(4, 0), textcoords="offset points", va="center",
+                        fontsize=8, color=G900)
+    ax.set_yticks(y)
+    ax.set_yticklabels(categories)
+    ax.set_xlim(0, max(max(v) for _, v, _ in series) * 1.75)
+    ax.set_xticks([])
+    ax.grid(False)
+    ax.spines["bottom"].set_visible(False)
+    ax.spines["left"].set_visible(True)
+    _legend(ax, handles, [s[0] for s in series], loc="upper right", ncol=1)
+    return to_svg(fig, name)
+
+
+def plan_backtest(months, actual, best, plan, title, size=(5.2, 2.8)) -> str:
+    """How the plan would have tracked actual sales on the holdout."""
+    fig, ax = plt.subplots(figsize=size)
+    x = np.arange(len(months))
+    (lb,) = ax.plot(x, best, color=G500, lw=1.5)
+    (lp,) = ax.plot(x, plan, color=PINK, lw=2)
+    (la,) = ax.plot(x, actual, color=INK, lw=2, marker="o", ms=4, mec="white", mew=1)
+    lo, hi = min(np.min(actual), np.min(plan)), max(np.max(actual), np.max(best))
+    pad = (hi - lo) * 0.25
+    ax.set_ylim(lo - pad, hi + pad * 1.7)
+    ax.yaxis.set_major_formatter(FuncFormatter(money_m))
+    ax.set_xticks(x[::2])
+    ax.set_xticklabels([m.strftime("%b %y") for m in months][::2])
+    ax.set_title(title, fontsize=9, color=G900, loc="left", pad=8, fontweight=600)
+    _legend(ax, [la, lp, lb], ["Actual", "Plan", "Best estimate"])
+    return to_svg(fig, "plan-backtest")
 
 
 def growth_bars(labels, deltas, pcts, size=(4.6, 4.95)) -> str:

@@ -1,0 +1,10 @@
+model,settings,approach,forecast_2027
+Prophet,baseline,one model per cafe,33018511.986399166
+Prophet,adopted,one model per cafe,33070034.101528905
+Prophet,adopted,one model on the total,32676030.864422668
+SARIMA,baseline,one model per cafe,34188790.39603049
+SARIMA,adopted,one model per cafe,33225880.5123019
+SARIMA,adopted,one model on the total,33483731.5679548
+Holt-Winters,baseline,one model per cafe,32223250.78157757
+Holt-Winters,adopted,one model per cafe,32223250.78157757
+Holt-Winters,adopted,one model on the total,32084153.358254667

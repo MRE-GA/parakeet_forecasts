@@ -12,10 +12,15 @@ Steps
  4. Blend rule (mean / median / inverse-error weights) picked on the tuning set and kept only if
     it is at least as good as the plain mean on the holdout.
  5. Top-down check: one model fitted to the cafes' total vs one model per cafe (bottom-up).
+ 6. Conservative plan: over-forecasting sales costs more than under-forecasting, so the plan is
+    the blend times a factor k that minimises an asymmetric cost (over-forecast dollars weighted
+    OVER_COST x). k is fitted on the tuning set's brand-month errors and checked on the holdout;
+    the 2027 plan uses k re-estimated on both. Model settings stay chosen on accuracy alone, so
+    nothing is deliberately underfit.
 
 Writes outputs/tuning/*.csv and outputs/tuned_configs.json (read by forecast_2027.py).
 
-    python src/tune.py [--trials 100] [--jobs 4]
+    python src/tune.py [--trials 150] [--jobs 4] [--reuse prophet,sarima]
 """
 from __future__ import annotations
 
@@ -40,6 +45,40 @@ HOLDOUT_WINDOW = (pd.Period("2026-01", "M"), pd.Period("2026-09", "M"))
 FINAL_ORIGIN = pd.Timestamp("2026-09-30")
 MIN_H, MAX_H = 4, 15
 OUT = OUTPUTS / "tuning"
+OVER_COST = 3  # an over-forecast dollar costs this many under-forecast dollars (default plan)
+COST_RATIOS = [1, 2, 3, 4]
+
+
+def asym_cost(actual, forecast, over_cost: float) -> float:
+    """Asymmetric absolute error as a share of actual sales: over-forecasts weighted over_cost x."""
+    actual, forecast = np.asarray(actual, float), np.asarray(forecast, float)
+    err = forecast - actual
+    return (over_cost * err.clip(min=0) - err.clip(max=0)).sum() / actual.sum()
+
+
+def best_factor(actual, forecast, over_cost: float) -> float:
+    """Multiplier on the forecast that minimises the asymmetric cost (grid, 0.1% steps)."""
+    grid = np.arange(0.80, 1.101, 0.001)
+    costs = [asym_cost(actual, forecast * k, over_cost) for k in grid]
+    return float(grid[int(np.argmin(costs))])
+
+
+def calibrate_plan(tune_brand: pd.DataFrame, hold_brand: pd.DataFrame) -> pd.DataFrame:
+    """Plan factor per cost ratio: fitted on tuning brand-months, scored on the holdout."""
+    rows = []
+    both = pd.concat([tune_brand, hold_brand])
+    for c in COST_RATIOS:
+        k = best_factor(tune_brand.actual, tune_brand.f, c)
+        h_a, h_f = hold_brand.actual.to_numpy(), hold_brand.f.to_numpy()
+        rows.append({
+            "over_cost": c, "factor_tuning": k,
+            "factor_final": best_factor(both.actual, both.f, c),
+            "holdout_cost_blend": asym_cost(h_a, h_f, c), "holdout_cost_plan": asym_cost(h_a, h_f * k, c),
+            "holdout_over_share_blend": float(np.mean(h_f > h_a)),
+            "holdout_over_share_plan": float(np.mean(h_f * k > h_a)),
+            "holdout_bias_plan": bias(h_a, h_f * k),
+        })
+    return pd.DataFrame(rows)
 
 SARIMA_GRID = [
     {"trend": t, "candidates": cs, "criterion": cr, "transform": tr, "td_adjust": td}
@@ -163,22 +202,32 @@ def prophet_search(ev: Evaluator, n_trials: int) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values("objective").reset_index(drop=True)
 
 
-def main(n_trials: int, n_jobs: int) -> None:
+def main(n_trials: int, n_jobs: int, reuse: set[str]) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     stores = load_stores()
     ev = Evaluator(stores, n_jobs)
     t0 = time.time()
 
-    # 1-2. search on the tuning set ------------------------------------------------------------
-    print("Prophet search", flush=True)
-    prophet = prophet_search(ev, n_trials)
-    prophet.to_csv(OUT / "prophet_trials.csv", index=False)
-    print("SARIMA grid", flush=True)
-    sarima = grid_search(ev, "SARIMA", SARIMA_GRID)
-    sarima.to_csv(OUT / "sarima_grid.csv", index=False)
-    print("Holt-Winters grid", flush=True)
-    hw = grid_search(ev, "Holt-Winters", HW_GRID)
-    hw.to_csv(OUT / "hw_grid.csv", index=False)
+    # 1-2. search on the tuning set (or reuse a finished search) ---------------------------------
+    if "prophet" in reuse:
+        prophet = pd.read_csv(OUT / "prophet_trials.csv")
+        n_trials = len(prophet)
+    else:
+        print("Prophet search", flush=True)
+        prophet = prophet_search(ev, n_trials)
+        prophet.to_csv(OUT / "prophet_trials.csv", index=False)
+    if "sarima" in reuse:
+        sarima = pd.read_csv(OUT / "sarima_grid.csv")
+    else:
+        print("SARIMA grid", flush=True)
+        sarima = grid_search(ev, "SARIMA", SARIMA_GRID)
+        sarima.to_csv(OUT / "sarima_grid.csv", index=False)
+    if "hw" in reuse:
+        hw = pd.read_csv(OUT / "hw_grid.csv")
+    else:
+        print("Holt-Winters grid", flush=True)
+        hw = grid_search(ev, "Holt-Winters", HW_GRID)
+        hw.to_csv(OUT / "hw_grid.csv", index=False)
 
     best = {"Prophet": json.loads(prophet.config[0]), "SARIMA": json.loads(sarima.config[0]),
             "Holt-Winters": json.loads(hw.config[0])}
@@ -221,6 +270,16 @@ def main(n_trials: int, n_jobs: int) -> None:
     ad = blends[blends.models == "adopted models"].set_index("rule")
     pick = ad.tune_objective.idxmin()
     blend_rule = json.loads(ad.loc[pick, "rule_value"]) if ad.loc[pick, "holdout_objective"] <= ad.loc["mean", "holdout_objective"] else "mean"
+
+    # 6. conservative plan factor on the adopted blend ------------------------------------------
+    tf, hf = frame(tune_fc, adopted_variant), frame(hold_fc, adopted_variant)
+    tf["f"], hf["f"] = combine(tf, blend_rule), combine(hf, blend_rule)
+    pd.concat([tf.assign(set="tuning"), hf.assign(set="holdout")]).to_csv(
+        OUT / "adopted_forecasts.csv", index=False)
+    brand = lambda d: d.groupby(["origin", "month"])[["actual", "f"]].sum().reset_index()  # noqa: E731
+    plan = calibrate_plan(brand(tf), brand(hf))
+    plan.to_csv(OUT / "plan_calibration.csv", index=False)
+    plan_factor = float(plan.set_index("over_cost").loc[OVER_COST, "factor_final"])
 
     # 5. top-down check on the holdout -----------------------------------------------------------
     td_rows = []
@@ -276,6 +335,7 @@ def main(n_trials: int, n_jobs: int) -> None:
         "best_on_tuning_set": best,
         "adopted": {"models": {m: adopted[m] for m in MODELS}, "blend": blend_rule,
                     "variant": adopted_variant},
+        "plan": {"over_cost": OVER_COST, "factor": plan_factor},
     }, indent=2, default=str))
 
     pd.set_option("display.width", 220)
@@ -284,12 +344,15 @@ def main(n_trials: int, n_jobs: int) -> None:
     print(blends.drop(columns="rule_value").round(4).to_string(index=False))
     print(td_summary.round(4).to_string(index=False))
     print(final.round(0).to_string(index=False))
-    print("adopted:", json.dumps({"variant": adopted_variant, "blend": blend_rule}, default=str))
+    print(plan.round(4).to_string(index=False))
+    print("adopted:", json.dumps({"variant": adopted_variant, "blend": blend_rule,
+                                  "plan_factor": plan_factor}, default=str))
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--trials", type=int, default=100)
+    ap.add_argument("--trials", type=int, default=150)
     ap.add_argument("--jobs", type=int, default=4)
+    ap.add_argument("--reuse", default="", help="comma list of finished searches to reload: prophet,sarima,hw")
     a = ap.parse_args()
-    main(a.trials, a.jobs)
+    main(a.trials, a.jobs, {x.strip() for x in a.reuse.split(",") if x.strip()})

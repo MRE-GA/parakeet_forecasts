@@ -1,7 +1,8 @@
 """Fit the three models on all history through Sep-2026 and forecast Oct-2026 .. Dec-2027.
 
 Uses the settings adopted by src/tune.py (outputs/tuned_configs.json) when present, otherwise
-the round-1 defaults.
+the round-1 defaults. Alongside the best estimate (the blend) it writes the conservative "Plan"
+= blend x the calibrated factor, because over-forecasting sales costs more than under-forecasting.
 
 Outputs (outputs/):
   forecast_by_store_month.csv   point forecasts per store x month x model (+ actuals to date)
@@ -25,6 +26,9 @@ LAST_MONTH = pd.Period("2027-12", "M")
 LIVE_CHECK_END = pd.Timestamp("2026-10-14")
 N_SAMPLES = 1000
 CONFIGS = load_configs()
+PLAN = "Plan"  # conservative plan = blend x calibrated factor (see src/tune.py step 6)
+PLAN_FACTOR = CONFIGS["plan"]["factor"]
+SERIES = MODELS + [ENSEMBLE, PLAN]
 
 
 def run(sd, model, seed):
@@ -62,14 +66,16 @@ def main() -> None:
             rows.append(r)
     by_store = pd.DataFrame(rows)
     by_store[ENSEMBLE] = combine(by_store, CONFIGS["blend"])
+    by_store[PLAN] = by_store[ENSEMBLE] * PLAN_FACTOR
     by_store.to_csv(OUTPUTS / "forecast_by_store_month.csv", index=False)
 
     # ---- brand totals with simulation ranges ---------------------------------------------
     # Paths are summed across stores draw by draw (stores treated as independent).
     brand_paths = {m: sum(samples[(s, m)].to_numpy() for s in STORES) for m in MODELS}
     brand_paths[ENSEMBLE] = blend_paths(brand_paths)
+    brand_paths[PLAN] = brand_paths[ENSEMBLE] * PLAN_FACTOR
     brand = pd.DataFrame({"month": [str(x) for x in months]})
-    for m in MODELS + [ENSEMBLE]:
+    for m in SERIES:
         brand[m] = by_store.groupby("month")[m].sum().reindex(brand.month).to_numpy()
         brand[f"{m} p10"] = np.percentile(brand_paths[m], 10, axis=1)
         brand[f"{m} p90"] = np.percentile(brand_paths[m], 90, axis=1)
@@ -90,8 +96,8 @@ def main() -> None:
              "actual_2025": act[act.index.year == 2025].sum(),
              "actual_2026_jan_sep": act[(act.index.year == 2026) & (act.index.month <= 9)].sum()}
         sel = by_store if s == "TOTAL" else by_store[by_store.store == s]
-        g = sel.groupby("month")[MODELS + [ENSEMBLE]].sum()
-        for m in MODELS + [ENSEMBLE]:
+        g = sel.groupby("month")[SERIES].sum()
+        for m in SERIES:
             r[f"{m} 2026E"] = r["actual_2026_jan_sep"] + g[m].to_numpy()[q4_26].sum()
             r[f"{m} 2027"] = g[m].to_numpy()[is27].sum()
             if s == "TOTAL":
@@ -115,6 +121,7 @@ def main() -> None:
         live.append(r)
     live = pd.DataFrame(live)
     live[ENSEMBLE] = combine(live, CONFIGS["blend"])
+    live[PLAN] = live[ENSEMBLE] * PLAN_FACTOR
     live.to_csv(OUTPUTS / "october_check.csv", index=False)
 
     pd.DataFrame([{"store": s, "sarima_spec": points[(s, "SARIMA")].attrs.get("spec")} for s in STORES]) \
@@ -123,18 +130,18 @@ def main() -> None:
     # ---- console summary -------------------------------------------------------------------
     pd.set_option("display.width", 220)
     cols = ["store", "actual_2025", "actual_2026_jan_sep"] + [f"{m} 2026E" for m in [ENSEMBLE]] + \
-           [f"{m} 2027" for m in MODELS + [ENSEMBLE]]
+           [f"{m} 2027" for m in SERIES]
     view = annual[cols].copy()
     for c in cols[1:]:
         view[c] = (view[c] / 1e6).round(2)
     print(view.to_string(index=False))
     t = annual[annual.store == "TOTAL"].iloc[0]
-    for m in MODELS + [ENSEMBLE]:
+    for m in SERIES:
         print(f"{m:13s} 2026E {t[f'{m} 2026E']/1e6:6.2f}M  2027 {t[f'{m} 2027']/1e6:6.2f}M "
               f"({t[f'{m} 2027']/t[f'{m} 2026E']-1:+.1%})  p10-p90 {t[f'{m} 2027 p10']/1e6:.2f}-{t[f'{m} 2027 p90']/1e6:.2f}M")
-    tl = live[["actual_oct_1_14"] + MODELS + [ENSEMBLE]].sum()
+    tl = live[["actual_oct_1_14"] + SERIES].sum()
     print("Oct 1-14 live check:", {k: round(v) for k, v in tl.items()},
-          {m: f"{tl[m]/tl.actual_oct_1_14-1:+.1%}" for m in MODELS + [ENSEMBLE]})
+          {m: f"{tl[m]/tl.actual_oct_1_14-1:+.1%}" for m in SERIES})
 
 
 if __name__ == "__main__":
