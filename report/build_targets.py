@@ -155,7 +155,7 @@ def collect() -> dict:
         assert np.allclose(run, c["level_m"] / DPM * c["ff"], rtol=1e-4), s  # run-rate = today's level x seasons
         cafes.append(c)
     C = {c["key"]: c for c in cafes}
-    n = {"cafes": cafes, "C": C, "nine": nine, "stores": stores, "plan_cfg": n0["plan_cfg"], "track": n0["track"],
+    n = {"cafes": cafes, "C": C, "nine": nine, "stores": stores,
          "first_day": n0["first_day"], "last_day": n0["last_day"], "store_days": n0["store_days"]}
 
     # ---- totals: the nine existing cafés, and with La Jolla Cove ------------------------------

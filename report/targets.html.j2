@@ -70,7 +70,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
           <tr class="g"><td>2027 growth</td><td>{{ t9.bg | pct }}</td><td>{{ t9.rr_g | pct }}</td><td class="pink">{{ t9.tg | pct }}</td></tr>
         </tbody>
       </table>
-      <p class="note" style="margin-top:10px">Growth on each column's own 2026 finish. Run-rate = the last 45 days of Toast sales, seasonally adjusted and held flat. Target = our plan (three forecasting models, leaning low).</p>
+      <p class="note" style="margin-top:10px">Growth on each column's own 2026 finish. Run-rate = the last 45 days of Toast sales, seasonally adjusted and held flat. Target = our plan (three forecasting models).</p>
     </div>
   </div>
   <div class="strip pin-bottom"><span class="lab">With the Cove</span><span>Adding La Jolla Cove (remodeled October 2027): budget {{ t10.b27 | fm }}, run-rate objective {{ t10.prop27 | fm }}, manager target <b>{{ t10.target27 | fm }}</b>. New cafés are not in these numbers.</span></div>
@@ -121,7 +121,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
       <p class="note" style="margin-top:10px">Most of that rise is already in 2026's sales: held flat, today's level gives 2027 just {{ t9.rr_g | pct }} over the 2026 finish.</p>
     </div>
   </div>
-  {{ foot("Seasonal pattern from our Prophet fit through Sep 30, 2026 · " ~ SRC) }}
+  {{ foot("Seasonal pattern learned from each café's sales through Sep 30, 2026 · " ~ SRC) }}
 </section>
 
 {# ================================================================== 2026 FINISH #}
@@ -284,9 +284,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
     </div>
     <div class="col" style="flex:1">
       <ul class="tight big">
-        <li><b>Our plan.</b> Three forecasting models (Prophet, SARIMA and Holt-Winters), fitted café by café on Toast sales through September 2026 and blended.</li>
-        <li><b>Leans low on purpose.</b> Shaded {{ "%.1f" | format((1 - n.plan_cfg.factor) * 100) }}% under the models' best estimate, because missing high costs more than missing low.</li>
-        <li><b>Track record.</b> Forecasting January–September 2026 from September 2025, the blend came in {{ n.track.bias | apct }} below actual sales.</li>
+        <li><b>Our plan.</b> Three forecasting models, fitted café by café on Toast sales through September 2026 and blended.</li>
         <li><b>Each café's own seasons</b>, month by month.</li>
         <li><b>La Jolla Cove:</b> plan through September, then $125K a month from the October 1, 2027 reopening.</li>
         <li><b>No new menu price increase.</b> If prices go up in 2027, raise the targets by the same percentage from that month.</li>
@@ -354,7 +352,7 @@ table.compact td.est{color:var(--g500);font-style:italic}
       <h3>Definitions</h3>
       <p><b>Net sales</b>: Toast POS net sales after discounts; excluding tax, tips and gift-card sales. Del Mar Café appears as Carmel Valley in Toast.</p>
       <p><b>Run-rate</b>: the last 45 days (August 31 – October 14, 2026), seasonally adjusted and held flat with normal seasons.</p>
-      <p><b>Target</b>: our plan, the blend of three forecasting models shaded {{ "%.1f" | format((1 - n.plan_cfg.factor) * 100) }}% down.</p>
+      <p><b>Target</b>: our plan, the blend of three forecasting models.</p>
       <p><b>Budget</b>: the investor budget workbook (2027_Sales_budget_Investors.xlsx).</p>
     </div>
   </div>
