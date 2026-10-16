@@ -73,23 +73,28 @@ Café-level figures behind the deck: `outputs/budget_review_by_cafe.csv`.
 
 ## Run-rate review and manager targets (`outputs/Parakeet_2027_Run_Rate_and_Targets.pdf`)
 
-A 31-slide deck in two parts covering the nine existing cafés and La Jolla Cove (Nautilus left out),
+A 32-slide deck in two parts covering the nine existing cafés and La Jolla Cove (Nautilus left out),
 with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.xlsx`).
 
 * **Part 1, today's run-rate**: the last 45 days of Toast sales (Aug 31 – Oct 14, 2026), divided by
-  each café's seasonal pattern (from its Prophet fit) and held flat (`src/runrate_scenario.py`). The
-  nine cafés finish 2026 at $27.79M (−0.3% against the budget's $27.88M) and sell $28.71M in 2027
-  (−0.4% against $28.82M): in total the budget is a no-growth plan, but not café by café. Setting
-  each café to its own run-rate raises Beverly Hills, Del Mar, Carlsbad and Little Italy (+$338K)
-  and lowers Coronado, Newport Beach, La Jolla Juicery, La Jolla Café and Brentwood (−$443K). La Jolla
-  Cove runs at its run-rate to September 2027, then at the budget's remodeled $125K a month ($868K,
-  in line with the budget). One page per store with what we found. Under each monthly chart, a strip
-  shows growth against the same month a year earlier (same-store for the nine): actual months, then
-  what the run-rate and the budget imply, with the last 45 days marked.
-* **Part 2, 2027 manager targets**: each month of 2026 plus 65% of the growth in our plan (the blend
-  of the three models, shaded 0.9% down), so a café the plan grows 20% gets +13%: $30.07M for the
-  nine (+8.2% on the 2026 finish against the plan's +12.6%; 4.7% over today's run-rate) and $887K for
-  La Jolla Cove (the same to September, then $125K a month), $30.96M in all. One page per store with
+  each café's seasonal pattern (from its Prophet fit) and held flat (`src/runrate_scenario.py`). A
+  management adjustment sets Coronado, La Jolla Juicery and Newport Beach at +1.2%, +1.5% and +1.9% on
+  2026 for 2027 (their last 45 days alone give −1.5%, −1.2% and +0.6%), noted on their pages. The nine
+  cafés finish 2026 at $27.79M (−0.3% against the budget's $27.88M) and sell $28.89M in 2027 (+0.2%
+  against $28.82M; $28.71M without the adjustment): in total the budget is a no-growth plan, but not
+  café by café. Setting each café to its own run-rate raises Beverly Hills, Del Mar, Carlsbad and Little
+  Italy (+$338K) and lowers Coronado, Newport Beach, La Jolla Café, La Jolla Juicery and Brentwood
+  (−$268K). La Jolla Cove runs at its run-rate to September 2027, then at the budget's remodeled $125K a
+  month ($868K, in line with the budget). One page per store with what we found. Under each monthly
+  chart, a strip shows growth against the same month a year earlier (same-store for the nine): actual
+  months, then what the run-rate and the budget imply, with the last 45 days marked.
+* **Part 2, 2027 manager targets**: each month of 2026 plus 65% of the growth in our plan (the blend of
+  the three models, shaded 0.9% down), so a café the plan grows 20% gets +13%; then raised by management
+  for five cafés, in points of growth on 2026 added to every month: Coronado, La Jolla Juicery and
+  Newport Beach by the points their run-rate was raised (+2.7, +2.7, +1.3), La Jolla Café by 3, and
+  Beverly Hills to 5 points over its run-rate (+3.4). $30.42M for the nine (+9.4% on the 2026 finish,
+  against +8.2% from the 65% rule alone and the plan's +12.6%; 5.3% over the run-rate) and $887K for La
+  Jolla Cove (the same to September, then $125K a month), $31.31M in all. One page per store with
   monthly and quarterly targets and what each asks over today's level. Each page's chart runs from the
   2024 actuals to the 2027 target (today's run-rate and the budget for reference), with the same history
   without the season underneath, so the target can be read against the café's own trend (seasonal

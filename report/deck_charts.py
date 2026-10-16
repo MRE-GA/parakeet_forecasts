@@ -422,7 +422,7 @@ def quarter_trend(years, actual, estimate, run, budget, target, size=(7.4, 3.7),
     _legend(ax, [Patch(color=G500), Patch(color=G300), Patch(color=PINK),
                  Line2D([], [], ls="", marker="D", ms=5, color=G900),
                  Line2D([], [], ls="", marker="o", ms=7, mfc="white", mec=INK, mew=1.6)],
-            ["Actual", "Q4 2026 estimate", "2027 at today's run-rate", "Budget", "2027 target"],
+            ["Actual", "Q4 2026 estimate", "2027 at run-rate", "Budget", "2027 target"],
             loc="upper left", ncol=5, bbox_to_anchor=(0, -0.2), columnspacing=1.2)
     return to_svg(fig, name)
 
