@@ -61,7 +61,7 @@ table.qgrid tr.dimrow td{color:var(--g500)}
       <div class="finding"><div class="num">01</div><p><b>2026 holds.</b> At today's run-rate the nine cafés finish 2026 at {{ t9.rr26 | fm }}, {{ t9.d26 | pct }} against the budget's {{ t9.b26 | fm }}; {{ "%.0f" | format(t9.booked_share * 100) }}% of the year is already booked.</p></div>
       <div class="finding"><div class="num">02</div><p><b>The 2027 budget is today's level.</b> Held flat with normal seasons, the nine sell {{ t9.rr27 | fm }} in 2027, {{ (t9.rr27 / t9.b27 - 1) | pct }} against the budget's {{ t9.b27 | fm }}: the budget assumes no growth from here.</p></div>
       <div class="finding"><div class="num">03</div><p><b>But the split by store is off.</b> Set each café to its own run-rate and {{ n.up | map(attribute="short") | join(", ") }} go up ({{ n.up_total | sfk }}); {{ n.down | map(attribute="short") | join(", ") }} come down ({{ n.down_total | sfk }}).</p></div>
-      <div class="finding"><div class="num">04</div><p><b>Manager targets: our plan.</b> {{ t9.target27 | fm }} for the nine ({{ t9.tg | pct }} on 2026) and {{ cove.target27 | fa }} for La Jolla Cove with its remodel: {{ t10.target27 | fm }}, by month and store, with a workbook to track actuals.</p></div>
+      <div class="finding"><div class="num">04</div><p><b>Manager targets: 65% of our plan's growth.</b> {{ t9.target27 | fm }} for the nine ({{ t9.tg | pct }} on 2026) and {{ cove.target27 | fa }} for La Jolla Cove with its remodel: {{ t10.target27 | fm }}, by month and store, with a workbook to track actuals.</p></div>
       {% set hi0, hi1 = n.ask_hi[0].ask | apct(0), n.ask_hi[1].ask | apct(0) %}
       <div class="finding"><div class="num">05</div><p><b>What the targets ask.</b> {{ t9.ask | apct }} more than today's run-rate for the nine, about {{ (t9.t_vs_rr / 12) | fk }} a month: from {{ n.ask_lo.ask | apct(0) }} at {{ n.ask_lo.name }} to {% if hi0 == hi1 %}{{ hi0 }} at {{ n.ask_hi[0].name }} and {{ n.ask_hi[1].name }}{% else %}{{ hi0 }} at {{ n.ask_hi[0].name }} and {{ hi1 }} at {{ n.ask_hi[1].name }}{% endif %}.</p></div>
     </div>
@@ -74,7 +74,7 @@ table.qgrid tr.dimrow td{color:var(--g500)}
           <tr class="g"><td>2027 growth</td><td>{{ t9.bg | pct }}</td><td>{{ t9.rr_g | pct }}</td><td class="pink">{{ t9.tg | pct }}</td></tr>
         </tbody>
       </table>
-      <p class="note" style="margin-top:10px">Growth on each column's own 2026 finish. Run-rate = the last 45 days of Toast sales, seasonally adjusted and held flat. Target = our plan (three forecasting models).</p>
+      <p class="note" style="margin-top:10px">Growth on each column's own 2026 finish. Run-rate = the last 45 days of Toast sales, seasonally adjusted and held flat. Target = 2026 plus 65% of the growth in our plan (three forecasting models).</p>
     </div>
   </div>
   <div class="strip pin-bottom"><span class="lab">With the Cove</span><span>Adding La Jolla Cove (remodeled October 2027): budget {{ t10.b27 | fm }}, run-rate objective {{ t10.prop27 | fm }}, manager target <b>{{ t10.target27 | fm }}</b>. New cafés are not in these numbers.</span></div>
@@ -284,7 +284,7 @@ table.qgrid tr.dimrow td{color:var(--g500)}
 <section class="page">
   {{ head("Part 2 · 2027 targets") }}
   <h1>2027 targets: {{ t9.target27 | fm }} for the nine cafés, {{ t10.target27 | fm }} with La Jolla Cove</h1>
-  <p class="lede">Each target keeps the store growing with its own trend: {{ t9.tg | pct }} on 2026 for the nine, against {{ t9.rr_g | pct }} if sales just hold today's level and {{ t9.bg | pct }} in the budget.</p>
+  <p class="lede">Each target keeps the store growing with its trend, toned down to 65% of the growth in our plan: {{ t9.tg | pct }} on 2026 for the nine, against {{ t9.rr_g | pct }} if sales just hold today's level and {{ t9.bg | pct }} in the budget.</p>
   <div class="row">
     <div class="col" style="flex:1.45">
       <div class="chart-title">2027 growth on 2026, by café</div>
@@ -320,8 +320,9 @@ table.qgrid tr.dimrow td{color:var(--g500)}
     <div class="col" style="flex:1">
       <ul class="tight big">
         <li><b>Our plan.</b> Three forecasting models, fitted café by café on Toast sales through September 2026 and blended.</li>
+        <li><b>Toned down to 65% of its growth.</b> Each month's target is the same month of 2026 plus 65% of what the plan adds: the plan grows the nine cafés {{ t9.plan_g | pct }}, the targets {{ t9.tg | pct }}. A café the plan grows 20% gets +13%; one at 10% gets +6.5%.</li>
         <li><b>Each café's own seasons</b>, month by month.</li>
-        <li><b>La Jolla Cove:</b> plan through September, then $125K a month from the October 1, 2027 reopening.</li>
+        <li><b>La Jolla Cove:</b> the same through September, then $125K a month from the October 1, 2027 reopening.</li>
         <li><b>No new menu price increase.</b> If prices go up in 2027, raise the targets by the same percentage from that month.</li>
       </ul>
       <div class="minis" style="margin-top:6px">
@@ -387,7 +388,7 @@ table.qgrid tr.dimrow td{color:var(--g500)}
       <h3>Definitions</h3>
       <p><b>Net sales</b>: Toast POS net sales after discounts; excluding tax, tips and gift-card sales. Del Mar Café appears as Carmel Valley in Toast.</p>
       <p><b>Run-rate</b>: the last 45 days (August 31 – October 14, 2026), seasonally adjusted and held flat with normal seasons.</p>
-      <p><b>Target</b>: our plan, the blend of three forecasting models.</p>
+      <p><b>Target</b>: each month of 2026 plus 65% of the growth in our plan (the blend of three forecasting models).</p>
       <p><b>Budget</b>: the investor budget workbook (2027_Sales_budget_Investors.xlsx).</p>
     </div>
   </div>

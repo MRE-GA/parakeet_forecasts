@@ -5,9 +5,9 @@
 Part 1 reads the last 45 days of Toast sales (Aug 31 - Oct 14, 2026), seasonally adjusted, as each café's
 run-rate (src/runrate_scenario.py): the 2026 finish and 2027 at that level with no further growth,
 against the investor budget, and the adjustment that sets each café to its own run-rate. Part 2 sets the
-2027 manager targets: our plan (the blend of our three forecasting models, shaded to lean low), by month
-and café. La Jolla Cove runs on its plan through September 2027, then on the budget's remodeled rate from
-the October 1, 2027 reopening. Nautilus is left out throughout.
+2027 manager targets by month and café: each month of 2026 plus 65% of the growth in our plan (the blend of
+our three forecasting models). La Jolla Cove runs that way through September 2027, then on the budget's
+remodeled rate from the October 1, 2027 reopening. Nautilus is left out throughout.
 
 Run src/forecast_2027.py, src/hold_scenario.py and src/runrate_scenario.py first. Outputs:
 outputs/Parakeet_2027_Run_Rate_and_Targets.pdf and outputs/Parakeet_2027_Manager_Targets.xlsx.
@@ -40,6 +40,7 @@ from forecasting import OUTPUTS, STORE_START, load_daily  # noqa: E402
 PDF = OUTPUTS / "Parakeet_2027_Run_Rate_and_Targets.pdf"
 XLSX = OUTPUTS / "Parakeet_2027_Manager_Targets.xlsx"
 COVE = "La Jolla Cove"
+GROWTH_SHARE = 0.65  # targets keep 65% of the growth in our plan (a plan of +10% becomes +6.5%, +20% becomes +13%)
 WINDOW = pd.date_range("2026-08-31", "2026-10-14")  # the last 45 days of Toast data
 LAG = pd.Timedelta(days=364)  # same weekdays a year earlier
 M26 = pd.period_range("2026-01", "2026-12", freq="M")
@@ -106,15 +107,17 @@ def collect() -> dict:
         est26[0] += oct_to_date[s] - r.runrate_oct_to_date
         # the budget by month (workbook): Oct-Dec 2026 estimate, then the 2027 objective
         budget = np.asarray(c0["b_months"], dtype=float)
-        # 2027 targets: our plan; the Cove switches to the budget's remodeled rate from its reopening
-        target = plan.loc[s].reindex(M27).to_numpy().copy()
+        months26 = np.r_[raw_m.loc[s].reindex(M26[:9]).to_numpy(), est26]
+        # 2027 targets, month by month: the same month of 2026 plus a share of the growth in our plan; the Cove
+        # switches to the budget's remodeled rate from its reopening
+        plan_m = plan.loc[s].reindex(M27).to_numpy()
+        target = months26 + GROWTH_SHARE * (plan_m - months26)
         if s == COVE:
             target[9:] = budget[12:15]
-        months26 = np.r_[raw_m.loc[s].reindex(M26[:9]).to_numpy(), est26]
         c.update(
             g45=g45, chk45=chk45, w45=w45, to_date=r.actual_2026_to_oct14, rest26=r.runrate_rest_2026,
             rr26=r.runrate_2026E, rr27=r.runrate_2027, rr27_check=r.check_runrate_2027, run=run, budget=budget,
-            target=target, months26=months26, target27=target.sum(), act=raw_m.loc[s],
+            target=target, months26=months26, target27=target.sum(), plan_m=plan_m, act=raw_m.loc[s],
             # the budget's own 2026 by month (Jan-Sep sales report, Oct-Dec estimate): the base of its 2027 growth
             b26_months=np.array([bm26[(s, f"2026-{i:02d}")] for i in range(1, 13)], dtype=float),
             first_full=pd.Timestamp(STORE_START[s]).to_period("M") + (0 if pd.Timestamp(STORE_START[s]).day == 1 else 1),
@@ -163,7 +166,7 @@ def collect() -> dict:
         g = [C[s] for s in group]
         out = {k: sum(c[k] for c in g) for k in ("ytd26", "to_date", "rest26", "rr26", "rr27", "rr27_check", "b26",
                                                    "b27", "q4_b", "prop27", "target27", "plan27", "fy25")}
-        for k in ("run", "path", "budget", "target", "months26"):
+        for k in ("run", "path", "budget", "target", "months26", "plan_m"):
             out[k] = sum(c[k] for c in g)
         out["act"] = sum(c["act"] for c in g)
         w = {k: sum(c["w45"][k] for c in g) for k in g[0]["w45"]}
@@ -184,6 +187,7 @@ def collect() -> dict:
         out["quarters_t"] = [out["target"][i:i + 3].sum() for i in (0, 3, 6, 9)]
         out["quarters_26"] = [out["months26"][i:i + 3].sum() for i in (0, 3, 6, 9)]
         out["quarters_g"] = [a / b - 1 for a, b in zip(out["quarters_t"], out["quarters_26"])]
+        out["plan_g"] = out["plan_m"].sum() / out["rr26"] - 1  # growth in our plan, before the targets' share
         return out
 
     n["t9"] = total(nine)
@@ -260,6 +264,7 @@ def check(n: dict) -> None:
     assert d[2] + d[7] < jj["rr27"] - jj["rr26"] < 0 and np.delete(d, [2, 7]).sum() > -2000  # "repeats 2026 except
     # March and August"
     assert abs(n["up_total"] + n["down_total"] - t9["adj"]) < 1
+    assert abs(t9["tg"] - GROWTH_SHARE * t9["plan_g"]) < 1e-9  # the nine's targets keep 65% of the plan's growth
     q = n["qtr"]
     run27 = [g for g, _ in q["quarters"][2027]]
     assert all(a > b for a, b in zip(run27, run27[1:])) and abs(run27[-1]) < 0.015  # "fades to about zero"
@@ -335,9 +340,9 @@ def story(c: dict) -> dict:
     ask = f"{apct(c['ask'])} over today's run-rate (about {fk(c['t_vs_rr'] / 12)} a month)"
     if s == COVE:
         js_ask = c["target"][:9].sum() / c["run"][3:12].sum() - 1
-        o["t_line"] = (f"{fa(c['target27'])} for 2027: our plan to September ({apct(js_ask)} over today's run-rate), "
-                       f"then the remodeled $125K a month from the October 1 reopening; {sfk(c['t_vs_b'])} against "
-                       f"the budget.")
+        o["t_line"] = (f"{fa(c['target27'])} for 2027: 65% of the plan's growth to September ({apct(js_ask)} over "
+                       f"today's run-rate), then the remodeled $125K a month from the October 1 reopening; "
+                       f"{sfk(c['t_vs_b'])} against the budget.")
     elif s == "Brentwood":
         o["t_line"] = (f"{fa(c['target27'])} for 2027 asks Brentwood to grow again after a flat 2026: {ask}, "
                        f"{sfk(c['t_vs_b'])} against a budget that already allows for Leora.")
@@ -508,7 +513,8 @@ def export_xlsx(n: dict) -> dict:
     ws = wb.active
     ws.title = "Targets 2027"
     ws["A1"], ws["A1"].font = "Parakeet Café · 2027 sales targets by store", title
-    ws["A2"], ws["A2"].font = ("Net sales targets per month (our plan; La Jolla Cove switches to the budget's remodeled "
+    ws["A2"], ws["A2"].font = ("Net sales targets per month (each month of 2026 plus 65% of the growth in our plan; "
+                               "La Jolla Cove switches to the budget's remodeled "
                                "rate from its Oct 1, 2027 reopening). Blue = values from the analysis; black = formulas."
                                ), muted
     hdr = ["Store"] + months + ["Q1", "Q2", "Q3", "Q4", "Total 2027", "2026 finish (run-rate)", "Growth"]
@@ -668,7 +674,7 @@ def export_xlsx(n: dict) -> dict:
     rf["A1"], rf["A1"].font = "Reference: 2026 finish and 2027 under each view", title
     rf["A2"], rf["A2"].font = ("Sources: Toast POS net sales through Oct 14, 2026; investor budget workbook "
                                "(2027_Sales_budget_Investors.xlsx); run-rate = last 45 days seasonally adjusted; "
-                               "target = our plan."), muted
+                               "target = each month of 2026 plus 65% of the growth in our plan."), muted
     rh = ["Store", "2025 actual (Toast)", "2026 finish: budget", "2026 finish: run-rate", "2027: budget",
           "2027: run-rate objective", "2027: target", "Target vs budget"]
     for j, h in enumerate(rh, start=1):

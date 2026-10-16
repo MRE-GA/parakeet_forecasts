@@ -397,7 +397,10 @@ def quarter_trend(years, actual, estimate, run, budget, target, size=(7.4, 3.7),
     fig, ax = plt.subplots(figsize=size)
     colors = [G500] * n_a + [G300] + [PINK] * len(run)
     ax.bar(x, vals, width=0.62, color=colors, linewidth=0, zorder=2)
-    for xi, v in zip(x, vals):
+    top = max(np.max(vals), np.max(target)) * 1.18
+    # values on the bars with actual sales and the estimate; the last year's bars carry markers (the table next to
+    # the chart gives their values)
+    for xi, v in zip(x[:len(vals) - len(run)], vals):
         ax.annotate(_pct_label(v), (xi, max(v, 0)), xytext=(0, 3), textcoords="offset points", ha="center",
                     va="bottom", fontsize=7.4, color=G900, zorder=6)
     xf = x[-len(run):]
@@ -411,7 +414,6 @@ def quarter_trend(years, actual, estimate, run, budget, target, size=(7.4, 3.7),
         ax.text(4 * i + 1.5, -0.13, str(y), ha="center", va="top", fontsize=8.6, color=INK, fontweight=600,
                 transform=ax.get_xaxis_transform())
     ax.axhline(0, color=G400, lw=0.8, zorder=1)
-    top = max(np.max(vals), np.max(target)) * 1.18
     ax.set_ylim(min(0.0, np.min(vals)) - 0.01, top)
     ax.set_xlim(-0.6, len(vals) - 0.4)
     ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: _pct_label(v)))
