@@ -428,16 +428,16 @@ def quarter_trend(years, actual, estimate, run, budget, target, size=(7.4, 3.7),
 
 
 def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", run_label="Today's run-rate",
-                 size=(7.4, 4.45), name="tt") -> str:
+                 size=(7.4, 4.45), name="tt", ref_label="Budget") -> str:
     """The 2027 target as the continuation of the café's trend.
 
     Top: monthly sales, from the actual months to the Oct-Dec 2026 estimate (dotted) and the 2027 target (pink),
-    with today's run-rate (light gray) and the budget (dashed) for reference. Bottom: the same without the season
-    (each month divided by its usual seasonal pattern, as a monthly equivalent), so the target's slope can be read
-    against the café's own trend.
+    with today's run-rate (light gray) and a reference (dashed, labelled ref_label) for reference. Bottom: the same
+    without the season (each month divided by its usual seasonal pattern, as a monthly equivalent), so the target's
+    slope can be read against the café's own trend.
 
-    monthly / trend: dicts of 'actual' (per actual month), 'est26' (Oct-Dec 2026), and 'target', 'run', 'budget'
-    (per 2027 month); months: the actual months followed by Oct 2026 - Dec 2027."""
+    monthly / trend: dicts of 'actual' (per actual month), 'est26' (Oct-Dec 2026), and 'target', 'run', 'budget' (the
+    dashed reference; per 2027 month); months: the actual months followed by Oct 2026 - Dec 2027."""
     fmt = FuncFormatter(money_k if money == "k" else money_m)
     fig = plt.figure(figsize=size)
     gs = fig.add_gridspec(2, 1, height_ratios=[2.45, 1.55], hspace=0.08)
@@ -472,7 +472,7 @@ def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", 
     _legend(ax2, [Line2D([], [], color=INK, lw=2), Line2D([], [], color=INK, lw=1.8, ls=(0, (1.1, 1.6))),
                   Line2D([], [], color=PINK, lw=2.5), Line2D([], [], color=G400, lw=1.5),
                   Line2D([], [], color=BUDGET, lw=1.6, ls=(0, (4, 2.5)))],
-            ["Actual", "Estimate, Oct–Dec 2026", "2027 target", run_label, "Budget"],
+            ["Actual", "Estimate, Oct–Dec 2026", "2027 target", run_label, ref_label],
             loc="upper left", ncol=5, bbox_to_anchor=(0, -0.2), columnspacing=1.1)
     return to_svg(fig, name)
 

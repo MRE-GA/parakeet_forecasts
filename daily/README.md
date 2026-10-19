@@ -177,8 +177,9 @@ model, Beverly Hills halfway to equal days) retrained on all data through Oct 14
 * **run-rate**: today's run-rate by month, adding up to the workbook's 'Reference' figure to the cent.
 
 Tabs: the two daily series, average day by weekday and season (a staffing template), a `Check` tab that recomputes
-every month against the workbook (zero cents of difference) and notes. The targets are the budget's growth (+10.0%
-for the nine cafés, about 6% over today's run-rate), so payroll built on them assumes that growth is reached.
+every month against the workbook (zero cents of difference) and notes. The targets are the October 15 budget's
+objectives (+10.3% on the run-rate's 2026 finish for the nine cafés, about 6% over today's run-rate), so payroll built on
+them assumes that growth is reached.
 
 First live check (Thursday to Sunday, Oct 15–18, 2026, after the training data): the ten stores sold $337K against
 $339K expected by this daily shape on the run-rate's level (−0.4%; Thursday −1.1% to Sunday +0.5%), with a 5.2% daily

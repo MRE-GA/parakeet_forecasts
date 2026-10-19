@@ -74,43 +74,44 @@ Café-level figures behind the deck: `outputs/budget_review_by_cafe.csv`.
 ## Run-rate review and manager targets (`outputs/Parakeet_2027_Run_Rate_and_Targets.pdf`)
 
 A 32-slide deck in two parts covering the nine existing cafés and La Jolla Cove (Nautilus left out),
-with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.xlsx`). Updated October 19,
-2026 to the 2027 budget of October 2026 (“2027 Sales Objectives by Café”, a one-page PDF imported by
-`src/import_budget_pdf.py` into `data/budget_2027_oct.csv`): the nine existing cafés from $27.88M to $30.67M
-(+10.0%), store by store from +5.5% (Del Mar Café) to +19.0% (Beverly Hills), La Jolla Café and the Juicery on
-one line (+7.5%).
+with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.xlsx`).
 
 * **Part 1, today's run-rate**: the last 45 days of Toast sales (Aug 31 – Oct 14, 2026), divided by
   each café's seasonal pattern (from its Prophet fit) and held flat (`src/runrate_scenario.py`). A
   management adjustment sets Coronado, La Jolla Juicery and Newport Beach at +1.2%, +1.5% and +1.9% on
   2026 for 2027 (their last 45 days alone give −1.5%, −1.2% and +0.6%), noted on their pages. The nine
-  cafés finish 2026 at $27.79M (−0.3% against the budget's $27.88M) and sell $28.89M in 2027 at the run-rate
-  (+3.9%): the budget's $30.67M needs 6.2% more, from 2.0% at Del Mar Café to 16.7% at Brentwood (flat all
-  2026). The budget gives years only; its months are its 2026 months grown by each café's rate, as its workbook
-  builds them. La Jolla Cove runs at its run-rate to September 2027, then at the budget's remodeled $125K a month
-  ($868K, in line with the budget). One page per store with what we found. Under each monthly chart, a strip shows
-  growth against the same month a year earlier (same-store for the nine): actual months, then what the run-rate
-  and the budget imply, with the last 45 days marked.
-* **Part 2, 2027 manager targets**: each store's 2027 growth in the budget applied to its 2026 finish (Toast to
-  Oct 14, then the run-rate), spread over the months along our plan's 2027 path (the blend of the three models:
-  each café's seasons and trend), in cents. $30.57M for the nine (+10.0%; 5.8% over the run-rate, from today's
-  level in January to 11% over it in December) and $879K for La Jolla Cove (+38.1%: the remodeled $125K a month
-  from October 1, 2027, the rest over January–September), $31.45M in all. Each store's target differs from its
-  budget only by the difference between the two 2026 finishes. One page per store with monthly and quarterly
-  targets and what each asks over today's level; charts from the 2024 actuals to the 2027 target with the same
-  history without the season underneath (seasonal factors from the run-rate's Prophet fit:
-  `outputs/runrate_45d_seasonal_by_month.csv`).
+  cafés finish 2026 at $27.79M (−0.3% against the budget's $27.88M) and sell $28.89M in 2027 (+0.2%
+  against $28.82M; $28.71M without the adjustment): in total the budget is a no-growth plan, but not
+  café by café. Setting each café to its own run-rate raises Beverly Hills, Del Mar, Carlsbad and Little
+  Italy (+$338K) and lowers Coronado, Newport Beach, La Jolla Café, La Jolla Juicery and Brentwood
+  (−$268K). La Jolla Cove runs at its run-rate to September 2027, then at the budget's remodeled $125K a
+  month ($868K, in line with the budget). One page per store with what we found. Under each monthly
+  chart, a strip shows growth against the same month a year earlier (same-store for the nine): actual
+  months, then what the run-rate and the budget imply, with the last 45 days marked.
+* **Part 2, 2027 manager targets** (updated October 19, 2026): each café's 2027 objective in the October 15
+  budget (“2027 Sales Objectives by Café”, a one-page PDF imported by `src/import_budget_pdf.py` into
+  `data/budget_2027_oct.csv`), spread over the months along our most accurate forecast (the blend of the three
+  tuned models, unshaded: café-month error 8.6% and brand-month 2.4% on the 2026 holdout), in cents: the forecast
+  moved by one percentage per café, the same every month, from −6.5% (Carlsbad) to +2.7% (Brentwood), −2.9% for the
+  nine. La Jolla Café and La Jolla Juicery share their line ($4,111,305) in proportion to the forecast. $30.67M for
+  the nine, exactly the budget (+10.3% on the run-rate's 2026 finish; 6.2% over the run-rate, from today's level in
+  January to 11% over it in December) and $868K for La Jolla Cove (flat on 2026 to September, then $125K a month),
+  $31.53M in all. One page per store with monthly and quarterly targets and what each asks over today's level.
+  Each page's chart runs from the 2024 actuals to the 2027 target (today's run-rate and our forecast for
+  reference), with the same history without the season underneath, so the target can be read against the café's
+  own trend (seasonal factors from the run-rate's Prophet fit: `outputs/runrate_45d_seasonal_by_month.csv`). Part 1
+  is unchanged.
 * **Workbook**: `Targets 2027` (by store and month), `Monthly tracking` (managers enter actuals; the
   variance fills in), `Year to date` (against target, months entered only) and `Reference` (2026
-  finish and 2027 under the budget, today's run-rate and the target, with growth). Recalculated with
+  finish and 2027 under the investor budget, today's run-rate, our forecast and the target). Recalculated with
   LibreOffice on build; zero formula errors.
 * **Daily targets** (`report/build_daily_targets.py`, `outputs/Parakeet_2027_Daily_Targets.xlsx` and
-  `outputs/targets_2027_daily.csv`): each month's target, and today's run-rate, split over its days by the best
-  daily model of the daily study (`daily/README.md`): Prophet with the extended special days × a tree model trained
-  on all stores, retrained through Oct 14, 2026, with Beverly Hills halfway to equal days (backtest daily error
-  8.4%, against 9.2% for Prophet as tuned, the split used before). Amounts are in cents and every month adds up exactly to the
-  workbook (a `Check` tab recomputes it: zero cents of difference); a `Weekday averages` tab gives the average day by
-  weekday and season for staffing.
+  `outputs/targets_2027_daily.csv`): each month's target, and the run-rate by month, split over its days by the
+  best daily model of the daily study (`daily/README.md`): Prophet with the extended special days × a tree model
+  trained on all stores, retrained through Oct 14, 2026, with Beverly Hills halfway to equal days (backtest daily
+  error 8.4%, against 9.2% for Prophet as tuned, the split used before). Amounts are in cents and every month adds
+  up exactly to the workbook (a `Check` tab recomputes it: zero cents of difference); a `Weekday averages` tab gives
+  the average day by weekday and season for staffing.
 
 ## Approach
 

@@ -57,7 +57,9 @@ def monthly_figures() -> tuple[dict, dict]:
     wb = load_workbook(MONTHLY_XLSX, data_only=True)
     target = {r[0]: np.array(r[1:13], dtype=float) for r in wb["Targets 2027"].iter_rows(min_row=5, values_only=True)
               if r[0] in DISPLAY}
-    ref = {r[0]: float(r[6]) for r in wb["Reference"].iter_rows(min_row=5, values_only=True) if r[0] in DISPLAY}
+    head = [c.value for c in wb["Reference"][4]]
+    k = head.index("2027: run-rate objective")
+    ref = {r[0]: float(r[k]) for r in wb["Reference"].iter_rows(min_row=5, values_only=True) if r[0] in DISPLAY}
     n = bt.collect()
     run = {}
     for s, name in zip(STORES, DISPLAY):
@@ -214,8 +216,9 @@ def export(t_cents: dict, r_cents: dict, target: dict, run: dict) -> dict:
     nt = wb.create_sheet("Notes")
     nt["A1"], nt["A1"].font = "How the daily figures are built", title
     for i, text in enumerate([
-        "Monthly and annual figures: exactly those in the targets workbook and deck (each store at the 2027 budget's "
-        "growth on its 2026 finish, October 2026); this file only splits each month into its days.",
+        "Monthly and annual figures: exactly those in the targets workbook and deck (targets: each store's objective "
+        "in the October 15 budget, along our most accurate forecast; run-rate: today's run-rate by month); this file "
+        "only splits each month into its days.",
         "Daily model: the geometric mean of two models, both retrained on all data through Oct 14, 2026: Prophet with "
         "the adopted settings (time of year, day of week, holidays) plus the other special days (Dec 26, the days "
         "between Christmas and New Year's Eve, Thanksgiving weekend, spring break, Halloween), and a tree model "

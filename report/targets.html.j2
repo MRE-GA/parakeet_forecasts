@@ -6,8 +6,8 @@
 <style>
 {% include "deck_style.css" %}
 /* this deck */
-.badge.ahead,.badge.raise{background:var(--pink);border-color:var(--pink);color:#fff}
-.badge.behind{color:var(--ink);border-color:var(--ink);background:#fff}
+.badge.raise{background:var(--pink);border-color:var(--pink);color:#fff}
+.badge.lower{color:var(--ink);border-color:var(--ink);background:#fff}
 .badge.remodel{background:var(--g700);border-color:var(--g700);color:#fff}
 .board{width:100%;border-top:2px solid var(--ink)}
 .board th{font-size:9px}
@@ -34,8 +34,8 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
 {% set t9 = n.t9 %}{% set t10 = n.t10 %}{% set C = n.C %}{% set cove = C["La Jolla Cove"] %}
 {% macro head(eyebrow) %}<div class="head"><img src="assets/logo-bird.png" alt="Parakeet Café"><span class="eyebrow">{{ eyebrow }}</span></div>{% endmacro %}
 {% macro foot(note) %}<div class="foot"><span>Parakeet Café · 2027 Sales: Run-Rate and Targets</span><span>{{ note }}</span><span class="pn"></span></div>{% endmacro %}
-{% macro badge(c) %}<span class="badge {{ c.action }}">{{ c.badge }}</span>{% endmacro %}
-{% set SRC = "Toast POS net sales through Oct 14, 2026 · budget: 2027 Sales Objectives by Café, October 2026" %}
+{% macro badge(a) %}<span class="badge {{ a }}">{{ BADGE[a] }}</span>{% endmacro %}
+{% set SRC = "Toast POS net sales through Oct 14, 2026 · budget: investor budget workbook, Oct 2026" %}
 {% macro dag(c) %}{% if c.rr_set %}<sup class="dag">†</sup>{% endif %}{% endmacro %}
 {% set RRSET = "† Run-rate set by management to " ~ n.adj_text.rr ~ " on 2026 (the last 45 days alone give " ~ n.adj_text.raw ~ ")." %}
 
@@ -45,11 +45,11 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
     <img class="logo" src="assets/logo-bird.png" alt="Parakeet Café">
     <div class="eyebrow">2027 sales · October 2026</div>
     <div class="cover-title">Today's<br>Run-Rate and<br>2027 Targets</div>
-    <p class="cover-sub">Part 1: what the last 45 days say about 2026 and 2027, store by store, against the budget. Part 2: the 2027 sales targets for each store manager, at the budget's growth.</p>
+    <p class="cover-sub">Part 1: what the last 45 days say about 2026 and 2027, store by store, against the budget. Part 2: the 2027 sales targets for each store manager.</p>
     <div class="cover-meta">
       Nine existing cafés and La Jolla Cove · Toast POS net sales through {{ n.last_day.strftime("%B %-d, %Y") }}<br>
-      Against the 2027 budget, “2027 Sales Objectives by Café” (October 2026)<br>
-      Prepared October 19, 2026
+      Reviewing “2027 Sales Objectives by Café – Investors” (prepared by the CFO, October 2026)<br>
+      Prepared October 15, 2026
     </div>
   </div>
   <div class="cover-right"><img src="assets/split-menus.jpg" alt=""></div>
@@ -58,13 +58,13 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
 {# ================================================================== SUMMARY #}
 <section class="page">
   {{ head("The short version") }}
-  <h1>2026 holds. The 2027 budget asks {{ t9.bg | pct }}, {{ t9.need | apct }} more than today's run-rate; the targets follow it store by store.</h1>
+  <h1>2026 and 2027 at today's run-rate match the budget. The split by store does not.</h1>
   <div class="row" style="margin-top:12px">
     <div class="col flist" style="flex:1.45">
       <div class="finding"><div class="num">01</div><p><b>2026 holds.</b> At today's run-rate the nine cafés finish 2026 at {{ t9.rr26 | fm }}, {{ t9.d26 | pct }} against the budget's {{ t9.b26 | fm }}; {{ "%.0f" | format(t9.booked_share * 100) }}% of the year is already booked.</p></div>
-      <div class="finding"><div class="num">02</div><p><b>The 2027 budget asks for growth on top of today's level.</b> Held flat with normal seasons, the nine sell {{ t9.rr27 | fm }} in 2027, {{ t9.rr_g | pct }} on 2026; the budget's {{ t9.b27 | fm }} ({{ t9.bg | pct }}) needs {{ t9.need | apct }} more.</p></div>
-      <div class="finding"><div class="num">03</div><p><b>The ask differs by store.</b> Over today's level the budget needs from {{ n.need_lo.need | apct }} at {{ n.need_lo.name }} to {{ n.need_hi.need | apct }} at {{ n.need_hi.name }}, flat all 2026 and given {{ n.need_hi.bg | pct }}.</p></div>
-      <div class="finding"><div class="num">04</div><p><b>Manager targets: the budget's growth, store by store.</b> Each store's 2027 growth in the budget on our 2026 finish, spread by month with our forecasting model: {{ t9.target27 | fm }} for the nine ({{ t9.tg | pct }}) and {{ cove.target27 | fa }} for La Jolla Cove with its remodel, {{ t10.target27 | fm }} in all, by month, day and store.</p></div>
+      <div class="finding"><div class="num">02</div><p><b>The 2027 budget is today's level.</b> Held flat with normal seasons, the nine sell {{ t9.rr27 | fm }} in 2027, {{ (t9.rr27 / t9.b27 - 1) | pct }} against the budget's {{ t9.b27 | fm }}: the budget assumes no growth from here.</p></div>
+      <div class="finding"><div class="num">03</div><p><b>But the split by store is off.</b> Set each café to its own run-rate and {{ n.up | map(attribute="short") | join(", ") }} go up ({{ n.up_total | sfk }}); {{ n.down | map(attribute="short") | join(", ") }} come down ({{ n.down_total | sfk }}).</p></div>
+      <div class="finding"><div class="num">04</div><p><b>Manager targets: the October 15 budget, along our forecast.</b> Each café's objective in the October 15 budget, spread month by month along our most accurate forecast ({{ t9.adj_fc | pct }} on it for the nine): {{ t9.target27 | fm }} for the nine ({{ t9.tg | pct }} on 2026) and {{ cove.target27 | fa }} for La Jolla Cove with its remodel, {{ t10.target27 | fm }} in all, by month, day and store.</p></div>
       {% set hi0, hi1 = n.ask_hi[0].ask | apct(0), n.ask_hi[1].ask | apct(0) %}
       <div class="finding"><div class="num">05</div><p><b>What the targets ask.</b> {{ t9.ask | apct }} more than the run-rate for the nine, about {{ (t9.t_vs_rr / 12) | fk }} a month: from {{ n.ask_lo.ask | apct(0) }} at {{ n.ask_lo.name }} to {% if hi0 == hi1 %}{{ hi0 }} at {{ n.ask_hi[0].name }} and {{ n.ask_hi[1].name }}{% else %}{{ hi0 }} at {{ n.ask_hi[0].name }} and {{ hi1 }} at {{ n.ask_hi[1].name }}{% endif %}.</p></div>
     </div>
@@ -77,10 +77,10 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
           <tr class="g"><td>2027 growth</td><td>{{ t9.bg | pct }}</td><td>{{ t9.rr_g | pct }}</td><td class="pink">{{ t9.tg | pct }}</td></tr>
         </tbody>
       </table>
-      <p class="note" style="margin-top:10px">Growth on each column's own 2026 finish. Run-rate = the last 45 days of Toast sales, seasonally adjusted and held flat ({{ n.adj_text.names }} set a little higher by management). Target = the budget's growth for each store on the run-rate's 2026 finish, by month from our forecasting model (three models, blended).</p>
+      <p class="note" style="margin-top:10px">Growth on each column's own 2026 finish. Run-rate = the last 45 days of Toast sales, seasonally adjusted and held flat ({{ n.adj_text.names }} set a little higher by management). Target = each café's objective in the October 15 budget, along our forecast (three forecasting models, blended).</p>
     </div>
   </div>
-  <div class="strip pin-bottom"><span class="lab">With the Cove</span><span>Adding La Jolla Cove (remodeled October 2027): budget {{ t10.b27 | fm }}, run-rate with the remodel {{ t10.prop27 | fm }}, manager target <b>{{ t10.target27 | fm }}</b>. New cafés are not in these numbers.</span></div>
+  <div class="strip pin-bottom"><span class="lab">With the Cove</span><span>Adding La Jolla Cove (remodeled October 2027): budget {{ t10.b27 | fm }}, run-rate objective {{ t10.prop27 | fm }}, manager target <b>{{ t10.target27 | fm }}</b>. New cafés are not in these numbers.</span></div>
   {{ foot(SRC) }}
 </section>
 
@@ -89,12 +89,12 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
   <div class="div-left">
     <div class="part">Part 1</div>
     <div class="div-title">Today's run-rate</div>
-    <p class="div-sub">What the last 45 days say about 2026 and 2027, and how much growth the budget asks of each store.</p>
+    <p class="div-sub">What the last 45 days say about 2026 and 2027, and what each store should be budgeted at.</p>
     <ul class="div-list">
       <li><span>01</span>How we read the last 45 days</li>
       <li><span>02</span>2026 finish and 2027 at today's level</li>
       <li><span>03</span>Growth by quarter</li>
-      <li><span>04</span>What the budget asks of each store</li>
+      <li><span>04</span>Adjustments between stores</li>
       <li><span>05</span>What we found, store by store</li>
     </ul>
     <img class="bird" src="assets/parrot-map.png" alt="">
@@ -155,8 +155,8 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
 {# ================================================================== 2027 AT RUN-RATE #}
 <section class="page">
   {{ head("Part 1 · Today's run-rate") }}
-  <h1>2027 at the run-rate: {{ t9.rr_g | pct }} on 2026. The budget asks {{ t9.bg | pct }}, {{ t9.need | apct }} more</h1>
-  <p class="lede">Held flat with normal seasons, the nine cafés sell {{ t9.rr27 | fm }} in 2027 against the budget's {{ t9.b27 | fm }}: {{ t9.rr_g | pct }} and {{ t9.bg | pct }} on their own 2026 finish. The run-rate is the growth 2026's rise already locks in; the budget needs {{ (t9.b27 - t9.prop27) | sfm }} on top.</p>
+  <h1>2027 at the run-rate lands within {{ "%.1f" | format(((t9.rr27 / t9.b27 - 1) | abs) * 100) }}% of the budget: it is a no-growth plan</h1>
+  <p class="lede">Held flat with normal seasons, the nine cafés sell {{ t9.rr27 | fm }} in 2027 against the budget's {{ t9.b27 | fm }}: {{ t9.rr_g | pct }} and {{ t9.bg | pct }} on their own 2026 finish, growth already locked in by 2026's rise and nothing more.</p>
   <table class="roomy">
     <thead><tr><th class="l">Café</th><th>2026 finish<br>run-rate</th><th>2027 at<br>run-rate</th><th>vs 2026</th><th>Budget<br>2027</th><th>Budget vs<br>its 2026</th><th>Run-rate<br>minus budget</th><th>Growth the budget<br>needs over run-rate</th></tr></thead>
     <tbody>
@@ -164,10 +164,10 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
       <tr><td>{{ c.name }}</td><td>{{ c.rr26 | fm }}</td><td><b>{{ c.rr27 | fm }}</b>{{ dag(c) }}</td><td>{{ c.rr_g | pct }}</td><td>{{ c.b27 | fm }}</td><td>{{ c.bg | pct }}</td>
         <td class="{{ 'pink' if c.adj > 0 else '' }}">{{ c.adj | sfk }}</td><td>{{ c.need | pct }}</td></tr>
     {% endfor %}
-      <tr class="total"><td>Nine existing cafés</td><td>{{ t9.rr26 | fm }}</td><td>{{ t9.rr27 | fm }}</td><td>{{ t9.rr_g | pct }}</td><td>{{ t9.b27 | fm }}</td><td>{{ t9.bg | pct }}</td><td>{{ t9.adj | sfk }}</td><td>{{ t9.need | pct }}</td></tr>
+      <tr class="total"><td>Nine existing cafés</td><td>{{ t9.rr26 | fm }}</td><td>{{ t9.rr27 | fm }}</td><td>{{ t9.rr_g | pct }}</td><td>{{ t9.b27 | fm }}</td><td>{{ t9.bg | pct }}</td><td>{{ t9.adj | sfk }}</td><td>{{ (t9.b27 / t9.rr27 - 1) | pct }}</td></tr>
     </tbody>
   </table>
-  <p class="note pin-bottom">Growth the budget needs = budget 2027 ÷ 2027 at the run-rate − 1. The budget shows La Jolla Café and La Jolla Juicery on one line ({{ C["La Jolla"].bg | pct }} for the two); both get that rate. {{ RRSET }}</p>
+  <p class="note pin-bottom">Growth the budget needs = budget 2027 ÷ 2027 at the run-rate − 1. A negative figure means the budget sits below the run-rate: it is met even if sales slip by that much. {{ RRSET }}</p>
   {{ foot(SRC) }}
 </section>
 
@@ -176,7 +176,7 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
 <section class="page">
   {{ head("Part 1 · Today's run-rate") }}
   <h1>Growth held at {{ Q.lo | pct0 }} to {{ Q.hi | pct0 }} a quarter; at the run-rate it fades to {{ Q.quarters[2027][3][0] | pct0 }} by Q4 2027</h1>
-  <p class="lede">Same-store sales of the nine existing cafés against the same quarter a year earlier. At the run-rate, growth fades through 2027 ({{ Q.quarters[2027][0][0] | pct }} in Q1, {{ Q.quarters[2027][3][0] | pct }} in Q4) as each quarter meets a 2026 quarter already at that level. The budget asks {{ Q.budget | min | pct0 }} every quarter; the targets in Part 2 run {{ Q.target | min | pct }} to {{ Q.target | max | pct }}, following each café's trend in our model.</p>
+  <p class="lede">Same-store sales of the nine existing cafés against the same quarter a year earlier. At the run-rate, growth fades through 2027 ({{ Q.quarters[2027][0][0] | pct }} in Q1, {{ Q.quarters[2027][3][0] | pct }} in Q4) as each quarter meets a 2026 quarter already at that level. The budget drops to {{ Q.budget[0] | pct }} from the first quarter; the targets in Part 2 keep {{ Q.target | min | pct0 }} to {{ Q.target | max | pct0 }}.</p>
   <div class="row">
     <div class="col" style="flex:1.5">
       <div class="chart-title">Same-store growth vs the same quarter a year earlier, nine existing cafés</div>
@@ -195,35 +195,36 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
           <tr><td>2027 target</td>{% for g in Q.target %}<td>{{ g | pct }}</td>{% endfor %}<td>{{ Q.target_year | pct }}</td></tr>
         </tbody>
       </table>
-      <p class="note" style="margin-top:10px">Same-store: a café counts once it traded the same period in full a year earlier. Small figures give the number of cafés when fewer than nine (Newport Beach and Beverly Hills opened in 2023, Brentwood and Carlsbad in 2024). 2026 Q4 in italics: estimate. Budget: against its own 2026 (each café's 2026 months grown by its rate). Target: Part 2, against the 2026 finish. The 2027 run-rate includes the management adjustment to {{ n.adj_text.names }}.</p>
+      <p class="note" style="margin-top:10px">Same-store: a café counts once it traded the same period in full a year earlier. Small figures give the number of cafés when fewer than nine (Newport Beach and Beverly Hills opened in 2023, Brentwood and Carlsbad in 2024). 2026 Q4 in italics: estimate. Budget: against its own 2026. Target: Part 2, against the 2026 finish. The 2027 run-rate includes the management adjustments to {{ n.adj_text.names }}.</p>
     </div>
   </div>
   {{ foot(SRC) }}
 </section>
 
-{# ================================================================== WHAT THE BUDGET ASKS #}
+{# ================================================================== ADJUSTMENTS #}
 <section class="page">
   {{ head("Part 1 · Today's run-rate") }}
-  <h1>The budget asks every café to grow beyond today's level: from {{ n.need_lo.need | apct }} to {{ n.need_hi.need | apct }}</h1>
-  <p class="lede">Today's run-rate already carries the growth that 2026's rise locks in. The gap between each café's budget growth and its run-rate is what it has to add in 2027: {{ t9.need | apct }} for the nine, most at {{ n.by_need[0].name }} and {{ n.by_need[1].name }}.</p>
+  <h1>Set each café to its run-rate: {{ n.up | length | words }} go up, {{ n.down | length | words }} come down</h1>
+  <p class="lede">The total barely moves ({{ t9.adj | sfk }} for the nine), but the budget asks some cafés for growth and gives others room. Setting each café to its own run-rate fixes the split.</p>
   <div class="row">
     <div class="col" style="flex:1">
-      <div class="chart-title">2027 growth on 2026: today's run-rate and the budget</div>
-      <div class="chart-sub">Each café on its own 2026 finish (the budget on the budget's) · biggest ask first</div>
-      {{ svg.ask }}
+      <div class="chart-title">Run-rate objective minus the budget, 2027</div>
+      <div class="chart-sub">Pink: the budget sits below the run-rate · gray: the budget needs growth</div>
+      {{ svg.adjust }}
     </div>
     <div class="col" style="flex:1.15">
       <table class="roomy">
-        <thead><tr><th class="l">Café</th><th>Budget<br>growth</th><th class="l">Budget's key<br>assumption</th><th>Run-rate<br>growth</th><th>Budget needs<br>over run-rate</th></tr></thead>
+        <thead><tr><th class="l">Café</th><th>Budget 2027</th><th>Run-rate objective</th><th>Change</th><th class="l"></th></tr></thead>
         <tbody>
-        {% for c in n.by_need %}
-          <tr><td>{{ c.name }}</td><td>{{ c.bg | pct }}</td><td class="l">{{ c.key_assumption }}</td><td>{{ c.rr_g | pct }}{{ dag(c) }}</td><td><b>{{ c.need | pct }}</b></td></tr>
+        {% for s in n.nine %}{% set c = C[s] %}
+          <tr><td>{{ c.name }}</td><td>{{ c.b27 | fm }}</td><td><b>{{ c.prop27 | fm }}</b>{{ dag(c) }}</td><td class="{{ 'pink' if c.adj > 0 else '' }}">{{ c.adj | sfk }}</td><td class="l">{{ badge(c.action) }}</td></tr>
         {% endfor %}
-          <tr class="total"><td>Nine existing cafés</td><td>{{ t9.bg | pct }}</td><td></td><td>{{ t9.rr_g | pct }}</td><td>{{ t9.need | pct }}</td></tr>
-          <tr class="sep"><td>La Jolla Cove</td><td>{{ cove.bg | pct }}</td><td class="l">{{ cove.key_assumption }}</td><td>{{ cove.prop_g | pct }}</td><td>{{ cove.need | pct }}</td></tr>
+          <tr class="total"><td>Nine existing cafés</td><td>{{ t9.b27 | fm }}</td><td>{{ t9.prop27 | fm }}</td><td>{{ t9.adj | sfk }}</td><td></td></tr>
+          <tr class="sep"><td>La Jolla Cove</td><td>{{ cove.b27 | fm }}</td><td><b>{{ cove.prop27 | fm }}</b></td><td>{{ cove.adj | sfk }}</td><td class="l">{{ badge("remodel") }}</td></tr>
+          <tr class="total"><td>Ten stores</td><td>{{ t10.b27 | fm }}</td><td>{{ t10.prop27 | fm }}</td><td>{{ t10.adj | sfk }}</td><td></td></tr>
         </tbody>
       </table>
-      <p class="note" style="margin-top:8px">La Jolla Cove: run-rate through September 2027, then the budget's remodeled $125K a month from the October 1 reopening. La Jolla Café and the Juicery share their line's rate. {{ RRSET }}</p>
+      <p class="note" style="margin-top:8px">La Jolla Cove: run-rate through September 2027, then the budget's remodeled $125K a month from the October 1 reopening. {{ RRSET }}</p>
     </div>
   </div>
   {{ foot(SRC) }}
@@ -233,7 +234,7 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
 {% for c in n.cafes %}
 <section class="page">
   {{ head("Part 1 · Today's run-rate · " ~ c.name) }}
-  <div class="cafe-tag"><span class="name">{{ c.name }}</span>{{ badge(c) }}</div>
+  <div class="cafe-tag"><span class="name">{{ c.name }}</span>{{ badge(c.action) }}</div>
   <h1>{{ c.h1 }}</h1>
   <div class="row" style="margin-top:8px">
     <div class="col" style="flex:1.75">
@@ -261,7 +262,7 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
       <p style="font-size:12.3px;line-height:1.5;margin:12px 0 0">{{ c.found }}</p>
     </div>
   </div>
-  <div class="verdict pin-bottom">{{ badge(c) }}<span>{{ c.verdict }}</span></div>
+  <div class="verdict pin-bottom">{{ badge(c.action) }}<span>{{ c.proposal }}</span></div>
   {{ foot(c.note if c.note else SRC) }}
 </section>
 {% endfor %}
@@ -271,7 +272,7 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
   <div class="div-left">
     <div class="part">Part 2</div>
     <div class="div-title">2027 manager targets</div>
-    <p class="div-sub">Each store at the budget's growth, month by month along its own trend.</p>
+    <p class="div-sub">Targets that keep each store growing with its trend, month by month.</p>
     <ul class="div-list">
       <li><span>01</span>The targets, store by store</li>
       <li><span>02</span>How they are built</li>
@@ -287,22 +288,22 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
 <section class="page">
   {{ head("Part 2 · 2027 targets") }}
   <h1>2027 targets: {{ t9.target27 | fm }} for the nine cafés, {{ t10.target27 | fm }} with La Jolla Cove</h1>
-  <p class="lede">Each target applies the store's 2027 growth in the budget to its 2026 finish, month by month with our forecasting model. The nine grow {{ t9.tg | pct }} on 2026, against {{ t9.rr_g | pct }} at the run-rate: {{ t9.ask | apct }} over today's level.</p>
+  <p class="lede">Each target is the café's objective in the October 15 budget, spread month by month along our most accurate forecast: one percentage over or under the forecast per café, {{ t9.adj_fc | pct }} for the nine. The nine grow {{ t9.tg | pct }} on 2026, against {{ t9.fc_g | pct }} in our forecast and {{ t9.rr_g | pct }} at the run-rate.</p>
   <div class="row">
     <div class="col" style="flex:1.45">
       <div class="chart-title">2027 growth on 2026, by café</div>
-      <div class="chart-sub">Today's run-rate held flat · the target, at the budget's growth</div>
+      <div class="chart-sub">The run-rate held flat · our forecast · the target (the October 15 budget)</div>
       {{ svg.targets_dots }}
     </div>
     <div class="col" style="flex:1">
       <table class="roomy">
-        <thead><tr><th class="l">Café</th><th>Target<br>2027</th><th>vs<br>2026</th><th>vs run-rate</th><th>vs budget</th></tr></thead>
+        <thead><tr><th class="l">Café</th><th>Target<br>2027</th><th>vs<br>2026</th><th>vs our<br>forecast</th><th>vs run-rate</th></tr></thead>
         <tbody>
         {% for c in n.cafes %}
-          <tr class="{{ 'sep' if c.key == 'La Jolla Cove' else '' }}"><td>{{ c.name }}</td><td><b>{{ c.target27 | fm }}</b></td><td>{{ c.tg | pct }}</td><td>{{ c.t_vs_rr | sfk }}</td><td>{{ c.t_vs_b | sfk }}</td></tr>
-          {% if loop.index == 9 %}<tr class="total"><td>Nine existing cafés</td><td>{{ t9.target27 | fm }}</td><td>{{ t9.tg | pct }}</td><td>{{ t9.t_vs_rr | sfm }}</td><td>{{ t9.t_vs_b | sfm }}</td></tr>{% endif %}
+          <tr class="{{ 'sep' if c.key == 'La Jolla Cove' else '' }}"><td>{{ c.name }}</td><td><b>{{ c.target27 | fm }}</b></td><td>{{ c.tg | pct }}</td><td>{{ "—" if c.key == "La Jolla Cove" else (c.adj_fc | pct) }}</td><td>{{ c.t_vs_rr | sfk }}</td></tr>
+          {% if loop.index == 9 %}<tr class="total"><td>Nine existing cafés</td><td>{{ t9.target27 | fm }}</td><td>{{ t9.tg | pct }}</td><td>{{ t9.adj_fc | pct }}</td><td>{{ t9.t_vs_rr | sfm }}</td></tr>{% endif %}
         {% endfor %}
-          <tr class="total"><td>Ten stores</td><td class="pink">{{ t10.target27 | fm }}</td><td>{{ t10.tg | pct }}</td><td>{{ t10.t_vs_rr | sfm }}</td><td>{{ t10.t_vs_b | sfm }}</td></tr>
+          <tr class="total"><td>Ten stores</td><td class="pink">{{ t10.target27 | fm }}</td><td>{{ t10.tg | pct }}</td><td></td><td>{{ t10.t_vs_rr | sfm }}</td></tr>
         </tbody>
       </table>
     </div>
@@ -322,10 +323,10 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
     </div>
     <div class="col" style="flex:1">
       <ul class="tight big">
-        <li><b>The budget's growth, store by store</b>, on our 2026 finish (Toast to October 14, then the run-rate): {% for c in n.by_need | sort(attribute="bg", reverse=True) %}{% if c.key != "La Jolla Juicery" %}{{ c.short if c.key != "La Jolla" else "La Jolla Café and Juicery" }} {{ c.bg | pct }}{{ ", " if not loop.last else "" }}{% endif %}{% endfor %}. The nine come to {{ t9.tg | pct }}.</li>
-        <li><b>Month by month from our model.</b> Three forecasting models, fitted café by café on Toast sales and blended, give each café's 2027 path, its seasons and its trend; the year's target is spread along it, in cents. So the targets climb: the nine start at today's level in January and end {{ t9.ramp[11] | apct(0) }} over it in December.</li>
+        <li><b>Our most accurate forecast.</b> Three forecasting models, fitted café by café on Toast sales through September 2026 and blended, the most accurate in our tests: each café's 2027 by month, with its seasons and its trend. It grows the nine cafés {{ t9.fc_g | pct }}.</li>
+        <li><b>Set to the October 15 budget.</b> Each café's year is its objective in that budget; the forecast moves by one percentage per café, the same in every month, to land on it: from {{ n.adj_lo.adj_fc | pct }} at {{ n.adj_lo.name }} to {{ n.adj_hi.adj_fc | pct }} at {{ n.adj_hi.name }}, {{ t9.adj_fc | pct }} for the nine. La Jolla Café and the Juicery share their line in proportion to the forecast.</li>
         <li><b>Day by day for payroll.</b> Each month is split into its days by our daily model, to the cent: <i>Parakeet_2027_Daily_Targets.xlsx</i>.</li>
-        <li><b>La Jolla Cove:</b> the remodeled $125K a month from the October 1, 2027 reopening; the rest of its target over January–September.</li>
+        <li><b>La Jolla Cove:</b> its objective in the budget: flat on 2026 through September, then $125K a month from the October 1, 2027 reopening.</li>
         <li><b>No new menu price increase.</b> If prices go up in 2027, raise the targets by the same percentage from that month.</li>
       </ul>
       <div class="minis" style="margin-top:6px">
@@ -379,8 +380,8 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
       <p><b>Targets 2027</b>: each store's target by month and quarter, the year and growth on 2026.</p>
       <p><b>Monthly tracking</b>: enter each month's actual net sales from Toast; the variance against target fills in.</p>
       <p><b>Year to date</b>: target and actual to date by store, for the months entered.</p>
-      <p><b>Reference</b>: each store's 2026 finish and 2027 under the budget, today's run-rate and the target.</p>
-      <p><b>Parakeet_2027_Daily_Targets.xlsx</b>: every 2027 day by store, for staffing and payroll, adding up to each month to the cent.</p>
+      <p><b>Reference</b>: each store's 2026 finish and 2027 under the budget, today's run-rate, our forecast and the target.</p>
+      <p><b>Parakeet_2027_Daily_Targets.xlsx</b>: every 2027 day by store, the target and the run-rate, for staffing and payroll, adding up to each month to the cent.</p>
     </div>
     <div class="col">
       <h3>A suggested monthly rhythm</h3>
@@ -392,11 +393,11 @@ sup.dag{font-size:9px;margin-left:1px;color:var(--g500)}
       <h3>Definitions</h3>
       <p><b>Net sales</b>: Toast POS net sales after discounts; excluding tax, tips and gift-card sales. Del Mar Café appears as Carmel Valley in Toast.</p>
       <p><b>Run-rate</b>: the last 45 days (August 31 – October 14, 2026), seasonally adjusted and held flat with normal seasons; set by management for {{ n.adj_text.rr }} on 2026.</p>
-      <p><b>Target</b>: the budget's 2027 growth for each store on its 2026 finish, by month along our forecasting model's path (the blend of three models) and by day from our daily model.</p>
-      <p><b>Budget</b>: “2027 Sales Objectives by Café” (2027 budget, October 2026). It gives years only; its months here are its 2026 months grown by each store's rate.</p>
+      <p><b>Target</b>: each store's 2027 objective in the October 15 budget (“2027 Sales Objectives by Café”), by month along our most accurate forecast (the blend of three forecasting models) and by day from our daily model.</p>
+      <p><b>Budget</b>: the investor budget workbook (2027_Sales_budget_Investors.xlsx), reviewed in Part 1.</p>
     </div>
   </div>
-  <p class="note pin-bottom">Code: report/build_targets.py, report/build_daily_targets.py, src/runrate_scenario.py, src/import_budget_pdf.py. The new cafés (Manhattan Beach, Sportsmen's Lodge, Boulangerie) are not included.</p>
+  <p class="note pin-bottom">Code: report/build_targets.py, report/build_daily_targets.py, src/runrate_scenario.py, src/import_budget.py, src/import_budget_pdf.py. The new cafés (Manhattan Beach, Sportsmen's Lodge, Boulangerie) are not included.</p>
   {{ foot(SRC) }}
 </section>
 
