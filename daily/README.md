@@ -122,6 +122,52 @@ were too strong; for the other stores the same pull costs a lot (8.2% to 11.8%):
 Its 2027 weekday pattern (week = 100), school term / summer / fall: Mon 96 / 97 / 95, Sat 103 / 102 / 106, Sun 103 /
 100 / 104. Review it in January with the fourth quarter.
 
+### By channel: the café and delivery apart (`channels.py`)
+
+Toast tags every order with its channel (`sql/channels_by_day.sql`, unpacked by `channel_data.py` into
+`data/toast_channels_daily.csv`: 13,217 store-days from Sep 2022 to Oct 14, 2026, each within $1.49 of the daily file,
+the rounding to whole dollars per channel). In the café = dine-in, take-out, kiosk and invoices; pickup = online orders
+picked up; delivery = delivery apps and own delivery.
+
+* **Delivery's share grew every year**: at most 9% of sales in 2023; over the last 12 months Brentwood 27.8%, Beverly
+  Hills 24.6%, La Jolla Café 21.3%, Carlsbad 20.5%, Little Italy 19.3%, Del Mar 17.7%, Newport 12.2%, Coronado 8.5%,
+  Juicery 5.4%, La Jolla Cove 0%. Beverly Hills peaked at 27.5% in 2026 Q1 and was back to 22% in Q3. Online pickup
+  adds 5–16% (none at La Jolla Cove).
+* **Delivery has a week of its own.** Over the last 12 months a weekend day sold, against a weekday, in the café (with
+  pickup) +8% (Beverly Hills) to +95% (Newport), but by delivery −19% (Beverly Hills) to +35% (Newport), within ±10%
+  in five of the nine cafés with delivery. In Beverly Hills online pickup is weekday business too (−45%). The summer
+  flattening of the week is the café's: Beverly Hills −19 points in the café against −3 by delivery, Coronado −27
+  against −8, Little Italy −26 against +3.
+* **Beverly Hills' change in 2026 is in the café.** Its café weekend lift went from +36% (2025 H1) to +6% (2026 H1)
+  and +10% (2026 H2 to Oct 14); the total went from +26% to −2%. The rise of delivery (about 18% to 27% of sales)
+  explains about 4 of those 28 points.
+
+Each channel then gets the chosen daily model, and a month's days are the two channel shapes weighted by the
+month's mix: the mix of the last 3 or 12 months before the origin, or, as a ceiling, the month's actual mix.
+
+| Daily error of the total, out of sample | All days | Weekends | Days-off holidays | 2025 months | 2026 months |
+|---|---|---|---|---|---|
+| Blend (Prophet with extended special days × tree model) | 8.50% | 8.03% | 11.81% | 8.60% | 8.43% |
+| Café (with pickup) and delivery apart, mix of the last 3 months | 8.51% | 7.99% | 11.76% | 8.64% | 8.41% |
+| Same, mix of the last 12 months | 8.51% | 8.01% | 11.78% | 8.62% | 8.43% |
+| Same, each month's actual mix | 8.50% | 7.95% | 11.83% | 8.65% | 8.39% |
+| In the café and online (pickup with delivery) apart, mix of the last 3 months | 8.51% | 7.95% | 11.79% | 8.62% | 8.42% |
+| Same, each month's actual mix | 8.50% | 7.91% | 11.85% | 8.62% | 8.40% |
+| **Blend, Beverly Hills halfway to equal days (used)** | **8.36%** | **7.80%** | **11.36%** | **8.55%** | **8.22%** |
+| Café and delivery apart, Beverly Hills halfway to equal days | 8.40% | 7.79% | 11.42% | 8.61% | 8.23% |
+| In the café and online apart, Beverly Hills halfway to equal days | 8.40% | 7.76% | 11.42% | 8.59% | 8.24% |
+
+No gain (block bootstrap: +0.01 points [−0.04, +0.05] against the blend; +0.04 [−0.01, +0.08] and +0.03 [−0.02,
++0.08] against the method used). It helps where delivery is large and weekday-heavy (Brentwood 9.6% to 9.4%, Del Mar
+6.5% to 6.4%, La Jolla Café 7.8% to 7.7%) and hurts elsewhere (Newport 7.8% to 8.1%, Little Italy 10.4% to 10.5%,
+Coronado 8.4% to 8.5%, Carlsbad 6.5% to 6.6%). Each channel alone is split better by its own model (café 9.1% to
+9.0%, delivery 23.9% to 19.4%), but delivery's days are noisy (a 19% error against 9% in the café), the two channels'
+misses offset each other in the total, which the blend already learns directly, and the mix moves too slowly to
+matter within a month (even the actual mix gives 8.50%). For Beverly Hills the split takes the blend from 12.0% to
+11.7% (11.4% with the actual mix); halfway to equal days takes it to 10.3%, with or without the split. Not used: the
+2027 daily file stays as built (`outputs/channels.png`, `outputs/channels_backtest.csv`, `channels_by_store.csv`,
+`channels_mix.csv`, `channels_weekday.csv`).
+
 ## Output
 
 `outputs/Parakeet_2027_Daily_Forecast.xlsx` and `outputs/daily_2027.csv`: every 2027 day for the ten stores, built by
@@ -144,6 +190,8 @@ the run-rate for the nine cafés), so payroll built on them assumes that growth 
 .venv/bin/python daily/prophet_variants.py   # Prophet with extended special days and seasonal weekly patterns
 .venv/bin/python daily/intramonth.py     # seasonality within the month (not adopted)
 .venv/bin/python daily/prophet_recent.py # a weekly pattern of its own for recent months (not adopted)
+.venv/bin/python -I daily/channel_data.py ch_2022.txt ... ch_2026.txt  # the channel extracts (MCP result files)
+.venv/bin/python daily/channels.py       # the café and delivery modelled apart (not adopted)
 .venv/bin/python daily/summarize.py      # summary table and chart
 .venv/bin/python daily/build_2027.py     # the 2027 daily figures, pinned to what was sent
 ```
