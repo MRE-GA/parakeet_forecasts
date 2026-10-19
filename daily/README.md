@@ -65,6 +65,25 @@ Prophet alone gains from both (9.16% to 8.97%), but the tree model already learn
 the blend the seasonal weekly patterns count it twice and over-weight weekends. The extended special days help the
 blend a little (better in 7 of 10 stores; Halloween, the Christmas week and spring break most).
 
+### Seasonality within the month (`intramonth.py`)
+
+In the data, net of each month's level, the store's weekday-by-season pattern and special days, the first three days
+of a month sell 0.5% less, days 14–16 0.6% more and the last three days 0.6% less, each within about one standard
+error (±0.4%); paydays (the 1st, the 15th) do not stand out and the signs change from store to store
+(`outputs/day_of_month_profile.csv`). The backtest agrees:
+
+| Daily error, out of sample | All days | Days 1–3 | Days 14–16 | Last 3 days |
+|---|---|---|---|---|
+| Prophet (extended special days) | 9.08% | 10.19% | 8.99% | 9.34% |
+| + monthly Fourier seasonality, order 3 / 5, moderate prior | 9.09% / 9.15% | 10.45% / 10.65% | 9.03% / 9.03% | 9.23% / 9.36% |
+| + monthly Fourier seasonality, order 5, free prior | 9.12% | 10.60% | 9.00% | 9.32% |
+| Tree model / without its day-of-month features | 8.77% / 8.75% | 9.85% / 9.72% | 8.86% / 8.79% | 9.40% / 9.36% |
+| Blend (Prophet with extended special days × tree model) | 8.50% | 9.66% | 8.57% | 8.80% |
+| Blend with monthly seasonality in Prophet | 8.52–8.54% | 9.77–9.84% | 8.55–8.60% | 8.79–8.83% |
+| Blend with an explicit day-of-month adjustment | 8.55% | 9.72% | 8.58% | 8.94% |
+
+No seasonality within the month is worth modelling.
+
 ## Output
 
 `outputs/Parakeet_2027_Daily_Forecast.xlsx` and `outputs/daily_2027.csv`: every 2027 day for the ten stores, built by
