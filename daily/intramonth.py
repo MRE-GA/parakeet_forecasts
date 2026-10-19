@@ -76,15 +76,14 @@ def main() -> None:
         prof = dom_profile(panel, origin)
         days.loc[idx, "dom_adj"] = np.exp(prof[test.dom.to_numpy() - 1])
         print(f"origin {origin.date()}: {time.time() - t0:.0f}s", flush=True)
-    days["blend_hol"] = np.sqrt(days.p_hol * days.lgbm_hl180)
     for v in VARIANTS:
         days[f"blend_{v}"] = np.sqrt(days[v] * days.lgbm_hl180)
-    days["blend_hol_nodom"] = np.sqrt(days.p_hol * days.lgbm_nodom)
-    days["blend_hol_domadj"] = days.blend_hol * days.dom_adj
+    days["blend_p_hol_nodom"] = np.sqrt(days.p_hol * days.lgbm_nodom)
+    days["blend_p_hol_domadj"] = days.blend_p_hol * days.dom_adj
     days.to_pickle(OUT / "backtest_days.pkl")
     rows = []
-    for m in ["p_hol", *VARIANTS, "lgbm_hl180", "lgbm_nodom", "blend_hol", *[f"blend_{v}" for v in VARIANTS],
-              "blend_hol_nodom", "blend_hol_domadj"]:
+    for m in ["p_hol", *VARIANTS, "lgbm_hl180", "lgbm_nodom", "blend_p_hol", *[f"blend_{v}" for v in VARIANTS],
+              "blend_p_hol_nodom", "blend_p_hol_domadj"]:
         z = pd.concat([shape_errors(g, m) for _, g in days.groupby("origin")])
         dim = pd.DatetimeIndex(z.date).days_in_month
         part = np.select([z.dom <= 3, z.dom.between(14, 16), z.dom >= dim - 2], ["start", "mid", "end"], "rest")

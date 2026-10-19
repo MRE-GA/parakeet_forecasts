@@ -25,14 +25,16 @@ splits each month of the following year (to Sep 2026) into days: 63 months a sto
 | Prophet, weekly pattern freed / separate in summer | 9.1% | 8.9% | 8.5–8.6% | 12.7–12.8% | 14.1–14.3% |
 | Components: weekday by season, calibrated holidays, time of year | 9.3% | 9.0% | 8.6% | 14.7% | 16.2% |
 | Tree model (LightGBM, all stores together) | 8.8% | 8.6% | 8.4% | 12.7% | 12.1% |
-| **Blend: Prophet as tuned × tree model (chosen)** | **8.6%** | **8.5%** | **8.0%** | **11.8%** | **11.7%** |
+| Blend: Prophet as tuned × tree model | 8.6% | 8.5% | 8.0% | 11.8% | 11.7% |
 | Blend, days-off holidays set to their usual level | 8.6% | 8.5% | 8.0% | 12.9% | 11.7% |
+| **Blend: Prophet with extended special days × tree model (chosen)** | **8.5%** | **8.4%** | **8.0%** | **11.8%** | **11.5%** |
 
-By store, the blend against Prophet as tuned: La Jolla Cove 15.0% → 13.4%, Newport Beach 9.4% → 7.9%, Coronado 9.5% →
-8.6%, Little Italy 11.3% → 10.4%, Juicery 11.1% → 10.7%, Brentwood 9.8% → 9.5%, Carlsbad 6.9% → 6.6%, La Jolla Café
-8.1% → 7.8%, Del Mar 6.7% → 6.5%, Beverly Hills 12.1% → 11.9% (`outputs/backtest_summary.csv`,
-`outputs/backtest_by_store.png`). The error is flat across horizons (8.4–8.7% from 1 to 12 months ahead), which matters because 2027
-is 3–14 months out.
+By store, the chosen blend against Prophet as tuned: La Jolla Cove 15.0% → 13.2%, Newport Beach 9.4% → 7.8%, Coronado
+9.5% → 8.4%, Little Italy 11.3% → 10.4%, Juicery 11.1% → 10.6%, Brentwood 9.8% → 9.6%, Carlsbad 6.9% → 6.5%, La Jolla
+Café 8.1% → 7.8%, Del Mar 6.7% → 6.5%, Beverly Hills 12.1% → 12.0% (`outputs/backtest_summary.csv`,
+`outputs/backtest_by_store.png`). The error is flat across horizons (8.4–8.7% from 1 to 12 months ahead), which matters
+because 2027 is 3–14 months out. Block bootstrap over store-months (95% intervals): the blend against Prophet −0.60
+points [−0.75, −0.46]; the extended special days in the blend −0.05 [−0.11, −0.01]; both real.
 
 What the tests showed:
 
@@ -84,10 +86,28 @@ error (±0.4%); paydays (the 1st, the 15th) do not stand out and the signs chang
 
 No seasonality within the month is worth modelling.
 
+### A weekly pattern of its own for recent months (`prophet_recent.py`)
+
+Conditional seasonality by period instead of by season: Prophet (with the extended special days) learns one weekly
+pattern from the last 12 (or 6) months before the origin and another from earlier data, and the forecast uses the
+recent one, so a store whose week is changing (Beverly Hills) is followed without losing the rest of its history.
+
+| Daily error, out of sample | Prophet alone | Blended with the tree model |
+|---|---|---|
+| Weekly pattern for all years (tuned prior) | 9.08% | 8.50% |
+| Recent 12 months / earlier, free prior | 8.87% | 8.49% |
+| Recent 6 months / earlier, free prior | 8.88% | 8.46% |
+| Recent 12 months / earlier, split by summer, free prior | 8.92% | 8.52% |
+| Recent 12 months / earlier, tuned prior | 9.78% | 8.62% |
+
+The best change yet for Prophet alone (9.08% to 8.87%), but in the blend the gain is not significant (−0.01 points
+[−0.06, +0.05] and −0.04 [−0.09, +0.02]) and Brentwood gets worse (9.6% to 10.3%), so it is not used.
+
 ## Output
 
 `outputs/Parakeet_2027_Daily_Forecast.xlsx` and `outputs/daily_2027.csv`: every 2027 day for the ten stores, built by
-the blend retrained on all data through Oct 14, 2026, in two series:
+the chosen blend (Prophet with the extended special days × the tree model) retrained on all data through Oct 14, 2026,
+in two series:
 
 * **targets**: each month of 'Targets 2027' (`outputs/Parakeet_2027_Manager_Targets.xlsx`), to the cent;
 * **run-rate**: the deck's run-rate objective by month, adding up to the workbook's 'Reference' figure to the cent.
@@ -102,6 +122,9 @@ the run-rate for the nine cafés), so payroll built on them assumes that growth 
 .venv/bin/python daily/backtest.py       # the methods, six origins -> outputs/backtest_store_month.csv
 .venv/bin/python daily/experiments.py    # recency weighting and blend weights for the tree model
 .venv/bin/python daily/holiday_test.py   # days-off holidays at their usual level (not adopted)
+.venv/bin/python daily/prophet_variants.py   # Prophet with extended special days and seasonal weekly patterns
+.venv/bin/python daily/intramonth.py     # seasonality within the month (not adopted)
+.venv/bin/python daily/prophet_recent.py # a weekly pattern of its own for recent months (not adopted)
 .venv/bin/python daily/summarize.py      # summary table and chart
 .venv/bin/python daily/build_2027.py     # the 2027 daily figures, pinned to what was sent
 ```

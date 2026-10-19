@@ -1,7 +1,8 @@
 """2027 daily sales for payroll: the chosen daily model, retrained on all data, pinned to the monthly figures sent.
 
-Daily model (best in daily/backtest.py): the geometric mean of Prophet with the adopted settings and the pooled
-tree model (LightGBM, half-life 180 days), both retrained on every day of data through Oct 14, 2026. It only sets
+Daily model (best in the daily backtests): the geometric mean of Prophet with the adopted settings and the extended
+special days (daily/prophet_variants.py) and the pooled tree model (LightGBM, half-life 180 days), both retrained on
+every day of data through Oct 14, 2026. It only sets
 how each month divides into its days: each month is then split in proportion to it, in cents, so every month (and
 year) matches what was sent exactly:
   * targets: 'Targets 2027' in outputs/Parakeet_2027_Manager_Targets.xlsx
@@ -24,9 +25,9 @@ from joblib import Parallel, delayed
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE.parent / "report"))
-from common import (LAST_DAY, LGBM, NAME, OUT, ROOT, SEASONS, STORES, build_panel, future_panel, m_prophet,  # noqa: E402
-                    split_cents)
+from common import LAST_DAY, LGBM, NAME, OUT, ROOT, STORES, build_panel, future_panel, split_cents  # noqa: E402
 from forecasting import load_stores  # noqa: E402
+from prophet_variants import fit as prophet_fit  # noqa: E402
 
 YEAR = pd.date_range("2027-01-01", "2027-12-31")
 M27 = pd.period_range("2027-01", "2027-12", freq="M")
@@ -61,7 +62,7 @@ def sent_monthly() -> tuple[dict, dict]:
 
 def daily_weights(panel: pd.DataFrame, stores: dict) -> dict[str, np.ndarray]:
     origin = pd.Timestamp(LAST_DAY)
-    prophet = Parallel(n_jobs=4)(delayed(m_prophet)(stores[s], origin, YEAR) for s in STORES)
+    prophet = Parallel(n_jobs=4)(delayed(prophet_fit)(stores[s], origin, YEAR, "tuned", "ext") for s in STORES)
     tree = LGBM(panel, origin, half_life=180)
     out = {}
     for s, name, wp in zip(STORES, DISPLAY, prophet):
@@ -111,9 +112,9 @@ def export(t_cents: dict, r_cents: dict, target: dict, run: dict) -> dict:
         sheets[sheet] = ws
         ws["A1"], ws["A1"].font = f"Parakeet Café · 2027 daily sales: {what}", title
         ws["A2"], ws["A2"].font = (
-            f"Each month of {what} (as sent) split over its days by the daily model: Prophet and a tree model trained "
-            "on all stores, blended, retrained on data through Oct 14, 2026. Every month adds up exactly to the "
-            "figure sent (see 'Check'). Blue = values from the analysis; black = formulas."), muted
+            f"Each month of {what} (as sent) split over its days by the daily model: Prophet (with every special day) "
+            "and a tree model trained on all stores, blended, retrained on data through Oct 14, 2026. Every month adds "
+            "up exactly to the figure sent (see 'Check'). Blue = values from the analysis; black = formulas."), muted
         header(ws, 4, ["Date", "Day", "Month"] + DISPLAY + ["Total"])
         for i, day in enumerate(YEAR):
             r = first + i
@@ -206,12 +207,14 @@ def export(t_cents: dict, r_cents: dict, target: dict, run: dict) -> dict:
         "Monthly and annual figures: exactly those sent (targets workbook and deck); this file only splits each month "
         "into its days.",
         "Daily model: the geometric mean of two models, both retrained on all data through Oct 14, 2026: Prophet with "
-        "the adopted settings (time of year, day of week, holidays) and a tree model (LightGBM) trained on all ten "
-        "stores together on each day's sales against its month's average, from the weekday, season, holidays and "
-        "time of year, with recent days weighing more.",
+        "the adopted settings (time of year, day of week, holidays) plus the other special days (Dec 26, the days "
+        "between Christmas and New Year's Eve, Thanksgiving weekend, spring break, Halloween), and a tree model "
+        "(LightGBM) trained on all ten stores together on each day's sales against its month's average, from the "
+        "weekday, season, special days and time of year, with recent days weighing more.",
         "Chosen by backtest: six forecast origins (Dec 2024 to Mar 2026), each month of the next year split into "
-        "days and compared with actual days, given the true month. Daily error: Prophet alone 9.2%, the blend 8.6%; "
-        "on holidays 13.3% and 11.7%.",
+        "days and compared with actual days, given the true month. Daily error: Prophet as tuned 9.2%, this blend "
+        "8.5%; on days-off holidays 12.8% and 11.8%. Tested and not used: weekly patterns by season or for recent "
+        "months in Prophet, seasonality within the month, holidays set to their usual level.",
         "Each month is split in cents in proportion to the model's days; amounts are rounded so the month adds up "
         "exactly (see 'Check').",
         "Holidays the stores have always traded on are kept as trading days; a café closure that is not in the "

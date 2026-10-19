@@ -14,11 +14,11 @@ from common import DAYS_OFF, OUT, build_panel, holiday_override, holiday_ratios,
 days = pd.read_pickle(OUT / "backtest_days.pkl")
 panel = build_panel()
 days["blend"] = np.sqrt(days.prophet_tuned * days.lgbm_hl180)
-days["blend_hol"] = days.blend
+days["blend_override"] = days.blend
 for origin, idx in days.groupby("origin").groups.items():
     test = days.loc[idx]
-    days.loc[idx, "blend_hol"] = holiday_override(test, test.blend.to_numpy(), holiday_ratios(panel, origin))
-for m in ("prophet_tuned", "blend", "blend_hol"):
+    days.loc[idx, "blend_override"] = holiday_override(test, test.blend.to_numpy(), holiday_ratios(panel, origin))
+for m in ("prophet_tuned", "blend", "blend_override"):
     z = pd.concat([shape_errors(g, m) for _, g in days.groupby("origin")])
     sp = z[z.special.isin(DAYS_OFF)]
     wk = sp[sp.dow >= 5]

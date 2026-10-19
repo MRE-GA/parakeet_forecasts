@@ -6,5 +6,6 @@ prophet_free,"Prophet, free weekly pattern",9.13,8.94,8.57,12.84,14.14,12.8,10.8
 prophet_summer,"Prophet, summer weekly pattern",9.12,8.94,8.54,12.73,14.3,12.51,10.79,6.72,9.33,6.89,8.35,11.07,11.24,8.48,13.5
 structural,"Components (weekday by season, holidays, time of year)",9.27,8.97,8.57,14.65,16.2,12.17,10.99,7.15,10.38,6.75,8.23,11.02,11.43,8.21,13.95
 lgbm_hl180,Tree model (LightGBM),8.77,8.56,8.41,12.69,12.14,12.32,10.44,7.08,8.71,6.7,8.08,10.87,10.3,7.85,12.97
-blend,Blend: Prophet as tuned + tree model (chosen),8.56,8.48,8.04,11.81,11.71,11.95,9.54,6.61,8.64,6.5,7.84,10.67,10.45,7.86,13.37
-blend_hol,"Blend, days-off holidays at their usual level",8.6,8.5,8.04,12.88,11.65,12.07,9.59,6.73,8.58,6.48,7.87,10.71,10.4,8.0,13.5
+blend,Blend: Prophet as tuned + tree model,8.56,8.48,8.04,11.81,11.71,11.95,9.54,6.61,8.64,6.5,7.84,10.67,10.45,7.86,13.37
+blend_override,"Blend, days-off holidays at their usual level",8.6,8.5,8.04,12.88,11.65,12.07,9.59,6.73,8.58,6.48,7.87,10.71,10.4,8.0,13.5
+blend_p_hol,Blend: Prophet with extended special days + tree model (chosen),8.5,8.41,8.03,11.81,11.53,11.99,9.61,6.52,8.4,6.5,7.81,10.59,10.41,7.84,13.24
