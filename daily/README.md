@@ -1,10 +1,9 @@
 # Daily sales for payroll (2027)
 
-The monthly and annual figures for 2027 were already sent (the run-rate review and manager-targets deck and its
-workbook). Payroll needs the days, so this folder retrains a model whose only job is to divide each month into its
-days, and then splits every month in cents so it matches what was sent exactly. Nothing outside this folder is
-changed: it reads the repository's data and settings (`src/forecasting.py`), the targets workbook and the deck's
-run-rate (`report/build_targets.py`).
+Payroll needs the 2027 targets by day. This folder is the study behind the daily model: a model whose only job is
+to divide each month into its days (the months come from the targets workbook and are split in cents, so they match
+to the cent). It reads the repository's data and settings (`src/forecasting.py`). The model chosen here is the one the
+managers' daily targets use (`report/build_daily_targets.py`, October 19, 2026).
 
 ## Metric
 
@@ -170,16 +169,20 @@ matter within a month (even the actual mix gives 8.50%). For Beverly Hills the s
 
 ## Output
 
-`outputs/Parakeet_2027_Daily_Forecast.xlsx` and `outputs/daily_2027.csv`: every 2027 day for the ten stores, built by
-the chosen blend (Prophet with the extended special days × the tree model) retrained on all data through Oct 14, 2026,
-in two series:
+`report/build_daily_targets.py` writes `outputs/Parakeet_2027_Daily_Targets.xlsx` and `outputs/targets_2027_daily.csv`:
+every 2027 day for the ten stores, built by the chosen blend (Prophet with the extended special days × the tree
+model, Beverly Hills halfway to equal days) retrained on all data through Oct 14, 2026, in two series:
 
 * **targets**: each month of 'Targets 2027' (`outputs/Parakeet_2027_Manager_Targets.xlsx`), to the cent;
-* **run-rate**: the deck's run-rate objective by month, adding up to the workbook's 'Reference' figure to the cent.
+* **run-rate**: today's run-rate by month, adding up to the workbook's 'Reference' figure to the cent.
 
 Tabs: the two daily series, average day by weekday and season (a staffing template), a `Check` tab that recomputes
-every month against what was sent (zero cents of difference) and notes. The targets are stretch goals (about 5% over
-the run-rate for the nine cafés), so payroll built on them assumes that growth is reached.
+every month against the workbook (zero cents of difference) and notes. The targets are the budget's growth (+10.0%
+for the nine cafés, about 6% over today's run-rate), so payroll built on them assumes that growth is reached.
+
+First live check (Thursday to Sunday, Oct 15–18, 2026, after the training data): the ten stores sold $337K against
+$339K expected by this daily shape on the run-rate's level (−0.4%; Thursday −1.1% to Sunday +0.5%), with a 5.2% daily
+error over the 40 store-days.
 
 ## Run it
 
@@ -193,5 +196,5 @@ the run-rate for the nine cafés), so payroll built on them assumes that growth 
 .venv/bin/python -I daily/channel_data.py ch_2022.txt ... ch_2026.txt  # the channel extracts (MCP result files)
 .venv/bin/python daily/channels.py       # the café and delivery modelled apart (not adopted)
 .venv/bin/python daily/summarize.py      # summary table and chart
-.venv/bin/python daily/build_2027.py     # the 2027 daily figures, pinned to what was sent
+.venv/bin/python report/build_daily_targets.py  # the 2027 daily figures (after report/build_targets.py)
 ```

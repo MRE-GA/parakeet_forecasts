@@ -34,7 +34,7 @@ COLS = {"cafe": ["in_store", "pickup"], "delivery": ["delivery"], "in_store": ["
         "online": ["pickup", "delivery"]}
 GROUPINGS = {"ch": ("cafe", "delivery"), "on": ("in_store", "online")}  # (always modelled, modelled where big)
 MIN_SHARE = 0.03  # below this share of the last 12 months the second channel stays in the first (La Jolla Cove)
-FINAL_SHRINK = {"Beverly Hills": 0.5}  # as in build_2027.py
+FINAL_SHRINK = {"Beverly Hills": 0.5}  # as in report/build_daily_targets.py
 DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 
 

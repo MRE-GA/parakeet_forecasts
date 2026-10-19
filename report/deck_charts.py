@@ -477,7 +477,7 @@ def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", 
     return to_svg(fig, name)
 
 
-def growth_dots(names, series, label_series=-1, size=(7.4, 4.0), name="growth-dots") -> str:
+def growth_dots(names, series, label_series=-1, size=(7.4, 4.0), name="growth-dots", label_fmt="{:+.0%}") -> str:
     """Per row, 2027 growth under several views on one axis.
 
     series: list of (legend label, values, marker, colour); the values of series[label_series] are labelled.
@@ -496,7 +496,7 @@ def growth_dots(names, series, label_series=-1, size=(7.4, 4.0), name="growth-do
     lab = series[label_series]
     for yi, v in zip(y, lab[1]):
         row = [s[1][list(y).index(yi)] for s in series]
-        ax.annotate(f"{v:+.0%}".replace("-", "−"), (max(row), yi), xytext=(9, 0), textcoords="offset points",
+        ax.annotate(label_fmt.format(v).replace("-", "−"), (max(row), yi), xytext=(9, 0), textcoords="offset points",
                     va="center", fontsize=8.5, color=lab[3], fontweight=600)
     ax.set_yticks(y)
     ax.set_yticklabels(names)
