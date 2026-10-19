@@ -1,5 +1,5 @@
-"""2027 daily sales for the store managers and payroll: the monthly targets (and today's run-rate) split into days,
-without moving any month by a cent.
+"""Daily sales for the store managers and payroll: the 2027 monthly targets and today's run-rate (2027, and the rest of
+2026 after the last day of data) split into days, without moving any month by a cent.
 
 Daily model, the best of the daily backtests (daily/README.md): the geometric mean of Prophet with the adopted settings
 and the extended special days (daily/prophet_variants.py) and the pooled tree model (LightGBM, half-life 180 days),
@@ -8,11 +8,12 @@ only sets how each month divides into its days: each month is split in proportio
 (and year) matches the monthly figures exactly:
   * targets: 'Targets 2027' in outputs/Parakeet_2027_Manager_Targets.xlsx (report/build_targets.py)
   * run-rate: today's run-rate by month behind the deck, adding up to the annual figure in the workbook's 'Reference'
-    tab
+    tab; for Oct 15 - Dec 31, 2026, the deck's 'Oct 15 - Dec 31 at run-rate' by month
 
 Run report/build_targets.py first.
 
-    python report/build_daily_targets.py   -> outputs/Parakeet_2027_Daily_Targets.xlsx, outputs/targets_2027_daily.csv
+    python report/build_daily_targets.py   -> outputs/Parakeet_2027_Daily_Targets.xlsx, outputs/targets_2027_daily.csv,
+                                              outputs/Parakeet_2026_Daily_Run_Rate.xlsx, outputs/runrate_2026_daily.csv
 """
 from __future__ import annotations
 
@@ -34,6 +35,7 @@ from prophet_variants import fit as prophet_fit  # noqa: E402
 
 YEAR = pd.date_range("2027-01-01", "2027-12-31")
 M27 = pd.period_range("2027-01", "2027-12", freq="M")
+REST26 = pd.date_range("2026-10-15", "2026-12-31")  # the rest of 2026 after the last day of data
 # stores whose within-month shape is pulled toward equal days (share of the way, in logs): Beverly Hills' weekly
 # pattern has been flattening every year (weekends +30% in 2024, +20-25% in 2025, about 0% in 2026), so its learned
 # shape overshoots; halfway to equal days cut its backtest error from 12.0% to 10.3% (10.7% to 10.1% in 2025, 12.9% to
@@ -42,14 +44,17 @@ SHRINK_TO_EQUAL = {"Beverly Hills": 0.5}
 MONTHLY_XLSX = ROOT / "outputs" / "Parakeet_2027_Manager_Targets.xlsx"
 XLSX = ROOT / "outputs" / "Parakeet_2027_Daily_Targets.xlsx"
 CSV = ROOT / "outputs" / "targets_2027_daily.csv"
+XLSX26 = ROOT / "outputs" / "Parakeet_2026_Daily_Run_Rate.xlsx"
+CSV26 = ROOT / "outputs" / "runrate_2026_daily.csv"
 DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 RECALC = Path.home() / ".claude" / "skills"
 DISPLAY = [NAME.get(s, s) for s in STORES]
 
 
-def monthly_figures() -> tuple[dict, dict]:
-    """The monthly targets (as stored in the workbook) and today's run-rate by month, adding up to the annual run-rate
-    in the workbook's Reference tab."""
+def monthly_figures() -> tuple[dict, dict, dict]:
+    """The monthly targets (as stored in the workbook), today's run-rate by month, adding up to the annual run-rate in
+    the workbook's Reference tab, and the run-rate for Oct 15-31, November and December 2026, adding up to the deck's
+    'Oct 15 - Dec 31 at run-rate'."""
     from openpyxl import load_workbook
 
     import build_targets as bt
@@ -61,34 +66,42 @@ def monthly_figures() -> tuple[dict, dict]:
     k = head.index("2027: run-rate objective")
     ref = {r[0]: float(r[k]) for r in wb["Reference"].iter_rows(min_row=5, values_only=True) if r[0] in DISPLAY}
     n = bt.collect()
-    run = {}
+    rr = pd.read_csv(ROOT / "outputs" / "runrate_45d_2027.csv").set_index("store")
+    run, run26 = {}, {}
     for s, name in zip(STORES, DISPLAY):
-        path = np.asarray(n["C"][s]["path"][3:], dtype=float)
+        c = n["C"][s]
+        path = np.asarray(c["path"][3:], dtype=float)
         assert abs(path.sum() - ref[name]) < 0.02, (name, path.sum(), ref[name])
         run[name] = split_cents(ref[name], path) / 100  # months in cents, adding up to the annual figure
-    return target, run
+        # October: the run-rate for the whole month less its Oct 1-14 part (those days are actual sales)
+        m26 = np.array([c["run"][0] - rr.loc[s, "runrate_oct_to_date"], c["run"][1], c["run"][2]])
+        assert abs(m26.sum() - c["rest26"]) < 0.05, (name, m26.sum(), c["rest26"])
+        run26[name] = split_cents(round(c["rest26"], 2), m26) / 100
+    return target, run, run26
 
 
-def daily_weights(panel: pd.DataFrame, stores: dict) -> dict[str, np.ndarray]:
+def daily_weights(panel: pd.DataFrame, stores: dict, dates: pd.DatetimeIndex) -> dict[str, np.ndarray]:
     origin = pd.Timestamp(LAST_DAY)
-    prophet = Parallel(n_jobs=4)(delayed(prophet_fit)(stores[s], origin, YEAR, "tuned", "ext") for s in STORES)
+    prophet = Parallel(n_jobs=4)(delayed(prophet_fit)(stores[s], origin, dates, "tuned", "ext") for s in STORES)
     tree = LGBM(panel, origin, half_life=180)
     out = {}
     for s, name, wp in zip(STORES, DISPLAY, prophet):
-        fp = future_panel(s, YEAR, stores[s].open_flags(YEAR))
+        fp = future_panel(s, dates, stores[s].open_flags(dates))
         w = np.sqrt(wp * tree.weights(fp))
         a = SHRINK_TO_EQUAL.get(s, 0.0)
         out[name] = w ** (1 - a) * (w > 0)  # equal days have weight 1 on every open day
     return out
 
 
-def allocate(monthly: dict, weights: dict) -> dict[str, np.ndarray]:
-    months = YEAR.month
+def allocate(monthly: dict, weights: dict, dates: pd.DatetimeIndex = YEAR) -> dict[str, np.ndarray]:
+    """Each month's figure (in the order its months appear in the dates) split over its days, in cents."""
+    months = dates.to_period("M")
+    order = months.unique()
     cents = {}
     for name in DISPLAY:
-        c = np.concatenate([split_cents(monthly[name][i], weights[name][months == i + 1]) for i in range(12)])
-        for i in range(12):
-            assert c[months == i + 1].sum() == int(round(monthly[name][i] * 100)), (name, i)
+        c = np.concatenate([split_cents(monthly[name][i], weights[name][months == m]) for i, m in enumerate(order)])
+        for i, m in enumerate(order):
+            assert c[months == m].sum() == int(round(monthly[name][i] * 100)), (name, m)
         assert (c[weights[name] == 0] == 0).all()
         cents[name] = c
     return cents
@@ -251,12 +264,129 @@ def export(t_cents: dict, r_cents: dict, target: dict, run: dict) -> dict:
     return out
 
 
+def export26(cents: dict, run26: dict) -> dict:
+    """The rest of 2026 at today's run-rate, by day: one tab of days, a check against the monthly figures, notes."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+    from openpyxl.utils import get_column_letter
+
+    arial = "Arial"
+    title, bold, normal = (Font(name=arial, size=14, bold=True), Font(name=arial, size=10, bold=True),
+                           Font(name=arial, size=10))
+    blue, green = Font(name=arial, size=10, color="0000FF"), Font(name=arial, size=10, color="008000")
+    muted = Font(name=arial, size=9, italic=True, color="565A5C")
+    head_fill, thin = PatternFill("solid", fgColor="F2F2F2"), Side(style="thin", color="000000")
+    money = '$#,##0.00;($#,##0.00);"-"'
+
+    def header(ws, row, labels):
+        for j, h in enumerate(labels, start=1):
+            c = ws.cell(row, j, h)
+            c.font, c.fill, c.border = bold, head_fill, Border(bottom=thin)
+            c.alignment = Alignment(horizontal="left" if j == 1 else "center", wrap_text=True)
+
+    wb = Workbook()
+    ws = wb.active
+    sheet = ws.title = "Daily run-rate 2026"
+    first, last = 5, 4 + len(REST26)
+    ws["A1"], ws["A1"].font = "Parakeet Café · daily sales at today's run-rate, Oct 15 – Dec 31, 2026", title
+    ws["A2"], ws["A2"].font = (
+        "Today's run-rate (the last 45 days of Toast sales, Aug 31 – Oct 14, seasonally adjusted and held flat) for the "
+        "rest of 2026, by month as in the run-rate deck, split over the days by the daily model (Prophet with every "
+        "special day and a tree model trained on all stores, blended, retrained through Oct 14, 2026). Every month adds "
+        "up exactly to its monthly figure (see 'Check'). Blue = values from the analysis; black = formulas."), muted
+    header(ws, 4, ["Date", "Day", "Month"] + DISPLAY + ["Total"])
+    for i, day in enumerate(REST26):
+        r = first + i
+        c = ws.cell(r, 1, day.to_pydatetime())
+        c.number_format, c.font = "yyyy-mm-dd", normal
+        ws.cell(r, 2, DAYS[day.dayofweek]).font = normal
+        ws.cell(r, 3, day.strftime("%b %Y")).font = normal
+        for j, name in enumerate(DISPLAY):
+            c = ws.cell(r, 4 + j, cents[name][i] / 100)
+            c.font, c.number_format = blue, money
+        c = ws.cell(r, 4 + len(DISPLAY), f"=SUM(D{r}:{get_column_letter(3 + len(DISPLAY))}{r})")
+        c.font, c.number_format = normal, money
+    ws.column_dimensions["A"].width, ws.column_dimensions["B"].width, ws.column_dimensions["C"].width = 12, 6, 10
+    for j in range(4, 5 + len(DISPLAY)):
+        ws.column_dimensions[get_column_letter(j)].width = 14
+    ws.row_dimensions[4].height = 30
+    ws.freeze_panes = "D5"
+
+    ck = wb.create_sheet("Check")
+    ck["A1"], ck["A1"].font = "Check: the daily figures add up to the run-rate by month", title
+    ck["A2"], ck["A2"].font = ("Monthly figures: today's run-rate for Oct 15-31, November and December 2026, adding up to "
+                               "the deck's 'Oct 15 – Dec 31 at run-rate'. Difference in cents: must be 0."), muted
+    ck["A3"], ck["A3"].font = "Total absolute difference (cents)", bold
+    header(ck, 5, ["Store", "Period", "Monthly figure", "Sum of daily", "Difference (cents)"])
+    labels = [("Oct 15–31, 2026", "Oct 2026"), ("November 2026", "Nov 2026"), ("December 2026", "Dec 2026")]
+    r = 6
+    for j, name in enumerate(DISPLAY):
+        col = get_column_letter(4 + j)
+        start = r
+        for i, (label, key) in enumerate(labels):
+            ck.cell(r, 1, name).font = normal
+            ck.cell(r, 2, label).font = normal
+            c = ck.cell(r, 3, float(run26[name][i]))
+            c.font, c.number_format = blue, money
+            c = ck.cell(r, 4, f"=SUMIFS('{sheet}'!{col}${first}:{col}${last},'{sheet}'!$C${first}:$C${last},\"{key}\")")
+            c.font, c.number_format = green, money
+            ck.cell(r, 5, f"=ROUND(D{r}*100,0)-ROUND(C{r}*100,0)").font = normal
+            r += 1
+        ck.cell(r, 1, name).font = bold
+        ck.cell(r, 2, "Oct 15 – Dec 31").font = bold
+        for k, L in ((3, "C"), (4, "D")):
+            c = ck.cell(r, k, f"=SUM({L}{start}:{L}{r - 1})")
+            c.font, c.number_format = bold, money
+        ck.cell(r, 5, f"=ROUND(D{r}*100,0)-ROUND(C{r}*100,0)").font = bold
+        for k in range(1, 6):
+            ck.cell(r, k).border = Border(top=thin)
+        r += 2
+    ck["B3"] = f"=SUMPRODUCT(ABS(E6:E{r - 2}))"
+    ck["B3"].font = bold
+    for L, wdt in (("A", 20), ("B", 18), ("C", 18), ("D", 18), ("E", 18)):
+        ck.column_dimensions[L].width = wdt
+    ck.freeze_panes = "A6"
+
+    nt = wb.create_sheet("Notes")
+    nt["A1"], nt["A1"].font = "How the daily figures are built", title
+    for i, text in enumerate([
+        "Monthly figures: today's run-rate as in the run-rate deck (Part 1): October 1-14 is actual sales, so October "
+        "here is only Oct 15-31; November and December are whole months. The three add up to the deck's 'Oct 15 – Dec "
+        "31 at run-rate' for each café.",
+        "Daily model: the same as for the 2027 daily targets, retrained on all data through Oct 14, 2026 (see the Notes "
+        "tab of Parakeet_2027_Daily_Targets.xlsx): Prophet with every special day (Thanksgiving weekend, Christmas week, "
+        "Dec 26, Halloween...) and a tree model trained on all ten stores, blended; Beverly Hills halfway to equal days.",
+        "Each month is split in cents in proportion to the model's days, so the month adds up exactly (see 'Check'). "
+        "Closed days (as in the run-rate) get no sales.",
+        "The run-rate assumes no further growth from today's level: a café still growing will run ahead of these days.",
+    ], start=3):
+        nt.cell(i, 1, text).font = normal
+    nt.column_dimensions["A"].width = 140
+
+    wb.save(XLSX26)
+    script = next(RECALC.rglob("xlsx/scripts/recalc.py"), None)
+    if script is None:
+        return {"status": "not recalculated"}
+    res = subprocess.run([sys.executable, str(script), str(XLSX26), "120"], capture_output=True, text=True)
+    out = json.loads(res.stdout[res.stdout.index("{"):])
+    if out.get("status") != "success":
+        raise RuntimeError(f"workbook has formula errors: {out}")
+    return out
+
+
 def main() -> None:
-    target, run = monthly_figures()
+    target, run, run26 = monthly_figures()
     panel = build_panel()
     stores = load_stores(LAST_DAY)
-    w = daily_weights(panel, stores)
+    both = daily_weights(panel, stores, REST26.append(YEAR))  # one fit for the rest of 2026 and all of 2027
+    w = {k: v[len(REST26):] for k, v in both.items()}
+    w26 = {k: v[:len(REST26)] for k, v in both.items()}
     t_cents, r_cents = allocate(target, w), allocate(run, w)
+    r26_cents = allocate(run26, w26, REST26)
+    rows26 = [{"date": d.date(), "weekday": DAYS[d.dayofweek], "store": name, "runrate": r26_cents[name][i] / 100}
+              for name in DISPLAY for i, d in enumerate(REST26)]
+    pd.DataFrame(rows26).to_csv(CSV26, index=False, float_format="%.2f")
+    print("2026 workbook:", export26(r26_cents, run26))
     rows = [{"date": d.date(), "weekday": DAYS[d.dayofweek], "store": name, "target": t_cents[name][i] / 100,
              "runrate": r_cents[name][i] / 100} for name in DISPLAY for i, d in enumerate(YEAR)]
     pd.DataFrame(rows).to_csv(CSV, index=False, float_format="%.2f")
@@ -269,7 +399,15 @@ def main() -> None:
     for name in DISPLAY:
         print(f"{name:18s} target {t_cents[name].sum() / 100:>14,.2f} (monthly {target[name].sum():>14,.2f})   "
               f"run-rate {r_cents[name].sum() / 100:>14,.2f} (monthly {run[name].sum():>14,.2f})")
-    print(f"-> {XLSX.relative_to(ROOT)}\n-> {CSV.relative_to(ROOT)}")
+    from openpyxl import load_workbook as lw
+
+    diff26 = lw(XLSX26, data_only=True)["Check"]["B3"].value
+    assert diff26 == 0, diff26
+    for name in DISPLAY:
+        print(f"{name:18s} 2026 run-rate Oct 15-Dec 31 {r26_cents[name].sum() / 100:>13,.2f} "
+              f"(monthly {run26[name].sum():>13,.2f})")
+    print(f"-> {XLSX.relative_to(ROOT)}\n-> {CSV.relative_to(ROOT)}\n-> {XLSX26.relative_to(ROOT)}\n"
+          f"-> {CSV26.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":

@@ -111,7 +111,10 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
   trained on all stores, retrained through Oct 14, 2026, with Beverly Hills halfway to equal days (backtest daily
   error 8.4%, against 9.2% for Prophet as tuned, the split used before). Amounts are in cents and every month adds
   up exactly to the workbook (a `Check` tab recomputes it: zero cents of difference); a `Weekday averages` tab gives
-  the average day by weekday and season for staffing.
+  the average day by weekday and season for staffing. The same script writes the rest of 2026 at today's run-rate by
+  day (`outputs/Parakeet_2026_Daily_Run_Rate.xlsx`, `outputs/runrate_2026_daily.csv`): Oct 15–31, November and
+  December as in Part 1, adding up to its 'Oct 15 – Dec 31 at run-rate' to the cent ($5.88M for the ten stores).
+  First check, Thursday to Sunday Oct 15–18: the ten stores sold $337.4K against $338.6K (−0.4%).
 
 ## Approach
 
@@ -146,7 +149,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python src/runrate_scenario.py     # 2027 at today's deseasonalized run-rate (last 45 days)
 .venv/bin/python report/build_deck.py --ds /path/to/parakeet-cafe-design     # the budget-review deck
 .venv/bin/python report/build_targets.py --ds /path/to/parakeet-cafe-design  # run-rate review + manager targets (PDF, xlsx)
-.venv/bin/python report/build_daily_targets.py   # the targets and run-rate split into days (xlsx, csv), to the cent
+.venv/bin/python report/build_daily_targets.py   # targets and run-rate by day: 2027, and the rest of 2026 (xlsx, csv)
 ```
 
 The report needs the Parakeet Cafe design-system skill (brand fonts, logo, photography; not

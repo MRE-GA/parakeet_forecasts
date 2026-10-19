@@ -1,0 +1,781 @@
+date,weekday,store,runrate
+2026-10-15,Thu,Beverly Hills,7590.60
+2026-10-16,Fri,Beverly Hills,7707.55
+2026-10-17,Sat,Beverly Hills,8185.74
+2026-10-18,Sun,Beverly Hills,8035.30
+2026-10-19,Mon,Beverly Hills,7092.48
+2026-10-20,Tue,Beverly Hills,7290.95
+2026-10-21,Wed,Beverly Hills,7395.02
+2026-10-22,Thu,Beverly Hills,7398.55
+2026-10-23,Fri,Beverly Hills,7512.36
+2026-10-24,Sat,Beverly Hills,7985.36
+2026-10-25,Sun,Beverly Hills,7824.53
+2026-10-26,Mon,Beverly Hills,7086.96
+2026-10-27,Tue,Beverly Hills,7355.98
+2026-10-28,Wed,Beverly Hills,7367.76
+2026-10-29,Thu,Beverly Hills,7404.35
+2026-10-30,Fri,Beverly Hills,7498.35
+2026-10-31,Sat,Beverly Hills,7693.00
+2026-11-01,Sun,Beverly Hills,8094.01
+2026-11-02,Mon,Beverly Hills,7444.17
+2026-11-03,Tue,Beverly Hills,7605.54
+2026-11-04,Wed,Beverly Hills,7697.89
+2026-11-05,Thu,Beverly Hills,7749.63
+2026-11-06,Fri,Beverly Hills,7882.87
+2026-11-07,Sat,Beverly Hills,8397.83
+2026-11-08,Sun,Beverly Hills,8304.89
+2026-11-09,Mon,Beverly Hills,7592.81
+2026-11-10,Tue,Beverly Hills,7862.64
+2026-11-11,Wed,Beverly Hills,8012.50
+2026-11-12,Thu,Beverly Hills,7789.40
+2026-11-13,Fri,Beverly Hills,7956.69
+2026-11-14,Sat,Beverly Hills,8279.91
+2026-11-15,Sun,Beverly Hills,8012.24
+2026-11-16,Mon,Beverly Hills,7459.92
+2026-11-17,Tue,Beverly Hills,7641.48
+2026-11-18,Wed,Beverly Hills,7610.99
+2026-11-19,Thu,Beverly Hills,7672.76
+2026-11-20,Fri,Beverly Hills,7707.46
+2026-11-21,Sat,Beverly Hills,8132.45
+2026-11-22,Sun,Beverly Hills,7977.64
+2026-11-23,Mon,Beverly Hills,7433.00
+2026-11-24,Tue,Beverly Hills,7711.05
+2026-11-25,Wed,Beverly Hills,7679.20
+2026-11-26,Thu,Beverly Hills,7832.92
+2026-11-27,Fri,Beverly Hills,7363.80
+2026-11-28,Sat,Beverly Hills,7647.67
+2026-11-29,Sun,Beverly Hills,7543.21
+2026-11-30,Mon,Beverly Hills,7228.01
+2026-12-01,Tue,Beverly Hills,7213.09
+2026-12-02,Wed,Beverly Hills,7365.90
+2026-12-03,Thu,Beverly Hills,7254.24
+2026-12-04,Fri,Beverly Hills,7391.91
+2026-12-05,Sat,Beverly Hills,7788.08
+2026-12-06,Sun,Beverly Hills,7681.16
+2026-12-07,Mon,Beverly Hills,7152.09
+2026-12-08,Tue,Beverly Hills,7430.11
+2026-12-09,Wed,Beverly Hills,7442.26
+2026-12-10,Thu,Beverly Hills,7458.12
+2026-12-11,Fri,Beverly Hills,7406.49
+2026-12-12,Sat,Beverly Hills,7807.29
+2026-12-13,Sun,Beverly Hills,7699.64
+2026-12-14,Mon,Beverly Hills,7163.64
+2026-12-15,Tue,Beverly Hills,7379.34
+2026-12-16,Wed,Beverly Hills,7344.00
+2026-12-17,Thu,Beverly Hills,7208.54
+2026-12-18,Fri,Beverly Hills,7166.12
+2026-12-19,Sat,Beverly Hills,7430.86
+2026-12-20,Sun,Beverly Hills,7270.04
+2026-12-21,Mon,Beverly Hills,6874.34
+2026-12-22,Tue,Beverly Hills,7088.25
+2026-12-23,Wed,Beverly Hills,6968.51
+2026-12-24,Thu,Beverly Hills,5936.02
+2026-12-25,Fri,Beverly Hills,8049.16
+2026-12-26,Sat,Beverly Hills,7163.02
+2026-12-27,Sun,Beverly Hills,7467.78
+2026-12-28,Mon,Beverly Hills,7263.35
+2026-12-29,Tue,Beverly Hills,7392.78
+2026-12-30,Wed,Beverly Hills,7222.03
+2026-12-31,Thu,Beverly Hills,6530.71
+2026-10-15,Thu,Brentwood,5708.64
+2026-10-16,Fri,Brentwood,6354.16
+2026-10-17,Sat,Brentwood,8421.24
+2026-10-18,Sun,Brentwood,8212.62
+2026-10-19,Mon,Brentwood,5242.72
+2026-10-20,Tue,Brentwood,5174.83
+2026-10-21,Wed,Brentwood,5439.85
+2026-10-22,Thu,Brentwood,5560.61
+2026-10-23,Fri,Brentwood,6245.01
+2026-10-24,Sat,Brentwood,8346.19
+2026-10-25,Sun,Brentwood,8117.50
+2026-10-26,Mon,Brentwood,5526.34
+2026-10-27,Tue,Brentwood,5613.60
+2026-10-28,Wed,Brentwood,5790.90
+2026-10-29,Thu,Brentwood,5950.54
+2026-10-30,Fri,Brentwood,6640.96
+2026-10-31,Sat,Brentwood,8421.65
+2026-11-01,Sun,Brentwood,8651.11
+2026-11-02,Mon,Brentwood,5835.47
+2026-11-03,Tue,Brentwood,5679.36
+2026-11-04,Wed,Brentwood,5859.85
+2026-11-05,Thu,Brentwood,5957.38
+2026-11-06,Fri,Brentwood,6625.96
+2026-11-07,Sat,Brentwood,8881.12
+2026-11-08,Sun,Brentwood,8653.36
+2026-11-09,Mon,Brentwood,5966.18
+2026-11-10,Tue,Brentwood,5950.92
+2026-11-11,Wed,Brentwood,6486.32
+2026-11-12,Thu,Brentwood,6151.82
+2026-11-13,Fri,Brentwood,6794.73
+2026-11-14,Sat,Brentwood,8759.49
+2026-11-15,Sun,Brentwood,8287.91
+2026-11-16,Mon,Brentwood,6065.64
+2026-11-17,Tue,Brentwood,6039.24
+2026-11-18,Wed,Brentwood,6146.50
+2026-11-19,Thu,Brentwood,6281.29
+2026-11-20,Fri,Brentwood,6808.75
+2026-11-21,Sat,Brentwood,8710.19
+2026-11-22,Sun,Brentwood,8412.87
+2026-11-23,Mon,Brentwood,5898.27
+2026-11-24,Tue,Brentwood,5948.40
+2026-11-25,Wed,Brentwood,6029.68
+2026-11-26,Thu,Brentwood,6553.03
+2026-11-27,Fri,Brentwood,6275.65
+2026-11-28,Sat,Brentwood,7718.36
+2026-11-29,Sun,Brentwood,7383.35
+2026-11-30,Mon,Brentwood,5382.11
+2026-12-01,Tue,Brentwood,5232.75
+2026-12-02,Wed,Brentwood,5410.03
+2026-12-03,Thu,Brentwood,5379.32
+2026-12-04,Fri,Brentwood,6029.36
+2026-12-05,Sat,Brentwood,7959.25
+2026-12-06,Sun,Brentwood,7818.15
+2026-12-07,Mon,Brentwood,5479.81
+2026-12-08,Tue,Brentwood,5656.01
+2026-12-09,Wed,Brentwood,5843.69
+2026-12-10,Thu,Brentwood,5871.09
+2026-12-11,Fri,Brentwood,6431.74
+2026-12-12,Sat,Brentwood,8408.39
+2026-12-13,Sun,Brentwood,8087.16
+2026-12-14,Mon,Brentwood,5683.45
+2026-12-15,Tue,Brentwood,5752.97
+2026-12-16,Wed,Brentwood,5973.40
+2026-12-17,Thu,Brentwood,5936.15
+2026-12-18,Fri,Brentwood,6368.08
+2026-12-19,Sat,Brentwood,8090.34
+2026-12-20,Sun,Brentwood,7726.64
+2026-12-21,Mon,Brentwood,5567.11
+2026-12-22,Tue,Brentwood,5572.63
+2026-12-23,Wed,Brentwood,5401.34
+2026-12-24,Thu,Brentwood,4318.25
+2026-12-25,Fri,Brentwood,6161.19
+2026-12-26,Sat,Brentwood,6617.66
+2026-12-27,Sun,Brentwood,6463.77
+2026-12-28,Mon,Brentwood,4973.40
+2026-12-29,Tue,Brentwood,4997.15
+2026-12-30,Wed,Brentwood,4940.38
+2026-12-31,Thu,Brentwood,4989.06
+2026-10-15,Thu,Carlsbad,8990.13
+2026-10-16,Fri,Carlsbad,10330.92
+2026-10-17,Sat,Carlsbad,12008.52
+2026-10-18,Sun,Carlsbad,11423.25
+2026-10-19,Mon,Carlsbad,7744.44
+2026-10-20,Tue,Carlsbad,7668.09
+2026-10-21,Wed,Carlsbad,8223.93
+2026-10-22,Thu,Carlsbad,8583.33
+2026-10-23,Fri,Carlsbad,10006.89
+2026-10-24,Sat,Carlsbad,11837.38
+2026-10-25,Sun,Carlsbad,11137.30
+2026-10-26,Mon,Carlsbad,8103.06
+2026-10-27,Tue,Carlsbad,8241.40
+2026-10-28,Wed,Carlsbad,8669.34
+2026-10-29,Thu,Carlsbad,9118.90
+2026-10-30,Fri,Carlsbad,10608.96
+2026-10-31,Sat,Carlsbad,10931.85
+2026-11-01,Sun,Carlsbad,12012.50
+2026-11-02,Mon,Carlsbad,8569.32
+2026-11-03,Tue,Carlsbad,8520.28
+2026-11-04,Wed,Carlsbad,9092.88
+2026-11-05,Thu,Carlsbad,9421.89
+2026-11-06,Fri,Carlsbad,10805.28
+2026-11-07,Sat,Carlsbad,12742.93
+2026-11-08,Sun,Carlsbad,12185.36
+2026-11-09,Mon,Carlsbad,8748.58
+2026-11-10,Tue,Carlsbad,8913.16
+2026-11-11,Wed,Carlsbad,10700.99
+2026-11-12,Thu,Carlsbad,9493.67
+2026-11-13,Fri,Carlsbad,10819.57
+2026-11-14,Sat,Carlsbad,12292.63
+2026-11-15,Sun,Carlsbad,11388.18
+2026-11-16,Mon,Carlsbad,8723.58
+2026-11-17,Tue,Carlsbad,8745.61
+2026-11-18,Wed,Carlsbad,9143.70
+2026-11-19,Thu,Carlsbad,9595.89
+2026-11-20,Fri,Carlsbad,10941.70
+2026-11-21,Sat,Carlsbad,12688.77
+2026-11-22,Sun,Carlsbad,12506.43
+2026-11-23,Mon,Carlsbad,9558.59
+2026-11-24,Tue,Carlsbad,9891.37
+2026-11-25,Wed,Carlsbad,10415.21
+2026-11-26,Thu,Carlsbad,9164.80
+2026-11-27,Fri,Carlsbad,13418.07
+2026-11-28,Sat,Carlsbad,12322.47
+2026-11-29,Sun,Carlsbad,11714.89
+2026-11-30,Mon,Carlsbad,9399.39
+2026-12-01,Tue,Carlsbad,9234.23
+2026-12-02,Wed,Carlsbad,9358.91
+2026-12-03,Thu,Carlsbad,9703.83
+2026-12-04,Fri,Carlsbad,10985.80
+2026-12-05,Sat,Carlsbad,12457.19
+2026-12-06,Sun,Carlsbad,12034.58
+2026-12-07,Mon,Carlsbad,8733.96
+2026-12-08,Tue,Carlsbad,8863.73
+2026-12-09,Wed,Carlsbad,9367.79
+2026-12-10,Thu,Carlsbad,9796.15
+2026-12-11,Fri,Carlsbad,11137.62
+2026-12-12,Sat,Carlsbad,12889.32
+2026-12-13,Sun,Carlsbad,12648.52
+2026-12-14,Mon,Carlsbad,9485.00
+2026-12-15,Tue,Carlsbad,9783.07
+2026-12-16,Wed,Carlsbad,10384.80
+2026-12-17,Thu,Carlsbad,10795.29
+2026-12-18,Fri,Carlsbad,12251.23
+2026-12-19,Sat,Carlsbad,13865.82
+2026-12-20,Sun,Carlsbad,13327.96
+2026-12-21,Mon,Carlsbad,10713.67
+2026-12-22,Tue,Carlsbad,10738.57
+2026-12-23,Wed,Carlsbad,10625.35
+2026-12-24,Thu,Carlsbad,8689.12
+2026-12-25,Fri,Carlsbad,9459.57
+2026-12-26,Sat,Carlsbad,13997.64
+2026-12-27,Sun,Carlsbad,13294.70
+2026-12-28,Mon,Carlsbad,11141.47
+2026-12-29,Tue,Carlsbad,10887.28
+2026-12-30,Wed,Carlsbad,10673.96
+2026-12-31,Thu,Carlsbad,9143.57
+2026-10-15,Thu,Coronado,7888.13
+2026-10-16,Fri,Coronado,9825.16
+2026-10-17,Sat,Coronado,13019.40
+2026-10-18,Sun,Coronado,12956.52
+2026-10-19,Mon,Coronado,7663.50
+2026-10-20,Tue,Coronado,6887.88
+2026-10-21,Wed,Coronado,7281.82
+2026-10-22,Thu,Coronado,7596.15
+2026-10-23,Fri,Coronado,9393.82
+2026-10-24,Sat,Coronado,12575.95
+2026-10-25,Sun,Coronado,12130.21
+2026-10-26,Mon,Coronado,7576.41
+2026-10-27,Tue,Coronado,6924.85
+2026-10-28,Wed,Coronado,7102.50
+2026-10-29,Thu,Coronado,7570.23
+2026-10-30,Fri,Coronado,9400.58
+2026-10-31,Sat,Coronado,11880.39
+2026-11-01,Sun,Coronado,12214.12
+2026-11-02,Mon,Coronado,7184.57
+2026-11-03,Tue,Coronado,6501.46
+2026-11-04,Wed,Coronado,7010.51
+2026-11-05,Thu,Coronado,7472.62
+2026-11-06,Fri,Coronado,9315.33
+2026-11-07,Sat,Coronado,12668.06
+2026-11-08,Sun,Coronado,12501.41
+2026-11-09,Mon,Coronado,7464.68
+2026-11-10,Tue,Coronado,6793.15
+2026-11-11,Wed,Coronado,8872.26
+2026-11-12,Thu,Coronado,7087.34
+2026-11-13,Fri,Coronado,8734.77
+2026-11-14,Sat,Coronado,11505.33
+2026-11-15,Sun,Coronado,11051.10
+2026-11-16,Mon,Coronado,7241.70
+2026-11-17,Tue,Coronado,6537.55
+2026-11-18,Wed,Coronado,6826.16
+2026-11-19,Thu,Coronado,7231.05
+2026-11-20,Fri,Coronado,8776.64
+2026-11-21,Sat,Coronado,11800.00
+2026-11-22,Sun,Coronado,12289.02
+2026-11-23,Mon,Coronado,8130.91
+2026-11-24,Tue,Coronado,7927.31
+2026-11-25,Wed,Coronado,8448.13
+2026-11-26,Thu,Coronado,12092.68
+2026-11-27,Fri,Coronado,12371.18
+2026-11-28,Sat,Coronado,12290.93
+2026-11-29,Sun,Coronado,11850.76
+2026-11-30,Mon,Coronado,7562.51
+2026-12-01,Tue,Coronado,6363.86
+2026-12-02,Wed,Coronado,6515.98
+2026-12-03,Thu,Coronado,6951.77
+2026-12-04,Fri,Coronado,8926.51
+2026-12-05,Sat,Coronado,12292.82
+2026-12-06,Sun,Coronado,12373.06
+2026-12-07,Mon,Coronado,7025.68
+2026-12-08,Tue,Coronado,6457.15
+2026-12-09,Wed,Coronado,6744.82
+2026-12-10,Thu,Coronado,7073.36
+2026-12-11,Fri,Coronado,8531.88
+2026-12-12,Sat,Coronado,11813.85
+2026-12-13,Sun,Coronado,11911.43
+2026-12-14,Mon,Coronado,6959.85
+2026-12-15,Tue,Coronado,6456.59
+2026-12-16,Wed,Coronado,6891.22
+2026-12-17,Thu,Coronado,7232.74
+2026-12-18,Fri,Coronado,8978.36
+2026-12-19,Sat,Coronado,12340.80
+2026-12-20,Sun,Coronado,12465.42
+2026-12-21,Mon,Coronado,8844.06
+2026-12-22,Tue,Coronado,8617.93
+2026-12-23,Wed,Coronado,8850.28
+2026-12-24,Thu,Coronado,7395.85
+2026-12-25,Fri,Coronado,13067.51
+2026-12-26,Sat,Coronado,15290.87
+2026-12-27,Sun,Coronado,16616.76
+2026-12-28,Mon,Coronado,14186.92
+2026-12-29,Tue,Coronado,13633.71
+2026-12-30,Wed,Coronado,13355.27
+2026-12-31,Thu,Coronado,10150.62
+2026-10-15,Thu,Del Mar Café,11810.22
+2026-10-16,Fri,Del Mar Café,13177.63
+2026-10-17,Sat,Del Mar Café,15393.19
+2026-10-18,Sun,Del Mar Café,15070.27
+2026-10-19,Mon,Del Mar Café,10036.14
+2026-10-20,Tue,Del Mar Café,10338.79
+2026-10-21,Wed,Del Mar Café,11112.21
+2026-10-22,Thu,Del Mar Café,11625.11
+2026-10-23,Fri,Del Mar Café,12886.31
+2026-10-24,Sat,Del Mar Café,14966.27
+2026-10-25,Sun,Del Mar Café,14337.18
+2026-10-26,Mon,Del Mar Café,10091.75
+2026-10-27,Tue,Del Mar Café,10599.27
+2026-10-28,Wed,Del Mar Café,11219.58
+2026-10-29,Thu,Del Mar Café,11711.14
+2026-10-30,Fri,Del Mar Café,13030.45
+2026-10-31,Sat,Del Mar Café,13551.26
+2026-11-01,Sun,Del Mar Café,14487.57
+2026-11-02,Mon,Del Mar Café,10144.16
+2026-11-03,Tue,Del Mar Café,10488.04
+2026-11-04,Wed,Del Mar Café,11144.27
+2026-11-05,Thu,Del Mar Café,11605.21
+2026-11-06,Fri,Del Mar Café,12788.14
+2026-11-07,Sat,Del Mar Café,15009.79
+2026-11-08,Sun,Del Mar Café,14691.89
+2026-11-09,Mon,Del Mar Café,10262.55
+2026-11-10,Tue,Del Mar Café,10781.19
+2026-11-11,Wed,Del Mar Café,12894.79
+2026-11-12,Thu,Del Mar Café,11610.21
+2026-11-13,Fri,Del Mar Café,12723.00
+2026-11-14,Sat,Del Mar Café,14484.72
+2026-11-15,Sun,Del Mar Café,13822.44
+2026-11-16,Mon,Del Mar Café,10344.45
+2026-11-17,Tue,Del Mar Café,10805.77
+2026-11-18,Wed,Del Mar Café,11419.51
+2026-11-19,Thu,Del Mar Café,11974.49
+2026-11-20,Fri,Del Mar Café,12973.54
+2026-11-21,Sat,Del Mar Café,15016.35
+2026-11-22,Sun,Del Mar Café,15013.60
+2026-11-23,Mon,Del Mar Café,11071.94
+2026-11-24,Tue,Del Mar Café,11690.72
+2026-11-25,Wed,Del Mar Café,12278.57
+2026-11-26,Thu,Del Mar Café,13232.03
+2026-11-27,Fri,Del Mar Café,13855.58
+2026-11-28,Sat,Del Mar Café,15071.84
+2026-11-29,Sun,Del Mar Café,14676.62
+2026-11-30,Mon,Del Mar Café,10582.31
+2026-12-01,Tue,Del Mar Café,10716.75
+2026-12-02,Wed,Del Mar Café,11181.52
+2026-12-03,Thu,Del Mar Café,11688.60
+2026-12-04,Fri,Del Mar Café,12877.13
+2026-12-05,Sat,Del Mar Café,14868.22
+2026-12-06,Sun,Del Mar Café,14753.50
+2026-12-07,Mon,Del Mar Café,10467.56
+2026-12-08,Tue,Del Mar Café,10991.32
+2026-12-09,Wed,Del Mar Café,11647.95
+2026-12-10,Thu,Del Mar Café,12218.84
+2026-12-11,Fri,Del Mar Café,13166.03
+2026-12-12,Sat,Del Mar Café,15303.70
+2026-12-13,Sun,Del Mar Café,15083.61
+2026-12-14,Mon,Del Mar Café,10957.48
+2026-12-15,Tue,Del Mar Café,11531.63
+2026-12-16,Wed,Del Mar Café,12348.19
+2026-12-17,Thu,Del Mar Café,12807.98
+2026-12-18,Fri,Del Mar Café,13971.88
+2026-12-19,Sat,Del Mar Café,15896.81
+2026-12-20,Sun,Del Mar Café,15554.77
+2026-12-21,Mon,Del Mar Café,12256.42
+2026-12-22,Tue,Del Mar Café,12837.80
+2026-12-23,Wed,Del Mar Café,12768.16
+2026-12-24,Thu,Del Mar Café,11025.13
+2026-12-25,Fri,Del Mar Café,13033.24
+2026-12-26,Sat,Del Mar Café,16497.63
+2026-12-27,Sun,Del Mar Café,16032.94
+2026-12-28,Mon,Del Mar Café,13205.55
+2026-12-29,Tue,Del Mar Café,13296.92
+2026-12-30,Wed,Del Mar Café,13184.30
+2026-12-31,Thu,Del Mar Café,11698.78
+2026-10-15,Thu,La Jolla Café,7571.96
+2026-10-16,Fri,La Jolla Café,8322.84
+2026-10-17,Sat,La Jolla Café,9516.23
+2026-10-18,Sun,La Jolla Café,8982.97
+2026-10-19,Mon,La Jolla Café,6969.65
+2026-10-20,Tue,La Jolla Café,6813.91
+2026-10-21,Wed,La Jolla Café,6865.51
+2026-10-22,Thu,La Jolla Café,7195.16
+2026-10-23,Fri,La Jolla Café,7950.49
+2026-10-24,Sat,La Jolla Café,9068.42
+2026-10-25,Sun,La Jolla Café,8311.59
+2026-10-26,Mon,La Jolla Café,6839.69
+2026-10-27,Tue,La Jolla Café,6777.61
+2026-10-28,Wed,La Jolla Café,6711.11
+2026-10-29,Thu,La Jolla Café,7068.63
+2026-10-30,Fri,La Jolla Café,7759.25
+2026-10-31,Sat,La Jolla Café,8387.70
+2026-11-01,Sun,La Jolla Café,8484.11
+2026-11-02,Mon,La Jolla Café,6900.18
+2026-11-03,Tue,La Jolla Café,6812.43
+2026-11-04,Wed,La Jolla Café,6975.35
+2026-11-05,Thu,La Jolla Café,7334.38
+2026-11-06,Fri,La Jolla Café,7979.36
+2026-11-07,Sat,La Jolla Café,9288.76
+2026-11-08,Sun,La Jolla Café,8888.47
+2026-11-09,Mon,La Jolla Café,7175.98
+2026-11-10,Tue,La Jolla Café,7150.44
+2026-11-11,Wed,La Jolla Café,8091.21
+2026-11-12,Thu,La Jolla Café,7275.88
+2026-11-13,Fri,La Jolla Café,8002.97
+2026-11-14,Sat,La Jolla Café,8967.17
+2026-11-15,Sun,La Jolla Café,8283.40
+2026-11-16,Mon,La Jolla Café,7234.31
+2026-11-17,Tue,La Jolla Café,7120.60
+2026-11-18,Wed,La Jolla Café,6970.13
+2026-11-19,Thu,La Jolla Café,7276.71
+2026-11-20,Fri,La Jolla Café,7824.91
+2026-11-21,Sat,La Jolla Café,8871.81
+2026-11-22,Sun,La Jolla Café,8542.22
+2026-11-23,Mon,La Jolla Café,7381.02
+2026-11-24,Tue,La Jolla Café,7458.31
+2026-11-25,Wed,La Jolla Café,7344.45
+2026-11-26,Thu,La Jolla Café,9071.74
+2026-11-27,Fri,La Jolla Café,8571.94
+2026-11-28,Sat,La Jolla Café,8221.66
+2026-11-29,Sun,La Jolla Café,7736.55
+2026-11-30,Mon,La Jolla Café,6766.97
+2026-12-01,Tue,La Jolla Café,6495.00
+2026-12-02,Wed,La Jolla Café,6522.07
+2026-12-03,Thu,La Jolla Café,6927.45
+2026-12-04,Fri,La Jolla Café,7511.57
+2026-12-05,Sat,La Jolla Café,8631.96
+2026-12-06,Sun,La Jolla Café,8310.22
+2026-12-07,Mon,La Jolla Café,6784.16
+2026-12-08,Tue,La Jolla Café,6811.86
+2026-12-09,Wed,La Jolla Café,6857.76
+2026-12-10,Thu,La Jolla Café,7227.24
+2026-12-11,Fri,La Jolla Café,7726.13
+2026-12-12,Sat,La Jolla Café,8798.05
+2026-12-13,Sun,La Jolla Café,8417.29
+2026-12-14,Mon,La Jolla Café,6956.08
+2026-12-15,Tue,La Jolla Café,7000.90
+2026-12-16,Wed,La Jolla Café,6953.19
+2026-12-17,Thu,La Jolla Café,7229.68
+2026-12-18,Fri,La Jolla Café,7782.60
+2026-12-19,Sat,La Jolla Café,8756.16
+2026-12-20,Sun,La Jolla Café,8371.06
+2026-12-21,Mon,La Jolla Café,7552.24
+2026-12-22,Tue,La Jolla Café,7577.63
+2026-12-23,Wed,La Jolla Café,7294.70
+2026-12-24,Thu,La Jolla Café,6451.61
+2026-12-25,Fri,La Jolla Café,9631.89
+2026-12-26,Sat,La Jolla Café,9694.48
+2026-12-27,Sun,La Jolla Café,9585.22
+2026-12-28,Mon,La Jolla Café,9148.85
+2026-12-29,Tue,La Jolla Café,8946.27
+2026-12-30,Wed,La Jolla Café,8641.18
+2026-12-31,Thu,La Jolla Café,7687.28
+2026-10-15,Thu,La Jolla Juicery,2088.05
+2026-10-16,Fri,La Jolla Juicery,2280.62
+2026-10-17,Sat,La Jolla Juicery,2793.38
+2026-10-18,Sun,La Jolla Juicery,2415.91
+2026-10-19,Mon,La Jolla Juicery,1990.71
+2026-10-20,Tue,La Jolla Juicery,1962.80
+2026-10-21,Wed,La Jolla Juicery,2035.40
+2026-10-22,Thu,La Jolla Juicery,2099.02
+2026-10-23,Fri,La Jolla Juicery,2254.30
+2026-10-24,Sat,La Jolla Juicery,2713.14
+2026-10-25,Sun,La Jolla Juicery,2286.76
+2026-10-26,Mon,La Jolla Juicery,2041.33
+2026-10-27,Tue,La Jolla Juicery,2036.89
+2026-10-28,Wed,La Jolla Juicery,2061.51
+2026-10-29,Thu,La Jolla Juicery,2132.56
+2026-10-30,Fri,La Jolla Juicery,2275.78
+2026-10-31,Sat,La Jolla Juicery,2521.30
+2026-11-01,Sun,La Jolla Juicery,2244.74
+2026-11-02,Mon,La Jolla Juicery,1891.21
+2026-11-03,Tue,La Jolla Juicery,1875.52
+2026-11-04,Wed,La Jolla Juicery,2008.86
+2026-11-05,Thu,La Jolla Juicery,2079.29
+2026-11-06,Fri,La Jolla Juicery,2200.57
+2026-11-07,Sat,La Jolla Juicery,2633.81
+2026-11-08,Sun,La Jolla Juicery,2267.49
+2026-11-09,Mon,La Jolla Juicery,1978.76
+2026-11-10,Tue,La Jolla Juicery,1958.72
+2026-11-11,Wed,La Jolla Juicery,2097.59
+2026-11-12,Thu,La Jolla Juicery,1979.68
+2026-11-13,Fri,La Jolla Juicery,2104.89
+2026-11-14,Sat,La Jolla Juicery,2460.92
+2026-11-15,Sun,La Jolla Juicery,2043.62
+2026-11-16,Mon,La Jolla Juicery,1900.97
+2026-11-17,Tue,La Jolla Juicery,1865.18
+2026-11-18,Wed,La Jolla Juicery,1893.87
+2026-11-19,Thu,La Jolla Juicery,1981.07
+2026-11-20,Fri,La Jolla Juicery,2084.89
+2026-11-21,Sat,La Jolla Juicery,2489.62
+2026-11-22,Sun,La Jolla Juicery,2204.51
+2026-11-23,Mon,La Jolla Juicery,1955.52
+2026-11-24,Tue,La Jolla Juicery,2008.95
+2026-11-25,Wed,La Jolla Juicery,2137.13
+2026-11-26,Thu,La Jolla Juicery,2250.85
+2026-11-27,Fri,La Jolla Juicery,2401.14
+2026-11-28,Sat,La Jolla Juicery,2530.54
+2026-11-29,Sun,La Jolla Juicery,2141.95
+2026-11-30,Mon,La Jolla Juicery,1889.36
+2026-12-01,Tue,La Jolla Juicery,1833.14
+2026-12-02,Wed,La Jolla Juicery,1805.12
+2026-12-03,Thu,La Jolla Juicery,1885.08
+2026-12-04,Fri,La Jolla Juicery,2029.89
+2026-12-05,Sat,La Jolla Juicery,2486.20
+2026-12-06,Sun,La Jolla Juicery,2109.82
+2026-12-07,Mon,La Jolla Juicery,1801.59
+2026-12-08,Tue,La Jolla Juicery,1813.17
+2026-12-09,Wed,La Jolla Juicery,1850.06
+2026-12-10,Thu,La Jolla Juicery,1907.22
+2026-12-11,Fri,La Jolla Juicery,1956.25
+2026-12-12,Sat,La Jolla Juicery,2352.93
+2026-12-13,Sun,La Jolla Juicery,2052.41
+2026-12-14,Mon,La Jolla Juicery,1777.25
+2026-12-15,Tue,La Jolla Juicery,1806.64
+2026-12-16,Wed,La Jolla Juicery,1915.08
+2026-12-17,Thu,La Jolla Juicery,2004.54
+2026-12-18,Fri,La Jolla Juicery,2122.44
+2026-12-19,Sat,La Jolla Juicery,2459.65
+2026-12-20,Sun,La Jolla Juicery,2125.85
+2026-12-21,Mon,La Jolla Juicery,1918.68
+2026-12-22,Tue,La Jolla Juicery,1923.68
+2026-12-23,Wed,La Jolla Juicery,1905.02
+2026-12-24,Thu,La Jolla Juicery,1525.62
+2026-12-25,Fri,La Jolla Juicery,2114.69
+2026-12-26,Sat,La Jolla Juicery,2599.55
+2026-12-27,Sun,La Jolla Juicery,2491.15
+2026-12-28,Mon,La Jolla Juicery,2433.05
+2026-12-29,Tue,La Jolla Juicery,2387.22
+2026-12-30,Wed,La Jolla Juicery,2312.96
+2026-12-31,Thu,La Jolla Juicery,1830.33
+2026-10-15,Thu,Little Italy Café,7590.42
+2026-10-16,Fri,Little Italy Café,9703.12
+2026-10-17,Sat,Little Italy Café,12469.01
+2026-10-18,Sun,Little Italy Café,12315.82
+2026-10-19,Mon,Little Italy Café,7400.67
+2026-10-20,Tue,Little Italy Café,6159.31
+2026-10-21,Wed,Little Italy Café,6423.97
+2026-10-22,Thu,Little Italy Café,6823.65
+2026-10-23,Fri,Little Italy Café,8687.48
+2026-10-24,Sat,Little Italy Café,11132.26
+2026-10-25,Sun,Little Italy Café,10298.69
+2026-10-26,Mon,Little Italy Café,6664.99
+2026-10-27,Tue,Little Italy Café,5785.42
+2026-10-28,Wed,Little Italy Café,6033.96
+2026-10-29,Thu,Little Italy Café,6481.09
+2026-10-30,Fri,Little Italy Café,8413.71
+2026-10-31,Sat,Little Italy Café,10044.90
+2026-11-01,Sun,Little Italy Café,11267.50
+2026-11-02,Mon,Little Italy Café,7036.01
+2026-11-03,Tue,Little Italy Café,6192.69
+2026-11-04,Wed,Little Italy Café,6666.48
+2026-11-05,Thu,Little Italy Café,7044.28
+2026-11-06,Fri,Little Italy Café,9142.05
+2026-11-07,Sat,Little Italy Café,12027.34
+2026-11-08,Sun,Little Italy Café,11985.46
+2026-11-09,Mon,Little Italy Café,7711.04
+2026-11-10,Tue,Little Italy Café,6707.36
+2026-11-11,Wed,Little Italy Café,8487.23
+2026-11-12,Thu,Little Italy Café,7108.73
+2026-11-13,Fri,Little Italy Café,9097.99
+2026-11-14,Sat,Little Italy Café,11487.85
+2026-11-15,Sun,Little Italy Café,11010.33
+2026-11-16,Mon,Little Italy Café,7690.22
+2026-11-17,Tue,Little Italy Café,6601.07
+2026-11-18,Wed,Little Italy Café,6674.80
+2026-11-19,Thu,Little Italy Café,6830.75
+2026-11-20,Fri,Little Italy Café,8462.71
+2026-11-21,Sat,Little Italy Café,10999.84
+2026-11-22,Sun,Little Italy Café,10884.62
+2026-11-23,Mon,Little Italy Café,7289.42
+2026-11-24,Tue,Little Italy Café,6424.10
+2026-11-25,Wed,Little Italy Café,6736.85
+2026-11-26,Thu,Little Italy Café,10587.90
+2026-11-27,Fri,Little Italy Café,8869.14
+2026-11-28,Sat,Little Italy Café,9925.93
+2026-11-29,Sun,Little Italy Café,9599.64
+2026-11-30,Mon,Little Italy Café,6656.86
+2026-12-01,Tue,Little Italy Café,5550.05
+2026-12-02,Wed,Little Italy Café,5694.33
+2026-12-03,Thu,Little Italy Café,6043.03
+2026-12-04,Fri,Little Italy Café,8206.03
+2026-12-05,Sat,Little Italy Café,10768.44
+2026-12-06,Sun,Little Italy Café,10482.79
+2026-12-07,Mon,Little Italy Café,6564.46
+2026-12-08,Tue,Little Italy Café,5713.97
+2026-12-09,Wed,Little Italy Café,5949.81
+2026-12-10,Thu,Little Italy Café,6259.64
+2026-12-11,Fri,Little Italy Café,7843.42
+2026-12-12,Sat,Little Italy Café,10298.13
+2026-12-13,Sun,Little Italy Café,10153.84
+2026-12-14,Mon,Little Italy Café,6325.43
+2026-12-15,Tue,Little Italy Café,5432.84
+2026-12-16,Wed,Little Italy Café,5707.09
+2026-12-17,Thu,Little Italy Café,5990.40
+2026-12-18,Fri,Little Italy Café,7782.78
+2026-12-19,Sat,Little Italy Café,10186.51
+2026-12-20,Sun,Little Italy Café,10013.89
+2026-12-21,Mon,Little Italy Café,7418.80
+2026-12-22,Tue,Little Italy Café,6853.32
+2026-12-23,Wed,Little Italy Café,7100.06
+2026-12-24,Thu,Little Italy Café,5524.82
+2026-12-25,Fri,Little Italy Café,10911.51
+2026-12-26,Sat,Little Italy Café,10752.37
+2026-12-27,Sun,Little Italy Café,12511.85
+2026-12-28,Mon,Little Italy Café,11001.02
+2026-12-29,Tue,Little Italy Café,10324.13
+2026-12-30,Wed,Little Italy Café,10412.46
+2026-12-31,Thu,Little Italy Café,9810.50
+2026-10-15,Thu,Newport Beach,6885.19
+2026-10-16,Fri,Newport Beach,8403.33
+2026-10-17,Sat,Newport Beach,13111.65
+2026-10-18,Sun,Newport Beach,13718.06
+2026-10-19,Mon,Newport Beach,6483.46
+2026-10-20,Tue,Newport Beach,6105.04
+2026-10-21,Wed,Newport Beach,6487.54
+2026-10-22,Thu,Newport Beach,6860.95
+2026-10-23,Fri,Newport Beach,8232.33
+2026-10-24,Sat,Newport Beach,12997.22
+2026-10-25,Sun,Newport Beach,13383.97
+2026-10-26,Mon,Newport Beach,6620.12
+2026-10-27,Tue,Newport Beach,6354.85
+2026-10-28,Wed,Newport Beach,6589.23
+2026-10-29,Thu,Newport Beach,6954.72
+2026-10-30,Fri,Newport Beach,8260.09
+2026-10-31,Sat,Newport Beach,11466.71
+2026-11-01,Sun,Newport Beach,13473.91
+2026-11-02,Mon,Newport Beach,6586.65
+2026-11-03,Tue,Newport Beach,6112.03
+2026-11-04,Wed,Newport Beach,6605.14
+2026-11-05,Thu,Newport Beach,6856.50
+2026-11-06,Fri,Newport Beach,8182.86
+2026-11-07,Sat,Newport Beach,12984.67
+2026-11-08,Sun,Newport Beach,13570.55
+2026-11-09,Mon,Newport Beach,6683.75
+2026-11-10,Tue,Newport Beach,6288.45
+2026-11-11,Wed,Newport Beach,8759.86
+2026-11-12,Thu,Newport Beach,6424.87
+2026-11-13,Fri,Newport Beach,7686.48
+2026-11-14,Sat,Newport Beach,11787.12
+2026-11-15,Sun,Newport Beach,11923.01
+2026-11-16,Mon,Newport Beach,6294.17
+2026-11-17,Tue,Newport Beach,5923.73
+2026-11-18,Wed,Newport Beach,6193.93
+2026-11-19,Thu,Newport Beach,6578.72
+2026-11-20,Fri,Newport Beach,7838.43
+2026-11-21,Sat,Newport Beach,12263.00
+2026-11-22,Sun,Newport Beach,13192.09
+2026-11-23,Mon,Newport Beach,6905.07
+2026-11-24,Tue,Newport Beach,6855.30
+2026-11-25,Wed,Newport Beach,7374.80
+2026-11-26,Thu,Newport Beach,11342.48
+2026-11-27,Fri,Newport Beach,11651.08
+2026-11-28,Sat,Newport Beach,13082.23
+2026-11-29,Sun,Newport Beach,13213.96
+2026-11-30,Mon,Newport Beach,6720.07
+2026-12-01,Tue,Newport Beach,6128.78
+2026-12-02,Wed,Newport Beach,6338.69
+2026-12-03,Thu,Newport Beach,6549.45
+2026-12-04,Fri,Newport Beach,8024.94
+2026-12-05,Sat,Newport Beach,12468.03
+2026-12-06,Sun,Newport Beach,12834.43
+2026-12-07,Mon,Newport Beach,6274.87
+2026-12-08,Tue,Newport Beach,5902.59
+2026-12-09,Wed,Newport Beach,6139.66
+2026-12-10,Thu,Newport Beach,6330.12
+2026-12-11,Fri,Newport Beach,7500.69
+2026-12-12,Sat,Newport Beach,11910.59
+2026-12-13,Sun,Newport Beach,12540.11
+2026-12-14,Mon,Newport Beach,6243.19
+2026-12-15,Tue,Newport Beach,5972.68
+2026-12-16,Wed,Newport Beach,6460.59
+2026-12-17,Thu,Newport Beach,6808.62
+2026-12-18,Fri,Newport Beach,8187.30
+2026-12-19,Sat,Newport Beach,12680.05
+2026-12-20,Sun,Newport Beach,13229.46
+2026-12-21,Mon,Newport Beach,7691.08
+2026-12-22,Tue,Newport Beach,7590.74
+2026-12-23,Wed,Newport Beach,7700.07
+2026-12-24,Thu,Newport Beach,6085.12
+2026-12-25,Fri,Newport Beach,12774.95
+2026-12-26,Sat,Newport Beach,13716.62
+2026-12-27,Sun,Newport Beach,15294.94
+2026-12-28,Mon,Newport Beach,10380.77
+2026-12-29,Tue,Newport Beach,9965.52
+2026-12-30,Wed,Newport Beach,9799.46
+2026-12-31,Thu,Newport Beach,6933.79
+2026-10-15,Thu,La Jolla Cove,1408.31
+2026-10-16,Fri,La Jolla Cove,1877.17
+2026-10-17,Sat,La Jolla Cove,2509.92
+2026-10-18,Sun,La Jolla Cove,2537.04
+2026-10-19,Mon,La Jolla Cove,1376.53
+2026-10-20,Tue,La Jolla Cove,1163.69
+2026-10-21,Wed,La Jolla Cove,1169.26
+2026-10-22,Thu,La Jolla Cove,1369.15
+2026-10-23,Fri,La Jolla Cove,1776.49
+2026-10-24,Sat,La Jolla Cove,2391.96
+2026-10-25,Sun,La Jolla Cove,2314.55
+2026-10-26,Mon,La Jolla Cove,1276.62
+2026-10-27,Tue,La Jolla Cove,1098.20
+2026-10-28,Wed,La Jolla Cove,1072.08
+2026-10-29,Thu,La Jolla Cove,1251.63
+2026-10-30,Fri,La Jolla Cove,1636.80
+2026-10-31,Sat,La Jolla Cove,1911.21
+2026-11-01,Sun,La Jolla Cove,2186.96
+2026-11-02,Mon,La Jolla Cove,1196.03
+2026-11-03,Tue,La Jolla Cove,1033.61
+2026-11-04,Wed,La Jolla Cove,1134.87
+2026-11-05,Thu,La Jolla Cove,1261.52
+2026-11-06,Fri,La Jolla Cove,1637.70
+2026-11-07,Sat,La Jolla Cove,2307.82
+2026-11-08,Sun,La Jolla Cove,2297.35
+2026-11-09,Mon,La Jolla Cove,1293.43
+2026-11-10,Tue,La Jolla Cove,1099.11
+2026-11-11,Wed,La Jolla Cove,1465.35
+2026-11-12,Thu,La Jolla Cove,1138.74
+2026-11-13,Fri,La Jolla Cove,1504.91
+2026-11-14,Sat,La Jolla Cove,2018.13
+2026-11-15,Sun,La Jolla Cove,1983.30
+2026-11-16,Mon,La Jolla Cove,1197.16
+2026-11-17,Tue,La Jolla Cove,1026.29
+2026-11-18,Wed,La Jolla Cove,1007.06
+2026-11-19,Thu,La Jolla Cove,1159.82
+2026-11-20,Fri,La Jolla Cove,1503.36
+2026-11-21,Sat,La Jolla Cove,2056.59
+2026-11-22,Sun,La Jolla Cove,2138.90
+2026-11-23,Mon,La Jolla Cove,1267.13
+2026-11-24,Tue,La Jolla Cove,1155.33
+2026-11-25,Wed,La Jolla Cove,1157.38
+2026-11-26,Thu,La Jolla Cove,1882.29
+2026-11-27,Fri,La Jolla Cove,2287.37
+2026-11-28,Sat,La Jolla Cove,2025.05
+2026-11-29,Sun,La Jolla Cove,1962.58
+2026-11-30,Mon,La Jolla Cove,1165.08
+2026-12-01,Tue,La Jolla Cove,836.87
+2026-12-02,Wed,La Jolla Cove,911.82
+2026-12-03,Thu,La Jolla Cove,1017.39
+2026-12-04,Fri,La Jolla Cove,1440.44
+2026-12-05,Sat,La Jolla Cove,2044.62
+2026-12-06,Sun,La Jolla Cove,2006.20
+2026-12-07,Mon,La Jolla Cove,1062.35
+2026-12-08,Tue,La Jolla Cove,916.96
+2026-12-09,Wed,La Jolla Cove,916.64
+2026-12-10,Thu,La Jolla Cove,1012.62
+2026-12-11,Fri,La Jolla Cove,1275.45
+2026-12-12,Sat,La Jolla Cove,1813.50
+2026-12-13,Sun,La Jolla Cove,1802.18
+2026-12-14,Mon,La Jolla Cove,928.87
+2026-12-15,Tue,La Jolla Cove,771.00
+2026-12-16,Wed,La Jolla Cove,765.34
+2026-12-17,Thu,La Jolla Cove,890.78
+2026-12-18,Fri,La Jolla Cove,1217.04
+2026-12-19,Sat,La Jolla Cove,1728.76
+2026-12-20,Sun,La Jolla Cove,1781.44
+2026-12-21,Mon,La Jolla Cove,1146.68
+2026-12-22,Tue,La Jolla Cove,1071.51
+2026-12-23,Wed,La Jolla Cove,1056.72
+2026-12-24,Thu,La Jolla Cove,968.99
+2026-12-25,Fri,La Jolla Cove,2170.97
+2026-12-26,Sat,La Jolla Cove,2413.07
+2026-12-27,Sun,La Jolla Cove,2807.84
+2026-12-28,Mon,La Jolla Cove,2326.25
+2026-12-29,Tue,La Jolla Cove,2217.94
+2026-12-30,Wed,La Jolla Cove,2147.44
+2026-12-31,Thu,La Jolla Cove,1560.49

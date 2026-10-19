@@ -181,6 +181,9 @@ every month against the workbook (zero cents of difference) and notes. The targe
 objectives (+10.3% on the run-rate's 2026 finish for the nine cafés, about 6% over today's run-rate), so payroll built on
 them assumes that growth is reached.
 
+The same script splits the rest of 2026 at today's run-rate into days (`outputs/Parakeet_2026_Daily_Run_Rate.xlsx`):
+Oct 15–31, November and December as in the deck, to the cent.
+
 First live check (Thursday to Sunday, Oct 15–18, 2026, after the training data): the ten stores sold $337K against
 $339K expected by this daily shape on the run-rate's level (−0.4%; Thursday −1.1% to Sunday +0.5%), with a 5.2% daily
 error over the 40 store-days.
