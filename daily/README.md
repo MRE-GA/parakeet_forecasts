@@ -47,8 +47,7 @@ What the tests showed:
 * **Holidays are the least precise days** (about 12% against 8.6%). Setting days-off holidays to their usual level
   regardless of weekday helped the Fourth of July but hurt Christmas, Easter and Father's Day, so it is not used.
 * **Beverly Hills is the hardest store** (about 12%): its weekdays caught up with its weekends in the first half of
-  2026 and its weekend premium came back in September. The blend gives an in-between pattern with the seasonal swing
-  (weekends strongest in the fall); review it in January with the fourth quarter.
+  2026 and its weekend premium came back in September. See below: its days are pulled halfway toward equal days.
 * Most of the remaining error is day-to-day noise (weather, events) that no calendar model captures.
 
 ### Prophet with every special day and its own summer weekly pattern (`prophet_variants.py`)
@@ -102,6 +101,26 @@ recent one, so a store whose week is changing (Beverly Hills) is followed withou
 
 The best change yet for Prophet alone (9.08% to 8.87%), but in the blend the gain is not significant (−0.01 points
 [−0.06, +0.05] and −0.04 [−0.09, +0.02]) and Brentwood gets worse (9.6% to 10.3%), so it is not used.
+
+### Beverly Hills
+
+The models did improve Beverly Hills on 2025 months (Prophet 11.3%, the blend 10.7%), but on 2026 months every model
+missed: its weekend premium, about +30% in 2024 and +20–25% in 2025, vanished in 2026, so models trained on the past
+over-forecast Saturdays by 16–19% and Sundays by 12–13% and under-forecast Tuesdays by 13–14%, while equal days scored
+9.6%. Its days are not noisier than other stores': split with each month's own weekday pattern, it would land at 7.7%
+(Brentwood 7.7%, Newport 7.4%); the gap to the models (4.3 points) is the largest of any store. So its shape is
+pulled halfway toward equal days (in logs), which helps in both years and on its holidays, where the learned effects
+were too strong; for the other stores the same pull costs a lot (8.2% to 11.8%):
+
+| Beverly Hills, daily error | 2025 months | 2026 months | All | Days-off holidays |
+|---|---|---|---|---|
+| Equal days | 12.0% | 9.6% | 10.6% | 15.2% |
+| The blend | 10.7% | 12.9% | 12.0% | 22.2% |
+| **The blend, halfway to equal days (used)** | **10.1%** | **10.5%** | **10.3%** | **15.7%** |
+| Only its weekday pattern halfway to flat | 10.2% | 10.9% | 10.6% | 20.5% |
+
+Its 2027 weekday pattern (week = 100), school term / summer / fall: Mon 96 / 97 / 95, Sat 103 / 102 / 106, Sun 103 /
+100 / 104. Review it in January with the fourth quarter.
 
 ## Output
 

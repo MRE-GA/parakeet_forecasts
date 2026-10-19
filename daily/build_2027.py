@@ -31,6 +31,11 @@ from prophet_variants import fit as prophet_fit  # noqa: E402
 
 YEAR = pd.date_range("2027-01-01", "2027-12-31")
 M27 = pd.period_range("2027-01", "2027-12", freq="M")
+# stores whose within-month shape is pulled toward equal days (share of the way, in logs): Beverly Hills' weekly
+# pattern has been flattening every year (weekends +30% in 2024, +20-25% in 2025, about 0% in 2026), so its learned
+# shape overshoots; halfway to equal days cut its backtest error from 12.0% to 10.3% (10.7% to 10.1% in 2025, 12.9% to
+# 10.5% in 2026) and on its holidays from 22% to 16%
+SHRINK_TO_EQUAL = {"Beverly Hills": 0.5}
 MONTHLY_XLSX = ROOT / "outputs" / "Parakeet_2027_Manager_Targets.xlsx"
 CURRENT_DAILY = ROOT / "outputs" / "Parakeet_2027_Daily_Targets.xlsx"
 XLSX = OUT / "Parakeet_2027_Daily_Forecast.xlsx"
@@ -67,7 +72,9 @@ def daily_weights(panel: pd.DataFrame, stores: dict) -> dict[str, np.ndarray]:
     out = {}
     for s, name, wp in zip(STORES, DISPLAY, prophet):
         fp = future_panel(s, YEAR, stores[s].open_flags(YEAR))
-        out[name] = np.sqrt(wp * tree.weights(fp))
+        w = np.sqrt(wp * tree.weights(fp))
+        a = SHRINK_TO_EQUAL.get(s, 0.0)
+        out[name] = w ** (1 - a) * (w > 0)  # equal days have weight 1 on every open day
     return out
 
 
@@ -215,6 +222,9 @@ def export(t_cents: dict, r_cents: dict, target: dict, run: dict) -> dict:
         "days and compared with actual days, given the true month. Daily error: Prophet as tuned 9.2%, this blend "
         "8.5%; on days-off holidays 12.8% and 11.8%. Tested and not used: weekly patterns by season or for recent "
         "months in Prophet, seasonality within the month, holidays set to their usual level.",
+        "Beverly Hills: its daily shape is pulled halfway toward equal days. Its weekly pattern has been flattening "
+        "every year (weekends about +30% over weekdays in 2024, +20-25% in 2025, about 0% in 2026), so the learned "
+        "shape overshoots; halfway cut its backtest error from 12.0% to 10.3%, in 2025 and in 2026.",
         "Each month is split in cents in proportion to the model's days; amounts are rounded so the month adds up "
         "exactly (see 'Check').",
         "Holidays the stores have always traded on are kept as trading days; a café closure that is not in the "
