@@ -49,6 +49,22 @@ What the tests showed:
   (weekends strongest in the fall); review it in January with the fourth quarter.
 * Most of the remaining error is day-to-day noise (weather, events) that no calendar model captures.
 
+### Prophet with every special day and its own summer weekly pattern (`prophet_variants.py`)
+
+| Daily error, out of sample | All days | Weekdays | Weekends | Days-off holidays | Other special days |
+|---|---|---|---|---|---|
+| Prophet as tuned | 9.16% | 9.08% | 8.45% | 12.75% | 13.86% |
+| + extended special days (Dec 26, Christmas week, Thanksgiving weekend, spring break, Halloween) | 9.08% | 8.92% | 8.45% | 12.80% | 14.24% |
+| + weekly pattern of its own in summer | 9.04% | 8.81% | 8.53% | 12.29% | 14.99% |
+| + weekly patterns for summer, the holiday season and the rest | 8.97% | 8.80% | 8.56% | 12.55% | 12.70% |
+| Blend (Prophet as tuned × tree model), as built | 8.56% | 8.48% | 8.04% | 11.81% | 11.71% |
+| Blend with the extended special days | **8.50%** | 8.41% | 8.03% | 11.81% | 11.53% |
+| Blend with extended days and seasonal weekly patterns | 8.58% | 8.44% | 8.25% | 11.61% | 11.32% |
+
+Prophet alone gains from both (9.16% to 8.97%), but the tree model already learns the season-by-weekday pattern, so in
+the blend the seasonal weekly patterns count it twice and over-weight weekends. The extended special days help the
+blend a little (better in 7 of 10 stores; Halloween, the Christmas week and spring break most).
+
 ## Output
 
 `outputs/Parakeet_2027_Daily_Forecast.xlsx` and `outputs/daily_2027.csv`: every 2027 day for the ten stores, built by
