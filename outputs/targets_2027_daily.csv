@@ -1,0 +1,3651 @@
+date,weekday,store,target
+2027-01-01,Fri,Beverly Hills,8795.84
+2027-01-02,Sat,Beverly Hills,7306.58
+2027-01-03,Sun,Beverly Hills,7310.26
+2027-01-04,Mon,Beverly Hills,6498.78
+2027-01-05,Tue,Beverly Hills,7459.78
+2027-01-06,Wed,Beverly Hills,7319.11
+2027-01-07,Thu,Beverly Hills,7306.07
+2027-01-08,Fri,Beverly Hills,7128.71
+2027-01-09,Sat,Beverly Hills,7337.58
+2027-01-10,Sun,Beverly Hills,7323.36
+2027-01-11,Mon,Beverly Hills,6508.94
+2027-01-12,Tue,Beverly Hills,7479.69
+2027-01-13,Wed,Beverly Hills,7355.01
+2027-01-14,Thu,Beverly Hills,7362.12
+2027-01-15,Fri,Beverly Hills,7201.12
+2027-01-16,Sat,Beverly Hills,7417.96
+2027-01-17,Sun,Beverly Hills,7410.94
+2027-01-18,Mon,Beverly Hills,7483.47
+2027-01-19,Tue,Beverly Hills,7572.15
+2027-01-20,Wed,Beverly Hills,7435.15
+2027-01-21,Thu,Beverly Hills,7432.66
+2027-01-22,Fri,Beverly Hills,7262.23
+2027-01-23,Sat,Beverly Hills,7473.50
+2027-01-24,Sun,Beverly Hills,7472.61
+2027-01-25,Mon,Beverly Hills,6679.69
+2027-01-26,Tue,Beverly Hills,7681.81
+2027-01-27,Wed,Beverly Hills,7572.19
+2027-01-28,Thu,Beverly Hills,7605.23
+2027-01-29,Fri,Beverly Hills,7462.21
+2027-01-30,Sat,Beverly Hills,7685.83
+2027-01-31,Sun,Beverly Hills,7702.46
+2027-02-01,Mon,Beverly Hills,7021.55
+2027-02-02,Tue,Beverly Hills,8042.48
+2027-02-03,Wed,Beverly Hills,7892.79
+2027-02-04,Thu,Beverly Hills,7880.25
+2027-02-05,Fri,Beverly Hills,7670.82
+2027-02-06,Sat,Beverly Hills,7827.84
+2027-02-07,Sun,Beverly Hills,7779.62
+2027-02-08,Mon,Beverly Hills,6924.56
+2027-02-09,Tue,Beverly Hills,7883.36
+2027-02-10,Wed,Beverly Hills,7704.07
+2027-02-11,Thu,Beverly Hills,7679.37
+2027-02-12,Fri,Beverly Hills,7491.92
+2027-02-13,Sat,Beverly Hills,7700.53
+2027-02-14,Sun,Beverly Hills,8293.31
+2027-02-15,Mon,Beverly Hills,8000.27
+2027-02-16,Tue,Beverly Hills,8009.62
+2027-02-17,Wed,Beverly Hills,7935.02
+2027-02-18,Thu,Beverly Hills,8017.58
+2027-02-19,Fri,Beverly Hills,7909.21
+2027-02-20,Sat,Beverly Hills,8154.16
+2027-02-21,Sun,Beverly Hills,8209.06
+2027-02-22,Mon,Beverly Hills,7466.36
+2027-02-23,Tue,Beverly Hills,8543.81
+2027-02-24,Wed,Beverly Hills,8392.52
+2027-02-25,Thu,Beverly Hills,8387.92
+2027-02-26,Fri,Beverly Hills,8157.59
+2027-02-27,Sat,Beverly Hills,8269.15
+2027-02-28,Sun,Beverly Hills,8201.95
+2027-03-01,Mon,Beverly Hills,7384.66
+2027-03-02,Tue,Beverly Hills,8340.39
+2027-03-03,Wed,Beverly Hills,8102.61
+2027-03-04,Thu,Beverly Hills,8029.74
+2027-03-05,Fri,Beverly Hills,7778.43
+2027-03-06,Sat,Beverly Hills,7919.86
+2027-03-07,Sun,Beverly Hills,7879.94
+2027-03-08,Mon,Beverly Hills,7049.26
+2027-03-09,Tue,Beverly Hills,8065.81
+2027-03-10,Wed,Beverly Hills,7933.83
+2027-03-11,Thu,Beverly Hills,7964.22
+2027-03-12,Fri,Beverly Hills,7814.36
+2027-03-13,Sat,Beverly Hills,8037.42
+2027-03-14,Sun,Beverly Hills,8067.48
+2027-03-15,Mon,Beverly Hills,7296.47
+2027-03-16,Tue,Beverly Hills,8360.78
+2027-03-17,Wed,Beverly Hills,8222.40
+2027-03-18,Thu,Beverly Hills,8232.14
+2027-03-19,Fri,Beverly Hills,8029.62
+2027-03-20,Sat,Beverly Hills,8179.77
+2027-03-21,Sun,Beverly Hills,8138.91
+2027-03-22,Mon,Beverly Hills,7288.59
+2027-03-23,Tue,Beverly Hills,8261.98
+2027-03-24,Wed,Beverly Hills,8043.09
+2027-03-25,Thu,Beverly Hills,7976.60
+2027-03-26,Fri,Beverly Hills,7722.69
+2027-03-27,Sat,Beverly Hills,7853.27
+2027-03-28,Sun,Beverly Hills,7591.10
+2027-03-29,Mon,Beverly Hills,6918.68
+2027-03-30,Tue,Beverly Hills,7880.87
+2027-03-31,Wed,Beverly Hills,7707.07
+2027-04-01,Thu,Beverly Hills,7819.53
+2027-04-02,Fri,Beverly Hills,7630.56
+2027-04-03,Sat,Beverly Hills,7841.92
+2027-04-04,Sun,Beverly Hills,7842.34
+2027-04-05,Mon,Beverly Hills,7023.74
+2027-04-06,Tue,Beverly Hills,8070.42
+2027-04-07,Wed,Beverly Hills,7949.53
+2027-04-08,Thu,Beverly Hills,7975.54
+2027-04-09,Fri,Beverly Hills,7811.45
+2027-04-10,Sat,Beverly Hills,8024.03
+2027-04-11,Sun,Beverly Hills,8023.97
+2027-04-12,Mon,Beverly Hills,7197.42
+2027-04-13,Tue,Beverly Hills,8226.95
+2027-04-14,Wed,Beverly Hills,8063.12
+2027-04-15,Thu,Beverly Hills,8046.39
+2027-04-16,Fri,Beverly Hills,7837.18
+2027-04-17,Sat,Beverly Hills,8011.45
+2027-04-18,Sun,Beverly Hills,7981.89
+2027-04-19,Mon,Beverly Hills,7133.93
+2027-04-20,Tue,Beverly Hills,8152.31
+2027-04-21,Wed,Beverly Hills,7999.72
+2027-04-22,Thu,Beverly Hills,8006.66
+2027-04-23,Fri,Beverly Hills,7835.12
+2027-04-24,Sat,Beverly Hills,8053.00
+2027-04-25,Sun,Beverly Hills,8073.08
+2027-04-26,Mon,Beverly Hills,7281.87
+2027-04-27,Tue,Beverly Hills,8363.78
+2027-04-28,Wed,Beverly Hills,8247.03
+2027-04-29,Thu,Beverly Hills,8285.46
+2027-04-30,Fri,Beverly Hills,8118.40
+2027-05-01,Sat,Beverly Hills,8674.23
+2027-05-02,Sun,Beverly Hills,8675.45
+2027-05-03,Mon,Beverly Hills,7822.54
+2027-05-04,Tue,Beverly Hills,8912.90
+2027-05-05,Wed,Beverly Hills,8723.34
+2027-05-06,Thu,Beverly Hills,8698.48
+2027-05-07,Fri,Beverly Hills,8460.99
+2027-05-08,Sat,Beverly Hills,8614.88
+2027-05-09,Sun,Beverly Hills,9466.11
+2027-05-10,Mon,Beverly Hills,7692.86
+2027-05-11,Tue,Beverly Hills,8763.03
+2027-05-12,Wed,Beverly Hills,8584.32
+2027-05-13,Thu,Beverly Hills,8579.31
+2027-05-14,Fri,Beverly Hills,8376.36
+2027-05-15,Sat,Beverly Hills,8570.23
+2027-05-16,Sun,Beverly Hills,8566.73
+2027-05-17,Mon,Beverly Hills,7715.24
+2027-05-18,Tue,Beverly Hills,8812.26
+2027-05-19,Wed,Beverly Hills,8643.77
+2027-05-20,Thu,Beverly Hills,8636.37
+2027-05-21,Fri,Beverly Hills,8414.74
+2027-05-22,Sat,Beverly Hills,8578.74
+2027-05-23,Sun,Beverly Hills,8539.52
+2027-05-24,Mon,Beverly Hills,7645.63
+2027-05-25,Tue,Beverly Hills,8694.94
+2027-05-26,Wed,Beverly Hills,8496.03
+2027-05-27,Thu,Beverly Hills,8465.72
+2027-05-28,Fri,Beverly Hills,8244.07
+2027-05-29,Sat,Beverly Hills,8431.23
+2027-05-30,Sun,Beverly Hills,8420.22
+2027-05-31,Mon,Beverly Hills,7898.45
+2027-06-01,Tue,Beverly Hills,8829.25
+2027-06-02,Wed,Beverly Hills,8695.54
+2027-06-03,Thu,Beverly Hills,8733.56
+2027-06-04,Fri,Beverly Hills,8563.72
+2027-06-05,Sat,Beverly Hills,8785.64
+2027-06-06,Sun,Beverly Hills,8800.39
+2027-06-07,Mon,Beverly Hills,7945.35
+2027-06-08,Tue,Beverly Hills,9066.76
+2027-06-09,Wed,Beverly Hills,8880.58
+2027-06-10,Thu,Beverly Hills,8853.80
+2027-06-11,Fri,Beverly Hills,8601.30
+2027-06-12,Sat,Beverly Hills,8739.39
+2027-06-13,Sun,Beverly Hills,8671.51
+2027-06-14,Mon,Beverly Hills,7731.71
+2027-06-15,Tue,Beverly Hills,8766.66
+2027-06-16,Wed,Beverly Hills,8539.90
+2027-06-17,Thu,Beverly Hills,8482.26
+2027-06-18,Fri,Beverly Hills,10582.48
+2027-06-19,Sat,Beverly Hills,8433.11
+2027-06-20,Sun,Beverly Hills,9347.95
+2027-06-21,Mon,Beverly Hills,7455.61
+2027-06-22,Tue,Beverly Hills,8515.89
+2027-06-23,Wed,Beverly Hills,8337.34
+2027-06-24,Thu,Beverly Hills,8308.99
+2027-06-25,Fri,Beverly Hills,8083.11
+2027-06-26,Sat,Beverly Hills,8267.44
+2027-06-27,Sun,Beverly Hills,8208.15
+2027-06-28,Mon,Beverly Hills,7255.80
+2027-06-29,Tue,Beverly Hills,8257.39
+2027-06-30,Wed,Beverly Hills,8041.05
+2027-07-01,Thu,Beverly Hills,8301.04
+2027-07-02,Fri,Beverly Hills,8047.74
+2027-07-03,Sat,Beverly Hills,8256.17
+2027-07-04,Sun,Beverly Hills,6266.05
+2027-07-05,Mon,Beverly Hills,9647.78
+2027-07-06,Tue,Beverly Hills,8346.47
+2027-07-07,Wed,Beverly Hills,8231.79
+2027-07-08,Thu,Beverly Hills,8279.61
+2027-07-09,Fri,Beverly Hills,8158.13
+2027-07-10,Sat,Beverly Hills,8482.66
+2027-07-11,Sun,Beverly Hills,8550.96
+2027-07-12,Mon,Beverly Hills,7703.62
+2027-07-13,Tue,Beverly Hills,8912.30
+2027-07-14,Wed,Beverly Hills,8817.19
+2027-07-15,Thu,Beverly Hills,8866.83
+2027-07-16,Fri,Beverly Hills,8686.66
+2027-07-17,Sat,Beverly Hills,8906.54
+2027-07-18,Sun,Beverly Hills,8881.83
+2027-07-19,Mon,Beverly Hills,7932.86
+2027-07-20,Tue,Beverly Hills,9028.42
+2027-07-21,Wed,Beverly Hills,8810.74
+2027-07-22,Thu,Beverly Hills,8758.79
+2027-07-23,Fri,Beverly Hills,8510.39
+2027-07-24,Sat,Beverly Hills,8706.03
+2027-07-25,Sun,Beverly Hills,8677.99
+2027-07-26,Mon,Beverly Hills,7752.27
+2027-07-27,Tue,Beverly Hills,8901.10
+2027-07-28,Wed,Beverly Hills,8775.01
+2027-07-29,Thu,Beverly Hills,8824.41
+2027-07-30,Fri,Beverly Hills,8674.39
+2027-07-31,Sat,Beverly Hills,8944.55
+2027-08-01,Sun,Beverly Hills,9053.29
+2027-08-02,Mon,Beverly Hills,8179.44
+2027-08-03,Tue,Beverly Hills,9379.78
+2027-08-04,Wed,Beverly Hills,9222.60
+2027-08-05,Thu,Beverly Hills,9227.10
+2027-08-06,Fri,Beverly Hills,8994.95
+2027-08-07,Sat,Beverly Hills,9169.40
+2027-08-08,Sun,Beverly Hills,9124.67
+2027-08-09,Mon,Beverly Hills,8166.66
+2027-08-10,Tue,Beverly Hills,9286.40
+2027-08-11,Wed,Beverly Hills,9076.18
+2027-08-12,Thu,Beverly Hills,9049.76
+2027-08-13,Fri,Beverly Hills,8821.63
+2027-08-14,Sat,Beverly Hills,9030.38
+2027-08-15,Sun,Beverly Hills,9027.85
+2027-08-16,Mon,Beverly Hills,8124.11
+2027-08-17,Tue,Beverly Hills,9308.52
+2027-08-18,Wed,Beverly Hills,9158.26
+2027-08-19,Thu,Beverly Hills,9178.90
+2027-08-20,Fri,Beverly Hills,8969.81
+2027-08-21,Sat,Beverly Hills,9164.67
+2027-08-22,Sun,Beverly Hills,9130.68
+2027-08-23,Mon,Beverly Hills,8169.45
+2027-08-24,Tue,Beverly Hills,9264.72
+2027-08-25,Wed,Beverly Hills,9008.12
+2027-08-26,Thu,Beverly Hills,8910.14
+2027-08-27,Fri,Beverly Hills,8596.73
+2027-08-28,Sat,Beverly Hills,8721.62
+2027-08-29,Sun,Beverly Hills,8609.26
+2027-08-30,Mon,Beverly Hills,7573.17
+2027-08-31,Tue,Beverly Hills,8601.94
+2027-09-01,Wed,Beverly Hills,8357.92
+2027-09-02,Thu,Beverly Hills,8297.76
+2027-09-03,Fri,Beverly Hills,8069.64
+2027-09-04,Sat,Beverly Hills,8306.76
+2027-09-05,Sun,Beverly Hills,8281.12
+2027-09-06,Mon,Beverly Hills,8765.48
+2027-09-07,Tue,Beverly Hills,8428.81
+2027-09-08,Wed,Beverly Hills,8283.09
+2027-09-09,Thu,Beverly Hills,8277.32
+2027-09-10,Fri,Beverly Hills,8081.96
+2027-09-11,Sat,Beverly Hills,8329.30
+2027-09-12,Sun,Beverly Hills,8298.89
+2027-09-13,Mon,Beverly Hills,7329.24
+2027-09-14,Tue,Beverly Hills,8407.98
+2027-09-15,Wed,Beverly Hills,8242.64
+2027-09-16,Thu,Beverly Hills,8224.73
+2027-09-17,Fri,Beverly Hills,8032.83
+2027-09-18,Sat,Beverly Hills,8300.24
+2027-09-19,Sun,Beverly Hills,8302.18
+2027-09-20,Mon,Beverly Hills,7380.63
+2027-09-21,Tue,Beverly Hills,8524.85
+2027-09-22,Wed,Beverly Hills,8419.12
+2027-09-23,Thu,Beverly Hills,8462.02
+2027-09-24,Fri,Beverly Hills,8308.82
+2027-09-25,Sat,Beverly Hills,8583.79
+2027-09-26,Sun,Beverly Hills,8591.01
+2027-09-27,Mon,Beverly Hills,7660.03
+2027-09-28,Tue,Beverly Hills,8773.62
+2027-09-29,Wed,Beverly Hills,8587.18
+2027-09-30,Thu,Beverly Hills,8539.89
+2027-10-01,Fri,Beverly Hills,8726.88
+2027-10-02,Sat,Beverly Hills,8921.14
+2027-10-03,Sun,Beverly Hills,8839.74
+2027-10-04,Mon,Beverly Hills,7776.78
+2027-10-05,Tue,Beverly Hills,8877.53
+2027-10-06,Wed,Beverly Hills,8675.29
+2027-10-07,Thu,Beverly Hills,8639.74
+2027-10-08,Fri,Beverly Hills,8431.42
+2027-10-09,Sat,Beverly Hills,8714.86
+2027-10-10,Sun,Beverly Hills,8720.19
+2027-10-11,Mon,Beverly Hills,7727.84
+2027-10-12,Tue,Beverly Hills,8957.94
+2027-10-13,Wed,Beverly Hills,8843.81
+2027-10-14,Thu,Beverly Hills,8878.84
+2027-10-15,Fri,Beverly Hills,8702.16
+2027-10-16,Sat,Beverly Hills,8974.14
+2027-10-17,Sun,Beverly Hills,8956.61
+2027-10-18,Mon,Beverly Hills,7944.86
+2027-10-19,Tue,Beverly Hills,9081.02
+2027-10-20,Wed,Beverly Hills,8867.42
+2027-10-21,Thu,Beverly Hills,8801.52
+2027-10-22,Fri,Beverly Hills,8535.32
+2027-10-23,Sat,Beverly Hills,8747.59
+2027-10-24,Sun,Beverly Hills,8680.89
+2027-10-25,Mon,Beverly Hills,7637.28
+2027-10-26,Tue,Beverly Hills,8764.76
+2027-10-27,Wed,Beverly Hills,8607.93
+2027-10-28,Thu,Beverly Hills,8617.60
+2027-10-29,Fri,Beverly Hills,8455.08
+2027-10-30,Sat,Beverly Hills,8777.84
+2027-10-31,Sun,Beverly Hills,8821.89
+2027-11-01,Mon,Beverly Hills,7772.52
+2027-11-02,Tue,Beverly Hills,9004.47
+2027-11-03,Wed,Beverly Hills,8918.30
+2027-11-04,Thu,Beverly Hills,8986.12
+2027-11-05,Fri,Beverly Hills,8837.07
+2027-11-06,Sat,Beverly Hills,9120.70
+2027-11-07,Sun,Beverly Hills,9143.68
+2027-11-08,Mon,Beverly Hills,8207.72
+2027-11-09,Tue,Beverly Hills,9409.36
+2027-11-10,Wed,Beverly Hills,9241.42
+2027-11-11,Thu,Beverly Hills,10005.12
+2027-11-12,Fri,Beverly Hills,9010.73
+2027-11-13,Sat,Beverly Hills,9220.07
+2027-11-14,Sun,Beverly Hills,9184.68
+2027-11-15,Mon,Beverly Hills,8193.18
+2027-11-16,Tue,Beverly Hills,9335.09
+2027-11-17,Wed,Beverly Hills,9113.06
+2027-11-18,Thu,Beverly Hills,9050.07
+2027-11-19,Fri,Beverly Hills,8767.77
+2027-11-20,Sat,Beverly Hills,8932.43
+2027-11-21,Sun,Beverly Hills,8831.29
+2027-11-22,Mon,Beverly Hills,7756.97
+2027-11-23,Tue,Beverly Hills,8798.43
+2027-11-24,Wed,Beverly Hills,8536.10
+2027-11-25,Thu,Beverly Hills,9743.00
+2027-11-26,Fri,Beverly Hills,7475.75
+2027-11-27,Sat,Beverly Hills,8362.39
+2027-11-28,Sun,Beverly Hills,8297.84
+2027-11-29,Mon,Beverly Hills,7274.64
+2027-11-30,Tue,Beverly Hills,8393.89
+2027-12-01,Wed,Beverly Hills,8251.88
+2027-12-02,Thu,Beverly Hills,8299.39
+2027-12-03,Fri,Beverly Hills,8184.03
+2027-12-04,Sat,Beverly Hills,8541.82
+2027-12-05,Sun,Beverly Hills,8611.79
+2027-12-06,Mon,Beverly Hills,7717.67
+2027-12-07,Tue,Beverly Hills,8944.17
+2027-12-08,Wed,Beverly Hills,8839.85
+2027-12-09,Thu,Beverly Hills,8864.42
+2027-12-10,Fri,Beverly Hills,8653.31
+2027-12-11,Sat,Beverly Hills,8862.52
+2027-12-12,Sun,Beverly Hills,8779.38
+2027-12-13,Mon,Beverly Hills,7704.88
+2027-12-14,Tue,Beverly Hills,8716.96
+2027-12-15,Wed,Beverly Hills,8417.56
+2027-12-16,Thu,Beverly Hills,8256.78
+2027-12-17,Fri,Beverly Hills,7923.05
+2027-12-18,Sat,Beverly Hills,8092.44
+2027-12-19,Sun,Beverly Hills,7968.45
+2027-12-20,Mon,Beverly Hills,6878.15
+2027-12-21,Tue,Beverly Hills,7910.38
+2027-12-22,Wed,Beverly Hills,7765.71
+2027-12-23,Thu,Beverly Hills,7772.52
+2027-12-24,Fri,Beverly Hills,7442.50
+2027-12-25,Sat,Beverly Hills,12635.19
+2027-12-26,Sun,Beverly Hills,8096.01
+2027-12-27,Mon,Beverly Hills,7193.84
+2027-12-28,Tue,Beverly Hills,8413.81
+2027-12-29,Wed,Beverly Hills,8373.64
+2027-12-30,Thu,Beverly Hills,8460.75
+2027-12-31,Fri,Beverly Hills,8748.47
+2027-01-01,Fri,Brentwood,8087.69
+2027-01-02,Sat,Brentwood,7757.52
+2027-01-03,Sun,Brentwood,7701.52
+2027-01-04,Mon,Brentwood,5527.27
+2027-01-05,Tue,Brentwood,5803.61
+2027-01-06,Wed,Brentwood,6100.66
+2027-01-07,Thu,Brentwood,6279.74
+2027-01-08,Fri,Brentwood,7016.82
+2027-01-09,Sat,Brentwood,8953.21
+2027-01-10,Sun,Brentwood,8788.08
+2027-01-11,Mon,Brentwood,6460.96
+2027-01-12,Tue,Brentwood,6550.67
+2027-01-13,Wed,Brentwood,6639.09
+2027-01-14,Thu,Brentwood,6600.29
+2027-01-15,Fri,Brentwood,7123.10
+2027-01-16,Sat,Brentwood,8860.83
+2027-01-17,Sun,Brentwood,8522.98
+2027-01-18,Mon,Brentwood,6883.77
+2027-01-19,Tue,Brentwood,6046.98
+2027-01-20,Wed,Brentwood,6076.68
+2027-01-21,Thu,Brentwood,6019.16
+2027-01-22,Fri,Brentwood,6559.37
+2027-01-23,Sat,Brentwood,8344.42
+2027-01-24,Sun,Brentwood,8075.93
+2027-01-25,Mon,Brentwood,5692.64
+2027-01-26,Tue,Brentwood,5769.59
+2027-01-27,Wed,Brentwood,5882.51
+2027-01-28,Thu,Brentwood,5897.54
+2027-01-29,Fri,Brentwood,6494.60
+2027-01-30,Sat,Brentwood,8317.92
+2027-01-31,Sun,Brentwood,8068.41
+2027-02-01,Mon,Brentwood,6001.65
+2027-02-02,Tue,Brentwood,6068.46
+2027-02-03,Wed,Brentwood,6162.33
+2027-02-04,Thu,Brentwood,6147.41
+2027-02-05,Fri,Brentwood,6746.91
+2027-02-06,Sat,Brentwood,8645.92
+2027-02-07,Sun,Brentwood,8366.48
+2027-02-08,Mon,Brentwood,5848.28
+2027-02-09,Tue,Brentwood,5924.85
+2027-02-10,Wed,Brentwood,6041.93
+2027-02-11,Thu,Brentwood,6062.12
+2027-02-12,Fri,Brentwood,6705.98
+2027-02-13,Sat,Brentwood,8655.20
+2027-02-14,Sun,Brentwood,8661.42
+2027-02-15,Mon,Brentwood,7467.44
+2027-02-16,Tue,Brentwood,6083.57
+2027-02-17,Wed,Brentwood,6239.69
+2027-02-18,Thu,Brentwood,6290.17
+2027-02-19,Fri,Brentwood,6954.84
+2027-02-20,Sat,Brentwood,8915.55
+2027-02-21,Sun,Brentwood,8691.44
+2027-02-22,Mon,Brentwood,6219.82
+2027-02-23,Tue,Brentwood,6332.51
+2027-02-24,Wed,Brentwood,6474.20
+2027-02-25,Thu,Brentwood,6507.10
+2027-02-26,Fri,Brentwood,7151.99
+2027-02-27,Sat,Brentwood,9091.23
+2027-02-28,Sun,Brentwood,8844.23
+2027-03-01,Mon,Brentwood,6260.54
+2027-03-02,Tue,Brentwood,6346.38
+2027-03-03,Wed,Brentwood,6459.62
+2027-03-04,Thu,Brentwood,6464.83
+2027-03-05,Fri,Brentwood,7073.62
+2027-03-06,Sat,Brentwood,8960.10
+2027-03-07,Sun,Brentwood,8693.33
+2027-03-08,Mon,Brentwood,6213.22
+2027-03-09,Tue,Brentwood,6286.38
+2027-03-10,Wed,Brentwood,6394.29
+2027-03-11,Thu,Brentwood,6402.17
+2027-03-12,Fri,Brentwood,7021.44
+2027-03-13,Sat,Brentwood,8925.04
+2027-03-14,Sun,Brentwood,8679.73
+2027-03-15,Mon,Brentwood,6222.16
+2027-03-16,Tue,Brentwood,6314.91
+2027-03-17,Wed,Brentwood,6434.99
+2027-03-18,Thu,Brentwood,6443.22
+2027-03-19,Fri,Brentwood,7047.14
+2027-03-20,Sat,Brentwood,8916.89
+2027-03-21,Sun,Brentwood,8617.97
+2027-03-22,Mon,Brentwood,6087.68
+2027-03-23,Tue,Brentwood,6091.30
+2027-03-24,Wed,Brentwood,6110.62
+2027-03-25,Thu,Brentwood,6013.05
+2027-03-26,Fri,Brentwood,6514.15
+2027-03-27,Sat,Brentwood,8292.80
+2027-03-28,Sun,Brentwood,7979.68
+2027-03-29,Mon,Brentwood,5350.89
+2027-03-30,Tue,Brentwood,5347.23
+2027-03-31,Wed,Brentwood,5398.18
+2027-04-01,Thu,Brentwood,5446.07
+2027-04-02,Fri,Brentwood,6065.62
+2027-04-03,Sat,Brentwood,8014.02
+2027-04-04,Sun,Brentwood,7810.64
+2027-04-05,Mon,Brentwood,5389.72
+2027-04-06,Tue,Brentwood,5576.55
+2027-04-07,Wed,Brentwood,5810.14
+2027-04-08,Thu,Brentwood,5945.41
+2027-04-09,Fri,Brentwood,6695.34
+2027-04-10,Sat,Brentwood,8734.95
+2027-04-11,Sun,Brentwood,8578.53
+2027-04-12,Mon,Brentwood,6158.67
+2027-04-13,Tue,Brentwood,6302.60
+2027-04-14,Wed,Brentwood,6454.64
+2027-04-15,Thu,Brentwood,6477.84
+2027-04-16,Fri,Brentwood,7095.41
+2027-04-17,Sat,Brentwood,8993.73
+2027-04-18,Sun,Brentwood,8698.56
+2027-04-19,Mon,Brentwood,6153.04
+2027-04-20,Tue,Brentwood,6193.17
+2027-04-21,Wed,Brentwood,6269.46
+2027-04-22,Thu,Brentwood,6248.26
+2027-04-23,Fri,Brentwood,6852.93
+2027-04-24,Sat,Brentwood,8767.05
+2027-04-25,Sun,Brentwood,8511.05
+2027-04-26,Mon,Brentwood,6020.91
+2027-04-27,Tue,Brentwood,6124.40
+2027-04-28,Wed,Brentwood,6263.67
+2027-04-29,Thu,Brentwood,6297.41
+2027-04-30,Fri,Brentwood,6942.74
+2027-05-01,Sat,Brentwood,9011.30
+2027-05-02,Sun,Brentwood,8753.30
+2027-05-03,Mon,Brentwood,6207.68
+2027-05-04,Tue,Brentwood,6276.88
+2027-05-05,Wed,Brentwood,6369.48
+2027-05-06,Thu,Brentwood,6347.78
+2027-05-07,Fri,Brentwood,6945.88
+2027-05-08,Sat,Brentwood,8859.31
+2027-05-09,Sun,Brentwood,8639.13
+2027-05-10,Mon,Brentwood,5987.05
+2027-05-11,Tue,Brentwood,6045.16
+2027-05-12,Wed,Brentwood,6143.01
+2027-05-13,Thu,Brentwood,6141.28
+2027-05-14,Fri,Brentwood,6770.91
+2027-05-15,Sat,Brentwood,8723.21
+2027-05-16,Sun,Brentwood,8465.30
+2027-05-17,Mon,Brentwood,5931.81
+2027-05-18,Tue,Brentwood,6023.11
+2027-05-19,Wed,Brentwood,6144.93
+2027-05-20,Thu,Brentwood,6156.27
+2027-05-21,Fri,Brentwood,6787.87
+2027-05-22,Sat,Brentwood,8732.30
+2027-05-23,Sun,Brentwood,8459.13
+2027-05-24,Mon,Brentwood,5906.29
+2027-05-25,Tue,Brentwood,5977.85
+2027-05-26,Wed,Brentwood,6083.07
+2027-05-27,Thu,Brentwood,6083.96
+2027-05-28,Fri,Brentwood,6713.29
+2027-05-29,Sat,Brentwood,8664.42
+2027-05-30,Sun,Brentwood,8406.42
+2027-05-31,Mon,Brentwood,8972.57
+2027-06-01,Tue,Brentwood,6096.47
+2027-06-02,Wed,Brentwood,6230.51
+2027-06-03,Thu,Brentwood,6254.57
+2027-06-04,Fri,Brentwood,6912.98
+2027-06-05,Sat,Brentwood,8910.46
+2027-06-06,Sun,Brentwood,8640.88
+2027-06-07,Mon,Brentwood,6038.29
+2027-06-08,Tue,Brentwood,6106.10
+2027-06-09,Wed,Brentwood,6198.15
+2027-06-10,Thu,Brentwood,6172.62
+2027-06-11,Fri,Brentwood,6777.46
+2027-06-12,Sat,Brentwood,8721.32
+2027-06-13,Sun,Brentwood,8401.89
+2027-06-14,Mon,Brentwood,5756.54
+2027-06-15,Tue,Brentwood,5791.07
+2027-06-16,Wed,Brentwood,5860.63
+2027-06-17,Thu,Brentwood,5823.52
+2027-06-18,Fri,Brentwood,6245.20
+2027-06-19,Sat,Brentwood,9191.77
+2027-06-20,Sun,Brentwood,6922.30
+2027-06-21,Mon,Brentwood,5437.34
+2027-06-22,Tue,Brentwood,5485.42
+2027-06-23,Wed,Brentwood,5565.92
+2027-06-24,Thu,Brentwood,5535.69
+2027-06-25,Fri,Brentwood,6141.18
+2027-06-26,Sat,Brentwood,8089.70
+2027-06-27,Sun,Brentwood,7777.91
+2027-06-28,Mon,Brentwood,5142.60
+2027-06-29,Tue,Brentwood,5189.64
+2027-06-30,Wed,Brentwood,5274.83
+2027-07-01,Thu,Brentwood,5238.11
+2027-07-02,Fri,Brentwood,5864.46
+2027-07-03,Sat,Brentwood,7839.97
+2027-07-04,Sun,Brentwood,7122.74
+2027-07-05,Mon,Brentwood,4822.75
+2027-07-06,Tue,Brentwood,5112.11
+2027-07-07,Wed,Brentwood,5262.49
+2027-07-08,Thu,Brentwood,5310.76
+2027-07-09,Fri,Brentwood,5998.56
+2027-07-10,Sat,Brentwood,8027.84
+2027-07-11,Sun,Brentwood,7805.39
+2027-07-12,Mon,Brentwood,5264.83
+2027-07-13,Tue,Brentwood,5390.17
+2027-07-14,Wed,Brentwood,5544.02
+2027-07-15,Thu,Brentwood,5584.01
+2027-07-16,Fri,Brentwood,6254.21
+2027-07-17,Sat,Brentwood,8259.64
+2027-07-18,Sun,Brentwood,8010.45
+2027-07-19,Mon,Brentwood,5443.47
+2027-07-20,Tue,Brentwood,5545.41
+2027-07-21,Wed,Brentwood,5680.84
+2027-07-22,Thu,Brentwood,5708.32
+2027-07-23,Fri,Brentwood,6371.85
+2027-07-24,Sat,Brentwood,8375.45
+2027-07-25,Sun,Brentwood,8127.45
+2027-07-26,Mon,Brentwood,5562.46
+2027-07-27,Tue,Brentwood,5664.86
+2027-07-28,Wed,Brentwood,5797.12
+2027-07-29,Thu,Brentwood,5816.35
+2027-07-30,Fri,Brentwood,6465.91
+2027-07-31,Sat,Brentwood,8450.16
+2027-08-01,Sun,Brentwood,8374.35
+2027-08-02,Mon,Brentwood,5722.28
+2027-08-03,Tue,Brentwood,5802.39
+2027-08-04,Wed,Brentwood,5917.25
+2027-08-05,Thu,Brentwood,5923.52
+2027-08-06,Fri,Brentwood,6584.74
+2027-08-07,Sat,Brentwood,8623.55
+2027-08-08,Sun,Brentwood,8364.05
+2027-08-09,Mon,Brentwood,5740.39
+2027-08-10,Tue,Brentwood,5856.53
+2027-08-11,Wed,Brentwood,6011.36
+2027-08-12,Thu,Brentwood,6057.04
+2027-08-13,Fri,Brentwood,6752.25
+2027-08-14,Sat,Brentwood,8814.85
+2027-08-15,Sun,Brentwood,8564.82
+2027-08-16,Mon,Brentwood,5933.32
+2027-08-17,Tue,Brentwood,6022.84
+2027-08-18,Wed,Brentwood,6132.55
+2027-08-19,Thu,Brentwood,6116.74
+2027-08-20,Fri,Brentwood,6737.87
+2027-08-21,Sat,Brentwood,8719.03
+2027-08-22,Sun,Brentwood,8386.37
+2027-08-23,Mon,Brentwood,5677.62
+2027-08-24,Tue,Brentwood,5701.62
+2027-08-25,Wed,Brentwood,5763.16
+2027-08-26,Thu,Brentwood,5720.76
+2027-08-27,Fri,Brentwood,6339.48
+2027-08-28,Sat,Brentwood,8343.03
+2027-08-29,Sun,Brentwood,8056.23
+2027-08-30,Mon,Brentwood,5413.67
+2027-08-31,Tue,Brentwood,5519.50
+2027-09-01,Wed,Brentwood,5620.49
+2027-09-02,Thu,Brentwood,5672.90
+2027-09-03,Fri,Brentwood,6377.68
+2027-09-04,Sat,Brentwood,8446.19
+2027-09-05,Sun,Brentwood,8232.41
+2027-09-06,Mon,Brentwood,9197.76
+2027-09-07,Tue,Brentwood,5808.56
+2027-09-08,Wed,Brentwood,5977.24
+2027-09-09,Thu,Brentwood,6028.71
+2027-09-10,Fri,Brentwood,6716.87
+2027-09-11,Sat,Brentwood,8755.98
+2027-09-12,Sun,Brentwood,8503.34
+2027-09-13,Mon,Brentwood,5894.15
+2027-09-14,Tue,Brentwood,5986.79
+2027-09-15,Wed,Brentwood,6107.44
+2027-09-16,Thu,Brentwood,6112.77
+2027-09-17,Fri,Brentwood,6758.10
+2027-09-18,Sat,Brentwood,8758.63
+2027-09-19,Sun,Brentwood,8472.20
+2027-09-20,Mon,Brentwood,5834.32
+2027-09-21,Tue,Brentwood,5903.72
+2027-09-22,Wed,Brentwood,6007.07
+2027-09-23,Thu,Brentwood,6001.78
+2027-09-24,Fri,Brentwood,6644.17
+2027-09-25,Sat,Brentwood,8650.62
+2027-09-26,Sun,Brentwood,8380.10
+2027-09-27,Mon,Brentwood,5769.04
+2027-09-28,Tue,Brentwood,5876.53
+2027-09-29,Wed,Brentwood,6028.80
+2027-09-30,Thu,Brentwood,6081.80
+2027-10-01,Fri,Brentwood,6826.93
+2027-10-02,Sat,Brentwood,8913.16
+2027-10-03,Sun,Brentwood,8708.33
+2027-10-04,Mon,Brentwood,6143.24
+2027-10-05,Tue,Brentwood,6299.46
+2027-10-06,Wed,Brentwood,6483.21
+2027-10-07,Thu,Brentwood,6545.28
+2027-10-08,Fri,Brentwood,7240.65
+2027-10-09,Sat,Brentwood,9284.80
+2027-10-10,Sun,Brentwood,9012.89
+2027-10-11,Mon,Brentwood,6229.10
+2027-10-12,Tue,Brentwood,6409.91
+2027-10-13,Wed,Brentwood,6479.22
+2027-10-14,Thu,Brentwood,6426.17
+2027-10-15,Fri,Brentwood,7014.82
+2027-10-16,Sat,Brentwood,8969.54
+2027-10-17,Sun,Brentwood,8633.37
+2027-10-18,Mon,Brentwood,5946.40
+2027-10-19,Tue,Brentwood,5999.26
+2027-10-20,Wed,Brentwood,6106.19
+2027-10-21,Thu,Brentwood,6124.29
+2027-10-22,Fri,Brentwood,6812.50
+2027-10-23,Sat,Brentwood,8887.60
+2027-10-24,Sun,Brentwood,8683.11
+2027-10-25,Mon,Brentwood,6128.61
+2027-10-26,Tue,Brentwood,6304.10
+2027-10-27,Wed,Brentwood,6514.08
+2027-10-28,Thu,Brentwood,6607.68
+2027-10-29,Fri,Brentwood,7338.43
+2027-10-30,Sat,Brentwood,9420.69
+2027-10-31,Sun,Brentwood,9188.85
+2027-11-01,Mon,Brentwood,6660.29
+2027-11-02,Tue,Brentwood,6755.34
+2027-11-03,Wed,Brentwood,6870.19
+2027-11-04,Thu,Brentwood,6862.23
+2027-11-05,Fri,Brentwood,7504.96
+2027-11-06,Sat,Brentwood,9531.42
+2027-11-07,Sun,Brentwood,9237.06
+2027-11-08,Mon,Brentwood,6559.90
+2027-11-09,Tue,Brentwood,6653.70
+2027-11-10,Wed,Brentwood,6796.47
+2027-11-11,Thu,Brentwood,7156.69
+2027-11-12,Fri,Brentwood,7554.70
+2027-11-13,Sat,Brentwood,9660.51
+2027-11-14,Sun,Brentwood,9443.87
+2027-11-15,Mon,Brentwood,6832.25
+2027-11-16,Tue,Brentwood,6969.76
+2027-11-17,Wed,Brentwood,7126.50
+2027-11-18,Thu,Brentwood,7150.29
+2027-11-19,Fri,Brentwood,7805.45
+2027-11-20,Sat,Brentwood,9817.12
+2027-11-21,Sun,Brentwood,9475.03
+2027-11-22,Mon,Brentwood,6714.26
+2027-11-23,Tue,Brentwood,6688.94
+2027-11-24,Wed,Brentwood,6680.74
+2027-11-25,Thu,Brentwood,7385.55
+2027-11-26,Fri,Brentwood,7042.66
+2027-11-27,Sat,Brentwood,8982.90
+2027-11-28,Sun,Brentwood,8580.83
+2027-11-29,Mon,Brentwood,5806.22
+2027-11-30,Tue,Brentwood,5815.43
+2027-12-01,Wed,Brentwood,5925.26
+2027-12-02,Thu,Brentwood,5918.80
+2027-12-03,Fri,Brentwood,6605.35
+2027-12-04,Sat,Brentwood,8715.33
+2027-12-05,Sun,Brentwood,8512.55
+2027-12-06,Mon,Brentwood,5924.86
+2027-12-07,Tue,Brentwood,6127.98
+2027-12-08,Wed,Brentwood,6374.04
+2027-12-09,Thu,Brentwood,6507.48
+2027-12-10,Fri,Brentwood,7293.57
+2027-12-11,Sat,Brentwood,9456.85
+2027-12-12,Sun,Brentwood,9258.01
+2027-12-13,Mon,Brentwood,6624.60
+2027-12-14,Tue,Brentwood,6734.76
+2027-12-15,Wed,Brentwood,6845.70
+2027-12-16,Thu,Brentwood,6809.20
+2027-12-17,Fri,Brentwood,7399.75
+2027-12-18,Sat,Brentwood,9352.60
+2027-12-19,Sun,Brentwood,8939.98
+2027-12-20,Mon,Brentwood,6101.39
+2027-12-21,Tue,Brentwood,6026.70
+2027-12-22,Wed,Brentwood,5983.98
+2027-12-23,Thu,Brentwood,5834.60
+2027-12-24,Fri,Brentwood,5344.54
+2027-12-25,Sat,Brentwood,9603.28
+2027-12-26,Sun,Brentwood,7936.25
+2027-12-27,Mon,Brentwood,5199.86
+2027-12-28,Tue,Brentwood,5280.34
+2027-12-29,Wed,Brentwood,5439.54
+2027-12-30,Thu,Brentwood,5529.74
+2027-12-31,Fri,Brentwood,5793.88
+2027-01-01,Fri,Carlsbad,12425.12
+2027-01-02,Sat,Carlsbad,12937.40
+2027-01-03,Sun,Carlsbad,12345.90
+2027-01-04,Mon,Carlsbad,9150.80
+2027-01-05,Tue,Carlsbad,9188.53
+2027-01-06,Wed,Carlsbad,9529.02
+2027-01-07,Thu,Carlsbad,9861.49
+2027-01-08,Fri,Carlsbad,11163.72
+2027-01-09,Sat,Carlsbad,12649.17
+2027-01-10,Sun,Carlsbad,12118.91
+2027-01-11,Mon,Carlsbad,8958.12
+2027-01-12,Tue,Carlsbad,9006.45
+2027-01-13,Wed,Carlsbad,9339.55
+2027-01-14,Thu,Carlsbad,9654.05
+2027-01-15,Fri,Carlsbad,10935.84
+2027-01-16,Sat,Carlsbad,12406.10
+2027-01-17,Sun,Carlsbad,11872.28
+2027-01-18,Mon,Carlsbad,11918.48
+2027-01-19,Tue,Carlsbad,8802.58
+2027-01-20,Wed,Carlsbad,9182.93
+2027-01-21,Thu,Carlsbad,9558.20
+2027-01-22,Fri,Carlsbad,10908.74
+2027-01-23,Sat,Carlsbad,12448.74
+2027-01-24,Sun,Carlsbad,11978.13
+2027-01-25,Mon,Carlsbad,8879.20
+2027-01-26,Tue,Carlsbad,8987.35
+2027-01-27,Wed,Carlsbad,9373.15
+2027-01-28,Thu,Carlsbad,9727.98
+2027-01-29,Fri,Carlsbad,11033.00
+2027-01-30,Sat,Carlsbad,12505.81
+2027-01-31,Sun,Carlsbad,11951.93
+2027-02-01,Mon,Carlsbad,8883.19
+2027-02-02,Tue,Carlsbad,8899.05
+2027-02-03,Wed,Carlsbad,9204.40
+2027-02-04,Thu,Carlsbad,9494.12
+2027-02-05,Fri,Carlsbad,10769.35
+2027-02-06,Sat,Carlsbad,12241.02
+2027-02-07,Sun,Carlsbad,11685.95
+2027-02-08,Mon,Carlsbad,8484.58
+2027-02-09,Tue,Carlsbad,8559.09
+2027-02-10,Wed,Carlsbad,8942.69
+2027-02-11,Thu,Carlsbad,9323.87
+2027-02-12,Fri,Carlsbad,10696.65
+2027-02-13,Sat,Carlsbad,12264.83
+2027-02-14,Sun,Carlsbad,13722.95
+2027-02-15,Mon,Carlsbad,10418.42
+2027-02-16,Tue,Carlsbad,8807.82
+2027-02-17,Wed,Carlsbad,9232.93
+2027-02-18,Thu,Carlsbad,9637.39
+2027-02-19,Fri,Carlsbad,11016.89
+2027-02-20,Sat,Carlsbad,12578.20
+2027-02-21,Sun,Carlsbad,12095.46
+2027-02-22,Mon,Carlsbad,8948.02
+2027-02-23,Tue,Carlsbad,9058.43
+2027-02-24,Wed,Carlsbad,9461.58
+2027-02-25,Thu,Carlsbad,9848.58
+2027-02-26,Fri,Carlsbad,11216.74
+2027-02-27,Sat,Carlsbad,12773.38
+2027-02-28,Sun,Carlsbad,12292.27
+2027-03-01,Mon,Carlsbad,9324.28
+2027-03-02,Tue,Carlsbad,9447.51
+2027-03-03,Wed,Carlsbad,9871.11
+2027-03-04,Thu,Carlsbad,10278.86
+2027-03-05,Fri,Carlsbad,11685.68
+2027-03-06,Sat,Carlsbad,13283.28
+2027-03-07,Sun,Carlsbad,12803.20
+2027-03-08,Mon,Carlsbad,9612.15
+2027-03-09,Tue,Carlsbad,9743.20
+2027-03-10,Wed,Carlsbad,10173.94
+2027-03-11,Thu,Carlsbad,10588.19
+2027-03-12,Fri,Carlsbad,12000.45
+2027-03-13,Sat,Carlsbad,13601.34
+2027-03-14,Sun,Carlsbad,13120.77
+2027-03-15,Mon,Carlsbad,9923.24
+2027-03-16,Tue,Carlsbad,10039.36
+2027-03-17,Wed,Carlsbad,10444.31
+2027-03-18,Thu,Carlsbad,10819.89
+2027-03-19,Fri,Carlsbad,12179.42
+2027-03-20,Sat,Carlsbad,13713.54
+2027-03-21,Sun,Carlsbad,13153.58
+2027-03-22,Mon,Carlsbad,9867.08
+2027-03-23,Tue,Carlsbad,9889.16
+2027-03-24,Wed,Carlsbad,10200.78
+2027-03-25,Thu,Carlsbad,10490.38
+2027-03-26,Fri,Carlsbad,11778.21
+2027-03-27,Sat,Carlsbad,13261.46
+2027-03-28,Sun,Carlsbad,9853.40
+2027-03-29,Mon,Carlsbad,9396.07
+2027-03-30,Tue,Carlsbad,9455.53
+2027-03-31,Wed,Carlsbad,9835.39
+2027-04-01,Thu,Carlsbad,10272.27
+2027-04-02,Fri,Carlsbad,11684.06
+2027-04-03,Sat,Carlsbad,13305.56
+2027-04-04,Sun,Carlsbad,12852.62
+2027-04-05,Mon,Carlsbad,9683.26
+2027-04-06,Tue,Carlsbad,9854.92
+2027-04-07,Wed,Carlsbad,10323.71
+2027-04-08,Thu,Carlsbad,10766.28
+2027-04-09,Fri,Carlsbad,12198.04
+2027-04-10,Sat,Carlsbad,13803.10
+2027-04-11,Sun,Carlsbad,13299.61
+2027-04-12,Mon,Carlsbad,10050.85
+2027-04-13,Tue,Carlsbad,10122.05
+2027-04-14,Wed,Carlsbad,10478.86
+2027-04-15,Thu,Carlsbad,10808.34
+2027-04-16,Fri,Carlsbad,12136.13
+2027-04-17,Sat,Carlsbad,13655.45
+2027-04-18,Sun,Carlsbad,13091.53
+2027-04-19,Mon,Carlsbad,9812.06
+2027-04-20,Tue,Carlsbad,9883.57
+2027-04-21,Wed,Carlsbad,10269.82
+2027-04-22,Thu,Carlsbad,10653.08
+2027-04-23,Fri,Carlsbad,12051.73
+2027-04-24,Sat,Carlsbad,13650.14
+2027-04-25,Sun,Carlsbad,13163.96
+2027-04-26,Mon,Carlsbad,9951.61
+2027-04-27,Tue,Carlsbad,10071.61
+2027-04-28,Wed,Carlsbad,10481.81
+2027-04-29,Thu,Carlsbad,10861.25
+2027-04-30,Fri,Carlsbad,12228.14
+2027-05-01,Sat,Carlsbad,13895.75
+2027-05-02,Sun,Carlsbad,13327.94
+2027-05-03,Mon,Carlsbad,9997.01
+2027-05-04,Tue,Carlsbad,10026.03
+2027-05-05,Wed,Carlsbad,10354.53
+2027-05-06,Thu,Carlsbad,10667.51
+2027-05-07,Fri,Carlsbad,11999.92
+2027-05-08,Sat,Carlsbad,13536.67
+2027-05-09,Sun,Carlsbad,21660.07
+2027-05-10,Mon,Carlsbad,9691.02
+2027-05-11,Tue,Carlsbad,9787.83
+2027-05-12,Wed,Carlsbad,10204.24
+2027-05-13,Thu,Carlsbad,10617.15
+2027-05-14,Fri,Carlsbad,12052.23
+2027-05-15,Sat,Carlsbad,13684.90
+2027-05-16,Sun,Carlsbad,13209.07
+2027-05-17,Mon,Carlsbad,9977.16
+2027-05-18,Tue,Carlsbad,10103.65
+2027-05-19,Wed,Carlsbad,10519.54
+2027-05-20,Thu,Carlsbad,10902.23
+2027-05-21,Fri,Carlsbad,12280.70
+2027-05-22,Sat,Carlsbad,13836.03
+2027-05-23,Sun,Carlsbad,13269.62
+2027-05-24,Mon,Carlsbad,9942.45
+2027-05-25,Tue,Carlsbad,9977.77
+2027-05-26,Wed,Carlsbad,10314.70
+2027-05-27,Thu,Carlsbad,10637.39
+2027-05-28,Fri,Carlsbad,11979.57
+2027-05-29,Sat,Carlsbad,13524.69
+2027-05-30,Sun,Carlsbad,12973.92
+2027-05-31,Mon,Carlsbad,12818.83
+2027-06-01,Tue,Carlsbad,9809.24
+2027-06-02,Wed,Carlsbad,10216.23
+2027-06-03,Thu,Carlsbad,10613.11
+2027-06-04,Fri,Carlsbad,12029.03
+2027-06-05,Sat,Carlsbad,13637.36
+2027-06-06,Sun,Carlsbad,13125.59
+2027-06-07,Mon,Carlsbad,9845.29
+2027-06-08,Tue,Carlsbad,9931.85
+2027-06-09,Wed,Carlsbad,10307.73
+2027-06-10,Thu,Carlsbad,10650.45
+2027-06-11,Fri,Carlsbad,11993.21
+2027-06-12,Sat,Carlsbad,13515.19
+2027-06-13,Sun,Carlsbad,12910.87
+2027-06-14,Mon,Carlsbad,9539.44
+2027-06-15,Tue,Carlsbad,9543.99
+2027-06-16,Wed,Carlsbad,9854.01
+2027-06-17,Thu,Carlsbad,10152.97
+2027-06-18,Fri,Carlsbad,12506.04
+2027-06-19,Sat,Carlsbad,14653.41
+2027-06-20,Sun,Carlsbad,11867.94
+2027-06-21,Mon,Carlsbad,9144.91
+2027-06-22,Tue,Carlsbad,9241.21
+2027-06-23,Wed,Carlsbad,9661.19
+2027-06-24,Thu,Carlsbad,10081.50
+2027-06-25,Fri,Carlsbad,11532.05
+2027-06-26,Sat,Carlsbad,13186.46
+2027-06-27,Sun,Carlsbad,12731.81
+2027-06-28,Mon,Carlsbad,9518.55
+2027-06-29,Tue,Carlsbad,9680.28
+2027-06-30,Wed,Carlsbad,10137.00
+2027-07-01,Thu,Carlsbad,10556.75
+2027-07-02,Fri,Carlsbad,11981.77
+2027-07-03,Sat,Carlsbad,13582.16
+2027-07-04,Sun,Carlsbad,8616.22
+2027-07-05,Mon,Carlsbad,10771.77
+2027-07-06,Tue,Carlsbad,9801.31
+2027-07-07,Wed,Carlsbad,10150.83
+2027-07-08,Thu,Carlsbad,10476.79
+2027-07-09,Fri,Carlsbad,11816.81
+2027-07-10,Sat,Carlsbad,13354.51
+2027-07-11,Sun,Carlsbad,12788.31
+2027-07-12,Mon,Carlsbad,9478.60
+2027-07-13,Tue,Carlsbad,9563.57
+2027-07-14,Wed,Carlsbad,9971.76
+2027-07-15,Thu,Carlsbad,10382.21
+2027-07-16,Fri,Carlsbad,11825.77
+2027-07-17,Sat,Carlsbad,13477.44
+2027-07-18,Sun,Carlsbad,13025.81
+2027-07-19,Mon,Carlsbad,9821.09
+2027-07-20,Tue,Carlsbad,9991.76
+2027-07-21,Wed,Carlsbad,10458.00
+2027-07-22,Thu,Carlsbad,10892.65
+2027-07-23,Fri,Carlsbad,12323.08
+2027-07-24,Sat,Carlsbad,13924.01
+2027-07-25,Sun,Carlsbad,13387.06
+2027-07-26,Mon,Carlsbad,10068.56
+2027-07-27,Tue,Carlsbad,10105.86
+2027-07-28,Wed,Carlsbad,10429.95
+2027-07-29,Thu,Carlsbad,10725.50
+2027-07-30,Fri,Carlsbad,12031.81
+2027-07-31,Sat,Carlsbad,13534.38
+2027-08-01,Sun,Carlsbad,13298.12
+2027-08-02,Mon,Carlsbad,9861.79
+2027-08-03,Tue,Carlsbad,9919.58
+2027-08-04,Wed,Carlsbad,10314.33
+2027-08-05,Thu,Carlsbad,10716.40
+2027-08-06,Fri,Carlsbad,12185.45
+2027-08-07,Sat,Carlsbad,13872.46
+2027-08-08,Sun,Carlsbad,13399.74
+2027-08-09,Mon,Carlsbad,10097.74
+2027-08-10,Tue,Carlsbad,10266.23
+2027-08-11,Wed,Carlsbad,10737.14
+2027-08-12,Thu,Carlsbad,11172.85
+2027-08-13,Fri,Carlsbad,12628.81
+2027-08-14,Sat,Carlsbad,14255.83
+2027-08-15,Sun,Carlsbad,13680.15
+2027-08-16,Mon,Carlsbad,10239.86
+2027-08-17,Tue,Carlsbad,10245.25
+2027-08-18,Wed,Carlsbad,10540.77
+2027-08-19,Thu,Carlsbad,10801.98
+2027-08-20,Fri,Carlsbad,12097.00
+2027-08-21,Sat,Carlsbad,13587.61
+2027-08-22,Sun,Carlsbad,12908.31
+2027-08-23,Mon,Carlsbad,9402.08
+2027-08-24,Tue,Carlsbad,9380.40
+2027-08-25,Wed,Carlsbad,9685.20
+2027-08-26,Thu,Carlsbad,9986.35
+2027-08-27,Fri,Carlsbad,11343.76
+2027-08-28,Sat,Carlsbad,12909.60
+2027-08-29,Sun,Carlsbad,12308.45
+2027-08-30,Mon,Carlsbad,8874.17
+2027-08-31,Tue,Carlsbad,8911.02
+2027-09-01,Wed,Carlsbad,9381.09
+2027-09-02,Thu,Carlsbad,9707.71
+2027-09-03,Fri,Carlsbad,11086.99
+2027-09-04,Sat,Carlsbad,12664.50
+2027-09-05,Sun,Carlsbad,12039.98
+2027-09-06,Mon,Carlsbad,12331.62
+2027-09-07,Tue,Carlsbad,8583.45
+2027-09-08,Wed,Carlsbad,8952.31
+2027-09-09,Thu,Carlsbad,9323.56
+2027-09-10,Fri,Carlsbad,10776.42
+2027-09-11,Sat,Carlsbad,12456.21
+2027-09-12,Sun,Carlsbad,11958.75
+2027-09-13,Mon,Carlsbad,8610.18
+2027-09-14,Tue,Carlsbad,8798.40
+2027-09-15,Wed,Carlsbad,9314.06
+2027-09-16,Thu,Carlsbad,9814.43
+2027-09-17,Fri,Carlsbad,11366.55
+2027-09-18,Sat,Carlsbad,13105.55
+2027-09-19,Sun,Carlsbad,12620.12
+2027-09-20,Mon,Carlsbad,9233.24
+2027-09-21,Tue,Carlsbad,9334.12
+2027-09-22,Wed,Carlsbad,9719.24
+2027-09-23,Thu,Carlsbad,10055.76
+2027-09-24,Fri,Carlsbad,11423.94
+2027-09-25,Sat,Carlsbad,12974.17
+2027-09-26,Sun,Carlsbad,12311.11
+2027-09-27,Mon,Carlsbad,8772.91
+2027-09-28,Tue,Carlsbad,8761.68
+2027-09-29,Wed,Carlsbad,9083.32
+2027-09-30,Thu,Carlsbad,9409.98
+2027-10-01,Fri,Carlsbad,10851.09
+2027-10-02,Sat,Carlsbad,12498.53
+2027-10-03,Sun,Carlsbad,11966.50
+2027-10-04,Mon,Carlsbad,8578.49
+2027-10-05,Tue,Carlsbad,8738.55
+2027-10-06,Wed,Carlsbad,9227.86
+2027-10-07,Thu,Carlsbad,9702.18
+2027-10-08,Fri,Carlsbad,11231.36
+2027-10-09,Sat,Carlsbad,12948.58
+2027-10-10,Sun,Carlsbad,12436.94
+2027-10-11,Mon,Carlsbad,10191.29
+2027-10-12,Tue,Carlsbad,9102.03
+2027-10-13,Wed,Carlsbad,9475.77
+2027-10-14,Thu,Carlsbad,9807.45
+2027-10-15,Fri,Carlsbad,11180.95
+2027-10-16,Sat,Carlsbad,12744.59
+2027-10-17,Sun,Carlsbad,12096.23
+2027-10-18,Mon,Carlsbad,8571.33
+2027-10-19,Tue,Carlsbad,8587.84
+2027-10-20,Wed,Carlsbad,8941.52
+2027-10-21,Thu,Carlsbad,9302.02
+2027-10-22,Fri,Carlsbad,10751.21
+2027-10-23,Sat,Carlsbad,12431.35
+2027-10-24,Sun,Carlsbad,11930.93
+2027-10-25,Mon,Carlsbad,8573.62
+2027-10-26,Tue,Carlsbad,8764.25
+2027-10-27,Wed,Carlsbad,9285.34
+2027-10-28,Thu,Carlsbad,9794.32
+2027-10-29,Fri,Carlsbad,11362.78
+2027-10-30,Sat,Carlsbad,13125.48
+2027-10-31,Sun,Carlsbad,12666.61
+2027-11-01,Mon,Carlsbad,9425.69
+2027-11-02,Tue,Carlsbad,9578.34
+2027-11-03,Wed,Carlsbad,10030.93
+2027-11-04,Thu,Carlsbad,10444.26
+2027-11-05,Fri,Carlsbad,11912.61
+2027-11-06,Sat,Carlsbad,13569.91
+2027-11-07,Sun,Carlsbad,12980.07
+2027-11-08,Mon,Carlsbad,9466.59
+2027-11-09,Tue,Carlsbad,9524.96
+2027-11-10,Wed,Carlsbad,9908.81
+2027-11-11,Thu,Carlsbad,12628.97
+2027-11-12,Fri,Carlsbad,11743.58
+2027-11-13,Sat,Carlsbad,13424.33
+2027-11-14,Sun,Carlsbad,12886.86
+2027-11-15,Mon,Carlsbad,9450.73
+2027-11-16,Tue,Carlsbad,9606.05
+2027-11-17,Wed,Carlsbad,10099.94
+2027-11-18,Thu,Carlsbad,10590.02
+2027-11-19,Fri,Carlsbad,12164.84
+2027-11-20,Sat,Carlsbad,13950.36
+2027-11-21,Sun,Carlsbad,13500.85
+2027-11-22,Mon,Carlsbad,10129.12
+2027-11-23,Tue,Carlsbad,10319.48
+2027-11-24,Wed,Carlsbad,10814.64
+2027-11-25,Thu,Carlsbad,8620.60
+2027-11-26,Fri,Carlsbad,15832.66
+2027-11-27,Sat,Carlsbad,14448.89
+2027-11-28,Sun,Carlsbad,13859.16
+2027-11-29,Mon,Carlsbad,10321.68
+2027-11-30,Tue,Carlsbad,10329.45
+2027-12-01,Wed,Carlsbad,10564.53
+2027-12-02,Thu,Carlsbad,10834.77
+2027-12-03,Fri,Carlsbad,12164.27
+2027-12-04,Sat,Carlsbad,13699.19
+2027-12-05,Sun,Carlsbad,13025.93
+2027-12-06,Mon,Carlsbad,9478.06
+2027-12-07,Tue,Carlsbad,9512.02
+2027-12-08,Wed,Carlsbad,9906.24
+2027-12-09,Thu,Carlsbad,10329.02
+2027-12-10,Fri,Carlsbad,11868.24
+2027-12-11,Sat,Carlsbad,13660.11
+2027-12-12,Sun,Carlsbad,13277.09
+2027-12-13,Mon,Carlsbad,10035.61
+2027-12-14,Tue,Carlsbad,10372.86
+2027-12-15,Wed,Carlsbad,11047.26
+2027-12-16,Thu,Carlsbad,11707.86
+2027-12-17,Fri,Carlsbad,13425.51
+2027-12-18,Sat,Carlsbad,15322.97
+2027-12-19,Sun,Carlsbad,14963.95
+2027-12-20,Mon,Carlsbad,11661.62
+2027-12-21,Tue,Carlsbad,11855.72
+2027-12-22,Wed,Carlsbad,12312.93
+2027-12-23,Thu,Carlsbad,12695.62
+2027-12-24,Fri,Carlsbad,13170.01
+2027-12-25,Sat,Carlsbad,11164.63
+2027-12-26,Sun,Carlsbad,14939.30
+2027-12-27,Mon,Carlsbad,11308.95
+2027-12-28,Tue,Carlsbad,11212.09
+2027-12-29,Wed,Carlsbad,11430.38
+2027-12-30,Thu,Carlsbad,11636.56
+2027-12-31,Fri,Carlsbad,13183.29
+2027-01-01,Fri,Coronado,16210.99
+2027-01-02,Sat,Coronado,16713.84
+2027-01-03,Sun,Coronado,16036.45
+2027-01-04,Mon,Coronado,10312.97
+2027-01-05,Tue,Coronado,9026.29
+2027-01-06,Wed,Coronado,8647.46
+2027-01-07,Thu,Coronado,8465.81
+2027-01-08,Fri,Coronado,9775.32
+2027-01-09,Sat,Coronado,12602.30
+2027-01-10,Sun,Coronado,12233.64
+2027-01-11,Mon,Coronado,6987.20
+2027-01-12,Tue,Coronado,6299.22
+2027-01-13,Wed,Coronado,6587.41
+2027-01-14,Thu,Coronado,7086.08
+2027-01-15,Fri,Coronado,9037.52
+2027-01-16,Sat,Coronado,12424.12
+2027-01-17,Sun,Coronado,12500.19
+2027-01-18,Mon,Coronado,10204.28
+2027-01-19,Tue,Coronado,7048.87
+2027-01-20,Wed,Coronado,7379.75
+2027-01-21,Thu,Coronado,7812.09
+2027-01-22,Fri,Coronado,9617.17
+2027-01-23,Sat,Coronado,12810.97
+2027-01-24,Sun,Coronado,12681.87
+2027-01-25,Mon,Coronado,7559.40
+2027-01-26,Tue,Coronado,6899.17
+2027-01-27,Wed,Coronado,7143.03
+2027-01-28,Thu,Coronado,7551.05
+2027-01-29,Fri,Coronado,9389.98
+2027-01-30,Sat,Coronado,12662.93
+2027-01-31,Sun,Coronado,12639.54
+2027-02-01,Mon,Coronado,7723.34
+2027-02-02,Tue,Coronado,7150.36
+2027-02-03,Wed,Coronado,7458.50
+2027-02-04,Thu,Coronado,7887.03
+2027-02-05,Fri,Coronado,9714.98
+2027-02-06,Sat,Coronado,12950.50
+2027-02-07,Sun,Coronado,12816.90
+2027-02-08,Mon,Coronado,7620.14
+2027-02-09,Tue,Coronado,6936.01
+2027-02-10,Wed,Coronado,7167.53
+2027-02-11,Thu,Coronado,7574.71
+2027-02-12,Fri,Coronado,9451.51
+2027-02-13,Sat,Coronado,12812.66
+2027-02-14,Sun,Coronado,15327.37
+2027-02-15,Mon,Coronado,10307.22
+2027-02-16,Tue,Coronado,7553.61
+2027-02-17,Wed,Coronado,8090.50
+2027-02-18,Thu,Coronado,8778.29
+2027-02-19,Fri,Coronado,10877.79
+2027-02-20,Sat,Coronado,14374.57
+2027-02-21,Sun,Coronado,14467.18
+2027-02-22,Mon,Coronado,9437.38
+2027-02-23,Tue,Coronado,8840.21
+2027-02-24,Wed,Coronado,9064.06
+2027-02-25,Thu,Coronado,9362.74
+2027-02-26,Fri,Coronado,11033.80
+2027-02-27,Sat,Coronado,14105.85
+2027-02-28,Sun,Coronado,13822.41
+2027-03-01,Mon,Coronado,8928.19
+2027-03-02,Tue,Coronado,8134.08
+2027-03-03,Wed,Coronado,8358.00
+2027-03-04,Thu,Coronado,8826.42
+2027-03-05,Fri,Coronado,10894.10
+2027-03-06,Sat,Coronado,14567.75
+2027-03-07,Sun,Coronado,14817.89
+2027-03-08,Mon,Coronado,9836.80
+2027-03-09,Tue,Coronado,9633.39
+2027-03-10,Wed,Coronado,10385.84
+2027-03-11,Thu,Coronado,11269.12
+2027-03-12,Fri,Coronado,13596.30
+2027-03-13,Sat,Coronado,17346.54
+2027-03-14,Sun,Coronado,17479.74
+2027-03-15,Mon,Coronado,12195.75
+2027-03-16,Tue,Coronado,11528.54
+2027-03-17,Wed,Coronado,11696.48
+2027-03-18,Thu,Coronado,11925.91
+2027-03-19,Fri,Coronado,13587.44
+2027-03-20,Sat,Coronado,16718.28
+2027-03-21,Sun,Coronado,16331.31
+2027-03-22,Mon,Coronado,10669.15
+2027-03-23,Tue,Coronado,9794.42
+2027-03-24,Wed,Coronado,9937.45
+2027-03-25,Thu,Coronado,10319.04
+2027-03-26,Fri,Coronado,12287.74
+2027-03-27,Sat,Coronado,15844.75
+2027-03-28,Sun,Coronado,15128.28
+2027-03-29,Mon,Coronado,10815.61
+2027-03-30,Tue,Coronado,10432.22
+2027-03-31,Wed,Coronado,10990.82
+2027-04-01,Thu,Coronado,11199.65
+2027-04-02,Fri,Coronado,13247.42
+2027-04-03,Sat,Coronado,16678.04
+2027-04-04,Sun,Coronado,16668.07
+2027-04-05,Mon,Coronado,11500.12
+2027-04-06,Tue,Coronado,10805.57
+2027-04-07,Wed,Coronado,10958.88
+2027-04-08,Thu,Coronado,11215.11
+2027-04-09,Fri,Coronado,12881.29
+2027-04-10,Sat,Coronado,15981.02
+2027-04-11,Sun,Coronado,15714.90
+2027-04-12,Mon,Coronado,10379.75
+2027-04-13,Tue,Coronado,9610.70
+2027-04-14,Wed,Coronado,9775.82
+2027-04-15,Thu,Coronado,10115.37
+2027-04-16,Fri,Coronado,11915.59
+2027-04-17,Sat,Coronado,15176.23
+2027-04-18,Sun,Coronado,15074.18
+2027-04-19,Mon,Coronado,9885.59
+2027-04-20,Tue,Coronado,9230.26
+2027-04-21,Wed,Coronado,9467.84
+2027-04-22,Thu,Coronado,9837.53
+2027-04-23,Fri,Coronado,11631.42
+2027-04-24,Sat,Coronado,14860.66
+2027-04-25,Sun,Coronado,14716.98
+2027-04-26,Mon,Coronado,9492.40
+2027-04-27,Tue,Coronado,8821.01
+2027-04-28,Wed,Coronado,9073.03
+2027-04-29,Thu,Coronado,9492.74
+2027-04-30,Fri,Coronado,11371.05
+2027-05-01,Sat,Coronado,15288.17
+2027-05-02,Sun,Coronado,15269.19
+2027-05-03,Mon,Coronado,9967.78
+2027-05-04,Tue,Coronado,9377.17
+2027-05-05,Wed,Coronado,9708.18
+2027-05-06,Thu,Coronado,10162.23
+2027-05-07,Fri,Coronado,12073.59
+2027-05-08,Sat,Coronado,15446.33
+2027-05-09,Sun,Coronado,19562.64
+2027-05-10,Mon,Coronado,9794.58
+2027-05-11,Tue,Coronado,9009.01
+2027-05-12,Wed,Coronado,9158.37
+2027-05-13,Thu,Coronado,9470.37
+2027-05-14,Fri,Coronado,11303.19
+2027-05-15,Sat,Coronado,14679.34
+2027-05-16,Sun,Coronado,14607.51
+2027-05-17,Mon,Coronado,9312.26
+2027-05-18,Tue,Coronado,8798.96
+2027-05-19,Wed,Coronado,9284.41
+2027-05-20,Thu,Coronado,9968.49
+2027-05-21,Fri,Coronado,12175.97
+2027-05-22,Sat,Coronado,15893.75
+2027-05-23,Sun,Coronado,16096.50
+2027-05-24,Mon,Coronado,10979.93
+2027-05-25,Tue,Coronado,10529.16
+2027-05-26,Wed,Coronado,10951.51
+2027-05-27,Thu,Coronado,11449.67
+2027-05-28,Fri,Coronado,13363.32
+2027-05-29,Sat,Coronado,16705.19
+2027-05-30,Sun,Coronado,16484.13
+2027-05-31,Mon,Coronado,16429.75
+2027-06-01,Tue,Coronado,9732.05
+2027-06-02,Wed,Coronado,9818.69
+2027-06-03,Thu,Coronado,10073.58
+2027-06-04,Fri,Coronado,11809.09
+2027-06-05,Sat,Coronado,15045.15
+2027-06-06,Sun,Coronado,14959.68
+2027-06-07,Mon,Coronado,9832.55
+2027-06-08,Tue,Coronado,9313.46
+2027-06-09,Wed,Coronado,9744.20
+2027-06-10,Thu,Coronado,10347.53
+2027-06-11,Fri,Coronado,12399.88
+2027-06-12,Sat,Coronado,15889.90
+2027-06-13,Sun,Coronado,15972.32
+2027-06-14,Mon,Coronado,10914.36
+2027-06-15,Tue,Coronado,10364.97
+2027-06-16,Wed,Coronado,10677.10
+2027-06-17,Thu,Coronado,11095.34
+2027-06-18,Fri,Coronado,15908.99
+2027-06-19,Sat,Coronado,17815.63
+2027-06-20,Sun,Coronado,14859.86
+2027-06-21,Mon,Coronado,10903.28
+2027-06-22,Tue,Coronado,10321.54
+2027-06-23,Wed,Coronado,10708.45
+2027-06-24,Thu,Coronado,11312.43
+2027-06-25,Fri,Coronado,13431.25
+2027-06-26,Sat,Coronado,17067.91
+2027-06-27,Sun,Coronado,17382.50
+2027-06-28,Mon,Coronado,12637.56
+2027-06-29,Tue,Coronado,12467.30
+2027-06-30,Wed,Coronado,13201.03
+2027-07-01,Thu,Coronado,14252.35
+2027-07-02,Fri,Coronado,16525.49
+2027-07-03,Sat,Coronado,20195.68
+2027-07-04,Sun,Coronado,21915.81
+2027-07-05,Mon,Coronado,18266.23
+2027-07-06,Tue,Coronado,14656.95
+2027-07-07,Wed,Coronado,14908.38
+2027-07-08,Thu,Coronado,15236.16
+2027-07-09,Fri,Coronado,16970.99
+2027-07-10,Sat,Coronado,20140.54
+2027-07-11,Sun,Coronado,19868.64
+2027-07-12,Mon,Coronado,14430.74
+2027-07-13,Tue,Coronado,13637.32
+2027-07-14,Wed,Coronado,13803.32
+2027-07-15,Thu,Coronado,14164.62
+2027-07-16,Fri,Coronado,16036.71
+2027-07-17,Sat,Coronado,19423.78
+2027-07-18,Sun,Coronado,19420.77
+2027-07-19,Mon,Coronado,14271.82
+2027-07-20,Tue,Coronado,13756.89
+2027-07-21,Wed,Coronado,14164.05
+2027-07-22,Thu,Coronado,14708.31
+2027-07-23,Fri,Coronado,16691.80
+2027-07-24,Sat,Coronado,20113.58
+2027-07-25,Sun,Coronado,20071.44
+2027-07-26,Mon,Coronado,14819.29
+2027-07-27,Tue,Coronado,14152.15
+2027-07-28,Wed,Coronado,14376.24
+2027-07-29,Thu,Coronado,14725.58
+2027-07-30,Fri,Coronado,16519.98
+2027-07-31,Sat,Coronado,19772.98
+2027-08-01,Sun,Coronado,19951.15
+2027-08-02,Mon,Coronado,14497.49
+2027-08-03,Tue,Coronado,13748.07
+2027-08-04,Wed,Coronado,13936.32
+2027-08-05,Thu,Coronado,14273.48
+2027-08-06,Fri,Coronado,16092.71
+2027-08-07,Sat,Coronado,19396.50
+2027-08-08,Sun,Coronado,19192.82
+2027-08-09,Mon,Coronado,13700.70
+2027-08-10,Tue,Coronado,12889.65
+2027-08-11,Wed,Coronado,12992.47
+2027-08-12,Thu,Coronado,13223.55
+2027-08-13,Fri,Coronado,14922.36
+2027-08-14,Sat,Coronado,18100.07
+2027-08-15,Sun,Coronado,17774.45
+2027-08-16,Mon,Coronado,12174.27
+2027-08-17,Tue,Coronado,11277.53
+2027-08-18,Wed,Coronado,11323.33
+2027-08-19,Thu,Coronado,11529.48
+2027-08-20,Fri,Coronado,13235.82
+2027-08-21,Sat,Coronado,16450.88
+2027-08-22,Sun,Coronado,16187.34
+2027-08-23,Mon,Coronado,10667.13
+2027-08-24,Tue,Coronado,9860.62
+2027-08-25,Wed,Coronado,9999.39
+2027-08-26,Thu,Coronado,10294.73
+2027-08-27,Fri,Coronado,12081.56
+2027-08-28,Sat,Coronado,15365.55
+2027-08-29,Sun,Coronado,15158.60
+2027-08-30,Mon,Coronado,9683.79
+2027-08-31,Tue,Coronado,8914.03
+2027-09-01,Wed,Coronado,9073.48
+2027-09-02,Thu,Coronado,9398.22
+2027-09-03,Fri,Coronado,11214.01
+2027-09-04,Sat,Coronado,14528.50
+2027-09-05,Sun,Coronado,14360.23
+2027-09-06,Mon,Coronado,16990.11
+2027-09-07,Tue,Coronado,8208.01
+2027-09-08,Wed,Coronado,8419.90
+2027-09-09,Thu,Coronado,8782.13
+2027-09-10,Fri,Coronado,10628.36
+2027-09-11,Sat,Coronado,13964.46
+2027-09-12,Sun,Coronado,13808.51
+2027-09-13,Mon,Coronado,8386.13
+2027-09-14,Tue,Coronado,7659.18
+2027-09-15,Wed,Coronado,7868.47
+2027-09-16,Thu,Coronado,8231.74
+2027-09-17,Fri,Coronado,10087.91
+2027-09-18,Sat,Coronado,13447.61
+2027-09-19,Sun,Coronado,13332.57
+2027-09-20,Mon,Coronado,7970.27
+2027-09-21,Tue,Coronado,7322.36
+2027-09-22,Wed,Coronado,7627.17
+2027-09-23,Thu,Coronado,8097.91
+2027-09-24,Fri,Coronado,10067.34
+2027-09-25,Sat,Coronado,13539.03
+2027-09-26,Sun,Coronado,13527.47
+2027-09-27,Mon,Coronado,8253.71
+2027-09-28,Tue,Coronado,7674.41
+2027-09-29,Wed,Coronado,8025.13
+2027-09-30,Thu,Coronado,8518.72
+2027-10-01,Fri,Coronado,10234.27
+2027-10-02,Sat,Coronado,13607.04
+2027-10-03,Sun,Coronado,13571.12
+2027-10-04,Mon,Coronado,8397.46
+2027-10-05,Tue,Coronado,7806.23
+2027-10-06,Wed,Coronado,8129.97
+2027-10-07,Thu,Coronado,8604.04
+2027-10-08,Fri,Coronado,10531.64
+2027-10-09,Sat,Coronado,13918.62
+2027-10-10,Sun,Coronado,13902.47
+2027-10-11,Mon,Coronado,9217.89
+2027-10-12,Tue,Coronado,8166.97
+2027-10-13,Wed,Coronado,8485.00
+2027-10-14,Thu,Coronado,8930.42
+2027-10-15,Fri,Coronado,10801.78
+2027-10-16,Sat,Coronado,14103.25
+2027-10-17,Sun,Coronado,13974.12
+2027-10-18,Mon,Coronado,8684.44
+2027-10-19,Tue,Coronado,7955.61
+2027-10-20,Wed,Coronado,8123.86
+2027-10-21,Thu,Coronado,8430.64
+2027-10-22,Fri,Coronado,10187.39
+2027-10-23,Sat,Coronado,13409.72
+2027-10-24,Sun,Coronado,13245.50
+2027-10-25,Mon,Coronado,7969.33
+2027-10-26,Tue,Coronado,7302.40
+2027-10-27,Wed,Coronado,7575.75
+2027-10-28,Thu,Coronado,8020.96
+2027-10-29,Fri,Coronado,9935.83
+2027-10-30,Sat,Coronado,13319.93
+2027-10-31,Sun,Coronado,13304.36
+2027-11-01,Mon,Coronado,8378.97
+2027-11-02,Tue,Coronado,7773.73
+2027-11-03,Wed,Coronado,8084.10
+2027-11-04,Thu,Coronado,8516.87
+2027-11-05,Fri,Coronado,10409.68
+2027-11-06,Sat,Coronado,13770.99
+2027-11-07,Sun,Coronado,13607.87
+2027-11-08,Mon,Coronado,8147.38
+2027-11-09,Tue,Coronado,7392.15
+2027-11-10,Wed,Coronado,7579.24
+2027-11-11,Thu,Coronado,10200.98
+2027-11-12,Fri,Coronado,9798.03
+2027-11-13,Sat,Coronado,13193.17
+2027-11-14,Sun,Coronado,13123.13
+2027-11-15,Mon,Coronado,7807.57
+2027-11-16,Tue,Coronado,7235.89
+2027-11-17,Wed,Coronado,7627.50
+2027-11-18,Thu,Coronado,8185.04
+2027-11-19,Fri,Coronado,10237.24
+2027-11-20,Sat,Coronado,13779.83
+2027-11-21,Sun,Coronado,13804.61
+2027-11-22,Mon,Coronado,8522.34
+2027-11-23,Tue,Coronado,7920.12
+2027-11-24,Wed,Coronado,8221.73
+2027-11-25,Thu,Coronado,13453.61
+2027-11-26,Fri,Coronado,13699.71
+2027-11-27,Sat,Coronado,13874.85
+2027-11-28,Sun,Coronado,13715.54
+2027-11-29,Mon,Coronado,8270.45
+2027-11-30,Tue,Coronado,7540.61
+2027-12-01,Wed,Coronado,7658.40
+2027-12-02,Thu,Coronado,8035.37
+2027-12-03,Fri,Coronado,9897.53
+2027-12-04,Sat,Coronado,13250.12
+2027-12-05,Sun,Coronado,13155.92
+2027-12-06,Mon,Coronado,7851.71
+2027-12-07,Tue,Coronado,7195.29
+2027-12-08,Wed,Coronado,7456.67
+2027-12-09,Thu,Coronado,7855.37
+2027-12-10,Fri,Coronado,9714.41
+2027-12-11,Sat,Coronado,13045.42
+2027-12-12,Sun,Coronado,12924.07
+2027-12-13,Mon,Coronado,7605.38
+2027-12-14,Tue,Coronado,6968.56
+2027-12-15,Wed,Coronado,7305.52
+2027-12-16,Thu,Coronado,7855.09
+2027-12-17,Fri,Coronado,9953.89
+2027-12-18,Sat,Coronado,13618.80
+2027-12-19,Sun,Coronado,13920.41
+2027-12-20,Mon,Coronado,9097.35
+2027-12-21,Tue,Coronado,9001.47
+2027-12-22,Wed,Coronado,9887.80
+2027-12-23,Thu,Coronado,10951.56
+2027-12-24,Fri,Coronado,12694.01
+2027-12-25,Sat,Coronado,19472.84
+2027-12-26,Sun,Coronado,17891.70
+2027-12-27,Mon,Coronado,13009.28
+2027-12-28,Tue,Coronado,12640.71
+2027-12-29,Wed,Coronado,13040.64
+2027-12-30,Thu,Coronado,13420.84
+2027-12-31,Fri,Coronado,16192.68
+2027-01-01,Fri,Del Mar Café,15004.20
+2027-01-02,Sat,Del Mar Café,15754.74
+2027-01-03,Sun,Del Mar Café,15402.58
+2027-01-04,Mon,Del Mar Café,10792.65
+2027-01-05,Tue,Del Mar Café,11195.66
+2027-01-06,Wed,Del Mar Café,11681.41
+2027-01-07,Thu,Del Mar Café,12144.02
+2027-01-08,Fri,Del Mar Café,13249.66
+2027-01-09,Sat,Del Mar Café,15496.16
+2027-01-10,Sun,Del Mar Café,15344.81
+2027-01-11,Mon,Del Mar Café,10919.86
+2027-01-12,Tue,Del Mar Café,11477.78
+2027-01-13,Wed,Del Mar Café,12077.03
+2027-01-14,Thu,Del Mar Café,12604.31
+2027-01-15,Fri,Del Mar Café,13722.94
+2027-01-16,Sat,Del Mar Café,15932.75
+2027-01-17,Sun,Del Mar Café,15701.60
+2027-01-18,Mon,Del Mar Café,15147.49
+2027-01-19,Tue,Del Mar Café,11590.36
+2027-01-20,Wed,Del Mar Café,12053.30
+2027-01-21,Thu,Del Mar Café,12454.55
+2027-01-22,Fri,Del Mar Café,13470.73
+2027-01-23,Sat,Del Mar Café,15612.15
+2027-01-24,Sun,Del Mar Café,15353.23
+2027-01-25,Mon,Del Mar Café,10830.74
+2027-01-26,Tue,Del Mar Café,11311.77
+2027-01-27,Wed,Del Mar Café,11862.43
+2027-01-28,Thu,Del Mar Café,12373.42
+2027-01-29,Fri,Del Mar Café,13508.02
+2027-01-30,Sat,Del Mar Café,15762.07
+2027-01-31,Sun,Del Mar Café,15595.93
+2027-02-01,Mon,Del Mar Café,11301.28
+2027-02-02,Tue,Del Mar Café,11809.63
+2027-02-03,Wed,Del Mar Café,12342.28
+2027-02-04,Thu,Del Mar Café,12788.33
+2027-02-05,Fri,Del Mar Café,13825.96
+2027-02-06,Sat,Del Mar Café,15967.88
+2027-02-07,Sun,Del Mar Café,15634.40
+2027-02-08,Mon,Del Mar Café,10937.42
+2027-02-09,Tue,Del Mar Café,11290.27
+2027-02-10,Wed,Del Mar Café,11695.79
+2027-02-11,Thu,Del Mar Café,12056.37
+2027-02-12,Fri,Del Mar Café,13059.96
+2027-02-13,Sat,Del Mar Café,15224.51
+2027-02-14,Sun,Del Mar Café,16079.09
+2027-02-15,Mon,Del Mar Café,13383.96
+2027-02-16,Tue,Del Mar Café,10932.24
+2027-02-17,Wed,Del Mar Café,11541.48
+2027-02-18,Thu,Del Mar Café,12119.69
+2027-02-19,Fri,Del Mar Café,13338.17
+2027-02-20,Sat,Del Mar Café,15698.75
+2027-02-21,Sun,Del Mar Café,15607.76
+2027-02-22,Mon,Del Mar Café,11161.20
+2027-02-23,Tue,Del Mar Café,11755.95
+2027-02-24,Wed,Del Mar Café,12379.22
+2027-02-25,Thu,Del Mar Café,12919.91
+2027-02-26,Fri,Del Mar Café,14055.61
+2027-02-27,Sat,Del Mar Café,16297.85
+2027-02-28,Sun,Del Mar Café,16065.08
+2027-03-01,Mon,Del Mar Café,11702.90
+2027-03-02,Tue,Del Mar Café,12158.15
+2027-03-03,Wed,Del Mar Café,12658.04
+2027-03-04,Thu,Del Mar Café,13099.23
+2027-03-05,Fri,Del Mar Café,14180.31
+2027-03-06,Sat,Del Mar Café,16427.07
+2027-03-07,Sun,Del Mar Café,16184.42
+2027-03-08,Mon,Del Mar Café,11519.86
+2027-03-09,Tue,Del Mar Café,12031.98
+2027-03-10,Wed,Del Mar Café,12609.68
+2027-03-11,Thu,Del Mar Café,13141.26
+2027-03-12,Fri,Del Mar Café,14316.84
+2027-03-13,Sat,Del Mar Café,16654.26
+2027-03-14,Sun,Del Mar Café,16491.72
+2027-03-15,Mon,Del Mar Café,11891.56
+2027-03-16,Tue,Del Mar Café,12448.92
+2027-03-17,Wed,Del Mar Café,13050.99
+2027-03-18,Thu,Del Mar Café,13585.85
+2027-03-19,Fri,Del Mar Café,14744.52
+2027-03-20,Sat,Del Mar Café,17046.48
+2027-03-21,Sun,Del Mar Café,16831.96
+2027-03-22,Mon,Del Mar Café,12165.35
+2027-03-23,Tue,Del Mar Café,12643.72
+2027-03-24,Wed,Del Mar Café,13155.94
+2027-03-25,Thu,Del Mar Café,13591.63
+2027-03-26,Fri,Del Mar Café,14643.37
+2027-03-27,Sat,Del Mar Café,16832.54
+2027-03-28,Sun,Del Mar Café,14707.25
+2027-03-29,Mon,Del Mar Café,11718.67
+2027-03-30,Tue,Del Mar Café,12084.41
+2027-03-31,Wed,Del Mar Café,12492.89
+2027-04-01,Thu,Del Mar Café,12814.57
+2027-04-02,Fri,Del Mar Café,13795.96
+2027-04-03,Sat,Del Mar Café,15939.17
+2027-04-04,Sun,Del Mar Café,15599.13
+2027-04-05,Mon,Del Mar Café,10851.04
+2027-04-06,Tue,Del Mar Café,11279.42
+2027-04-07,Wed,Del Mar Café,11787.60
+2027-04-08,Thu,Del Mar Café,12267.98
+2027-04-09,Fri,Del Mar Café,13412.05
+2027-04-10,Sat,Del Mar Café,15737.79
+2027-04-11,Sun,Del Mar Café,15589.81
+2027-04-12,Mon,Del Mar Café,11031.75
+2027-04-13,Tue,Del Mar Café,11636.17
+2027-04-14,Wed,Del Mar Café,12295.03
+2027-04-15,Thu,Del Mar Café,12890.99
+2027-04-16,Fri,Del Mar Café,14108.25
+2027-04-17,Sat,Del Mar Café,16460.65
+2027-04-18,Sun,Del Mar Café,16292.24
+2027-04-19,Mon,Del Mar Café,11669.76
+2027-04-20,Tue,Del Mar Café,12172.29
+2027-04-21,Wed,Del Mar Café,12701.19
+2027-04-22,Thu,Del Mar Café,13150.55
+2027-04-23,Fri,Del Mar Café,14217.01
+2027-04-24,Sat,Del Mar Café,16426.79
+2027-04-25,Sun,Del Mar Café,16135.14
+2027-04-26,Mon,Del Mar Café,11417.83
+2027-04-27,Tue,Del Mar Café,11860.10
+2027-04-28,Wed,Del Mar Café,12366.13
+2027-04-29,Thu,Del Mar Café,12829.34
+2027-04-30,Fri,Del Mar Café,13942.44
+2027-05-01,Sat,Del Mar Café,16131.96
+2027-05-02,Sun,Del Mar Café,15931.67
+2027-05-03,Mon,Del Mar Café,11338.82
+2027-05-04,Tue,Del Mar Café,11874.00
+2027-05-05,Wed,Del Mar Café,12461.81
+2027-05-06,Thu,Del Mar Café,12989.20
+2027-05-07,Fri,Del Mar Café,14140.15
+2027-05-08,Sat,Del Mar Café,16429.09
+2027-05-09,Sun,Del Mar Café,22691.03
+2027-05-10,Mon,Del Mar Café,11605.24
+2027-05-11,Tue,Del Mar Café,12097.98
+2027-05-12,Wed,Del Mar Café,12633.00
+2027-05-13,Thu,Del Mar Café,13103.75
+2027-05-14,Fri,Del Mar Café,14200.43
+2027-05-15,Sat,Del Mar Café,16442.64
+2027-05-16,Sun,Del Mar Café,16202.10
+2027-05-17,Mon,Del Mar Café,11560.71
+2027-05-18,Tue,Del Mar Café,12043.78
+2027-05-19,Wed,Del Mar Café,12580.10
+2027-05-20,Thu,Del Mar Café,13059.89
+2027-05-21,Fri,Del Mar Café,14169.25
+2027-05-22,Sat,Del Mar Café,16423.50
+2027-05-23,Sun,Del Mar Café,16190.48
+2027-05-24,Mon,Del Mar Café,11549.16
+2027-05-25,Tue,Del Mar Café,12023.30
+2027-05-26,Wed,Del Mar Café,12541.69
+2027-05-27,Thu,Del Mar Café,12996.14
+2027-05-28,Fri,Del Mar Café,14075.64
+2027-05-29,Sat,Del Mar Café,16299.37
+2027-05-30,Sun,Del Mar Café,16039.39
+2027-05-31,Mon,Del Mar Café,16139.38
+2027-06-01,Tue,Del Mar Café,12026.07
+2027-06-02,Wed,Del Mar Café,12556.58
+2027-06-03,Thu,Del Mar Café,13035.37
+2027-06-04,Fri,Del Mar Café,14160.51
+2027-06-05,Sat,Del Mar Café,16455.95
+2027-06-06,Sun,Del Mar Café,16233.44
+2027-06-07,Mon,Del Mar Café,11541.07
+2027-06-08,Tue,Del Mar Café,12046.38
+2027-06-09,Wed,Del Mar Café,12596.98
+2027-06-10,Thu,Del Mar Café,13079.14
+2027-06-11,Fri,Del Mar Café,14188.48
+2027-06-12,Sat,Del Mar Café,16448.55
+2027-06-13,Sun,Del Mar Café,16172.96
+2027-06-14,Mon,Del Mar Café,11413.79
+2027-06-15,Tue,Del Mar Café,11844.40
+2027-06-16,Wed,Del Mar Café,12319.47
+2027-06-17,Thu,Del Mar Café,12732.89
+2027-06-18,Fri,Del Mar Café,16154.59
+2027-06-19,Sat,Del Mar Café,17781.92
+2027-06-20,Sun,Del Mar Café,16478.18
+2027-06-21,Mon,Del Mar Café,10987.99
+2027-06-22,Tue,Del Mar Café,11463.78
+2027-06-23,Wed,Del Mar Café,12008.07
+2027-06-24,Thu,Del Mar Café,12509.44
+2027-06-25,Fri,Del Mar Café,13663.70
+2027-06-26,Sat,Del Mar Café,15992.33
+2027-06-27,Sun,Del Mar Café,15804.83
+2027-06-28,Mon,Del Mar Café,11147.38
+2027-06-29,Tue,Del Mar Café,11686.21
+2027-06-30,Wed,Del Mar Café,12268.29
+2027-07-01,Thu,Del Mar Café,12788.04
+2027-07-02,Fri,Del Mar Café,13926.27
+2027-07-03,Sat,Del Mar Café,16215.71
+2027-07-04,Sun,Del Mar Café,14889.50
+2027-07-05,Mon,Del Mar Café,13606.59
+2027-07-06,Tue,Del Mar Café,11703.89
+2027-07-07,Wed,Del Mar Café,12218.23
+2027-07-08,Thu,Del Mar Café,12675.14
+2027-07-09,Fri,Del Mar Café,13777.58
+2027-07-10,Sat,Del Mar Café,16054.74
+2027-07-11,Sun,Del Mar Café,15821.02
+2027-07-12,Mon,Del Mar Café,11127.87
+2027-07-13,Tue,Del Mar Café,11652.70
+2027-07-14,Wed,Del Mar Café,12242.45
+2027-07-15,Thu,Del Mar Café,12784.48
+2027-07-16,Fri,Del Mar Café,13974.42
+2027-07-17,Sat,Del Mar Café,16334.10
+2027-07-18,Sun,Del Mar Café,16171.30
+2027-07-19,Mon,Del Mar Café,11532.19
+2027-07-20,Tue,Del Mar Café,12090.72
+2027-07-21,Wed,Del Mar Café,12692.39
+2027-07-22,Thu,Del Mar Café,13225.21
+2027-07-23,Fri,Del Mar Café,14387.33
+2027-07-24,Sat,Del Mar Café,16704.64
+2027-07-25,Sun,Del Mar Café,16489.98
+2027-07-26,Mon,Del Mar Café,11795.01
+2027-07-27,Tue,Del Mar Café,12299.00
+2027-07-28,Wed,Del Mar Café,12852.14
+2027-07-29,Thu,Del Mar Café,13345.98
+2027-07-30,Fri,Del Mar Café,14480.92
+2027-07-31,Sat,Del Mar Café,16783.60
+2027-08-01,Sun,Del Mar Café,17260.44
+2027-08-02,Mon,Del Mar Café,12376.60
+2027-08-03,Tue,Del Mar Café,12917.53
+2027-08-04,Wed,Del Mar Café,13514.49
+2027-08-05,Thu,Del Mar Café,14051.34
+2027-08-06,Fri,Del Mar Café,15254.94
+2027-08-07,Sat,Del Mar Café,17671.80
+2027-08-08,Sun,Del Mar Café,17458.14
+2027-08-09,Mon,Del Mar Café,12581.46
+2027-08-10,Tue,Del Mar Café,13123.96
+2027-08-11,Wed,Del Mar Café,13717.35
+2027-08-12,Thu,Del Mar Café,14246.19
+2027-08-13,Fri,Del Mar Café,15437.99
+2027-08-14,Sat,Del Mar Café,17839.50
+2027-08-15,Sun,Del Mar Café,17606.68
+2027-08-16,Mon,Del Mar Café,12706.14
+2027-08-17,Tue,Del Mar Café,13218.55
+2027-08-18,Wed,Del Mar Café,13773.65
+2027-08-19,Thu,Del Mar Café,14253.84
+2027-08-20,Fri,Del Mar Café,15384.62
+2027-08-21,Sat,Del Mar Café,17711.24
+2027-08-22,Sun,Del Mar Café,17389.12
+2027-08-23,Mon,Del Mar Café,12385.49
+2027-08-24,Tue,Del Mar Café,12783.07
+2027-08-25,Wed,Del Mar Café,13215.16
+2027-08-26,Thu,Del Mar Café,13569.05
+2027-08-27,Fri,Del Mar Café,14576.25
+2027-08-28,Sat,Del Mar Café,16788.76
+2027-08-29,Sun,Del Mar Café,16368.90
+2027-08-30,Mon,Del Mar Café,11290.46
+2027-08-31,Tue,Del Mar Café,11641.74
+2027-09-01,Wed,Del Mar Café,11971.39
+2027-09-02,Thu,Del Mar Café,12343.63
+2027-09-03,Fri,Del Mar Café,13398.98
+2027-09-04,Sat,Del Mar Café,15683.18
+2027-09-05,Sun,Del Mar Café,15382.50
+2027-09-06,Mon,Del Mar Café,16358.49
+2027-09-07,Tue,Del Mar Café,10980.72
+2027-09-08,Wed,Del Mar Café,11554.70
+2027-09-09,Thu,Del Mar Café,12083.21
+2027-09-10,Fri,Del Mar Café,13284.30
+2027-09-11,Sat,Del Mar Café,15696.61
+2027-09-12,Sun,Del Mar Café,15500.76
+2027-09-13,Mon,Del Mar Café,10675.47
+2027-09-14,Tue,Del Mar Café,11225.49
+2027-09-15,Wed,Del Mar Café,11819.48
+2027-09-16,Thu,Del Mar Café,12341.26
+2027-09-17,Fri,Del Mar Café,13512.48
+2027-09-18,Sat,Del Mar Café,15876.61
+2027-09-19,Sun,Del Mar Café,15619.84
+2027-09-20,Mon,Del Mar Café,10726.83
+2027-09-21,Tue,Del Mar Café,11208.11
+2027-09-22,Wed,Del Mar Café,11737.70
+2027-09-23,Thu,Del Mar Café,12204.00
+2027-09-24,Fri,Del Mar Café,13332.30
+2027-09-25,Sat,Del Mar Café,15668.63
+2027-09-26,Sun,Del Mar Café,15400.70
+2027-09-27,Mon,Del Mar Café,10513.58
+2027-09-28,Tue,Del Mar Café,11017.32
+2027-09-29,Wed,Del Mar Café,11584.63
+2027-09-30,Thu,Del Mar Café,12101.87
+2027-10-01,Fri,Del Mar Café,13293.84
+2027-10-02,Sat,Del Mar Café,15699.65
+2027-10-03,Sun,Del Mar Café,15504.92
+2027-10-04,Mon,Del Mar Café,10690.72
+2027-10-05,Tue,Del Mar Café,11264.89
+2027-10-06,Wed,Del Mar Café,11895.46
+2027-10-07,Thu,Del Mar Café,12465.08
+2027-10-08,Fri,Del Mar Café,13693.18
+2027-10-09,Sat,Del Mar Café,16119.96
+2027-10-10,Sun,Del Mar Café,15926.92
+2027-10-11,Mon,Del Mar Café,11811.83
+2027-10-12,Tue,Del Mar Café,11628.84
+2027-10-13,Wed,Del Mar Café,12200.69
+2027-10-14,Thu,Del Mar Café,12694.63
+2027-10-15,Fri,Del Mar Café,13833.74
+2027-10-16,Sat,Del Mar Café,16163.00
+2027-10-17,Sun,Del Mar Café,15869.51
+2027-10-18,Mon,Del Mar Café,10939.20
+2027-10-19,Tue,Del Mar Café,11385.86
+2027-10-20,Wed,Del Mar Café,11884.26
+2027-10-21,Thu,Del Mar Café,12324.12
+2027-10-22,Fri,Del Mar Café,13431.85
+2027-10-23,Sat,Del Mar Café,15753.97
+2027-10-24,Sun,Del Mar Café,15477.33
+2027-10-25,Mon,Del Mar Café,10585.66
+2027-10-26,Tue,Del Mar Café,11088.82
+2027-10-27,Wed,Del Mar Café,11656.22
+2027-10-28,Thu,Del Mar Café,12171.30
+2027-10-29,Fri,Del Mar Café,13353.79
+2027-10-30,Sat,Del Mar Café,15743.87
+2027-10-31,Sun,Del Mar Café,15522.84
+2027-11-01,Mon,Del Mar Café,10857.04
+2027-11-02,Tue,Del Mar Café,11389.97
+2027-11-03,Wed,Del Mar Café,11969.16
+2027-11-04,Thu,Del Mar Café,12478.00
+2027-11-05,Fri,Del Mar Café,13652.71
+2027-11-06,Sat,Del Mar Café,16048.34
+2027-11-07,Sun,Del Mar Café,15785.79
+2027-11-08,Mon,Del Mar Café,10816.07
+2027-11-09,Tue,Del Mar Café,11328.07
+2027-11-10,Wed,Del Mar Café,11902.88
+2027-11-11,Thu,Del Mar Café,14567.22
+2027-11-12,Fri,Del Mar Café,13638.55
+2027-11-13,Sat,Del Mar Café,16090.80
+2027-11-14,Sun,Del Mar Café,15901.49
+2027-11-15,Mon,Del Mar Café,11016.24
+2027-11-16,Tue,Del Mar Café,11617.02
+2027-11-17,Wed,Del Mar Café,12277.16
+2027-11-18,Thu,Del Mar Café,12875.51
+2027-11-19,Fri,Del Mar Café,14142.28
+2027-11-20,Sat,Del Mar Café,16625.53
+2027-11-21,Sun,Del Mar Café,16438.85
+2027-11-22,Mon,Del Mar Café,11526.19
+2027-11-23,Tue,Del Mar Café,12070.42
+2027-11-24,Wed,Del Mar Café,12648.08
+2027-11-25,Thu,Del Mar Café,13771.33
+2027-11-26,Fri,Del Mar Café,14795.77
+2027-11-27,Sat,Del Mar Café,16654.41
+2027-11-28,Sun,Del Mar Café,16347.98
+2027-11-29,Mon,Del Mar Café,11326.03
+2027-11-30,Tue,Del Mar Café,11778.30
+2027-12-01,Wed,Del Mar Café,12107.83
+2027-12-02,Thu,Del Mar Café,12553.80
+2027-12-03,Fri,Del Mar Café,13672.90
+2027-12-04,Sat,Del Mar Café,16013.08
+2027-12-05,Sun,Del Mar Café,15751.16
+2027-12-06,Mon,Del Mar Café,10866.16
+2027-12-07,Tue,Del Mar Café,11395.97
+2027-12-08,Wed,Del Mar Café,11997.68
+2027-12-09,Thu,Del Mar Café,12556.99
+2027-12-10,Fri,Del Mar Café,13798.52
+2027-12-11,Sat,Del Mar Café,16266.98
+2027-12-12,Sun,Del Mar Café,16136.27
+2027-12-13,Mon,Del Mar Café,11382.67
+2027-12-14,Tue,Del Mar Café,12041.37
+2027-12-15,Wed,Del Mar Café,12766.49
+2027-12-16,Thu,Del Mar Café,13440.24
+2027-12-17,Fri,Del Mar Café,14783.19
+2027-12-18,Sat,Del Mar Café,17335.29
+2027-12-19,Sun,Del Mar Café,17265.18
+2027-12-20,Mon,Del Mar Café,12543.68
+2027-12-21,Tue,Del Mar Café,13200.75
+2027-12-22,Wed,Del Mar Café,13886.09
+2027-12-23,Thu,Del Mar Café,14478.94
+2027-12-24,Fri,Del Mar Café,16109.44
+2027-12-25,Sat,Del Mar Café,15956.47
+2027-12-26,Sun,Del Mar Café,17818.20
+2027-12-27,Mon,Del Mar Café,12868.95
+2027-12-28,Tue,Del Mar Café,13280.03
+2027-12-29,Wed,Del Mar Café,13713.68
+2027-12-30,Thu,Del Mar Café,14063.11
+2027-12-31,Fri,Del Mar Café,16387.15
+2027-01-01,Fri,La Jolla Café,9699.17
+2027-01-02,Sat,La Jolla Café,10111.56
+2027-01-03,Sun,La Jolla Café,9483.97
+2027-01-04,Mon,La Jolla Café,7724.96
+2027-01-05,Tue,La Jolla Café,7484.19
+2027-01-06,Wed,La Jolla Café,7331.32
+2027-01-07,Thu,La Jolla Café,7629.82
+2027-01-08,Fri,La Jolla Café,8260.05
+2027-01-09,Sat,La Jolla Café,9549.88
+2027-01-10,Sun,La Jolla Café,9106.96
+2027-01-11,Mon,La Jolla Café,7546.59
+2027-01-12,Tue,La Jolla Café,7497.55
+2027-01-13,Wed,La Jolla Café,7510.05
+2027-01-14,Thu,La Jolla Café,7931.52
+2027-01-15,Fri,La Jolla Café,8631.17
+2027-01-16,Sat,La Jolla Café,9931.60
+2027-01-17,Sun,La Jolla Café,9441.43
+2027-01-18,Mon,La Jolla Café,8629.84
+2027-01-19,Tue,La Jolla Café,7596.82
+2027-01-20,Wed,La Jolla Café,7449.06
+2027-01-21,Thu,La Jolla Café,7704.64
+2027-01-22,Fri,La Jolla Café,8250.40
+2027-01-23,Sat,La Jolla Café,9424.75
+2027-01-24,Sun,La Jolla Café,8848.71
+2027-01-25,Mon,La Jolla Café,7152.31
+2027-01-26,Tue,La Jolla Café,6978.90
+2027-01-27,Wed,La Jolla Café,6891.57
+2027-01-28,Thu,La Jolla Café,7247.74
+2027-01-29,Fri,La Jolla Café,7922.82
+2027-01-30,Sat,La Jolla Café,9241.37
+2027-01-31,Sun,La Jolla Café,8809.75
+2027-02-01,Mon,La Jolla Café,7366.76
+2027-02-02,Tue,La Jolla Café,7297.87
+2027-02-03,Wed,La Jolla Café,7282.81
+2027-02-04,Thu,La Jolla Café,7681.19
+2027-02-05,Fri,La Jolla Café,8367.02
+2027-02-06,Sat,La Jolla Café,9675.33
+2027-02-07,Sun,La Jolla Café,9180.42
+2027-02-08,Mon,La Jolla Café,7519.72
+2027-02-09,Tue,La Jolla Café,7381.28
+2027-02-10,Wed,La Jolla Café,7306.93
+2027-02-11,Thu,La Jolla Café,7665.54
+2027-02-12,Fri,La Jolla Café,8337.36
+2027-02-13,Sat,La Jolla Café,9659.93
+2027-02-14,Sun,La Jolla Café,11291.07
+2027-02-15,Mon,La Jolla Café,8825.33
+2027-02-16,Tue,La Jolla Café,7544.66
+2027-02-17,Wed,La Jolla Café,7548.23
+2027-02-18,Thu,La Jolla Café,7976.06
+2027-02-19,Fri,La Jolla Café,8697.89
+2027-02-20,Sat,La Jolla Café,10042.64
+2027-02-21,Sun,La Jolla Café,9577.64
+2027-02-22,Mon,La Jolla Café,7933.34
+2027-02-23,Tue,La Jolla Café,7791.92
+2027-02-24,Wed,La Jolla Café,7691.18
+2027-02-25,Thu,La Jolla Café,7998.64
+2027-02-26,Fri,La Jolla Café,8596.16
+2027-02-27,Sat,La Jolla Café,9825.86
+2027-02-28,Sun,La Jolla Café,9267.82
+2027-03-01,Mon,La Jolla Café,7669.10
+2027-03-02,Tue,La Jolla Café,7506.37
+2027-03-03,Wed,La Jolla Café,7430.53
+2027-03-04,Thu,La Jolla Café,7813.83
+2027-03-05,Fri,La Jolla Café,8531.59
+2027-03-06,Sat,La Jolla Café,9921.81
+2027-03-07,Sun,La Jolla Café,9518.68
+2027-03-08,Mon,La Jolla Café,7958.51
+2027-03-09,Tue,La Jolla Café,7954.27
+2027-03-10,Wed,La Jolla Café,8013.62
+2027-03-11,Thu,La Jolla Café,8497.10
+2027-03-12,Fri,La Jolla Café,9271.57
+2027-03-13,Sat,La Jolla Café,10670.50
+2027-03-14,Sun,La Jolla Café,10227.85
+2027-03-15,Mon,La Jolla Café,8583.84
+2027-03-16,Tue,La Jolla Café,8458.99
+2027-03-17,Wed,La Jolla Café,8371.23
+2027-03-18,Thu,La Jolla Café,8693.02
+2027-03-19,Fri,La Jolla Café,9303.61
+2027-03-20,Sat,La Jolla Café,10548.09
+2027-03-21,Sun,La Jolla Café,9970.35
+2027-03-22,Mon,La Jolla Café,8217.98
+2027-03-23,Tue,La Jolla Café,8015.91
+2027-03-24,Wed,La Jolla Café,7883.44
+2027-03-25,Thu,La Jolla Café,8191.60
+2027-03-26,Fri,La Jolla Café,8815.88
+2027-03-27,Sat,La Jolla Café,10096.09
+2027-03-28,Sun,La Jolla Café,9163.36
+2027-03-29,Mon,La Jolla Café,7879.29
+2027-03-30,Tue,La Jolla Café,7743.55
+2027-03-31,Wed,La Jolla Café,7678.10
+2027-04-01,Thu,La Jolla Café,7937.61
+2027-04-02,Fri,La Jolla Café,8614.53
+2027-04-03,Sat,La Jolla Café,9935.51
+2027-04-04,Sun,La Jolla Café,9474.17
+2027-04-05,Mon,La Jolla Café,7864.27
+2027-04-06,Tue,La Jolla Café,7787.92
+2027-04-07,Wed,La Jolla Café,7781.42
+2027-04-08,Thu,La Jolla Café,8206.94
+2027-04-09,Fri,La Jolla Café,8938.20
+2027-04-10,Sat,La Jolla Café,10306.69
+2027-04-11,Sun,La Jolla Café,9881.38
+2027-04-12,Mon,La Jolla Café,8291.03
+2027-04-13,Tue,La Jolla Café,8213.10
+2027-04-14,Wed,La Jolla Café,8180.29
+2027-04-15,Thu,La Jolla Café,8552.90
+2027-04-16,Fri,La Jolla Café,9205.10
+2027-04-17,Sat,La Jolla Café,10471.35
+2027-04-18,Sun,La Jolla Café,9926.19
+2027-04-19,Mon,La Jolla Café,8206.23
+2027-04-20,Tue,La Jolla Café,7998.43
+2027-04-21,Wed,La Jolla Café,7845.88
+2027-04-22,Thu,La Jolla Café,8119.04
+2027-04-23,Fri,La Jolla Café,8701.03
+2027-04-24,Sat,La Jolla Café,9933.05
+2027-04-25,Sun,La Jolla Café,9393.36
+2027-04-26,Mon,La Jolla Café,7718.76
+2027-04-27,Tue,La Jolla Café,7592.70
+2027-04-28,Wed,La Jolla Café,7551.28
+2027-04-29,Thu,La Jolla Café,7955.11
+2027-04-30,Fri,La Jolla Café,8675.53
+2027-05-01,Sat,La Jolla Café,10213.91
+2027-05-02,Sun,La Jolla Café,9783.67
+2027-05-03,Mon,La Jolla Café,8171.30
+2027-05-04,Tue,La Jolla Café,8098.77
+2027-05-05,Wed,La Jolla Café,8073.01
+2027-05-06,Thu,La Jolla Café,8460.99
+2027-05-07,Fri,La Jolla Café,9136.06
+2027-05-08,Sat,La Jolla Café,10440.42
+2027-05-09,Sun,La Jolla Café,11617.77
+2027-05-10,Mon,La Jolla Café,8191.60
+2027-05-11,Tue,La Jolla Café,8022.60
+2027-05-12,Wed,La Jolla Café,7920.55
+2027-05-13,Thu,La Jolla Café,8261.54
+2027-05-14,Fri,La Jolla Café,8924.66
+2027-05-15,Sat,La Jolla Café,10253.73
+2027-05-16,Sun,La Jolla Café,9781.08
+2027-05-17,Mon,La Jolla Café,8149.58
+2027-05-18,Tue,La Jolla Café,8083.77
+2027-05-19,Wed,La Jolla Café,8089.81
+2027-05-20,Thu,La Jolla Café,8530.56
+2027-05-21,Fri,La Jolla Café,9272.43
+2027-05-22,Sat,La Jolla Café,10648.52
+2027-05-23,Sun,La Jolla Café,10183.63
+2027-05-24,Mon,La Jolla Café,8517.16
+2027-05-25,Tue,La Jolla Café,8374.69
+2027-05-26,Wed,La Jolla Café,8267.92
+2027-05-27,Thu,La Jolla Café,8569.20
+2027-05-28,Fri,La Jolla Café,9157.43
+2027-05-29,Sat,La Jolla Café,10379.95
+2027-05-30,Sun,La Jolla Café,9776.01
+2027-05-31,Mon,La Jolla Café,10473.56
+2027-06-01,Tue,La Jolla Café,7740.17
+2027-06-02,Wed,La Jolla Café,7606.04
+2027-06-03,Thu,La Jolla Café,7924.71
+2027-06-04,Fri,La Jolla Café,8573.26
+2027-06-05,Sat,La Jolla Café,9890.18
+2027-06-06,Sun,La Jolla Café,9417.50
+2027-06-07,Mon,La Jolla Café,7790.97
+2027-06-08,Tue,La Jolla Café,7717.25
+2027-06-09,Wed,La Jolla Café,7708.65
+2027-06-10,Thu,La Jolla Café,8125.31
+2027-06-11,Fri,La Jolla Café,8834.94
+2027-06-12,Sat,La Jolla Café,10170.67
+2027-06-13,Sun,La Jolla Café,9673.74
+2027-06-14,Mon,La Jolla Café,7983.66
+2027-06-15,Tue,La Jolla Café,7815.04
+2027-06-16,Wed,La Jolla Café,7691.40
+2027-06-17,Thu,La Jolla Café,7986.17
+2027-06-18,Fri,La Jolla Café,10102.02
+2027-06-19,Sat,La Jolla Café,11139.75
+2027-06-20,Sun,La Jolla Café,9111.18
+2027-06-21,Mon,La Jolla Café,7547.97
+2027-06-22,Tue,La Jolla Café,7397.90
+2027-06-23,Wed,La Jolla Café,7334.81
+2027-06-24,Thu,La Jolla Café,7727.20
+2027-06-25,Fri,La Jolla Café,8448.12
+2027-06-26,Sat,La Jolla Café,9832.53
+2027-06-27,Sun,La Jolla Café,9419.77
+2027-06-28,Mon,La Jolla Café,7844.01
+2027-06-29,Tue,La Jolla Café,7811.58
+2027-06-30,Wed,La Jolla Café,7835.70
+2027-07-01,Thu,La Jolla Café,8351.50
+2027-07-02,Fri,La Jolla Café,9089.72
+2027-07-03,Sat,La Jolla Café,10458.70
+2027-07-04,Sun,La Jolla Café,8224.26
+2027-07-05,Mon,La Jolla Café,9838.69
+2027-07-06,Tue,La Jolla Café,8168.86
+2027-07-07,Wed,La Jolla Café,8085.74
+2027-07-08,Thu,La Jolla Café,8430.90
+2027-07-09,Fri,La Jolla Café,9082.96
+2027-07-10,Sat,La Jolla Café,10388.17
+2027-07-11,Sun,La Jolla Café,9873.21
+2027-07-12,Mon,La Jolla Café,8186.69
+2027-07-13,Tue,La Jolla Café,8066.60
+2027-07-14,Wed,La Jolla Café,8018.95
+2027-07-15,Thu,La Jolla Café,8412.69
+2027-07-16,Fri,La Jolla Café,9118.22
+2027-07-17,Sat,La Jolla Café,10473.45
+2027-07-18,Sun,La Jolla Café,9997.61
+2027-07-19,Mon,La Jolla Café,8333.57
+2027-07-20,Tue,La Jolla Café,8215.93
+2027-07-21,Wed,La Jolla Café,8150.04
+2027-07-22,Thu,La Jolla Café,8506.97
+2027-07-23,Fri,La Jolla Café,9161.72
+2027-07-24,Sat,La Jolla Café,10458.75
+2027-07-25,Sun,La Jolla Café,9924.98
+2027-07-26,Mon,La Jolla Café,8211.23
+2027-07-27,Tue,La Jolla Café,8059.41
+2027-07-28,Wed,La Jolla Café,7980.71
+2027-07-29,Thu,La Jolla Café,8349.78
+2027-07-30,Fri,La Jolla Café,9042.65
+2027-07-31,Sat,La Jolla Café,10401.96
+2027-08-01,Sun,La Jolla Café,10160.07
+2027-08-02,Mon,La Jolla Café,8507.18
+2027-08-03,Tue,La Jolla Café,8453.95
+2027-08-04,Wed,La Jolla Café,8470.83
+2027-08-05,Thu,La Jolla Café,8931.08
+2027-08-06,Fri,La Jolla Café,9699.80
+2027-08-07,Sat,La Jolla Café,11120.26
+2027-08-08,Sun,La Jolla Café,10658.42
+2027-08-09,Mon,La Jolla Café,8970.44
+2027-08-10,Tue,La Jolla Café,8848.89
+2027-08-11,Wed,La Jolla Café,8768.23
+2027-08-12,Thu,La Jolla Café,9108.06
+2027-08-13,Fri,La Jolla Café,9741.54
+2027-08-14,Sat,La Jolla Café,11021.00
+2027-08-15,Sun,La Jolla Café,10421.71
+2027-08-16,Mon,La Jolla Café,8608.53
+2027-08-17,Tue,La Jolla Café,8381.48
+2027-08-18,Wed,La Jolla Café,8220.62
+2027-08-19,Thu,La Jolla Café,8508.99
+2027-08-20,Fri,La Jolla Café,9120.70
+2027-08-21,Sat,La Jolla Café,10406.76
+2027-08-22,Sun,La Jolla Café,9838.90
+2027-08-23,Mon,La Jolla Café,8076.79
+2027-08-24,Tue,La Jolla Café,7914.02
+2027-08-25,Wed,La Jolla Café,7823.60
+2027-08-26,Thu,La Jolla Café,8181.51
+2027-08-27,Fri,La Jolla Café,8855.45
+2027-08-28,Sat,La Jolla Café,10191.06
+2027-08-29,Sun,La Jolla Café,9656.25
+2027-08-30,Mon,La Jolla Café,7908.58
+2027-08-31,Tue,La Jolla Café,7741.44
+2027-09-01,Wed,La Jolla Café,7631.83
+2027-09-02,Thu,La Jolla Café,7954.30
+2027-09-03,Fri,La Jolla Café,8583.49
+2027-09-04,Sat,La Jolla Café,9870.66
+2027-09-05,Sun,La Jolla Café,9288.85
+2027-09-06,Mon,La Jolla Café,9450.52
+2027-09-07,Tue,La Jolla Café,7308.92
+2027-09-08,Wed,La Jolla Café,7188.85
+2027-09-09,Thu,La Jolla Café,7523.80
+2027-09-10,Fri,La Jolla Café,8187.25
+2027-09-11,Sat,La Jolla Café,9529.85
+2027-09-12,Sun,La Jolla Café,9022.20
+2027-09-13,Mon,La Jolla Café,7323.78
+2027-09-14,Tue,La Jolla Café,7228.51
+2027-09-15,Wed,La Jolla Café,7208.13
+2027-09-16,Thu,La Jolla Café,7637.62
+2027-09-17,Fri,La Jolla Café,8383.19
+2027-09-18,Sat,La Jolla Café,9788.83
+2027-09-19,Sun,La Jolla Café,9319.75
+2027-09-20,Mon,La Jolla Café,7631.75
+2027-09-21,Tue,La Jolla Café,7517.27
+2027-09-22,Wed,La Jolla Café,7448.99
+2027-09-23,Thu,La Jolla Café,7805.33
+2027-09-24,Fri,La Jolla Café,8458.24
+2027-09-25,Sat,La Jolla Café,9759.47
+2027-09-26,Sun,La Jolla Café,9183.34
+2027-09-27,Mon,La Jolla Café,7395.47
+2027-09-28,Tue,La Jolla Café,7197.96
+2027-09-29,Wed,La Jolla Café,7072.15
+2027-09-30,Thu,La Jolla Café,7403.23
+2027-10-01,Fri,La Jolla Café,8168.09
+2027-10-02,Sat,La Jolla Café,9535.20
+2027-10-03,Sun,La Jolla Café,9037.60
+2027-10-04,Mon,La Jolla Café,7343.75
+2027-10-05,Tue,La Jolla Café,7282.27
+2027-10-06,Wed,La Jolla Café,7304.74
+2027-10-07,Thu,La Jolla Café,7788.91
+2027-10-08,Fri,La Jolla Café,8596.77
+2027-10-09,Sat,La Jolla Café,10073.66
+2027-10-10,Sun,La Jolla Café,9650.08
+2027-10-11,Mon,La Jolla Café,8199.93
+2027-10-12,Tue,La Jolla Café,7909.54
+2027-10-13,Wed,La Jolla Café,7869.04
+2027-10-14,Thu,La Jolla Café,8247.52
+2027-10-15,Fri,La Jolla Café,8914.89
+2027-10-16,Sat,La Jolla Café,10227.46
+2027-10-17,Sun,La Jolla Café,9628.83
+2027-10-18,Mon,La Jolla Café,7794.11
+2027-10-19,Tue,La Jolla Café,7561.73
+2027-10-20,Wed,La Jolla Café,7395.48
+2027-10-21,Thu,La Jolla Café,7686.61
+2027-10-22,Fri,La Jolla Café,8310.80
+2027-10-23,Sat,La Jolla Café,9626.12
+2027-10-24,Sun,La Jolla Café,9073.70
+2027-10-25,Mon,La Jolla Café,7322.40
+2027-10-26,Tue,La Jolla Café,7201.21
+2027-10-27,Wed,La Jolla Café,7162.32
+2027-10-28,Thu,La Jolla Café,7584.50
+2027-10-29,Fri,La Jolla Café,8331.28
+2027-10-30,Sat,La Jolla Café,9750.18
+2027-10-31,Sun,La Jolla Café,9274.44
+2027-11-01,Mon,La Jolla Café,7606.78
+2027-11-02,Tue,La Jolla Café,7498.08
+2027-11-03,Wed,La Jolla Café,7442.68
+2027-11-04,Thu,La Jolla Café,7827.41
+2027-11-05,Fri,La Jolla Café,8523.70
+2027-11-06,Sat,La Jolla Café,9890.71
+2027-11-07,Sun,La Jolla Café,9358.58
+2027-11-08,Mon,La Jolla Café,7603.80
+2027-11-09,Tue,La Jolla Café,7475.41
+2027-11-10,Wed,La Jolla Café,7424.10
+2027-11-11,Thu,La Jolla Café,9218.08
+2027-11-12,Fri,La Jolla Café,8580.47
+2027-11-13,Sat,La Jolla Café,10008.04
+2027-11-14,Sun,La Jolla Café,9540.16
+2027-11-15,Mon,La Jolla Café,7842.69
+2027-11-16,Tue,La Jolla Café,7754.16
+2027-11-17,Wed,La Jolla Café,7716.04
+2027-11-18,Thu,La Jolla Café,8108.39
+2027-11-19,Fri,La Jolla Café,8795.78
+2027-11-20,Sat,La Jolla Café,10131.41
+2027-11-21,Sun,La Jolla Café,9541.30
+2027-11-22,Mon,La Jolla Café,7700.36
+2027-11-23,Tue,La Jolla Café,7459.11
+2027-11-24,Wed,La Jolla Café,7272.85
+2027-11-25,Thu,La Jolla Café,9970.78
+2027-11-26,Fri,La Jolla Café,9119.11
+2027-11-27,Sat,La Jolla Café,9405.90
+2027-11-28,Sun,La Jolla Café,8809.18
+2027-11-29,Mon,La Jolla Café,7012.30
+2027-11-30,Tue,La Jolla Café,6862.72
+2027-12-01,Wed,La Jolla Café,6763.29
+2027-12-02,Thu,La Jolla Café,7182.83
+2027-12-03,Fri,La Jolla Café,7940.14
+2027-12-04,Sat,La Jolla Café,9380.55
+2027-12-05,Sun,La Jolla Café,8938.02
+2027-12-06,Mon,La Jolla Café,7271.53
+2027-12-07,Tue,La Jolla Café,7200.15
+2027-12-08,Wed,La Jolla Café,7176.49
+2027-12-09,Thu,La Jolla Café,7580.74
+2027-12-10,Fri,La Jolla Café,8282.40
+2027-12-11,Sat,La Jolla Café,9637.38
+2027-12-12,Sun,La Jolla Café,9093.91
+2027-12-13,Mon,La Jolla Café,7327.46
+2027-12-14,Tue,La Jolla Café,7173.88
+2027-12-15,Wed,La Jolla Café,7101.03
+2027-12-16,Thu,La Jolla Café,7500.94
+2027-12-17,Fri,La Jolla Café,8250.14
+2027-12-18,Sat,La Jolla Café,9705.70
+2027-12-19,Sun,La Jolla Café,9310.87
+2027-12-20,Mon,La Jolla Café,7730.21
+2027-12-21,Tue,La Jolla Café,7783.71
+2027-12-22,Wed,La Jolla Café,7919.91
+2027-12-23,Thu,La Jolla Café,8510.00
+2027-12-24,Fri,La Jolla Café,9447.55
+2027-12-25,Sat,La Jolla Café,12601.44
+2027-12-26,Sun,La Jolla Café,10590.03
+2027-12-27,Mon,La Jolla Café,8957.59
+2027-12-28,Tue,La Jolla Café,8882.89
+2027-12-29,Wed,La Jolla Café,8821.63
+2027-12-30,Thu,La Jolla Café,9158.76
+2027-12-31,Fri,La Jolla Café,10969.81
+2027-01-01,Fri,La Jolla Juicery,2374.29
+2027-01-02,Sat,La Jolla Juicery,2937.19
+2027-01-03,Sun,La Jolla Juicery,2468.41
+2027-01-04,Mon,La Jolla Juicery,2147.21
+2027-01-05,Tue,La Jolla Juicery,2150.97
+2027-01-06,Wed,La Jolla Juicery,2173.10
+2027-01-07,Thu,La Jolla Juicery,2236.43
+2027-01-08,Fri,La Jolla Juicery,2398.80
+2027-01-09,Sat,La Jolla Juicery,2843.41
+2027-01-10,Sun,La Jolla Juicery,2385.81
+2027-01-11,Mon,La Jolla Juicery,2075.87
+2027-01-12,Tue,La Jolla Juicery,2088.93
+2027-01-13,Wed,La Jolla Juicery,2116.71
+2027-01-14,Thu,La Jolla Juicery,2180.93
+2027-01-15,Fri,La Jolla Juicery,2338.98
+2027-01-16,Sat,La Jolla Juicery,2774.45
+2027-01-17,Sun,La Jolla Juicery,2303.99
+2027-01-18,Mon,La Jolla Juicery,2306.83
+2027-01-19,Tue,La Jolla Juicery,1977.94
+2027-01-20,Wed,La Jolla Juicery,1994.18
+2027-01-21,Thu,La Jolla Juicery,2052.16
+2027-01-22,Fri,La Jolla Juicery,2211.35
+2027-01-23,Sat,La Jolla Juicery,2656.78
+2027-01-24,Sun,La Jolla Juicery,2205.68
+2027-01-25,Mon,La Jolla Juicery,1909.30
+2027-01-26,Tue,La Jolla Juicery,1943.79
+2027-01-27,Wed,La Jolla Juicery,2000.96
+2027-01-28,Thu,La Jolla Juicery,2101.78
+2027-01-29,Fri,La Jolla Juicery,2302.09
+2027-01-30,Sat,La Jolla Juicery,2783.15
+2027-01-31,Sun,La Jolla Juicery,2358.68
+2027-02-01,Mon,La Jolla Juicery,2072.17
+2027-02-02,Tue,La Jolla Juicery,2107.74
+2027-02-03,Wed,La Jolla Juicery,2151.74
+2027-02-04,Thu,La Jolla Juicery,2225.90
+2027-02-05,Fri,La Jolla Juicery,2388.09
+2027-02-06,Sat,La Jolla Juicery,2822.52
+2027-02-07,Sun,La Jolla Juicery,2350.11
+2027-02-08,Mon,La Jolla Juicery,2021.67
+2027-02-09,Tue,La Jolla Juicery,2016.05
+2027-02-10,Wed,La Jolla Juicery,2029.78
+2027-02-11,Thu,La Jolla Juicery,2088.23
+2027-02-12,Fri,La Jolla Juicery,2251.65
+2027-02-13,Sat,La Jolla Juicery,2705.04
+2027-02-14,Sun,La Jolla Juicery,2377.49
+2027-02-15,Mon,La Jolla Juicery,2303.18
+2027-02-16,Tue,La Jolla Juicery,2044.29
+2027-02-17,Wed,La Jolla Juicery,2122.99
+2027-02-18,Thu,La Jolla Juicery,2245.53
+2027-02-19,Fri,La Jolla Juicery,2466.25
+2027-02-20,Sat,La Jolla Juicery,2964.78
+2027-02-21,Sun,La Jolla Juicery,2556.78
+2027-02-22,Mon,La Jolla Juicery,2287.62
+2027-02-23,Tue,La Jolla Juicery,2331.09
+2027-02-24,Wed,La Jolla Juicery,2379.44
+2027-02-25,Thu,La Jolla Juicery,2455.05
+2027-02-26,Fri,La Jolla Juicery,2616.74
+2027-02-27,Sat,La Jolla Juicery,3049.79
+2027-02-28,Sun,La Jolla Juicery,2576.19
+2027-03-01,Mon,La Jolla Juicery,2336.22
+2027-03-02,Tue,La Jolla Juicery,2332.38
+2027-03-03,Wed,La Jolla Juicery,2351.08
+2027-03-04,Thu,La Jolla Juicery,2418.73
+2027-03-05,Fri,La Jolla Juicery,2597.61
+2027-03-06,Sat,La Jolla Juicery,3079.29
+2027-03-07,Sun,La Jolla Juicery,2636.40
+2027-03-08,Mon,La Jolla Juicery,2357.29
+2027-03-09,Tue,La Jolla Juicery,2422.55
+2027-03-10,Wed,La Jolla Juicery,2510.41
+2027-03-11,Thu,La Jolla Juicery,2640.47
+2027-03-12,Fri,La Jolla Juicery,2868.85
+2027-03-13,Sat,La Jolla Juicery,3382.22
+2027-03-14,Sun,La Jolla Juicery,2949.98
+2027-03-15,Mon,La Jolla Juicery,2659.35
+2027-03-16,Tue,La Jolla Juicery,2691.85
+2027-03-17,Wed,La Jolla Juicery,2728.65
+2027-03-18,Thu,La Jolla Juicery,2794.00
+2027-03-19,Fri,La Jolla Juicery,2949.85
+2027-03-20,Sat,La Jolla Juicery,3389.33
+2027-03-21,Sun,La Jolla Juicery,2888.25
+2027-03-22,Mon,La Jolla Juicery,2539.60
+2027-03-23,Tue,La Jolla Juicery,2529.41
+2027-03-24,Wed,La Jolla Juicery,2541.78
+2027-03-25,Thu,La Jolla Juicery,2601.98
+2027-03-26,Fri,La Jolla Juicery,2771.08
+2027-03-27,Sat,La Jolla Juicery,3239.56
+2027-03-28,Sun,La Jolla Juicery,2214.96
+2027-03-29,Mon,La Jolla Juicery,2477.81
+2027-03-30,Tue,La Jolla Juicery,2516.14
+2027-03-31,Wed,La Jolla Juicery,2572.97
+2027-04-01,Thu,La Jolla Juicery,2552.81
+2027-04-02,Fri,La Jolla Juicery,2737.47
+2027-04-03,Sat,La Jolla Juicery,3195.27
+2027-04-04,Sun,La Jolla Juicery,2751.25
+2027-04-05,Mon,La Jolla Juicery,2447.25
+2027-04-06,Tue,La Jolla Juicery,2458.61
+2027-04-07,Wed,La Jolla Juicery,2481.72
+2027-04-08,Thu,La Jolla Juicery,2540.51
+2027-04-09,Fri,La Jolla Juicery,2694.30
+2027-04-10,Sat,La Jolla Juicery,3127.18
+2027-04-11,Sun,La Jolla Juicery,2666.98
+2027-04-12,Mon,La Jolla Juicery,2357.23
+2027-04-13,Tue,La Jolla Juicery,2373.62
+2027-04-14,Wed,La Jolla Juicery,2411.54
+2027-04-15,Thu,La Jolla Juicery,2492.77
+2027-04-16,Fri,La Jolla Juicery,2673.58
+2027-04-17,Sat,La Jolla Juicery,3134.48
+2027-04-18,Sun,La Jolla Juicery,2699.69
+2027-04-19,Mon,La Jolla Juicery,2409.43
+2027-04-20,Tue,La Jolla Juicery,2436.90
+2027-04-21,Wed,La Jolla Juicery,2476.05
+2027-04-22,Thu,La Jolla Juicery,2548.41
+2027-04-23,Fri,La Jolla Juicery,2711.31
+2027-04-24,Sat,La Jolla Juicery,3147.42
+2027-04-25,Sun,La Jolla Juicery,2683.97
+2027-04-26,Mon,La Jolla Juicery,2364.73
+2027-04-27,Tue,La Jolla Juicery,2366.53
+2027-04-28,Wed,La Jolla Juicery,2386.57
+2027-04-29,Thu,La Jolla Juicery,2448.94
+2027-04-30,Fri,La Jolla Juicery,2612.39
+2027-05-01,Sat,La Jolla Juicery,3152.36
+2027-05-02,Sun,La Jolla Juicery,2696.60
+2027-05-03,Mon,La Jolla Juicery,2397.11
+2027-05-04,Tue,La Jolla Juicery,2432.78
+2027-05-05,Wed,La Jolla Juicery,2487.79
+2027-05-06,Thu,La Jolla Juicery,2582.93
+2027-05-07,Fri,La Jolla Juicery,2775.03
+2027-05-08,Sat,La Jolla Juicery,3249.58
+2027-05-09,Sun,La Jolla Juicery,2818.76
+2027-05-10,Mon,La Jolla Juicery,2485.02
+2027-05-11,Tue,La Jolla Juicery,2498.24
+2027-05-12,Wed,La Jolla Juicery,2521.53
+2027-05-13,Thu,La Jolla Juicery,2579.06
+2027-05-14,Fri,La Jolla Juicery,2731.86
+2027-05-15,Sat,La Jolla Juicery,3169.84
+2027-05-16,Sun,La Jolla Juicery,2686.13
+2027-05-17,Mon,La Jolla Juicery,2356.84
+2027-05-18,Tue,La Jolla Juicery,2364.30
+2027-05-19,Wed,La Jolla Juicery,2396.07
+2027-05-20,Thu,La Jolla Juicery,2475.91
+2027-05-21,Fri,La Jolla Juicery,2662.85
+2027-05-22,Sat,La Jolla Juicery,3143.48
+2027-05-23,Sun,La Jolla Juicery,2706.56
+2027-05-24,Mon,La Jolla Juicery,2423.24
+2027-05-25,Tue,La Jolla Juicery,2470.85
+2027-05-26,Wed,La Jolla Juicery,2532.43
+2027-05-27,Thu,La Jolla Juicery,2628.15
+2027-05-28,Fri,La Jolla Juicery,2814.82
+2027-05-29,Sat,La Jolla Juicery,3278.45
+2027-05-30,Sun,La Jolla Juicery,2808.91
+2027-05-31,Mon,La Jolla Juicery,2916.05
+2027-06-01,Tue,La Jolla Juicery,2434.24
+2027-06-02,Wed,La Jolla Juicery,2438.04
+2027-06-03,Thu,La Jolla Juicery,2477.47
+2027-06-04,Fri,La Jolla Juicery,2613.92
+2027-06-05,Sat,La Jolla Juicery,3035.33
+2027-06-06,Sun,La Jolla Juicery,2554.63
+2027-06-07,Mon,La Jolla Juicery,2231.05
+2027-06-08,Tue,La Jolla Juicery,2243.82
+2027-06-09,Wed,La Jolla Juicery,2285.05
+2027-06-10,Thu,La Jolla Juicery,2377.44
+2027-06-11,Fri,La Jolla Juicery,2578.35
+2027-06-12,Sat,La Jolla Juicery,3070.70
+2027-06-13,Sun,La Jolla Juicery,2661.93
+2027-06-14,Mon,La Jolla Juicery,2405.80
+2027-06-15,Tue,La Jolla Juicery,2476.62
+2027-06-16,Wed,La Jolla Juicery,2562.56
+2027-06-17,Thu,La Jolla Juicery,2683.68
+2027-06-18,Fri,La Jolla Juicery,3398.49
+2027-06-19,Sat,La Jolla Juicery,3353.92
+2027-06-20,Sun,La Jolla Juicery,2894.34
+2027-06-21,Mon,La Jolla Juicery,2666.71
+2027-06-22,Tue,La Jolla Juicery,2697.71
+2027-06-23,Wed,La Jolla Juicery,2740.10
+2027-06-24,Thu,La Jolla Juicery,2818.18
+2027-06-25,Fri,La Jolla Juicery,2991.98
+2027-06-26,Sat,La Jolla Juicery,3447.85
+2027-06-27,Sun,La Jolla Juicery,2997.06
+2027-06-28,Mon,La Jolla Juicery,2697.18
+2027-06-29,Tue,La Jolla Juicery,2726.06
+2027-06-30,Wed,La Jolla Juicery,2774.72
+2027-07-01,Thu,La Jolla Juicery,2921.14
+2027-07-02,Fri,La Jolla Juicery,3114.56
+2027-07-03,Sat,La Jolla Juicery,3596.09
+2027-07-04,Sun,La Jolla Juicery,2485.08
+2027-07-05,Mon,La Jolla Juicery,3367.18
+2027-07-06,Tue,La Jolla Juicery,2888.04
+2027-07-07,Wed,La Jolla Juicery,2934.00
+2027-07-08,Thu,La Jolla Juicery,3015.56
+2027-07-09,Fri,La Jolla Juicery,3192.02
+2027-07-10,Sat,La Jolla Juicery,3651.98
+2027-07-11,Sun,La Jolla Juicery,3182.74
+2027-07-12,Mon,La Jolla Juicery,2862.45
+2027-07-13,Tue,La Jolla Juicery,2872.99
+2027-07-14,Wed,La Jolla Juicery,2900.50
+2027-07-15,Thu,La Jolla Juicery,2969.08
+2027-07-16,Fri,La Jolla Juicery,3138.90
+2027-07-17,Sat,La Jolla Juicery,3598.80
+2027-07-18,Sun,La Jolla Juicery,3135.67
+2027-07-19,Mon,La Jolla Juicery,2826.69
+2027-07-20,Tue,La Jolla Juicery,2852.40
+2027-07-21,Wed,La Jolla Juicery,2897.37
+2027-07-22,Thu,La Jolla Juicery,2984.12
+2027-07-23,Fri,La Jolla Juicery,3171.38
+2027-07-24,Sat,La Jolla Juicery,3646.85
+2027-07-25,Sun,La Jolla Juicery,3196.66
+2027-07-26,Mon,La Jolla Juicery,2897.65
+2027-07-27,Tue,La Jolla Juicery,2930.41
+2027-07-28,Wed,La Jolla Juicery,2979.85
+2027-07-29,Thu,La Jolla Juicery,3069.02
+2027-07-30,Fri,La Jolla Juicery,3257.23
+2027-07-31,Sat,La Jolla Juicery,3732.65
+2027-08-01,Sun,La Jolla Juicery,3363.91
+2027-08-02,Mon,La Jolla Juicery,3055.93
+2027-08-03,Tue,La Jolla Juicery,3086.96
+2027-08-04,Wed,La Jolla Juicery,3133.42
+2027-08-05,Thu,La Jolla Juicery,3218.07
+2027-08-06,Fri,La Jolla Juicery,3400.80
+2027-08-07,Sat,La Jolla Juicery,3873.62
+2027-08-08,Sun,La Jolla Juicery,3391.90
+2027-08-09,Mon,La Jolla Juicery,3059.16
+2027-08-10,Tue,La Jolla Juicery,3060.37
+2027-08-11,Wed,La Jolla Juicery,3072.67
+2027-08-12,Thu,La Jolla Juicery,3120.14
+2027-08-13,Fri,La Jolla Juicery,3264.44
+2027-08-14,Sat,La Jolla Juicery,3699.72
+2027-08-15,Sun,La Jolla Juicery,3183.70
+2027-08-16,Mon,La Jolla Juicery,2822.22
+2027-08-17,Tue,La Jolla Juicery,2802.35
+2027-08-18,Wed,La Jolla Juicery,2802.89
+2027-08-19,Thu,La Jolla Juicery,2848.92
+2027-08-20,Fri,La Jolla Juicery,3002.41
+2027-08-21,Sat,La Jolla Juicery,3456.99
+2027-08-22,Sun,La Jolla Juicery,2969.09
+2027-08-23,Mon,La Jolla Juicery,2642.56
+2027-08-24,Tue,La Jolla Juicery,2661.92
+2027-08-25,Wed,La Jolla Juicery,2703.12
+2027-08-26,Thu,La Jolla Juicery,2788.30
+2027-08-27,Fri,La Jolla Juicery,2976.60
+2027-08-28,Sat,La Jolla Juicery,3459.23
+2027-08-29,Sun,La Jolla Juicery,2990.75
+2027-08-30,Mon,La Jolla Juicery,2673.88
+2027-08-31,Tue,La Jolla Juicery,2692.79
+2027-09-01,Wed,La Jolla Juicery,2625.20
+2027-09-02,Thu,La Jolla Juicery,2689.26
+2027-09-03,Fri,La Jolla Juicery,2846.12
+2027-09-04,Sat,La Jolla Juicery,3282.18
+2027-09-05,Sun,La Jolla Juicery,2799.38
+2027-09-06,Mon,La Jolla Juicery,3039.96
+2027-09-07,Tue,La Jolla Juicery,2452.19
+2027-09-08,Wed,La Jolla Juicery,2457.34
+2027-09-09,Thu,La Jolla Juicery,2502.12
+2027-09-10,Fri,La Jolla Juicery,2646.07
+2027-09-11,Sat,La Jolla Juicery,3075.91
+2027-09-12,Sun,La Jolla Juicery,2593.45
+2027-09-13,Mon,La Jolla Juicery,2263.19
+2027-09-14,Tue,La Jolla Juicery,2263.86
+2027-09-15,Wed,La Jolla Juicery,2284.26
+2027-09-16,Thu,La Jolla Juicery,2346.97
+2027-09-17,Fri,La Jolla Juicery,2510.33
+2027-09-18,Sat,La Jolla Juicery,2959.95
+2027-09-19,Sun,La Jolla Juicery,2496.73
+2027-09-20,Mon,La Jolla Juicery,2184.44
+2027-09-21,Tue,La Jolla Juicery,2201.32
+2027-09-22,Wed,La Jolla Juicery,2235.86
+2027-09-23,Thu,La Jolla Juicery,2310.53
+2027-09-24,Fri,La Jolla Juicery,2483.71
+2027-09-25,Sat,La Jolla Juicery,2941.10
+2027-09-26,Sun,La Jolla Juicery,2483.75
+2027-09-27,Mon,La Jolla Juicery,2175.62
+2027-09-28,Tue,La Jolla Juicery,2195.13
+2027-09-29,Wed,La Jolla Juicery,2230.96
+2027-09-30,Thu,La Jolla Juicery,2305.75
+2027-10-01,Fri,La Jolla Juicery,2497.13
+2027-10-02,Sat,La Jolla Juicery,2956.40
+2027-10-03,Sun,La Jolla Juicery,2493.35
+2027-10-04,Mon,La Jolla Juicery,2180.44
+2027-10-05,Tue,La Jolla Juicery,2197.77
+2027-10-06,Wed,La Jolla Juicery,2231.92
+2027-10-07,Thu,La Jolla Juicery,2306.06
+2027-10-08,Fri,La Jolla Juicery,2479.41
+2027-10-09,Sat,La Jolla Juicery,2939.53
+2027-10-10,Sun,La Jolla Juicery,2478.52
+2027-10-11,Mon,La Jolla Juicery,2064.63
+2027-10-12,Tue,La Jolla Juicery,2190.05
+2027-10-13,Wed,La Jolla Juicery,2228.69
+2027-10-14,Thu,La Jolla Juicery,2307.31
+2027-10-15,Fri,La Jolla Juicery,2484.61
+2027-10-16,Sat,La Jolla Juicery,2947.57
+2027-10-17,Sun,La Jolla Juicery,2487.77
+2027-10-18,Mon,La Jolla Juicery,2177.18
+2027-10-19,Tue,La Jolla Juicery,2195.44
+2027-10-20,Wed,La Jolla Juicery,2228.74
+2027-10-21,Thu,La Jolla Juicery,2299.94
+2027-10-22,Fri,La Jolla Juicery,2468.15
+2027-10-23,Sat,La Jolla Juicery,2920.96
+2027-10-24,Sun,La Jolla Juicery,2450.71
+2027-10-25,Mon,La Jolla Juicery,2130.18
+2027-10-26,Tue,La Jolla Juicery,2139.81
+2027-10-27,Wed,La Jolla Juicery,2166.51
+2027-10-28,Thu,La Jolla Juicery,2233.67
+2027-10-29,Fri,La Jolla Juicery,2400.76
+2027-10-30,Sat,La Jolla Juicery,2855.40
+2027-10-31,Sun,La Jolla Juicery,2389.74
+2027-11-01,Mon,La Jolla Juicery,2079.09
+2027-11-02,Tue,La Jolla Juicery,2097.28
+2027-11-03,Wed,La Jolla Juicery,2133.42
+2027-11-04,Thu,La Jolla Juicery,2210.09
+2027-11-05,Fri,La Jolla Juicery,2386.01
+2027-11-06,Sat,La Jolla Juicery,2848.37
+2027-11-07,Sun,La Jolla Juicery,2387.07
+2027-11-08,Mon,La Jolla Juicery,2075.65
+2027-11-09,Tue,La Jolla Juicery,2094.12
+2027-11-10,Wed,La Jolla Juicery,2128.35
+2027-11-11,Thu,La Jolla Juicery,2351.55
+2027-11-12,Fri,La Jolla Juicery,2372.31
+2027-11-13,Sat,La Jolla Juicery,2829.18
+2027-11-14,Sun,La Jolla Juicery,2362.49
+2027-11-15,Mon,La Jolla Juicery,2046.39
+2027-11-16,Tue,La Jolla Juicery,2061.34
+2027-11-17,Wed,La Jolla Juicery,2093.50
+2027-11-18,Thu,La Jolla Juicery,2165.95
+2027-11-19,Fri,La Jolla Juicery,2337.82
+2027-11-20,Sat,La Jolla Juicery,2796.67
+2027-11-21,Sun,La Jolla Juicery,2332.58
+2027-11-22,Mon,La Jolla Juicery,2019.15
+2027-11-23,Tue,La Jolla Juicery,2036.29
+2027-11-24,Wed,La Jolla Juicery,2069.61
+2027-11-25,Thu,La Jolla Juicery,2212.35
+2027-11-26,Fri,La Jolla Juicery,2511.46
+2027-11-27,Sat,La Jolla Juicery,2766.56
+2027-11-28,Sun,La Jolla Juicery,2296.84
+2027-11-29,Mon,La Jolla Juicery,1976.30
+2027-11-30,Tue,La Jolla Juicery,1985.24
+2027-12-01,Wed,La Jolla Juicery,1999.16
+2027-12-02,Thu,La Jolla Juicery,2062.32
+2027-12-03,Fri,La Jolla Juicery,2223.37
+2027-12-04,Sat,La Jolla Juicery,2669.40
+2027-12-05,Sun,La Jolla Juicery,2197.58
+2027-12-06,Mon,La Jolla Juicery,1876.62
+2027-12-07,Tue,La Jolla Juicery,1886.32
+2027-12-08,Wed,La Jolla Juicery,1914.84
+2027-12-09,Thu,La Jolla Juicery,1985.59
+2027-12-10,Fri,La Jolla Juicery,2157.92
+2027-12-11,Sat,La Jolla Juicery,2618.95
+2027-12-12,Sun,La Jolla Juicery,2165.80
+2027-12-13,Mon,La Jolla Juicery,1866.96
+2027-12-14,Tue,La Jolla Juicery,1901.90
+2027-12-15,Wed,La Jolla Juicery,1958.27
+2027-12-16,Thu,La Jolla Juicery,2058.73
+2027-12-17,Fri,La Jolla Juicery,2261.76
+2027-12-18,Sat,La Jolla Juicery,2753.39
+2027-12-19,Sun,La Jolla Juicery,2329.47
+2027-12-20,Mon,La Jolla Juicery,2057.14
+2027-12-21,Tue,La Jolla Juicery,2114.43
+2027-12-22,Wed,La Jolla Juicery,2187.65
+2027-12-23,Thu,La Jolla Juicery,2298.25
+2027-12-24,Fri,La Jolla Juicery,2375.72
+2027-12-25,Sat,La Jolla Juicery,2733.10
+2027-12-26,Sun,La Jolla Juicery,2551.47
+2027-12-27,Mon,La Jolla Juicery,2256.97
+2027-12-28,Tue,La Jolla Juicery,2285.03
+2027-12-29,Wed,La Jolla Juicery,2323.34
+2027-12-30,Thu,La Jolla Juicery,2395.22
+2027-12-31,Fri,La Jolla Juicery,2695.78
+2027-01-01,Fri,Little Italy Café,14574.28
+2027-01-02,Sat,Little Italy Café,12499.70
+2027-01-03,Sun,Little Italy Café,11913.37
+2027-01-04,Mon,Little Italy Café,7882.74
+2027-01-05,Tue,Little Italy Café,6544.86
+2027-01-06,Wed,Little Italy Café,6452.04
+2027-01-07,Thu,Little Italy Café,6543.32
+2027-01-08,Fri,Little Italy Café,8246.96
+2027-01-09,Sat,Little Italy Café,10621.03
+2027-01-10,Sun,Little Italy Café,10298.68
+2027-01-11,Mon,Little Italy Café,6618.25
+2027-01-12,Tue,Little Italy Café,5683.63
+2027-01-13,Wed,Little Italy Café,6011.51
+2027-01-14,Thu,Little Italy Café,6506.11
+2027-01-15,Fri,Little Italy Café,8564.68
+2027-01-16,Sat,Little Italy Café,11220.63
+2027-01-17,Sun,Little Italy Café,11090.66
+2027-01-18,Mon,Little Italy Café,11100.60
+2027-01-19,Tue,Little Italy Café,6572.17
+2027-01-20,Wed,Little Italy Café,6816.68
+2027-01-21,Thu,Little Italy Café,7160.99
+2027-01-22,Fri,Little Italy Café,9024.47
+2027-01-23,Sat,Little Italy Café,11464.93
+2027-01-24,Sun,Little Italy Café,11123.27
+2027-01-25,Mon,Little Italy Café,7352.16
+2027-01-26,Tue,Little Italy Café,6274.59
+2027-01-27,Wed,Little Italy Café,6429.02
+2027-01-28,Thu,Little Italy Café,6741.81
+2027-01-29,Fri,Little Italy Café,8630.75
+2027-01-30,Sat,Little Italy Café,11146.43
+2027-01-31,Sun,Little Italy Café,10918.14
+2027-02-01,Mon,Little Italy Café,7350.89
+2027-02-02,Tue,Little Italy Café,6410.65
+2027-02-03,Wed,Little Italy Café,6707.89
+2027-02-04,Thu,Little Italy Café,7147.09
+2027-02-05,Fri,Little Italy Café,9150.49
+2027-02-06,Sat,Little Italy Café,11755.66
+2027-02-07,Sun,Little Italy Café,11560.97
+2027-02-08,Mon,Little Italy Café,7902.42
+2027-02-09,Tue,Little Italy Café,6950.28
+2027-02-10,Wed,Little Italy Café,7223.44
+2027-02-11,Thu,Little Italy Café,7635.03
+2027-02-12,Fri,Little Italy Café,9614.95
+2027-02-13,Sat,Little Italy Café,12206.35
+2027-02-14,Sun,Little Italy Café,14462.95
+2027-02-15,Mon,Little Italy Café,11459.86
+2027-02-16,Tue,Little Italy Café,7428.77
+2027-02-17,Wed,Little Italy Café,7722.55
+2027-02-18,Thu,Little Italy Café,8148.80
+2027-02-19,Fri,Little Italy Café,10129.07
+2027-02-20,Sat,Little Italy Café,12698.93
+2027-02-21,Sun,Little Italy Café,12453.87
+2027-02-22,Mon,Little Italy Café,8726.84
+2027-02-23,Tue,Little Italy Café,7685.52
+2027-02-24,Wed,Little Italy Café,7847.53
+2027-02-25,Thu,Little Italy Café,8126.69
+2027-02-26,Fri,Little Italy Café,9955.98
+2027-02-27,Sat,Little Italy Café,12384.21
+2027-02-28,Sun,Little Italy Café,12020.52
+2027-03-01,Mon,Little Italy Café,8856.96
+2027-03-02,Tue,Little Italy Café,7693.18
+2027-03-03,Wed,Little Italy Café,7883.51
+2027-03-04,Thu,Little Italy Café,8258.08
+2027-03-05,Fri,Little Italy Café,10359.25
+2027-03-06,Sat,Little Italy Café,13152.14
+2027-03-07,Sun,Little Italy Café,12965.53
+2027-03-08,Mon,Little Italy Café,9076.63
+2027-03-09,Tue,Little Italy Café,8131.08
+2027-03-10,Wed,Little Italy Café,8517.91
+2027-03-11,Thu,Little Italy Café,9050.33
+2027-03-12,Fri,Little Italy Café,11257.14
+2027-03-13,Sat,Little Italy Café,14094.67
+2027-03-14,Sun,Little Italy Café,13888.55
+2027-03-15,Mon,Little Italy Café,9918.77
+2027-03-16,Tue,Little Italy Café,8839.50
+2027-03-17,Wed,Little Italy Café,9053.18
+2027-03-18,Thu,Little Italy Café,9389.99
+2027-03-19,Fri,Little Italy Café,11397.67
+2027-03-20,Sat,Little Italy Café,14051.57
+2027-03-21,Sun,Little Italy Café,13694.58
+2027-03-22,Mon,Little Italy Café,9620.59
+2027-03-23,Tue,Little Italy Café,8492.92
+2027-03-24,Wed,Little Italy Café,8717.60
+2027-03-25,Thu,Little Italy Café,9122.59
+2027-03-26,Fri,Little Italy Café,11247.76
+2027-03-27,Sat,Little Italy Café,14055.90
+2027-03-28,Sun,Little Italy Café,12468.14
+2027-03-29,Mon,Little Italy Café,9977.31
+2027-03-30,Tue,Little Italy Café,9011.55
+2027-03-31,Wed,Little Italy Café,9365.90
+2027-04-01,Thu,Little Italy Café,9767.75
+2027-04-02,Fri,Little Italy Café,11902.70
+2027-04-03,Sat,Little Italy Café,14655.92
+2027-04-04,Sun,Little Italy Café,14387.89
+2027-04-05,Mon,Little Italy Café,10387.28
+2027-04-06,Tue,Little Italy Café,9251.42
+2027-04-07,Wed,Little Italy Café,9398.13
+2027-04-08,Thu,Little Italy Café,9668.50
+2027-04-09,Fri,Little Italy Café,11596.37
+2027-04-10,Sat,Little Italy Café,14165.26
+2027-04-11,Sun,Little Italy Café,13748.94
+2027-04-12,Mon,Little Italy Café,9645.88
+2027-04-13,Tue,Little Italy Café,8458.92
+2027-04-14,Wed,Little Italy Café,8606.84
+2027-04-15,Thu,Little Italy Café,8927.16
+2027-04-16,Fri,Little Italy Café,10946.17
+2027-04-17,Sat,Little Italy Café,13636.63
+2027-04-18,Sun,Little Italy Café,13359.42
+2027-04-19,Mon,Little Italy Café,9399.21
+2027-04-20,Tue,Little Italy Café,8345.37
+2027-04-21,Wed,Little Italy Café,8604.63
+2027-04-22,Thu,Little Italy Café,9004.89
+2027-04-23,Fri,Little Italy Café,11065.87
+2027-04-24,Sat,Little Italy Café,13757.29
+2027-04-25,Sun,Little Italy Café,13440.55
+2027-04-26,Mon,Little Italy Café,9404.13
+2027-04-27,Tue,Little Italy Café,8244.08
+2027-04-28,Wed,Little Italy Café,8375.94
+2027-04-29,Thu,Little Italy Café,8637.74
+2027-04-30,Fri,Little Italy Café,10559.83
+2027-05-01,Sat,Little Italy Café,13343.57
+2027-05-02,Sun,Little Italy Café,12909.45
+2027-05-03,Mon,Little Italy Café,8719.74
+2027-05-04,Tue,Little Italy Café,7487.28
+2027-05-05,Wed,Little Italy Café,7604.08
+2027-05-06,Thu,Little Italy Café,7889.47
+2027-05-07,Fri,Little Italy Café,9898.42
+2027-05-08,Sat,Little Italy Café,12590.64
+2027-05-09,Sun,Little Italy Café,14614.60
+2027-05-10,Mon,Little Italy Café,8218.24
+2027-05-11,Tue,Little Italy Café,7139.33
+2027-05-12,Wed,Little Italy Café,7420.28
+2027-05-13,Thu,Little Italy Café,7874.67
+2027-05-14,Fri,Little Italy Café,10052.18
+2027-05-15,Sat,Little Italy Café,12907.79
+2027-05-16,Sun,Little Italy Café,12742.33
+2027-05-17,Mon,Little Italy Café,8831.04
+2027-05-18,Tue,Little Italy Café,7877.95
+2027-05-19,Wed,Little Italy Café,8266.53
+2027-05-20,Thu,Little Italy Café,8808.07
+2027-05-21,Fri,Little Italy Café,11050.19
+2027-05-22,Sat,Little Italy Café,13945.95
+2027-05-23,Sun,Little Italy Café,13794.45
+2027-05-24,Mon,Little Italy Café,9869.45
+2027-05-25,Tue,Little Italy Café,8873.93
+2027-05-26,Wed,Little Italy Café,9190.88
+2027-05-27,Thu,Little Italy Café,9631.97
+2027-05-28,Fri,Little Italy Café,11746.18
+2027-05-29,Sat,Little Italy Café,14489.20
+2027-05-30,Sun,Little Italy Café,14164.03
+2027-05-31,Mon,Little Italy Café,15977.76
+2027-06-01,Tue,Little Italy Café,8794.33
+2027-06-02,Wed,Little Italy Café,8910.81
+2027-06-03,Thu,Little Italy Café,9157.65
+2027-06-04,Fri,Little Italy Café,11081.84
+2027-06-05,Sat,Little Italy Café,13654.98
+2027-06-06,Sun,Little Italy Café,13213.76
+2027-06-07,Mon,Little Italy Café,9048.96
+2027-06-08,Tue,Little Italy Café,7828.37
+2027-06-09,Wed,Little Italy Café,7956.57
+2027-06-10,Thu,Little Italy Café,8261.98
+2027-06-11,Fri,Little Italy Café,10288.94
+2027-06-12,Sat,Little Italy Café,13003.68
+2027-06-13,Sun,Little Italy Café,12735.02
+2027-06-14,Mon,Little Italy Café,8763.85
+2027-06-15,Tue,Little Italy Café,7746.57
+2027-06-16,Wed,Little Italy Café,8075.69
+2027-06-17,Thu,Little Italy Café,8567.65
+2027-06-18,Fri,Little Italy Café,14259.69
+2027-06-19,Sat,Little Italy Café,16400.13
+2027-06-20,Sun,Little Italy Café,12596.21
+2027-06-21,Mon,Little Italy Café,9483.26
+2027-06-22,Tue,Little Italy Café,8460.94
+2027-06-23,Wed,Little Italy Café,8742.34
+2027-06-24,Thu,Little Italy Café,9149.78
+2027-06-25,Fri,Little Italy Café,11225.02
+2027-06-26,Sat,Little Italy Café,13935.28
+2027-06-27,Sun,Little Italy Café,13613.79
+2027-06-28,Mon,Little Italy Café,9548.78
+2027-06-29,Tue,Little Italy Café,8406.34
+2027-06-30,Wed,Little Italy Café,8590.06
+2027-07-01,Thu,Little Italy Café,9155.45
+2027-07-02,Fri,Little Italy Café,11244.21
+2027-07-03,Sat,Little Italy Café,14015.80
+2027-07-04,Sun,Little Italy Café,15799.14
+2027-07-05,Mon,Little Italy Café,13174.67
+2027-07-06,Tue,Little Italy Café,8468.27
+2027-07-07,Wed,Little Italy Café,8721.22
+2027-07-08,Thu,Little Italy Café,9130.08
+2027-07-09,Fri,Little Italy Café,11271.13
+2027-07-10,Sat,Little Italy Café,14079.25
+2027-07-11,Sun,Little Italy Café,13787.61
+2027-07-12,Mon,Little Italy Café,9659.96
+2027-07-13,Tue,Little Italy Café,8526.77
+2027-07-14,Wed,Little Italy Café,8747.19
+2027-07-15,Thu,Little Italy Café,9117.67
+2027-07-16,Fri,Little Italy Café,11222.44
+2027-07-17,Sat,Little Italy Café,14004.40
+2027-07-18,Sun,Little Italy Café,13703.98
+2027-07-19,Mon,Little Italy Café,9590.28
+2027-07-20,Tue,Little Italy Café,8496.56
+2027-07-21,Wed,Little Italy Café,8781.64
+2027-07-22,Thu,Little Italy Café,9238.46
+2027-07-23,Fri,Little Italy Café,11444.70
+2027-07-24,Sat,Little Italy Café,14334.36
+2027-07-25,Sun,Little Italy Café,14137.37
+2027-07-26,Mon,Little Italy Café,10112.00
+2027-07-27,Tue,Little Italy Café,9081.47
+2027-07-28,Wed,Little Italy Café,9396.55
+2027-07-29,Thu,Little Italy Café,9845.12
+2027-07-30,Fri,Little Italy Café,12003.50
+2027-07-31,Sat,Little Italy Café,14808.41
+2027-08-01,Sun,Little Italy Café,15125.03
+2027-08-02,Mon,Little Italy Café,10784.11
+2027-08-03,Tue,Little Italy Café,9559.91
+2027-08-04,Wed,Little Italy Café,9746.05
+2027-08-05,Thu,Little Italy Café,10091.92
+2027-08-06,Fri,Little Italy Café,12254.52
+2027-08-07,Sat,Little Italy Café,15133.53
+2027-08-08,Sun,Little Italy Café,14807.13
+2027-08-09,Mon,Little Italy Café,10511.65
+2027-08-10,Tue,Little Italy Café,9373.73
+2027-08-11,Wed,Little Italy Café,9676.62
+2027-08-12,Thu,Little Italy Café,10155.40
+2027-08-13,Fri,Little Italy Café,12450.12
+2027-08-14,Sat,Little Italy Café,15442.63
+2027-08-15,Sun,Little Italy Café,15194.21
+2027-08-16,Mon,Little Italy Café,10927.03
+2027-08-17,Tue,Little Italy Café,9757.91
+2027-08-18,Wed,Little Italy Café,9965.83
+2027-08-19,Thu,Little Italy Café,10287.76
+2027-08-20,Fri,Little Italy Café,12371.89
+2027-08-21,Sat,Little Italy Café,15113.79
+2027-08-22,Sun,Little Italy Café,14592.91
+2027-08-23,Mon,Little Italy Café,10052.29
+2027-08-24,Tue,Little Italy Café,8630.41
+2027-08-25,Wed,Little Italy Café,8626.52
+2027-08-26,Thu,Little Italy Café,8794.49
+2027-08-27,Fri,Little Italy Café,10794.41
+2027-08-28,Sat,Little Italy Café,13527.50
+2027-08-29,Sun,Little Italy Café,13072.02
+2027-08-30,Mon,Little Italy Café,8663.20
+2027-08-31,Tue,Little Italy Café,7425.81
+2027-09-01,Wed,Little Italy Café,7618.00
+2027-09-02,Thu,Little Italy Café,8017.60
+2027-09-03,Fri,Little Italy Café,10236.31
+2027-09-04,Sat,Little Italy Café,13159.27
+2027-09-05,Sun,Little Italy Café,12860.87
+2027-09-06,Mon,Little Italy Café,14050.53
+2027-09-07,Tue,Little Italy Café,7380.66
+2027-09-08,Wed,Little Italy Café,7586.92
+2027-09-09,Thu,Little Italy Café,7932.69
+2027-09-10,Fri,Little Italy Café,10065.78
+2027-09-11,Sat,Little Italy Café,12888.66
+2027-09-12,Sun,Little Italy Café,12494.48
+2027-09-13,Mon,Little Italy Café,8128.40
+2027-09-14,Tue,Little Italy Café,6904.90
+2027-09-15,Wed,Little Italy Café,7123.29
+2027-09-16,Thu,Little Italy Café,7533.84
+2027-09-17,Fri,Little Italy Café,9782.42
+2027-09-18,Sat,Little Italy Café,12763.10
+2027-09-19,Sun,Little Italy Café,12555.00
+2027-09-20,Mon,Little Italy Café,8385.20
+2027-09-21,Tue,Little Italy Café,7347.88
+2027-09-22,Wed,Little Italy Café,7722.21
+2027-09-23,Thu,Little Italy Café,8240.70
+2027-09-24,Fri,Little Italy Café,10535.90
+2027-09-25,Sat,Little Italy Café,13494.60
+2027-09-26,Sun,Little Italy Café,13195.73
+2027-09-27,Mon,Little Italy Café,8873.34
+2027-09-28,Tue,Little Italy Café,7635.34
+2027-09-29,Wed,Little Italy Café,7779.95
+2027-09-30,Thu,Little Italy Café,8062.23
+2027-10-01,Fri,Little Italy Café,10234.78
+2027-10-02,Sat,Little Italy Café,13040.48
+2027-10-03,Sun,Little Italy Café,12616.43
+2027-10-04,Mon,Little Italy Café,8202.47
+2027-10-05,Tue,Little Italy Café,6979.86
+2027-10-06,Wed,Little Italy Café,7228.49
+2027-10-07,Thu,Little Italy Café,7681.58
+2027-10-08,Fri,Little Italy Café,9994.18
+2027-10-09,Sat,Little Italy Café,13042.89
+2027-10-10,Sun,Little Italy Café,12862.97
+2027-10-11,Mon,Little Italy Café,8939.70
+2027-10-12,Tue,Little Italy Café,7617.32
+2027-10-13,Wed,Little Italy Café,7970.12
+2027-10-14,Thu,Little Italy Café,8447.65
+2027-10-15,Fri,Little Italy Café,10700.19
+2027-10-16,Sat,Little Italy Café,13607.90
+2027-10-17,Sun,Little Italy Café,13217.49
+2027-10-18,Mon,Little Italy Café,8761.35
+2027-10-19,Tue,Little Italy Café,7420.40
+2027-10-20,Wed,Little Italy Café,7481.41
+2027-10-21,Thu,Little Italy Café,7691.10
+2027-10-22,Fri,Little Italy Café,9723.44
+2027-10-23,Sat,Little Italy Café,12477.61
+2027-10-24,Sun,Little Italy Café,12013.08
+2027-10-25,Mon,Little Italy Café,7567.59
+2027-10-26,Tue,Little Italy Café,6319.76
+2027-10-27,Wed,Little Italy Café,6546.89
+2027-10-28,Thu,Little Italy Café,6980.29
+2027-10-29,Fri,Little Italy Café,9274.26
+2027-10-30,Sat,Little Italy Café,12306.18
+2027-10-31,Sun,Little Italy Café,12113.78
+2027-11-01,Mon,Little Italy Café,8123.25
+2027-11-02,Tue,Little Italy Café,7053.97
+2027-11-03,Wed,Little Italy Café,7445.45
+2027-11-04,Thu,Little Italy Café,7990.53
+2027-11-05,Fri,Little Italy Café,10387.64
+2027-11-06,Sat,Little Italy Café,13490.34
+2027-11-07,Sun,Little Italy Café,13241.70
+2027-11-08,Mon,Little Italy Café,8851.08
+2027-11-09,Tue,Little Italy Café,7681.99
+2027-11-10,Wed,Little Italy Café,7966.79
+2027-11-11,Thu,Little Italy Café,10025.04
+2027-11-12,Fri,Little Italy Café,10707.07
+2027-11-13,Sat,Little Italy Café,13721.93
+2027-11-14,Sun,Little Italy Café,13393.13
+2027-11-15,Mon,Little Italy Café,8925.61
+2027-11-16,Tue,Little Italy Café,7676.78
+2027-11-17,Wed,Little Italy Café,7872.64
+2027-11-18,Thu,Little Italy Café,8209.70
+2027-11-19,Fri,Little Italy Café,10389.19
+2027-11-20,Sat,Little Italy Café,13267.18
+2027-11-21,Sun,Little Italy Café,12789.61
+2027-11-22,Mon,Little Italy Café,8169.69
+2027-11-23,Tue,Little Italy Café,6776.22
+2027-11-24,Wed,Little Italy Café,6848.46
+2027-11-25,Thu,Little Italy Café,12282.77
+2027-11-26,Fri,Little Italy Café,8969.93
+2027-11-27,Sat,Little Italy Café,12124.92
+2027-11-28,Sun,Little Italy Café,11720.49
+2027-11-29,Mon,Little Italy Café,7232.11
+2027-11-30,Tue,Little Italy Café,6020.97
+2027-12-01,Wed,Little Italy Café,6223.24
+2027-12-02,Thu,Little Italy Café,6703.33
+2027-12-03,Fri,Little Italy Café,9043.68
+2027-12-04,Sat,Little Italy Café,12103.51
+2027-12-05,Sun,Little Italy Café,11870.09
+2027-12-06,Mon,Little Italy Café,7549.77
+2027-12-07,Tue,Little Italy Café,6388.47
+2027-12-08,Wed,Little Italy Café,6634.21
+2027-12-09,Thu,Little Italy Café,7002.75
+2027-12-10,Fri,Little Italy Café,9175.78
+2027-12-11,Sat,Little Italy Café,12033.61
+2027-12-12,Sun,Little Italy Café,11590.18
+2027-12-13,Mon,Little Italy Café,7081.59
+2027-12-14,Tue,Little Italy Café,5783.60
+2027-12-15,Wed,Little Italy Café,5970.90
+2027-12-16,Thu,Little Italy Café,6379.82
+2027-12-17,Fri,Little Italy Café,8703.87
+2027-12-18,Sat,Little Italy Café,11824.63
+2027-12-19,Sun,Little Italy Café,11746.02
+2027-12-20,Mon,Little Italy Café,7683.03
+2027-12-21,Tue,Little Italy Café,6880.69
+2027-12-22,Wed,Little Italy Café,7575.71
+2027-12-23,Thu,Little Italy Café,8462.48
+2027-12-24,Fri,Little Italy Café,11365.13
+2027-12-25,Sat,Little Italy Café,17142.43
+2027-12-26,Sun,Little Italy Café,14682.96
+2027-12-27,Mon,Little Italy Café,10610.81
+2027-12-28,Tue,Little Italy Café,9628.74
+2027-12-29,Wed,Little Italy Café,9979.12
+2027-12-30,Thu,Little Italy Café,10375.59
+2027-12-31,Fri,Little Italy Café,18016.34
+2027-01-01,Fri,Newport Beach,18261.87
+2027-01-02,Sat,Newport Beach,13860.77
+2027-01-03,Sun,Newport Beach,14421.61
+2027-01-04,Mon,Newport Beach,7373.30
+2027-01-05,Tue,Newport Beach,6970.26
+2027-01-06,Wed,Newport Beach,7235.84
+2027-01-07,Thu,Newport Beach,7414.02
+2027-01-08,Fri,Newport Beach,8755.25
+2027-01-09,Sat,Newport Beach,13463.43
+2027-01-10,Sun,Newport Beach,14278.91
+2027-01-11,Mon,Newport Beach,7473.64
+2027-01-12,Tue,Newport Beach,7280.09
+2027-01-13,Wed,Newport Beach,7703.36
+2027-01-14,Thu,Newport Beach,7974.52
+2027-01-15,Fri,Newport Beach,9337.46
+2027-01-16,Sat,Newport Beach,13996.47
+2027-01-17,Sun,Newport Beach,14698.97
+2027-01-18,Mon,Newport Beach,11891.97
+2027-01-19,Tue,Newport Beach,7338.96
+2027-01-20,Wed,Newport Beach,7551.55
+2027-01-21,Thu,Newport Beach,7619.35
+2027-01-22,Fri,Newport Beach,8805.51
+2027-01-23,Sat,Newport Beach,13330.19
+2027-01-24,Sun,Newport Beach,13951.81
+2027-01-25,Mon,Newport Beach,6960.42
+2027-01-26,Tue,Newport Beach,6604.86
+2027-01-27,Wed,Newport Beach,6903.36
+2027-01-28,Thu,Newport Beach,7095.70
+2027-01-29,Fri,Newport Beach,8429.45
+2027-01-30,Sat,Newport Beach,13107.43
+2027-01-31,Sun,Newport Beach,13870.85
+2027-02-01,Mon,Newport Beach,7222.38
+2027-02-02,Tue,Newport Beach,6934.57
+2027-02-03,Wed,Newport Beach,7275.72
+2027-02-04,Thu,Newport Beach,7459.67
+2027-02-05,Fri,Newport Beach,8779.16
+2027-02-06,Sat,Newport Beach,13518.43
+2027-02-07,Sun,Newport Beach,14195.82
+2027-02-08,Mon,Newport Beach,6980.81
+2027-02-09,Tue,Newport Beach,6590.94
+2027-02-10,Wed,Newport Beach,6857.75
+2027-02-11,Thu,Newport Beach,7007.00
+2027-02-12,Fri,Newport Beach,8338.85
+2027-02-13,Sat,Newport Beach,13139.58
+2027-02-14,Sun,Newport Beach,15655.21
+2027-02-15,Mon,Newport Beach,8862.72
+2027-02-16,Tue,Newport Beach,6630.16
+2027-02-17,Wed,Newport Beach,7071.86
+2027-02-18,Thu,Newport Beach,7386.49
+2027-02-19,Fri,Newport Beach,8857.87
+2027-02-20,Sat,Newport Beach,13758.54
+2027-02-21,Sun,Newport Beach,14593.56
+2027-02-22,Mon,Newport Beach,7519.01
+2027-02-23,Tue,Newport Beach,7240.40
+2027-02-24,Wed,Newport Beach,7579.81
+2027-02-25,Thu,Newport Beach,7757.26
+2027-02-26,Fri,Newport Beach,9071.49
+2027-02-27,Sat,Newport Beach,13811.86
+2027-02-28,Sun,Newport Beach,14500.39
+2027-03-01,Mon,Newport Beach,7611.22
+2027-03-02,Tue,Newport Beach,7241.45
+2027-03-03,Wed,Newport Beach,7565.74
+2027-03-04,Thu,Newport Beach,7774.05
+2027-03-05,Fri,Newport Beach,9215.60
+2027-03-06,Sat,Newport Beach,14266.11
+2027-03-07,Sun,Newport Beach,15125.19
+2027-03-08,Mon,Newport Beach,7790.25
+2027-03-09,Tue,Newport Beach,7572.41
+2027-03-10,Wed,Newport Beach,8030.18
+2027-03-11,Thu,Newport Beach,8340.69
+2027-03-12,Fri,Newport Beach,9844.15
+2027-03-13,Sat,Newport Beach,14911.94
+2027-03-14,Sun,Newport Beach,15744.36
+2027-03-15,Mon,Newport Beach,8344.20
+2027-03-16,Tue,Newport Beach,8031.87
+2027-03-17,Wed,Newport Beach,8377.86
+2027-03-18,Thu,Newport Beach,8572.44
+2027-03-19,Fri,Newport Beach,9968.48
+2027-03-20,Sat,Newport Beach,14948.06
+2027-03-21,Sun,Newport Beach,15718.90
+2027-03-22,Mon,Newport Beach,8287.21
+2027-03-23,Tue,Newport Beach,7972.43
+2027-03-24,Wed,Newport Beach,8339.95
+2027-03-25,Thu,Newport Beach,8571.57
+2027-03-26,Fri,Newport Beach,10009.50
+2027-03-27,Sat,Newport Beach,15024.41
+2027-03-28,Sun,Newport Beach,16746.41
+2027-03-29,Mon,Newport Beach,8374.49
+2027-03-30,Tue,Newport Beach,8022.14
+2027-03-31,Wed,Newport Beach,8321.18
+2027-04-01,Thu,Newport Beach,8401.51
+2027-04-02,Fri,Newport Beach,9716.22
+2027-04-03,Sat,Newport Beach,14576.83
+2027-04-04,Sun,Newport Beach,15245.34
+2027-04-05,Mon,Newport Beach,7759.94
+2027-04-06,Tue,Newport Beach,7347.00
+2027-04-07,Wed,Newport Beach,7623.75
+2027-04-08,Thu,Newport Beach,7787.18
+2027-04-09,Fri,Newport Beach,9179.68
+2027-04-10,Sat,Newport Beach,14163.38
+2027-04-11,Sun,Newport Beach,14990.94
+2027-04-12,Mon,Newport Beach,7687.11
+2027-04-13,Tue,Newport Beach,7461.92
+2027-04-14,Wed,Newport Beach,7915.07
+2027-04-15,Thu,Newport Beach,8226.76
+2027-04-16,Fri,Newport Beach,9725.04
+2027-04-17,Sat,Newport Beach,14761.82
+2027-04-18,Sun,Newport Beach,15584.77
+2027-04-19,Mon,Newport Beach,8219.49
+2027-04-20,Tue,Newport Beach,7882.67
+2027-04-21,Wed,Newport Beach,8185.87
+2027-04-22,Thu,Newport Beach,8325.03
+2027-04-23,Fri,Newport Beach,9646.25
+2027-04-24,Sat,Newport Beach,14519.85
+2027-04-25,Sun,Newport Beach,15210.30
+2027-04-26,Mon,Newport Beach,7756.59
+2027-04-27,Tue,Newport Beach,7383.99
+2027-04-28,Wed,Newport Beach,7706.89
+2027-04-29,Thu,Newport Beach,7918.10
+2027-04-30,Fri,Newport Beach,9354.92
+2027-05-01,Sat,Newport Beach,14467.02
+2027-05-02,Sun,Newport Beach,15322.33
+2027-05-03,Mon,Newport Beach,7976.73
+2027-05-04,Tue,Newport Beach,7736.50
+2027-05-05,Wed,Newport Beach,8160.24
+2027-05-06,Thu,Newport Beach,8425.14
+2027-05-07,Fri,Newport Beach,9872.09
+2027-05-08,Sat,Newport Beach,14874.03
+2027-05-09,Sun,Newport Beach,22213.01
+2027-05-10,Mon,Newport Beach,8163.53
+2027-05-11,Tue,Newport Beach,7779.70
+2027-05-12,Wed,Newport Beach,8059.71
+2027-05-13,Thu,Newport Beach,8197.90
+2027-05-14,Fri,Newport Beach,9550.33
+2027-05-15,Sat,Newport Beach,14501.44
+2027-05-16,Sun,Newport Beach,15262.25
+2027-05-17,Mon,Newport Beach,7840.61
+2027-05-18,Tue,Newport Beach,7552.99
+2027-05-19,Wed,Newport Beach,7964.80
+2027-05-20,Thu,Newport Beach,8255.88
+2027-05-21,Fri,Newport Beach,9765.33
+2027-05-22,Sat,Newport Beach,14859.92
+2027-05-23,Sun,Newport Beach,15734.42
+2027-05-24,Mon,Newport Beach,8383.52
+2027-05-25,Tue,Newport Beach,8115.20
+2027-05-26,Wed,Newport Beach,8491.93
+2027-05-27,Thu,Newport Beach,8696.56
+2027-05-28,Fri,Newport Beach,10076.81
+2027-05-29,Sat,Newport Beach,15012.78
+2027-05-30,Sun,Newport Beach,15715.73
+2027-05-31,Mon,Newport Beach,16270.45
+2027-06-01,Tue,Newport Beach,7845.02
+2027-06-02,Wed,Newport Beach,8117.25
+2027-06-03,Thu,Newport Beach,8264.83
+2027-06-04,Fri,Newport Beach,9651.44
+2027-06-05,Sat,Newport Beach,14675.08
+2027-06-06,Sun,Newport Beach,15482.04
+2027-06-07,Mon,Newport Beach,8043.65
+2027-06-08,Tue,Newport Beach,7786.46
+2027-06-09,Wed,Newport Beach,8222.05
+2027-06-10,Thu,Newport Beach,8520.56
+2027-06-11,Fri,Newport Beach,10029.75
+2027-06-12,Sat,Newport Beach,15135.08
+2027-06-13,Sun,Newport Beach,15975.00
+2027-06-14,Mon,Newport Beach,8518.64
+2027-06-15,Tue,Newport Beach,8196.07
+2027-06-16,Wed,Newport Beach,8527.80
+2027-06-17,Thu,Newport Beach,8697.28
+2027-06-18,Fri,Newport Beach,12921.74
+2027-06-19,Sat,Newport Beach,17443.37
+2027-06-20,Sun,Newport Beach,17992.33
+2027-06-21,Mon,Newport Beach,8255.79
+2027-06-22,Tue,Newport Beach,7914.62
+2027-06-23,Wed,Newport Beach,8280.11
+2027-06-24,Thu,Newport Beach,8534.27
+2027-06-25,Fri,Newport Beach,10033.91
+2027-06-26,Sat,Newport Beach,15169.72
+2027-06-27,Sun,Newport Beach,16080.85
+2027-06-28,Mon,Newport Beach,8732.41
+2027-06-29,Tue,Newport Beach,8546.05
+2027-06-30,Wed,Newport Beach,9030.27
+2027-07-01,Thu,Newport Beach,9378.05
+2027-07-02,Fri,Newport Beach,10893.66
+2027-07-03,Sat,Newport Beach,15994.24
+2027-07-04,Sun,Newport Beach,19383.12
+2027-07-05,Mon,Newport Beach,12139.50
+2027-07-06,Tue,Newport Beach,8900.13
+2027-07-07,Wed,Newport Beach,9173.39
+2027-07-08,Thu,Newport Beach,9283.30
+2027-07-09,Fri,Newport Beach,10599.49
+2027-07-10,Sat,Newport Beach,15531.84
+2027-07-11,Sun,Newport Beach,16214.92
+2027-07-12,Mon,Newport Beach,8620.15
+2027-07-13,Tue,Newport Beach,8225.19
+2027-07-14,Wed,Newport Beach,8536.36
+2027-07-15,Thu,Newport Beach,8732.03
+2027-07-16,Fri,Newport Beach,10171.74
+2027-07-17,Sat,Newport Beach,15252.62
+2027-07-18,Sun,Newport Beach,16095.20
+2027-07-19,Mon,Newport Beach,8657.05
+2027-07-20,Tue,Newport Beach,8403.41
+2027-07-21,Wed,Newport Beach,8830.79
+2027-07-22,Thu,Newport Beach,9111.04
+2027-07-23,Fri,Newport Beach,10600.83
+2027-07-24,Sat,Newport Beach,15698.02
+2027-07-25,Sun,Newport Beach,16527.05
+2027-07-26,Mon,Newport Beach,9051.82
+2027-07-27,Tue,Newport Beach,8745.37
+2027-07-28,Wed,Newport Beach,9112.49
+2027-07-29,Thu,Newport Beach,9332.73
+2027-07-30,Fri,Newport Beach,10769.12
+2027-07-31,Sat,Newport Beach,15823.90
+2027-08-01,Sun,Newport Beach,17194.16
+2027-08-02,Mon,Newport Beach,9445.33
+2027-08-03,Tue,Newport Beach,9122.34
+2027-08-04,Wed,Newport Beach,9503.20
+2027-08-05,Thu,Newport Beach,9734.64
+2027-08-06,Fri,Newport Beach,11221.67
+2027-08-07,Sat,Newport Beach,16444.84
+2027-08-08,Sun,Newport Beach,17257.51
+2027-08-09,Mon,Newport Beach,9483.51
+2027-08-10,Tue,Newport Beach,9125.13
+2027-08-11,Wed,Newport Beach,9462.47
+2027-08-12,Thu,Newport Beach,9645.73
+2027-08-13,Fri,Newport Beach,11084.18
+2027-08-14,Sat,Newport Beach,16262.85
+2027-08-15,Sun,Newport Beach,17039.10
+2027-08-16,Mon,Newport Beach,9239.77
+2027-08-17,Tue,Newport Beach,8868.61
+2027-08-18,Wed,Newport Beach,9205.50
+2027-08-19,Thu,Newport Beach,9398.60
+2027-08-20,Fri,Newport Beach,10853.59
+2027-08-21,Sat,Newport Beach,16050.73
+2027-08-22,Sun,Newport Beach,16842.03
+2027-08-23,Mon,Newport Beach,9048.97
+2027-08-24,Tue,Newport Beach,8670.70
+2027-08-25,Wed,Newport Beach,8983.73
+2027-08-26,Thu,Newport Beach,9134.62
+2027-08-27,Fri,Newport Beach,10529.42
+2027-08-28,Sat,Newport Beach,15650.78
+2027-08-29,Sun,Newport Beach,16354.91
+2027-08-30,Mon,Newport Beach,8468.94
+2027-08-31,Tue,Newport Beach,7998.54
+2027-09-01,Wed,Newport Beach,7997.82
+2027-09-02,Thu,Newport Beach,8075.80
+2027-09-03,Fri,Newport Beach,9381.74
+2027-09-04,Sat,Newport Beach,14332.83
+2027-09-05,Sun,Newport Beach,15014.10
+2027-09-06,Mon,Newport Beach,15244.23
+2027-09-07,Tue,Newport Beach,6955.46
+2027-09-08,Wed,Newport Beach,7240.65
+2027-09-09,Thu,Newport Beach,7396.55
+2027-09-10,Fri,Newport Beach,8790.09
+2027-09-11,Sat,Newport Beach,13833.16
+2027-09-12,Sun,Newport Beach,14605.86
+2027-09-13,Mon,Newport Beach,7047.44
+2027-09-14,Tue,Newport Beach,6712.80
+2027-09-15,Wed,Newport Beach,7067.10
+2027-09-16,Thu,Newport Beach,7281.63
+2027-09-17,Fri,Newport Beach,8723.66
+2027-09-18,Sat,Newport Beach,13806.24
+2027-09-19,Sun,Newport Beach,14611.13
+2027-09-20,Mon,Newport Beach,7079.41
+2027-09-21,Tue,Newport Beach,6767.71
+2027-09-22,Wed,Newport Beach,7142.53
+2027-09-23,Thu,Newport Beach,7376.03
+2027-09-24,Fri,Newport Beach,8835.79
+2027-09-25,Sat,Newport Beach,13934.68
+2027-09-26,Sun,Newport Beach,14753.95
+2027-09-27,Mon,Newport Beach,7234.01
+2027-09-28,Tue,Newport Beach,6930.86
+2027-09-29,Wed,Newport Beach,7310.64
+2027-09-30,Thu,Newport Beach,7545.50
+2027-10-01,Fri,Newport Beach,8938.63
+2027-10-02,Sat,Newport Beach,13996.69
+2027-10-03,Sun,Newport Beach,14804.69
+2027-10-04,Mon,Newport Beach,7333.46
+2027-10-05,Tue,Newport Beach,7028.06
+2027-10-06,Wed,Newport Beach,7402.37
+2027-10-07,Thu,Newport Beach,7634.63
+2027-10-08,Fri,Newport Beach,9082.49
+2027-10-09,Sat,Newport Beach,14141.06
+2027-10-10,Sun,Newport Beach,14947.87
+2027-10-11,Mon,Newport Beach,7376.12
+2027-10-12,Tue,Newport Beach,7154.73
+2027-10-13,Wed,Newport Beach,7509.30
+2027-10-14,Thu,Newport Beach,7711.95
+2027-10-15,Fri,Newport Beach,9119.74
+2027-10-16,Sat,Newport Beach,14128.34
+2027-10-17,Sun,Newport Beach,14877.13
+2027-10-18,Mon,Newport Beach,7337.82
+2027-10-19,Tue,Newport Beach,6957.33
+2027-10-20,Wed,Newport Beach,7252.35
+2027-10-21,Thu,Newport Beach,7404.79
+2027-10-22,Fri,Newport Beach,8776.62
+2027-10-23,Sat,Newport Beach,13767.60
+2027-10-24,Sun,Newport Beach,14519.86
+2027-10-25,Mon,Newport Beach,7006.09
+2027-10-26,Tue,Newport Beach,6672.24
+2027-10-27,Wed,Newport Beach,7031.92
+2027-10-28,Thu,Newport Beach,7262.14
+2027-10-29,Fri,Newport Beach,8718.42
+2027-10-30,Sat,Newport Beach,13793.13
+2027-10-31,Sun,Newport Beach,14620.73
+2027-11-01,Mon,Newport Beach,7325.74
+2027-11-02,Tue,Newport Beach,7023.46
+2027-11-03,Wed,Newport Beach,7403.71
+2027-11-04,Thu,Newport Beach,7623.27
+2027-11-05,Fri,Newport Beach,9068.39
+2027-11-06,Sat,Newport Beach,14187.83
+2027-11-07,Sun,Newport Beach,14947.18
+2027-11-08,Mon,Newport Beach,7230.03
+2027-11-09,Tue,Newport Beach,6827.70
+2027-11-10,Wed,Newport Beach,7114.96
+2027-11-11,Thu,Newport Beach,9639.70
+2027-11-12,Fri,Newport Beach,8649.43
+2027-11-13,Sat,Newport Beach,13745.33
+2027-11-14,Sun,Newport Beach,14514.36
+2027-11-15,Mon,Newport Beach,6840.91
+2027-11-16,Tue,Newport Beach,6514.38
+2027-11-17,Wed,Newport Beach,6905.01
+2027-11-18,Thu,Newport Beach,7171.84
+2027-11-19,Fri,Newport Beach,8700.63
+2027-11-20,Sat,Newport Beach,13936.79
+2027-11-21,Sun,Newport Beach,14839.99
+2027-11-22,Mon,Newport Beach,7285.65
+2027-11-23,Tue,Newport Beach,7055.27
+2027-11-24,Wed,Newport Beach,7512.76
+2027-11-25,Thu,Newport Beach,11771.11
+2027-11-26,Fri,Newport Beach,12518.69
+2027-11-27,Sat,Newport Beach,14535.11
+2027-11-28,Sun,Newport Beach,15363.99
+2027-11-29,Mon,Newport Beach,7703.92
+2027-11-30,Tue,Newport Beach,7341.31
+2027-12-01,Wed,Newport Beach,7522.25
+2027-12-02,Thu,Newport Beach,7654.08
+2027-12-03,Fri,Newport Beach,8986.40
+2027-12-04,Sat,Newport Beach,13932.81
+2027-12-05,Sun,Newport Beach,14593.26
+2027-12-06,Mon,Newport Beach,6921.79
+2027-12-07,Tue,Newport Beach,6457.21
+2027-12-08,Wed,Newport Beach,6684.74
+2027-12-09,Thu,Newport Beach,6786.55
+2027-12-10,Fri,Newport Beach,8136.92
+2027-12-11,Sat,Newport Beach,13153.39
+2027-12-12,Sun,Newport Beach,13937.68
+2027-12-13,Mon,Newport Beach,6442.90
+2027-12-14,Tue,Newport Beach,6203.88
+2027-12-15,Wed,Newport Beach,6698.59
+2027-12-16,Thu,Newport Beach,7098.66
+2027-12-17,Fri,Newport Beach,8764.73
+2027-12-18,Sat,Newport Beach,14098.24
+2027-12-19,Sun,Newport Beach,15183.06
+2027-12-20,Mon,Newport Beach,7953.86
+2027-12-21,Tue,Newport Beach,7927.71
+2027-12-22,Wed,Newport Beach,8566.84
+2027-12-23,Thu,Newport Beach,9030.56
+2027-12-24,Fri,Newport Beach,10846.02
+2027-12-25,Sat,Newport Beach,21483.35
+2027-12-26,Sun,Newport Beach,16772.83
+2027-12-27,Mon,Newport Beach,9265.33
+2027-12-28,Tue,Newport Beach,8900.50
+2027-12-29,Wed,Newport Beach,9161.39
+2027-12-30,Thu,Newport Beach,9231.45
+2027-12-31,Fri,Newport Beach,11340.64
+2027-01-01,Fri,La Jolla Cove,2407.37
+2027-01-02,Sat,La Jolla Cove,2518.05
+2027-01-03,Sun,La Jolla Cove,2465.38
+2027-01-04,Mon,La Jolla Cove,1438.63
+2027-01-05,Tue,La Jolla Cove,1185.19
+2027-01-06,Wed,La Jolla Cove,1093.62
+2027-01-07,Thu,La Jolla Cove,1169.47
+2027-01-08,Fri,La Jolla Cove,1479.27
+2027-01-09,Sat,La Jolla Cove,1981.39
+2027-01-10,Sun,La Jolla Cove,2009.85
+2027-01-11,Mon,La Jolla Cove,1084.72
+2027-01-12,Tue,La Jolla Cove,942.93
+2027-01-13,Wed,La Jolla Cove,962.53
+2027-01-14,Thu,La Jolla Cove,1139.50
+2027-01-15,Fri,La Jolla Cove,1532.53
+2027-01-16,Sat,La Jolla Cove,2094.62
+2027-01-17,Sun,La Jolla Cove,2157.20
+2027-01-18,Mon,La Jolla Cove,1808.91
+2027-01-19,Tue,La Jolla Cove,1084.65
+2027-01-20,Wed,La Jolla Cove,1072.38
+2027-01-21,Thu,La Jolla Cove,1206.11
+2027-01-22,Fri,La Jolla Cove,1551.51
+2027-01-23,Sat,La Jolla Cove,2068.30
+2027-01-24,Sun,La Jolla Cove,2093.63
+2027-01-25,Mon,La Jolla Cove,1151.98
+2027-01-26,Tue,La Jolla Cove,985.38
+2027-01-27,Wed,La Jolla Cove,977.04
+2027-01-28,Thu,La Jolla Cove,1127.52
+2027-01-29,Fri,La Jolla Cove,1499.24
+2027-01-30,Sat,La Jolla Cove,2047.62
+2027-01-31,Sun,La Jolla Cove,2105.22
+2027-02-01,Mon,La Jolla Cove,1219.49
+2027-02-02,Tue,La Jolla Cove,1071.13
+2027-02-03,Wed,La Jolla Cove,1075.30
+2027-02-04,Thu,La Jolla Cove,1232.10
+2027-02-05,Fri,La Jolla Cove,1606.51
+2027-02-06,Sat,La Jolla Cove,2155.55
+2027-02-07,Sun,La Jolla Cove,2200.15
+2027-02-08,Mon,La Jolla Cove,1253.65
+2027-02-09,Tue,La Jolla Cove,1098.53
+2027-02-10,Wed,La Jolla Cove,1105.02
+2027-02-11,Thu,La Jolla Cove,1275.26
+2027-02-12,Fri,La Jolla Cove,1674.63
+2027-02-13,Sat,La Jolla Cove,2258.74
+2027-02-14,Sun,La Jolla Cove,2689.28
+2027-02-15,Mon,La Jolla Cove,1925.68
+2027-02-16,Tue,La Jolla Cove,1329.54
+2027-02-17,Wed,La Jolla Cove,1368.59
+2027-02-18,Thu,La Jolla Cove,1557.30
+2027-02-19,Fri,La Jolla Cove,1956.89
+2027-02-20,Sat,La Jolla Cove,2520.60
+2027-02-21,Sun,La Jolla Cove,2565.96
+2027-02-22,Mon,La Jolla Cove,1603.81
+2027-02-23,Tue,La Jolla Cove,1415.48
+2027-02-24,Wed,La Jolla Cove,1371.65
+2027-02-25,Thu,La Jolla Cove,1476.66
+2027-02-26,Fri,La Jolla Cove,1799.78
+2027-02-27,Sat,La Jolla Cove,2301.95
+2027-02-28,Sun,La Jolla Cove,2307.28
+2027-03-01,Mon,La Jolla Cove,1350.56
+2027-03-02,Tue,La Jolla Cove,1174.32
+2027-03-03,Wed,La Jolla Cove,1173.00
+2027-03-04,Thu,La Jolla Cove,1347.63
+2027-03-05,Fri,La Jolla Cove,1762.56
+2027-03-06,Sat,La Jolla Cove,2370.24
+2027-03-07,Sun,La Jolla Cove,2475.89
+2027-03-08,Mon,La Jolla Cove,1578.60
+2027-03-09,Tue,La Jolla Cove,1478.92
+2027-03-10,Wed,La Jolla Cove,1530.64
+2027-03-11,Thu,La Jolla Cove,1729.85
+2027-03-12,Fri,La Jolla Cove,2138.70
+2027-03-13,Sat,La Jolla Cove,2710.51
+2027-03-14,Sun,La Jolla Cove,2754.21
+2027-03-15,Mon,La Jolla Cove,1775.14
+2027-03-16,Tue,La Jolla Cove,1581.97
+2027-03-17,Wed,La Jolla Cove,1537.60
+2027-03-18,Thu,La Jolla Cove,1647.28
+2027-03-19,Fri,La Jolla Cove,1981.48
+2027-03-20,Sat,La Jolla Cove,2500.08
+2027-03-21,Sun,La Jolla Cove,2516.30
+2027-03-22,Mon,La Jolla Cove,1536.98
+2027-03-23,Tue,La Jolla Cove,1369.48
+2027-03-24,Wed,La Jolla Cove,1372.83
+2027-03-25,Thu,La Jolla Cove,1546.22
+2027-03-26,Fri,La Jolla Cove,1952.70
+2027-03-27,Sat,La Jolla Cove,2544.11
+2027-03-28,Sun,La Jolla Cove,2704.18
+2027-03-29,Mon,La Jolla Cove,1698.24
+2027-03-30,Tue,La Jolla Cove,1563.63
+2027-03-31,Wed,La Jolla Cove,1578.42
+2027-04-01,Thu,La Jolla Cove,1731.69
+2027-04-02,Fri,La Jolla Cove,2106.35
+2027-04-03,Sat,La Jolla Cove,2649.70
+2027-04-04,Sun,La Jolla Cove,2676.81
+2027-04-05,Mon,La Jolla Cove,1697.20
+2027-04-06,Tue,La Jolla Cove,1509.55
+2027-04-07,Wed,La Jolla Cove,1479.72
+2027-04-08,Thu,La Jolla Cove,1611.22
+2027-04-09,Fri,La Jolla Cove,1971.55
+2027-04-10,Sat,La Jolla Cove,2517.69
+2027-04-11,Sun,La Jolla Cove,2563.36
+2027-04-12,Mon,La Jolla Cove,1614.90
+2027-04-13,Tue,La Jolla Cove,1466.49
+2027-04-14,Wed,La Jolla Cove,1478.65
+2027-04-15,Thu,La Jolla Cove,1649.46
+2027-04-16,Fri,La Jolla Cove,2041.47
+2027-04-17,Sat,La Jolla Cove,2607.81
+2027-04-18,Sun,La Jolla Cove,2659.81
+2027-04-19,Mon,La Jolla Cove,1703.19
+2027-04-20,Tue,La Jolla Cove,1533.23
+2027-04-21,Wed,La Jolla Cove,1513.14
+2027-04-22,Thu,La Jolla Cove,1644.82
+2027-04-23,Fri,La Jolla Cove,1995.41
+2027-04-24,Sat,La Jolla Cove,2522.66
+2027-04-25,Sun,La Jolla Cove,2542.12
+2027-04-26,Mon,La Jolla Cove,1562.79
+2027-04-27,Tue,La Jolla Cove,1381.87
+2027-04-28,Wed,La Jolla Cove,1363.03
+2027-04-29,Thu,La Jolla Cove,1507.09
+2027-04-30,Fri,La Jolla Cove,1878.81
+2027-05-01,Sat,La Jolla Cove,2429.32
+2027-05-02,Sun,La Jolla Cove,2476.83
+2027-05-03,Mon,La Jolla Cove,1524.63
+2027-05-04,Tue,La Jolla Cove,1364.24
+2027-05-05,Wed,La Jolla Cove,1357.87
+2027-05-06,Thu,La Jolla Cove,1505.35
+2027-05-07,Fri,La Jolla Cove,1871.73
+2027-05-08,Sat,La Jolla Cove,2413.27
+2027-05-09,Sun,La Jolla Cove,2774.22
+2027-05-10,Mon,La Jolla Cove,1477.89
+2027-05-11,Tue,La Jolla Cove,1305.90
+2027-05-12,Wed,La Jolla Cove,1295.36
+2027-05-13,Thu,La Jolla Cove,1448.95
+2027-05-14,Fri,La Jolla Cove,1833.31
+2027-05-15,Sat,La Jolla Cove,2404.82
+2027-05-16,Sun,La Jolla Cove,2477.47
+2027-05-17,Mon,La Jolla Cove,1557.70
+2027-05-18,Tue,La Jolla Cove,1436.63
+2027-05-19,Wed,La Jolla Cove,1474.97
+2027-05-20,Thu,La Jolla Cove,1670.03
+2027-05-21,Fri,La Jolla Cove,2083.44
+2027-05-22,Sat,La Jolla Cove,2667.49
+2027-05-23,Sun,La Jolla Cove,2733.56
+2027-05-24,Mon,La Jolla Cove,1787.29
+2027-05-25,Tue,La Jolla Cove,1620.93
+2027-05-26,Wed,La Jolla Cove,1598.30
+2027-05-27,Thu,La Jolla Cove,1721.44
+2027-05-28,Fri,La Jolla Cove,2057.97
+2027-05-29,Sat,La Jolla Cove,2566.78
+2027-05-30,Sun,La Jolla Cove,2565.85
+2027-05-31,Mon,La Jolla Cove,2582.73
+2027-06-01,Tue,La Jolla Cove,1355.98
+2027-06-02,Wed,La Jolla Cove,1321.17
+2027-06-03,Thu,La Jolla Cove,1453.36
+2027-06-04,Fri,La Jolla Cove,1818.41
+2027-06-05,Sat,La Jolla Cove,2372.35
+2027-06-06,Sun,La Jolla Cove,2433.51
+2027-06-07,Mon,La Jolla Cove,1511.23
+2027-06-08,Tue,La Jolla Cove,1382.55
+2027-06-09,Wed,La Jolla Cove,1412.75
+2027-06-10,Thu,La Jolla Cove,1599.32
+2027-06-11,Fri,La Jolla Cove,2004.05
+2027-06-12,Sat,La Jolla Cove,2580.55
+2027-06-13,Sun,La Jolla Cove,2646.61
+2027-06-14,Mon,La Jolla Cove,1712.81
+2027-06-15,Tue,La Jolla Cove,1559.08
+2027-06-16,Wed,La Jolla Cove,1554.78
+2027-06-17,Thu,La Jolla Cove,1702.21
+2027-06-18,Fri,La Jolla Cove,2371.02
+2027-06-19,Sat,La Jolla Cove,2935.08
+2027-06-20,Sun,La Jolla Cove,2729.47
+2027-06-21,Mon,La Jolla Cove,1703.39
+2027-06-22,Tue,La Jolla Cove,1547.41
+2027-06-23,Wed,La Jolla Cove,1552.36
+2027-06-24,Thu,La Jolla Cove,1718.68
+2027-06-25,Fri,La Jolla Cove,2110.15
+2027-06-26,Sat,La Jolla Cove,2681.32
+2027-06-27,Sun,La Jolla Cove,2749.82
+2027-06-28,Mon,La Jolla Cove,1825.07
+2027-06-29,Tue,La Jolla Cove,1685.00
+2027-06-30,Wed,La Jolla Cove,1696.51
+2027-07-01,Thu,La Jolla Cove,1874.28
+2027-07-02,Fri,La Jolla Cove,2255.45
+2027-07-03,Sat,La Jolla Cove,2809.49
+2027-07-04,Sun,La Jolla Cove,2851.24
+2027-07-05,Mon,La Jolla Cove,2193.53
+2027-07-06,Tue,La Jolla Cove,1716.79
+2027-07-07,Wed,La Jolla Cove,1701.46
+2027-07-08,Thu,La Jolla Cove,1844.18
+2027-07-09,Fri,La Jolla Cove,2211.29
+2027-07-10,Sat,La Jolla Cove,2759.09
+2027-07-11,Sun,La Jolla Cove,2801.74
+2027-07-12,Mon,La Jolla Cove,1846.39
+2027-07-13,Tue,La Jolla Cove,1686.67
+2027-07-14,Wed,La Jolla Cove,1684.95
+2027-07-15,Thu,La Jolla Cove,1840.89
+2027-07-16,Fri,La Jolla Cove,2218.72
+2027-07-17,Sat,La Jolla Cove,2773.23
+2027-07-18,Sun,La Jolla Cove,2817.75
+2027-07-19,Mon,La Jolla Cove,1859.47
+2027-07-20,Tue,La Jolla Cove,1692.82
+2027-07-21,Wed,La Jolla Cove,1681.66
+2027-07-22,Thu,La Jolla Cove,1827.51
+2027-07-23,Fri,La Jolla Cove,2196.64
+2027-07-24,Sat,La Jolla Cove,2745.72
+2027-07-25,Sun,La Jolla Cove,2789.48
+2027-07-26,Mon,La Jolla Cove,1835.87
+2027-07-27,Tue,La Jolla Cove,1679.24
+2027-07-28,Wed,La Jolla Cove,1682.58
+2027-07-29,Thu,La Jolla Cove,1845.79
+2027-07-30,Fri,La Jolla Cove,2232.97
+2027-07-31,Sat,La Jolla Cove,2798.32
+2027-08-01,Sun,La Jolla Cove,2891.94
+2027-08-02,Mon,La Jolla Cove,1931.64
+2027-08-03,Tue,La Jolla Cove,1771.09
+2027-08-04,Wed,La Jolla Cove,1764.23
+2027-08-05,Thu,La Jolla Cove,1911.31
+2027-08-06,Fri,La Jolla Cove,2278.55
+2027-08-07,Sat,La Jolla Cove,2821.64
+2027-08-08,Sun,La Jolla Cove,2846.45
+2027-08-09,Mon,La Jolla Cove,1855.25
+2027-08-10,Tue,La Jolla Cove,1667.48
+2027-08-11,Wed,La Jolla Cove,1639.49
+2027-08-12,Thu,La Jolla Cove,1773.20
+2027-08-13,Fri,La Jolla Cove,2135.57
+2027-08-14,Sat,La Jolla Cove,2682.03
+2027-08-15,Sun,La Jolla Cove,2717.19
+2027-08-16,Mon,La Jolla Cove,1741.27
+2027-08-17,Tue,La Jolla Cove,1571.10
+2027-08-18,Wed,La Jolla Cove,1560.21
+2027-08-19,Thu,La Jolla Cove,1707.85
+2027-08-20,Fri,La Jolla Cove,2078.85
+2027-08-21,Sat,La Jolla Cove,2627.28
+2027-08-22,Sun,La Jolla Cove,2657.46
+2027-08-23,Mon,La Jolla Cove,1670.30
+2027-08-24,Tue,La Jolla Cove,1484.39
+2027-08-25,Wed,La Jolla Cove,1455.76
+2027-08-26,Thu,La Jolla Cove,1586.68
+2027-08-27,Fri,La Jolla Cove,1945.05
+2027-08-28,Sat,La Jolla Cove,2487.72
+2027-08-29,Sun,La Jolla Cove,2521.05
+2027-08-30,Mon,La Jolla Cove,1547.00
+2027-08-31,Tue,La Jolla Cove,1383.96
+2027-09-01,Wed,La Jolla Cove,1371.26
+2027-09-02,Thu,La Jolla Cove,1537.22
+2027-09-03,Fri,La Jolla Cove,1930.29
+2027-09-04,Sat,La Jolla Cove,2503.80
+2027-09-05,Sun,La Jolla Cove,2567.67
+2027-09-06,Mon,La Jolla Cove,2558.25
+2027-09-07,Tue,La Jolla Cove,1473.53
+2027-09-08,Wed,La Jolla Cove,1471.27
+2027-09-09,Thu,La Jolla Cove,1618.52
+2027-09-10,Fri,La Jolla Cove,1980.45
+2027-09-11,Sat,La Jolla Cove,2513.29
+2027-09-12,Sun,La Jolla Cove,2531.04
+2027-09-13,Mon,La Jolla Cove,1542.29
+2027-09-14,Tue,La Jolla Cove,1347.68
+2027-09-15,Wed,La Jolla Cove,1312.04
+2027-09-16,Thu,La Jolla Cove,1438.75
+2027-09-17,Fri,La Jolla Cove,1795.43
+2027-09-18,Sat,La Jolla Cove,2339.15
+2027-09-19,Sun,La Jolla Cove,2382.97
+2027-09-20,Mon,La Jolla Cove,1432.83
+2027-09-21,Tue,La Jolla Cove,1285.32
+2027-09-22,Wed,La Jolla Cove,1300.16
+2027-09-23,Thu,La Jolla Cove,1475.24
+2027-09-24,Fri,La Jolla Cove,1872.84
+2027-09-25,Sat,La Jolla Cove,2445.46
+2027-09-26,Sun,La Jolla Cove,2502.92
+2027-09-27,Mon,La Jolla Cove,1549.62
+2027-09-28,Tue,La Jolla Cove,1382.51
+2027-09-29,Wed,La Jolla Cove,1363.59
+2027-09-30,Thu,La Jolla Cove,1494.68
+2027-10-01,Fri,La Jolla Cove,4221.34
+2027-10-02,Sat,La Jolla Cove,5422.30
+2027-10-03,Sun,La Jolla Cove,5458.79
+2027-10-04,Mon,La Jolla Cove,3207.84
+2027-10-05,Tue,La Jolla Cove,2793.89
+2027-10-06,Wed,La Jolla Cove,2761.01
+2027-10-07,Thu,La Jolla Cove,3113.87
+2027-10-08,Fri,La Jolla Cove,4002.78
+2027-10-09,Sat,La Jolla Cove,5323.77
+2027-10-10,Sun,La Jolla Cove,5497.53
+2027-10-11,Mon,La Jolla Cove,3853.40
+2027-10-12,Tue,La Jolla Cove,3100.67
+2027-10-13,Wed,La Jolla Cove,3169.32
+2027-10-14,Thu,La Jolla Cove,3585.69
+2027-10-15,Fri,La Jolla Cove,4492.19
+2027-10-16,Sat,La Jolla Cove,5781.65
+2027-10-17,Sun,La Jolla Cove,5876.59
+2027-10-18,Mon,La Jolla Cove,3646.36
+2027-10-19,Tue,La Jolla Cove,3211.24
+2027-10-20,Wed,La Jolla Cove,3115.07
+2027-10-21,Thu,La Jolla Cove,3366.39
+2027-10-22,Fri,La Jolla Cove,4123.04
+2027-10-23,Sat,La Jolla Cove,5291.56
+2027-10-24,Sun,La Jolla Cove,5305.08
+2027-10-25,Mon,La Jolla Cove,3039.37
+2027-10-26,Tue,La Jolla Cove,2616.29
+2027-10-27,Wed,La Jolla Cove,2576.43
+2027-10-28,Thu,La Jolla Cove,2920.62
+2027-10-29,Fri,La Jolla Cove,3795.52
+2027-10-30,Sat,La Jolla Cove,5094.32
+2027-10-31,Sun,La Jolla Cove,5236.08
+2027-11-01,Mon,La Jolla Cove,3551.42
+2027-11-02,Tue,La Jolla Cove,3164.20
+2027-11-03,Wed,La Jolla Cove,3179.63
+2027-11-04,Thu,La Jolla Cove,3594.78
+2027-11-05,Fri,La Jolla Cove,4579.66
+2027-11-06,Sat,La Jolla Cove,6016.99
+2027-11-07,Sun,La Jolla Cove,6095.45
+2027-11-08,Mon,La Jolla Cove,3517.10
+2027-11-09,Tue,La Jolla Cove,3030.10
+2027-11-10,Wed,La Jolla Cove,2957.45
+2027-11-11,Thu,La Jolla Cove,4198.40
+2027-11-12,Fri,La Jolla Cove,4255.40
+2027-11-13,Sat,La Jolla Cove,5689.34
+2027-11-14,Sun,La Jolla Cove,5796.34
+2027-11-15,Mon,La Jolla Cove,3273.52
+2027-11-16,Tue,La Jolla Cove,2860.87
+2027-11-17,Wed,La Jolla Cove,2871.14
+2027-11-18,Thu,La Jolla Cove,3301.02
+2027-11-19,Fri,La Jolla Cove,4317.59
+2027-11-20,Sat,La Jolla Cove,5798.68
+2027-11-21,Sun,La Jolla Cove,5926.86
+2027-11-22,Mon,La Jolla Cove,3397.74
+2027-11-23,Tue,La Jolla Cove,2953.54
+2027-11-24,Wed,La Jolla Cove,2912.62
+2027-11-25,Thu,La Jolla Cove,4534.31
+2027-11-26,Fri,La Jolla Cove,5891.95
+2027-11-27,Sat,La Jolla Cove,5655.06
+2027-11-28,Sun,La Jolla Cove,5741.01
+2027-11-29,Mon,La Jolla Cove,3190.40
+2027-11-30,Tue,La Jolla Cove,2747.43
+2027-12-01,Wed,La Jolla Cove,2701.27
+2027-12-02,Thu,La Jolla Cove,3101.87
+2027-12-03,Fri,La Jolla Cove,4088.05
+2027-12-04,Sat,La Jolla Cove,5537.95
+2027-12-05,Sun,La Jolla Cove,5649.65
+2027-12-06,Mon,La Jolla Cove,3127.80
+2027-12-07,Tue,La Jolla Cove,2662.33
+2027-12-08,Wed,La Jolla Cove,2584.00
+2027-12-09,Thu,La Jolla Cove,2894.27
+2027-12-10,Fri,La Jolla Cove,3766.81
+2027-12-11,Sat,La Jolla Cove,5091.82
+2027-12-12,Sun,La Jolla Cove,5083.21
+2027-12-13,Mon,La Jolla Cove,2463.64
+2027-12-14,Tue,La Jolla Cove,1941.32
+2027-12-15,Wed,La Jolla Cove,1863.34
+2027-12-16,Thu,La Jolla Cove,2243.52
+2027-12-17,Fri,La Jolla Cove,3262.09
+2027-12-18,Sat,La Jolla Cove,4808.65
+2027-12-19,Sun,La Jolla Cove,5088.81
+2027-12-20,Mon,La Jolla Cove,2809.38
+2027-12-21,Tue,La Jolla Cove,2656.20
+2027-12-22,Wed,La Jolla Cove,2949.16
+2027-12-23,Thu,La Jolla Cove,3672.43
+2027-12-24,Fri,La Jolla Cove,4754.70
+2027-12-25,Sat,La Jolla Cove,7779.00
+2027-12-26,Sun,La Jolla Cove,7103.52
+2027-12-27,Mon,La Jolla Cove,4804.71
+2027-12-28,Tue,La Jolla Cove,4511.37
+2027-12-29,Wed,La Jolla Cove,4549.72
+2027-12-30,Thu,La Jolla Cove,4919.86
+2027-12-31,Fri,La Jolla Cove,6529.55

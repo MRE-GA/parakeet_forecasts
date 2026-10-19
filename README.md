@@ -103,6 +103,13 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
   variance fills in), `Year to date` (against target, months entered only) and `Reference` (2026
   finish and 2027 under the budget, today's run-rate and the target). Recalculated with LibreOffice
   on build; zero formula errors.
+* **Daily targets** (`report/build_daily_targets.py`, `outputs/Parakeet_2027_Daily_Targets.xlsx` and
+  `outputs/targets_2027_daily.csv`): each month's target, read from the targets workbook as sent, spread over
+  its days by the café's seasonal pattern from the run-rate's Prophet fit (day of week, time of year,
+  holidays). Beverly Hills uses its actual Jan–Oct 2026 weekday pattern instead: its weekdays caught up with
+  its weekends in 2026 (Tuesday to Sunday all about 100 against a Saturday of about 116 in 2025), while the
+  tuned model still expects strong weekends. Amounts are in cents and every month adds up exactly to its
+  target (a `Check` tab recomputes it: zero cents of difference).
 
 ## Approach
 
@@ -136,6 +143,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python src/runrate_scenario.py     # 2027 at today's deseasonalized run-rate (last 45 days)
 .venv/bin/python report/build_deck.py --ds /path/to/parakeet-cafe-design     # the budget-review deck
 .venv/bin/python report/build_targets.py --ds /path/to/parakeet-cafe-design  # run-rate review + manager targets (PDF, xlsx)
+.venv/bin/python report/build_daily_targets.py   # the monthly targets split into days (xlsx, csv), months unchanged
 ```
 
 The report needs the Parakeet Cafe design-system skill (brand fonts, logo, photography; not
@@ -159,6 +167,7 @@ src/hold_scenario.py                2027 with each café's trend held at its Sep
 src/import_budget.py                imports the investor budget workbook into data/
 src/runrate_scenario.py             2026 finish and 2027 at today's deseasonalized run-rate (last 45 days)
 report/build_targets.py             the run-rate review and manager-targets deck, and the targets workbook
+report/build_daily_targets.py       the 2027 targets by day, adding up to the monthly targets to the cent
 report/                             charts, HTML templates, PDF renderer (report and both decks)
 outputs/                            CSV results and the PDF
 ```

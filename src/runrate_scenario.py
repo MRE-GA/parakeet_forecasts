@@ -40,7 +40,9 @@ OUT = OUTPUTS / "runrate_45d_2027.csv"
 BUDGET = ROOT / "data" / "cfo_budget_2027.csv"
 
 
-def seasonal_runrate(sd, window_sales: np.ndarray) -> dict:
+def seasonal_model(sd):
+    """Prophet with the adopted settings, fitted on the café's normal trading days through ORIGIN (used only for
+    its seasonal pattern: weekly, yearly and holidays)."""
     from prophet import Prophet
 
     warnings.filterwarnings("ignore")
@@ -55,6 +57,11 @@ def seasonal_runrate(sd, window_sales: np.ndarray) -> dict:
                 holidays_prior_scale=c["holidays_prior_scale"], changepoint_range=c["changepoint_range"],
                 uncertainty_samples=0)
     m.fit(sd.train_days(ORIGIN))
+    return m
+
+
+def seasonal_runrate(sd, window_sales: np.ndarray) -> dict:
+    m = seasonal_model(sd)
 
     def factors(dates: pd.DatetimeIndex) -> np.ndarray:
         p = m.predict(pd.DataFrame({"ds": dates}))
