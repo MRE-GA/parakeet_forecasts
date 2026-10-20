@@ -104,7 +104,9 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
 * **Workbook**: `Targets 2027` (by store and month), `Monthly tracking` (managers enter actuals; the
   variance fills in), `Year to date` (against target, months entered only) and `Reference` (2026
   finish and 2027 under the investor budget, today's run-rate, our forecast and the target). Recalculated with
-  LibreOffice on build; zero formula errors.
+  LibreOffice on build; zero formula errors. The same script writes the 2027 run-rate (financial budget) in the
+  layout of the `Targets 2027` tab, one sheet: `outputs/Parakeet_2027_Run_Rate_Budget.xlsx` ($28.89M for the nine,
+  +3.9%; $29.76M with La Jolla Cove), the same months as the daily run-rate to the cent.
 * **Daily targets** (`report/build_daily_targets.py`, `outputs/Parakeet_2027_Daily_Targets.xlsx` and
   `outputs/targets_2027_daily.csv`): each month's target, and the run-rate by month, split over its days by the
   best daily model of the daily study (`daily/README.md`): Prophet with the extended special days × a tree model

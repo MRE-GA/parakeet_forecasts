@@ -44,6 +44,7 @@ from forecasting import OUTPUTS, STORE_START, load_daily  # noqa: E402
 
 PDF = OUTPUTS / "Parakeet_2027_Run_Rate_and_Targets.pdf"
 XLSX = OUTPUTS / "Parakeet_2027_Manager_Targets.xlsx"
+RUNRATE_XLSX = OUTPUTS / "Parakeet_2027_Run_Rate_Budget.xlsx"  # the run-rate in the targets tab's layout
 COVE = "La Jolla Cove"
 # Management adjustment, October 2026. Run-rate: 2027 set to this growth on the 2026 finish, for cafés whose last
 # 45 days read flat or lower; every 2027 month moves by one factor, so the seasons and the 2026 finish stay put.
@@ -579,35 +580,34 @@ def make_charts(n: dict) -> dict:
 # ------------------------------------------------------------------------------------------
 # Workbook: monthly targets and tracking
 # ------------------------------------------------------------------------------------------
-def export_xlsx(n: dict) -> dict:
-    from openpyxl import Workbook
+def xlsx_styles() -> dict:
+    from openpyxl.styles import Font, PatternFill, Side
+
+    arial = "Arial"
+    return {"title": Font(name=arial, size=14, bold=True), "bold": Font(name=arial, size=10, bold=True),
+            "normal": Font(name=arial, size=10), "blue": Font(name=arial, size=10, color="0000FF"),
+            "green": Font(name=arial, size=10, color="008000"), "muted": Font(name=arial, size=9, italic=True,
+                                                                              color="565A5C"),
+            "head_fill": PatternFill("solid", fgColor="F2F2F2"), "input_fill": PatternFill("solid", fgColor="FFF8DC"),
+            "thin": Side(style="thin", color="000000"), "money": '$#,##0;($#,##0);"-"', "pct": '0.0%;(0.0%);"-"'}
+
+
+def monthly_sheet(ws, n: dict, values: dict, sheet: str, heading: str, note: str) -> tuple[dict, dict]:
+    """One store-by-month table, the layout of 'Targets 2027': each store's months (values, by store key), quarters,
+    the year, its 2026 finish (run-rate) and growth, with the nine cafés' subtotal and the ten stores' total. Returns
+    each store's row and each header's column."""
     from openpyxl.comments import Comment
-    from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
+    from openpyxl.styles import Alignment, Border
     from openpyxl.utils import get_column_letter
 
-    wb = Workbook()
-    arial = "Arial"
-    title, bold, normal = Font(name=arial, size=14, bold=True), Font(name=arial, size=10, bold=True), Font(name=arial,
-                                                                                                          size=10)
-    blue = Font(name=arial, size=10, color="0000FF")
-    green = Font(name=arial, size=10, color="008000")
-    muted = Font(name=arial, size=9, italic=True, color="565A5C")
-    head_fill = PatternFill("solid", fgColor="F2F2F2")
-    input_fill = PatternFill("solid", fgColor="FFF8DC")
-    thin = Side(style="thin", color="000000")
-    money, pct_fmt = '$#,##0;($#,##0);"-"', '0.0%;(0.0%);"-"'
+    st = xlsx_styles()
+    title, bold, normal, blue, muted = st["title"], st["bold"], st["normal"], st["blue"], st["muted"]
+    head_fill, thin, money, pct_fmt = st["head_fill"], st["thin"], st["money"], st["pct"]
     stores = n["cafes"]
     months = [m.strftime("%b %Y") for m in M27]
-
-    # ---- Targets 2027 ------------------------------------------------------------------------
-    ws = wb.active
-    ws.title = "Targets 2027"
-    ws["A1"], ws["A1"].font = "Parakeet Café · 2027 sales targets by store", title
-    ws["A2"], ws["A2"].font = ("Net sales targets per month: each store's 2027 objective in the October 15 budget, "
-                               "spread over the months along our most accurate forecast (the blend of three "
-                               "forecasting models): see 'Reference'. La Jolla Cove gets the budget's remodeled $125K "
-                               "a month from its Oct 1, 2027 reopening. Blue = values from the analysis; black = "
-                               "formulas."), muted
+    ws.title = sheet
+    ws["A1"], ws["A1"].font = heading, title
+    ws["A2"], ws["A2"].font = note, muted
     hdr = ["Store"] + months + ["Q1", "Q2", "Q3", "Q4", "Total 2027", "2026 finish (run-rate)", "Growth"]
     for j, h in enumerate(hdr, start=1):
         cell = ws.cell(4, j, h)
@@ -624,7 +624,7 @@ def export_xlsx(n: dict) -> dict:
             continue
         rows[c["key"]] = r
         ws.cell(r, 1, c["name"]).font = normal
-        for i, v in enumerate(c["target"]):
+        for i, v in enumerate(values[c["key"]]):
             cell = ws.cell(r, 2 + i, round(float(v), 2))
             cell.font, cell.number_format = blue, money
         r += 1
@@ -665,6 +665,69 @@ def export_xlsx(n: dict) -> dict:
     for j in range(2, len(hdr) + 1):
         ws.column_dimensions[get_column_letter(j)].width = 12.5
     ws.freeze_panes = "B5"
+    return rows, col
+
+
+def recalc(path: Path, timeout: int = 60) -> dict:
+    """Recalculate a workbook with LibreOffice (the xlsx skill's script); fail on any formula error."""
+    script = next(RECALC.rglob("xlsx/scripts/recalc.py"), None)
+    if script is None:
+        print("note: recalc.py not found; workbook saved without cached values")
+        return {"status": "not recalculated"}
+    res = subprocess.run([sys.executable, str(script), str(path), str(timeout)], capture_output=True, text=True)
+    try:
+        out = json.loads(res.stdout[res.stdout.index("{"):])
+    except ValueError:
+        raise RuntimeError(f"recalc failed: {res.stdout}\n{res.stderr}")
+    if out.get("status") != "success":
+        raise RuntimeError(f"workbook has formula errors: {out}")
+    return out
+
+
+def runrate_months(n: dict) -> dict:
+    """2027 at today's run-rate by store and month, in cents: the run-rate objective of Part 1 (La Jolla Cove with the
+    remodeled $125K a month), split as the daily run-rate splits it, so the two files agree to the cent."""
+    return {c["key"]: split_cents(round(float(c["prop27"]), 2), np.asarray(c["path"][3:], dtype=float)) / 100
+            for c in n["cafes"]}
+
+
+def export_runrate_xlsx(n: dict) -> dict:
+    """The 2027 run-rate (financial budget) in the layout of the 'Targets 2027' tab, one sheet."""
+    from openpyxl import Workbook
+
+    a = n["adj_text"]
+    wb = Workbook()
+    monthly_sheet(
+        wb.active, n, runrate_months(n), "Run-rate 2027", "Parakeet Café · 2027 run-rate by store (financial budget)",
+        "Net sales per month at today's run-rate: the last 45 days of Toast sales (Aug 31 – Oct 14, 2026), seasonally "
+        f"adjusted and held flat with normal seasons, as in Part 1 of the run-rate deck; {a['rr']} on 2026 set by "
+        "management. La Jolla Cove gets the budget's remodeled $125K a month from its Oct 1, 2027 reopening. Blue = "
+        "values from the analysis; black = formulas.")
+    wb.save(RUNRATE_XLSX)
+    return recalc(RUNRATE_XLSX)
+
+
+def export_xlsx(n: dict) -> dict:
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Border
+    from openpyxl.utils import get_column_letter
+
+    wb = Workbook()
+    st = xlsx_styles()
+    title, bold, normal, blue, green, muted = (st["title"], st["bold"], st["normal"], st["blue"], st["green"],
+                                               st["muted"])
+    head_fill, input_fill, thin, money, pct_fmt = st["head_fill"], st["input_fill"], st["thin"], st["money"], st["pct"]
+    stores = n["cafes"]
+    months = [m.strftime("%b %Y") for m in M27]
+
+    # ---- Targets 2027 ------------------------------------------------------------------------
+    rows, col = monthly_sheet(
+        wb.active, n, {c["key"]: c["target"] for c in stores}, "Targets 2027",
+        "Parakeet Café · 2027 sales targets by store",
+        "Net sales targets per month: each store's 2027 objective in the October 15 budget, spread over the months along "
+        "our most accurate forecast (the blend of three forecasting models): see 'Reference'. La Jolla Cove gets the "
+        "budget's remodeled $125K a month from its Oct 1, 2027 reopening. Blue = values from the analysis; black = "
+        "formulas.")
 
     # ---- Monthly tracking ------------------------------------------------------------------------
     tr = wb.create_sheet("Monthly tracking")
@@ -814,18 +877,7 @@ def export_xlsx(n: dict) -> dict:
     rf.row_dimensions[4].height = 30
 
     wb.save(XLSX)
-    script = next(RECALC.rglob("xlsx/scripts/recalc.py"), None)
-    if script is None:
-        print("note: recalc.py not found; workbook saved without cached values")
-        return {"status": "not recalculated"}
-    res = subprocess.run([sys.executable, str(script), str(XLSX), "60"], capture_output=True, text=True)
-    try:
-        out = json.loads(res.stdout[res.stdout.index("{"):])
-    except ValueError:
-        raise RuntimeError(f"recalc failed: {res.stdout}\n{res.stderr}")
-    if out.get("status") != "success":
-        raise RuntimeError(f"workbook has formula errors: {out}")
-    return out
+    return recalc(XLSX)
 
 
 # ------------------------------------------------------------------------------------------
@@ -854,6 +906,7 @@ def main() -> None:
         shutil.copy(ds / "assets" / f, BUILD / "assets" / Path(f).name)
     n = collect()
     print("workbook:", export_xlsx(n))
+    print("run-rate workbook:", export_runrate_xlsx(n))
     html = render(n, make_charts(n))
     print(f"HTML -> {html.relative_to(ROOT)}")
     if not args.no_pdf:
