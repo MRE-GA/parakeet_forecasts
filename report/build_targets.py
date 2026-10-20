@@ -231,8 +231,6 @@ def collect() -> dict:
         out["bg"] = out["b27"] / out["b26"] - 1
         out["tg"] = out["target27"] / out["rr26"] - 1
         out["fc27"] = out["fc_m"].sum()
-        out["fc_g"] = out["fc27"] / out["rr26"] - 1  # growth in our forecast
-        out["adj_fc"] = out["target27"] / out["fc27"] - 1
         out["ramp"] = out["target"] / out["path"][3:] - 1  # each month's target over today's level
         out["t_vs_rr"] = out["target27"] - out["prop27"]
         out["t_vs_b"] = out["target27"] - out["b27"]
@@ -257,8 +255,6 @@ def collect() -> dict:
     n["ask_lo"], n["ask_hi"] = by_ask[0], by_ask[-2:][::-1]
     n["qtr"] = quarterly_same_store([C[s] for s in nine])
     n["rr_set"] = [C[s] for s in nine if C[s]["rr_set"]]  # cafés whose run-rate management set (in deck order)
-    by_adj = sorted((C[s] for s in nine), key=lambda c: c["adj_fc"])
-    n["adj_lo"], n["adj_hi"] = by_adj[0], by_adj[-1]  # furthest below and above the forecast
     n["adj_text"] = adjustments_text(n)
     for c in cafes:
         c.update(story(c))
@@ -434,19 +430,18 @@ def story(c: dict) -> dict:
     o["t_h1"] = f"{name}: 2027 target {fa(c['target27'])}, {pct(c['tg'])} on 2026"
     # the summary line under the target page
     ask = f"{apct(c['ask'])} over {rr_name} (about {fk(c['t_vs_rr'] / 12)} a month)"
-    vs_fc = f"{apct(c['adj_fc'])} {'over' if c['adj_fc'] > 0 else 'under'} our forecast of {fa(c['fc27'])}"
     if s == COVE:
         o["t_line"] = (f"{fa(c['target27'])} for 2027, its objective in the October 15 budget: flat on 2026 to "
                        f"September ({fa(c['target'][:9].sum())}), then the remodeled $125K a month.")
     elif s in ("La Jolla", "La Jolla Juicery"):
         o["t_line"] = (f"{fa(c['target27'])} for 2027: its share of La Jolla Café & Juicery's line in the October 15 "
-                       f"budget, {vs_fc} (the same for the two); {pct(c['tg'])} on 2026, {ask}.")
+                       f"budget; {pct(c['tg'])} on 2026, {ask}.")
     elif s == "Brentwood":
         o["t_line"] = (f"{fa(c['target27'])} for 2027, its objective in the October 15 budget, asks Brentwood to grow "
-                       f"again after a flat 2026: {ask}; {vs_fc}.")
+                       f"again after a flat 2026: {pct(c['tg'])} on 2026, {ask}.")
     else:
-        o["t_line"] = (f"{fa(c['target27'])} for 2027, its objective in the October 15 budget: {vs_fc}; "
-                       f"{pct(c['tg'])} on 2026, {ask}.")
+        o["t_line"] = (f"{fa(c['target27'])} for 2027, its objective in the October 15 budget: {pct(c['tg'])} on "
+                       f"2026, {ask}.")
     return o
 
 
@@ -491,7 +486,7 @@ def trend_parts(group: list[dict], months_act) -> tuple[dict, dict]:
     """The two series behind the Part 2 chart, for one café or a group: monthly sales, and the same without the
     season (each café's sales per normal day as a monthly equivalent, added up across the group). Oct-Dec 2026:
     the estimate on top (actual to Oct 14, then the run-rate), the run-rate alone below. The dashed reference
-    ('budget' key) is our forecast, the path the targets follow."""
+    ('budget' key) is our forecast, the path the targets follow (not drawn on the pages)."""
     def total(f):
         return np.sum([f(c) for c in group], axis=0)
 
@@ -507,9 +502,9 @@ def trend_parts(group: list[dict], months_act) -> tuple[dict, dict]:
 
 
 def target_year_labels(months, act: pd.Series, first_full: pd.Period, rr26: float, target27: float, tg: float,
-                       prop27: float, fc27: float, cove: bool = False) -> list[tuple]:
+                       prop27: float, cove: bool = False) -> list[tuple]:
     """Year labels for the Part 2 charts: each year's sales with its growth on the year before (when both years
-    were traded in full), then the 2027 target against today's run-rate and our forecast."""
+    were traded in full), then the 2027 target against today's run-rate."""
     full = lambda y: first_full <= pd.Period(f"{y}-01", "M")  # noqa: E731
     tot = {y: act[act.index.year == y].sum() for y in range(2022, 2026)}
     tot[2026] = rr26
@@ -517,7 +512,7 @@ def target_year_labels(months, act: pd.Series, first_full: pd.Period, rr26: floa
     for y in sorted({m.year for m in months}):
         if y == 2027:
             labels[y] = (f"2027 target {fa(target27)}, {pct(tg)}\n"
-                         f"{'with remodel' if cove else 'run-rate'} {fa(prop27)} · forecast {fa(fc27)}")
+                         f"{'with remodel' if cove else 'run-rate'} {fa(prop27)}")
         elif not full(y):
             labels[y] = f"{y}\nfrom {months[0].strftime('%b')}"
         else:
@@ -549,14 +544,13 @@ def make_charts(n: dict) -> dict:
     out["targets_dots"] = dc.growth_dots(
         [c["short"] for c in nine],
         [("Run-rate", [c["rr_g"] for c in nine], "o", charts.INK),
-         ("Our forecast", [c["fc27"] / c["rr26"] - 1 for c in nine], "D", dc.BUDGET),
          ("2027 target", [c["tg"] for c in nine], "o", charts.PINK)],
         size=(7.2, 4.0), name="targets-dots", label_fmt="{:+.1%}")
     mo, tr = trend_parts(nine, act9.index)
     out["targets9"] = dc.target_trend(
         months, mo, tr, target_year_labels(months, t9["act"], max(c["first_full"] for c in nine), t9["rr26"],
-                                           t9["target27"], t9["tg"], t9["prop27"], t9["fc27"]),
-        money="m", run_label="Run-rate", name="targets-nine", ref_label="Our forecast")
+                                           t9["target27"], t9["tg"], t9["prop27"]),
+        money="m", run_label="Run-rate", name="targets-nine", ref_label=None)
     for c in n["cafes"]:
         act = c["act"].loc[chart_start(c["key"]):pd.Period("2026-09", "M")]
         months = list(act.index) + list(FC)
@@ -575,9 +569,9 @@ def make_charts(n: dict) -> dict:
         mo, tr = trend_parts([c], act.index)
         tt = dc.target_trend(months, mo, tr,
                              target_year_labels(months, c["act"], c["first_full"], c["rr26"], c["target27"], c["tg"],
-                                                c["prop27"], c["fc27"], cove=cove),
+                                                c["prop27"], cove=cove),
                              run_label=("Run-rate + remodel" if cove else "Run-rate (adjusted)" if c["rr_set"]
-                                        else "Today's run-rate"), name=f"tt-{c['key']}", ref_label="Our forecast")
+                                        else "Today's run-rate"), name=f"tt-{c['key']}", ref_label=None)
         out["cafe"][c["key"]] = {"rr": rr_chart, "targets": tt}
     return out
 

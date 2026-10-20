@@ -97,8 +97,8 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
   the nine, exactly the budget (+10.3% on the run-rate's 2026 finish; 6.2% over the run-rate, from today's level in
   January to 11% over it in December) and $868K for La Jolla Cove (flat on 2026 to September, then $125K a month),
   $31.53M in all. One page per store with monthly and quarterly targets and what each asks over today's level.
-  Each page's chart runs from the 2024 actuals to the 2027 target (today's run-rate and our forecast for
-  reference), with the same history without the season underneath, so the target can be read against the café's
+  Each page's chart runs from the 2024 actuals to the 2027 target (today's run-rate for reference;
+  the deck does not show the forecast itself), with the same history without the season underneath, so the target can be read against the café's
   own trend (seasonal factors from the run-rate's Prophet fit: `outputs/runrate_45d_seasonal_by_month.csv`). Part 1
   is unchanged.
 * **Workbook**: `Targets 2027` (by store and month), `Monthly tracking` (managers enter actuals; the

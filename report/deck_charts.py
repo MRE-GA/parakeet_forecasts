@@ -432,12 +432,14 @@ def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", 
     """The 2027 target as the continuation of the café's trend.
 
     Top: monthly sales, from the actual months to the Oct-Dec 2026 estimate (dotted) and the 2027 target (pink),
-    with today's run-rate (light gray) and a reference (dashed, labelled ref_label) for reference. Bottom: the same
-    without the season (each month divided by its usual seasonal pattern, as a monthly equivalent), so the target's
-    slope can be read against the café's own trend.
+    with today's run-rate (light gray) and a reference (dashed, labelled ref_label; none if ref_label is None) for
+    reference. Bottom: the same without the season (each month divided by its usual seasonal pattern, as a monthly
+    equivalent), so the target's slope can be read against the café's own trend.
 
     monthly / trend: dicts of 'actual' (per actual month), 'est26' (Oct-Dec 2026), and 'target', 'run', 'budget' (the
-    dashed reference; per 2027 month); months: the actual months followed by Oct 2026 - Dec 2027."""
+    dashed reference, only read with a ref_label; per 2027 month); months: the actual months followed by Oct 2026 -
+    Dec 2027."""
+    keys = ["actual", "est26", "target", "run"] + (["budget"] if ref_label is not None else [])
     fmt = FuncFormatter(money_k if money == "k" else money_m)
     fig = plt.figure(figsize=size)
     gs = fig.add_gridspec(2, 1, height_ratios=[2.45, 1.55], hspace=0.08)
@@ -450,18 +452,19 @@ def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", 
         a.plot(np.arange(n), act, color=INK, lw=2)
         a.plot(x26, np.r_[act[-1], est], color=INK, lw=1.8, ls=(0, (1.1, 1.6)))
         a.plot(x27, np.r_[est[-1], s["run"]], color=G400, lw=1.5, zorder=1)
-        a.plot(x27, np.r_[est[-1], s["budget"]], color=BUDGET, lw=1.6, ls=(0, (4, 2.5)), zorder=1)
+        if ref_label is not None:
+            a.plot(x27, np.r_[est[-1], s["budget"]], color=BUDGET, lw=1.6, ls=(0, (4, 2.5)), zorder=1)
         a.plot(x27, np.r_[est[-1], s["target"]], color=PINK, lw=2.5, zorder=3)
         a.yaxis.set_major_formatter(fmt)
         _month_axis(a, months)
-    ys = np.r_[monthly["actual"], monthly["est26"], monthly["target"], monthly["run"], monthly["budget"]]
+    ys = np.concatenate([np.asarray(monthly[k], dtype=float) for k in keys])
     ax.set_ylim(np.nanmin(ys) * 0.7, np.nanmax(ys) * 1.08)
     ax.yaxis.set_major_locator(plt.MaxNLocator(4))
     ax.tick_params(labelbottom=False)
     for (y0, y1, label) in year_labels:
         ax.text((y0 + y1) / 2, 1.03, esc(label), ha="center", va="bottom", fontsize=8.2, color=G700, linespacing=1.4,
                 transform=ax.get_xaxis_transform())
-    ys = np.r_[trend["actual"], trend["est26"], trend["target"], trend["run"], trend["budget"]]
+    ys = np.concatenate([np.asarray(trend[k], dtype=float) for k in keys])
     lo, hi = np.nanmin(ys), np.nanmax(ys)
     ax2.set_ylim(lo - 0.08 * (hi - lo), hi + 0.2 * (hi - lo))
     ax2.yaxis.set_major_locator(plt.MaxNLocator(3))
@@ -469,11 +472,13 @@ def target_trend(months, monthly: dict, trend: dict, year_labels=(), money="k", 
     ax2.grid(False, axis="x")
     ax2.text(0.005, 0.97, "Without the season (monthly equivalent)", transform=ax2.transAxes, ha="left", va="top",
              fontsize=7.8, color=G700)
-    _legend(ax2, [Line2D([], [], color=INK, lw=2), Line2D([], [], color=INK, lw=1.8, ls=(0, (1.1, 1.6))),
-                  Line2D([], [], color=PINK, lw=2.5), Line2D([], [], color=G400, lw=1.5),
-                  Line2D([], [], color=BUDGET, lw=1.6, ls=(0, (4, 2.5)))],
-            ["Actual", "Estimate, Oct–Dec 2026", "2027 target", run_label, ref_label],
-            loc="upper left", ncol=5, bbox_to_anchor=(0, -0.2), columnspacing=1.1)
+    handles = [Line2D([], [], color=INK, lw=2), Line2D([], [], color=INK, lw=1.8, ls=(0, (1.1, 1.6))),
+               Line2D([], [], color=PINK, lw=2.5), Line2D([], [], color=G400, lw=1.5)]
+    labels = ["Actual", "Estimate, Oct–Dec 2026", "2027 target", run_label]
+    if ref_label is not None:
+        handles.append(Line2D([], [], color=BUDGET, lw=1.6, ls=(0, (4, 2.5))))
+        labels.append(ref_label)
+    _legend(ax2, handles, labels, loc="upper left", ncol=len(labels), bbox_to_anchor=(0, -0.2), columnspacing=1.1)
     return to_svg(fig, name)
 
 
