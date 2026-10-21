@@ -137,7 +137,9 @@ left November and December 2026 out and borrowed Jan 1–2, 2028 from 2027.
   8.8%, Del Mar 8.6% and La Jolla Café 9.8% apart, under the 10% rule). The beach peaks in summer; Brentwood and
   Beverly Hills sell least in summer.
 * **Deck**: summary, method, the calendar, the types at a glance, then for each store its year week by week and one
-  page per type (sales and checks by hour, Mon–Sun). The holiday weeks with a template of their own are in an
+  page per type: sales and checks by hour, Mon–Sun; under it the holidays in its weeks that move their day most (up to
+  ten, at least 5%: the run-rate's day against the template's same weekday); at the side, a chart of its weeks
+  against the template (one dot per week, the lowest and highest named). The holiday weeks with a template of their own are in an
   appendix (a list in date order, then one page each); in the workbook, the `Holiday weeks` sheet.
 * **Holiday weeks**: weeks with a special day (the daily model's list) and spring break count a quarter in the split
   and nothing in a type's level; 21 of them sell 10% more or less than their type and get a template of their own

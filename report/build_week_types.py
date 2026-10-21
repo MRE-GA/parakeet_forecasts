@@ -90,6 +90,14 @@ def mlabel(d: pd.Timestamp) -> str:
     return f"{d:%b} {d.year}" if d.month == 1 else f"{d:%b}"
 
 
+DAY_NAME = {"Holiday week": "Christmas–New Year's", "Dec 26": "Day after Christmas"}
+
+
+def day_name(lab: str) -> str:
+    """A special day's name on the pages."""
+    return DAY_NAME.get(lab, lab.replace(" (observed)", ", observed"))
+
+
 def and_join(items: list[str]) -> str:
     return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
 
@@ -114,7 +122,7 @@ def day_parts(t: T.Template) -> list[float]:
 
 
 def heat_table(t: T.Template, vmax: float) -> str:
-    special = [lab.replace(" (observed)", ", observed") for lab in (t.special or [""] * 7)]
+    special = [day_name(lab) if lab else "" for lab in (t.special or [""] * 7)]
     head = "".join(f"<th class='sp'>{c}<small>{lab}</small></th>" if lab else f"<th>{c}</th>"
                    for c, lab in zip(t.columns, special))
     rows = [f"<table class='heat'><thead><tr><th class='hr'></th>{head}<th class='tot'>Week</th></tr></thead><tbody>"]
@@ -197,17 +205,42 @@ def week_heads() -> list[str]:
     return [f"{week_start(w):%b} {week_start(w).day}" if w % 4 == 1 else "" for w in range(1, N_WEEKS + 1)]
 
 
-def chips(ty_weeks: list[int], wt: pd.DataFrame, own: dict[int, str]) -> list[dict]:
-    """Every week a template is used in: its Monday and its own run-rate against the template."""
-    out = []
-    for w in ty_weeks:
-        r = wt.loc[w]
-        label = f"{week_start(w):%b} {week_start(w).day}"
-        if w in own:
-            out.append({"label": label, "vs": None, "own": SHORT.get(own[w], own[w].removesuffix(" week"))})
-        else:
-            out.append({"label": label, "vs": r.vs_template, "own": None})
-    return out
+def spread_svg(fit: pd.DataFrame, w: int = 250) -> str:
+    """Each week of a type against its template: one dot per week (0 = the template) stacked in 1-point bins, a bar
+    from the lowest week to the highest, and the two ends named."""
+    vs = fit.vs_template.to_numpy() * 100
+    lim = max(5.0, float(np.ceil(np.abs(vs).max() / 5) * 5))
+    pad, step = 14, 6.5
+    X = lambda v: pad + (v + lim) / (2 * lim) * (w - 2 * pad)  # noqa: E731
+    bins = np.floor(vs).astype(int)
+    tallest = max(np.unique(bins, return_counts=True)[1])
+    base = 22 + step * tallest  # the axis, under the tallest stack
+    h = base + 46
+    lo, hi = vs.min(), vs.max()
+    s = [f'<svg viewBox="0 0 {w} {h:.0f}" width="{w}" height="{h:.0f}" class="spread">',
+         f'<rect x="{X(lo):.1f}" y="{base - step * tallest - 4:.1f}" width="{max(X(hi) - X(lo), 1):.1f}" '
+         f'height="{step * tallest + 4:.1f}" fill="#eceeef"/>',
+         f'<line x1="{X(0):.1f}" x2="{X(0):.1f}" y1="14" y2="{base}" stroke="#000" stroke-width="1.4"/>'
+         f'<text x="{X(0):.1f}" y="10" text-anchor="middle" class="tl">Template</text>',
+         f'<line x1="{pad}" x2="{w - pad}" y1="{base}" y2="{base}" stroke="#82888a"/>']
+    for v in np.arange(-lim, lim + 0.1, 5):
+        s.append(f'<line x1="{X(v):.1f}" x2="{X(v):.1f}" y1="{base}" y2="{base + 4}" stroke="#82888a"/>'
+                 f'<text x="{X(v):.1f}" y="{base + 14}" text-anchor="middle" class="ax">'
+                 f'{"0" if v == 0 else f"{v:+.0f}%".replace("-", "−")}</text>')
+    seen: dict[int, int] = {}
+    for v, k in sorted(zip(vs, bins)):
+        n = seen.get(k, 0)
+        seen[k] = n + 1
+        col = "#ef4b81" if abs(v) >= 5 else "#373a3c"
+        s.append(f'<circle cx="{X(v):.1f}" cy="{base - 4 - step * n:.1f}" r="3" fill="{col}" fill-opacity=".85"/>')
+    for v, anchor, word, mon in ((lo, "start", "Lowest", fit.monday.iloc[int(np.argmin(vs))]),
+                                 (hi, "end", "Highest", fit.monday.iloc[int(np.argmax(vs))])):
+        d = pd.Timestamp(mon)
+        x = pad - 6 if anchor == "start" else w - pad + 6
+        pct_s = f"{v:+.1f}%".replace("-", "−")
+        s.append(f'<text x="{x}" y="{base + 30}" text-anchor="{anchor}" class="tl">{word} {pct_s}</text>'
+                 f'<text x="{x}" y="{base + 42}" text-anchor="{anchor}" class="ax">week of {d:%b} {d.day}</text>')
+    return "".join(s) + "</svg>"
 
 
 # ------------------------------------------------------------------------------------------
@@ -242,10 +275,15 @@ def collect() -> dict:
                     if lab == "Spring break":
                         continue
                     v = rr.loc[dt, s]
-                    notes.append({"day": lab.replace(" (observed)", ", observed"),
-                                  "date": f"{dt:%a %b} {dt.day}, {dt.year}", "sales": v, "vs": v / d[dt.dayofweek] - 1})
+                    notes.append({"day": day_name(lab), "when": dt,
+                                  "date": f"{dt:%a %b} {dt.day}, {dt.year}", "short": f"{dt:%b} {dt.day}",
+                                  "dow": DAYS[dt.dayofweek], "sales": v, "base": d[dt.dayofweek],
+                                  "vs": v / d[dt.dayofweek] - 1})
+            # under the template: the holidays that move their day most (at least 5%), up to ten, in date order
             notes.sort(key=lambda r: -abs(r["vs"]))
-            keep = 3 if name == REMODELED or len(sw.ranges(name)) > 1 else 4  # room left in the side column
+            big = [x for x in notes if abs(x["vs"]) >= 0.05]
+            cards = sorted(big[:10], key=lambda x: x["when"])
+            rest = notes[len(cards):]
             own = [{"name": sw.holiday[w], "week": w} for w in sorted(sw.holiday) if sw.label[w] == name]
             weekly = sw.weekly[reg]
             fit = reg_w[reg_w.template == name]
@@ -256,9 +294,10 @@ def collect() -> dict:
                 "checks": int(t.checks.sum()), "avg_check": t.week_sales / max(t.checks.sum(), 1),
                 "peak": f"{DAYS[pk[1]]} {hour_label(t.hours[pk[0]])}", "peak_sales": t.sales[pk],
                 "weekend": (d[5] + d[6]) / 2 / d[:5].mean() - 1, "lo": weekly.min(), "hi": weekly.max(),
-                "busiest_day": DAYS[int(np.argmax(d))], "notes": notes[:keep], "more_notes": max(len(notes) - keep, 0),
-                "more_max": max((abs(x["vs"]) for x in notes[keep:]), default=0.0),
-                "own": own, "chips": chips(t.weeks, wt, sw.holiday), "parts": day_parts(t),
+                "busiest_day": DAYS[int(np.argmax(d))], "cards": cards, "more_notes": len(rest),
+                "more_max": max((abs(x["vs"]) for x in rest), default=0.0),
+                "own": own, "spread": spread_svg(fit), "parts": day_parts(t),
+                "within5": float((fit.vs_template.abs() < 0.05).mean()),
                 "fit_week": fit.vs_template.abs().mean(), "fit_day": fit.day_gap_abs.sum() / fit.week_sales.sum(),
             })
         hols = []
@@ -268,7 +307,7 @@ def collect() -> dict:
             days = []
             for j, (dt, lab) in enumerate(zip(t.dates, t.special)):
                 if lab:
-                    days.append({"day": lab.replace(" (observed)", ", observed"),
+                    days.append({"day": day_name(lab),
                                  "date": f"{dt:%a %b} {dt.day}, {dt.year}", "sales": t.day_sales[j],
                                  "vs": t.day_sales[j] / base.day_sales[j] - 1})
             first, last = t.dates[0], t.dates[-1]
