@@ -66,6 +66,12 @@ def week_of(d: pd.Timestamp) -> int:
     return (d - WEEK1).days // 7 + 1
 
 
+def window_week(dates) -> np.ndarray:
+    """The week of the 52 any day falls in, counting whole 52-week years (364 days) back or forward: a past day takes
+    the week of the same weekday a year (or two) on, so it can be matched to that week's type."""
+    return ((pd.DatetimeIndex(dates) - WEEK1).days.to_numpy() // 7) % N_WEEKS + 1
+
+
 # ------------------------------------------------------------------------------------------
 # The run-rate by day and week
 # ------------------------------------------------------------------------------------------

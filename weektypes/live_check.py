@@ -21,7 +21,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import hourly as H  # noqa: E402
-from model import DISPLAY, OUT, ROOT, RUNRATE_26, STORES  # noqa: E402
+from model import DISPLAY, OUT, ROOT, RUNRATE_26, STORES, classify, window_week  # noqa: E402
 from templates import store_patterns  # noqa: E402
 
 LIVE = ROOT / "data" / "raw" / "parakeet_toast_hourly_live.csv"
@@ -49,14 +49,16 @@ def main(paths: list[str]) -> None:
     rr = pd.read_csv(RUNRATE_26, parse_dates=["date"])
     rr = rr.assign(store=rr.store.map(back)).set_index(["store", "date"]).runrate
     h = H.load()
+    weeks = classify()
     rows = []
     for s in STORES:
-        hours, pat, chk, _ = store_patterns(h, s)
+        hours, pat, chk, _ = store_patterns(h, s, weeks[s].label)
         g = live[live.store == s].copy()
         g["hour"] = hours.fold(g.hour.to_numpy())
         for d, gd in g.groupby("date"):
             a = gd.groupby("hour")[["net_sales", "checks"]].sum().reindex(hours.shown).fillna(0)
-            p, c = pat[d.dayofweek], chk[d.dayofweek]
+            p = pat.get(d.dayofweek, (weeks[s].label[window_week([d])[0]],))
+            c = chk[d.dayofweek]
             run = rr[(s, d)]
             rows.append({"store": DISPLAY[s], "date": d.date(), "actual": a.net_sales.sum(), "runrate": run,
                          "hour_err": np.abs(a.net_sales - p * run).sum(),

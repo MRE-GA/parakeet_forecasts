@@ -28,7 +28,7 @@ sys.path.insert(0, str(ROOT / "report"))
 
 from build_report import BUILD, copy_assets, find_design_system  # noqa: E402  (first: it imports src/backtest.py)
 import templates as T  # noqa: E402
-from hourly import CHECK_MONTHS, RECENCY_HALF_LIFE  # noqa: E402
+from hourly import CHECK_MONTHS, DAYPARTS, RECENCY_HALF_LIFE, SEASON_SHIFT  # noqa: E402
 from model import (COVE, DAYS, DISPLAY, HOURS_FROM, LAST_DAY, MIN_RUN, N_WEEKS, REMODELED, STEP, STORES,  # noqa: E402
                    runrate_days, week_start)
 
@@ -105,6 +105,12 @@ def shade(v: float, vmax: float) -> tuple[str, str]:
 
 def hour_label(h: int) -> str:
     return f"{(h - 1) % 12 + 1}{'am' if h < 12 else 'pm'}"
+
+
+def day_parts(t: T.Template) -> list[float]:
+    """Share of the week's sales before 11am, from 11am to 2pm and after 2pm."""
+    tot = t.sales.sum()
+    return [t.sales[[i for i, hr in enumerate(t.hours) if lo <= hr <= hi]].sum() / tot for lo, hi in DAYPARTS]
 
 
 def heat_table(t: T.Template, vmax: float) -> str:
@@ -252,7 +258,7 @@ def collect() -> dict:
                 "weekend": (d[5] + d[6]) / 2 / d[:5].mean() - 1, "lo": weekly.min(), "hi": weekly.max(),
                 "busiest_day": DAYS[int(np.argmax(d))], "notes": notes[:keep], "more_notes": max(len(notes) - keep, 0),
                 "more_max": max((abs(x["vs"]) for x in notes[keep:]), default=0.0),
-                "own": own, "chips": chips(t.weeks, wt, sw.holiday),
+                "own": own, "chips": chips(t.weeks, wt, sw.holiday), "parts": day_parts(t),
                 "fit_week": fit.vs_template.abs().mean(), "fit_day": fit.day_gap_abs.sum() / fit.week_sales.sum(),
             })
         hols = []
@@ -270,22 +276,24 @@ def collect() -> dict:
                          "heat": heat_table(t, vmax), "dates": dspan(first, last), "type": sw.label[w],
                          "type_color": COLOR[sw.label[w]], "type_ink": INK_ON[sw.label[w]], "total": t.week_sales,
                          "vs": t.week_sales / base.week_sales - 1, "base": base.week_sales, "days": days,
-                         "checks": int(t.checks.sum()), "avg_check": t.week_sales / max(t.checks.sum(), 1)})
+                         "checks": int(t.checks.sum()), "avg_check": t.week_sales / max(t.checks.sum(), 1),
+                         "parts": day_parts(t)})
         steps = [ty["vs_below"] for ty in types if ty["vs_below"] is not None]
         rows = len(sw.types) + len(sw.holiday)
         small_step = len(regular_types) == 2 and steps and steps[0] < STEP
         stores.append({"key": s, "name": DISPLAY[s], "weeks": sw, "types": types, "hols": hols,
                        "n": len(regular_types), "n_word": NUM[len(regular_types)],
                        # the chart gives way to the table on stores with many rows
-                       "svg": weekly_svg(sw, temps[s], h=max(150, min(250, 430 - 30 * rows))),
+                       "svg": weekly_svg(sw, temps[s], h=max(130, min(260, 470 - 32 * rows))),
                        "small_step": small_step, "step": steps[0] if steps else None,
                        "hours": f"{hour_label(temps[s][0].hours[0])}–{hour_label(temps[s][0].hours[-1] + 1)}",
                        "cove": s == COVE, "fit_week": reg_w.vs_template.abs().mean(),
                        "fit_day": reg_w.day_gap_abs.sum() / reg_w.week_sales.sum(),
                        "far": reg_w.vs_template.abs().max()})
     bt = pd.read_csv(BACKTEST)
+    hl = RECENCY_HALF_LIFE
     agg = bt.groupby(["test", "method"])[["err", "sales"]].sum()
-    err = (agg.err / agg.sales * 100).round(1)
+    err = (agg.err / agg.sales * 100).round(2)
     live = pd.read_csv(LIVE)
     lv = live.groupby("store", sort=False)[["actual", "runrate", "hour_err", "checks", "checks_expected"]].sum()
     lv_all = lv.sum()
@@ -301,17 +309,31 @@ def collect() -> dict:
          "n_hol": sum(len(st["hols"]) for st in stores),
          "hol_stores": [st["name"] for st in stores if st["hols"]],
          "no_hol_stores": [st["name"] for st in stores if not st["hols"]],
-         "bt": {"weekday": err[("1 pattern", "weekday")], "type": err[("1 pattern", "type x weekday")],
+         "bt": {"weekday": (err[("1 pattern", "weekday")], err[("2 recency", f"weekday, half-life {hl}")]),
+                "half": (err[("1 pattern", "weekday x half the type shift by hour")],
+                         err[("2 recency", f"weekday x half the type shift by hour, half-life {hl}")]),
+                "full": (err[("1 pattern", "weekday x type shift by hour")],
+                         err[("2 recency", f"weekday x type shift by hour, half-life {hl}")]),
+                "type": err[("1 pattern", "type x weekday")],
                 "sp_own": err[("1 special days", "special day: its own pattern")],
-                "sp_type": err[("1 special days", "special day: type x weekday")],
-                "hl_none": err[("2 recency", "half-life none")],
-                "hl": err[("2 recency", f"half-life {RECENCY_HALF_LIFE}")],
+                "sp_type": err[("1 special days", "special day: the weekday's pattern with its type's shift")],
+                "hl_none": err[("2 recency", "weekday x half the type shift by hour, half-life none")],
                 "chk": err[("2 average check", f"check: last {CHECK_MONTHS} months")]},
+         "season_shift": SEASON_SHIFT,
          "check": T.check_totals(weeks, temps, rr),
          "last_day": LAST_DAY, "hours_from": HOURS_FROM, "half_life": RECENCY_HALF_LIFE,
          "check_months": CHECK_MONTHS, "min_run": MIN_RUN, "step": STEP,
          "w1": week_start(1), "w52": week_start(N_WEEKS) + pd.Timedelta(days=6), "COLOR": COLOR, "INK_ON": INK_ON}
     n["total_rr"] = float(rr.sum().sum())
+    # where summer weeks put more of the day into the afternoon: the busiest type against the quietest
+    later = []
+    for st in stores:
+        reg = [ty for ty in st["types"] if ty["name"] != REMODELED]
+        lo, hi = reg[0], reg[-1]
+        if hi["parts"][2] - lo["parts"][2] >= 0.005:
+            later.append({"name": st["name"], "hi": hi["parts"][2], "lo": lo["parts"][2], "hi_t": hi["name"],
+                          "lo_t": lo["name"]})
+    n["later"] = sorted(later, key=lambda x: x["lo"] - x["hi"])
     n["live"]["lo"] = min(n["live"]["stores"], key=lambda x: x["sales"])
     n["live"]["hi"] = max(n["live"]["stores"], key=lambda x: x["sales"])
     cor = next(st for st in stores if st["key"] == "Coronado")

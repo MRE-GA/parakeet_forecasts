@@ -94,11 +94,11 @@ table.sum .tbadge{font-size:8px;padding:3px 7px 2px}
   <h1>Two to four types of week per café, each with its own week by day and hour</h1>
   <div class="row" style="margin-top:10px">
     <div class="col flist" style="flex:1.35">
-      <div class="finding"><div class="num">01</div><p><b>Two to four types per café.</b> A new type only where its weeks sell {{ "%.0f" | format(n.step * 100) }}% more than the type below, in runs of {{ n.min_run }} weeks or more. Four: {{ n.n_by_k[4] | and_join }}. Three: {{ n.n_by_k[3] | and_join }}. Two (the minimum): {{ n.n_by_k[2] | and_join }}.</p></div>
-      <div class="finding"><div class="num">02</div><p><b>The busiest weeks are summer at the beach.</b> Coronado's High weeks ({{ ch.ranges[0].dates }}) sell {{ ch.avg | fk }} a week, {{ (ch.avg / cl.avg - 1) | pct }} on its Low weeks. Los Angeles goes the other way: Brentwood and Beverly Hills sell least in summer.</p></div>
-      <div class="finding"><div class="num">03</div><p><b>{{ n.n_hol }} holiday weeks get their own template</b> ({{ "%.0f" | format(n.step * 100) }}% more or less than their type), starting with Thanksgiving, Christmas and New Year's: busier at the beach, quieter at Brentwood. {{ n.no_hol_stores | length }} cafés have none; their holidays are noted on the type's page.</p></div>
-      <div class="finding"><div class="num">04</div><p><b>Every week keeps its own numbers.</b> A week sells on average {{ "%.0f" | format(n.fit_lo * 100) }}–{{ "%.0f" | format(n.fit_hi * 100) }}% more or less than its template. Each type's page lists its weeks with that gap; the Weeks sheet has every week's own sales by day.</p></div>
-      <div class="finding"><div class="num">05</div><p><b>At today's level, and on track.</b> Today's run-rate with no growth: the templates add up to it ({{ n.total_rr | fm }} for the ten cafés). The five days after the data ({{ n.live.first.strftime("%b %-d") }}–{{ n.live.last.strftime("%-d") }}) came in {{ n.live.sales | pct1 }} against it.</p></div>
+      <div class="finding"><div class="num">01</div><p><b>Two to four types per café</b>, each {{ "%.0f" | format(n.step * 100) }}% above the one below, in runs of {{ n.min_run }} weeks or more. Four: {{ n.n_by_k[4] | and_join }}. Three: {{ n.n_by_k[3] | and_join }}. Two (the minimum): {{ n.n_by_k[2] | and_join }}.</p></div>
+      <div class="finding"><div class="num">02</div><p><b>The busiest weeks are summer at the beach.</b> Coronado's High weeks ({{ ch.ranges[0].dates }}) sell {{ ch.avg | fk }} a week, {{ (ch.avg / cl.avg - 1) | pct }} on its Low weeks. Brentwood and Beverly Hills sell least in summer.</p></div>
+      {% set lj = n.later[0] %}<div class="finding"><div class="num">03</div><p><b>Hours move with the season.</b> In summer {{ n.later | map(attribute="name") | list | and_join }} sell more of the day after 2pm ({{ lj.name }}: {{ "%.1f" | format(lj.hi * 100) }}% of a {{ lj.hi_t }} week, {{ "%.1f" | format(lj.lo * 100) }}% of a {{ lj.lo_t }} one); each type has its own split of the day.</p></div>
+      <div class="finding"><div class="num">04</div><p><b>{{ n.n_hol }} holiday weeks get their own template</b> ({{ "%.0f" | format(n.step * 100) }}% more or less than their type), starting with Thanksgiving, Christmas and New Year's. {{ n.no_hol_stores | length }} cafés have none; their holidays are noted on the type's page.</p></div>
+      <div class="finding"><div class="num">05</div><p><b>Every week keeps its numbers, at today's level.</b> A week sells {{ "%.0f" | format(n.fit_lo * 100) }}–{{ "%.0f" | format(n.fit_hi * 100) }}% off its template on average (Weeks sheet). Today's run-rate, no growth ({{ n.total_rr | fm }}); {{ n.live.first.strftime("%b %-d") }}–{{ n.live.last.strftime("%-d") }} came in {{ n.live.sales | pct1 }} against it.</p></div>
     </div>
     <div class="col" style="flex:1">
       <h3>How to use it</h3>
@@ -131,21 +131,23 @@ table.sum .tbadge{font-size:8px;padding:3px 7px 2px}
     </div>
     <div class="col">
       <h3>The template of a type</h3>
-      <p>The average of the type's weeks, day by day (holiday weeks with their own template left out), so the templates on the calendar add up to the run-rate. Each day is split into hours along the café's pattern for that day of the week: the hour each check was opened in Toast, {{ n.hours_from.strftime("%b %Y") }} to {{ n.last_day.strftime("%b %-d, %Y") }}, recent days weighing more. Holidays follow their own pattern from earlier years. Checks are each hour's sales over the café's average check for that hour and day, last {{ n.check_months }} months.</p>
+      <p>The average of the type's weeks, day by day (holiday weeks with their own template left out), so the templates on the calendar add up to the run-rate. Each day is split into hours along the café's pattern for that weekday (the hour each check was opened in Toast, {{ n.hours_from.strftime("%b %Y") }} to {{ n.last_day.strftime("%b %-d, %Y") }}, the last {{ n.half_life }} days weighing half), moved by the type's season: its own split of the day, measured within each year (so the drift to earlier hours each year is not read as a season) and used at half strength, as it changes from year to year. Holidays follow their own pattern from earlier years. Checks: each hour's sales over the café's average check for that hour and day, last {{ n.check_months }} months.</p>
       <h3>Tested on the last year</h3>
-      <table class="compact" style="margin-top:4px">
-        <thead><tr><th class="l">Hourly error, splitting the actual day</th><th>Error</th></tr></thead>
+      <table class="compact" style="margin-top:4px;table-layout:fixed">
+        <colgroup><col style="width:64%"><col style="width:18%"><col style="width:18%"></colgroup>
+        <thead><tr><th class="l">Hourly error, splitting the actual day (|actual − split| ÷ actual)</th><th>Oct 2025 – Oct 2026</th><th>Apr – Oct 2026</th></tr></thead>
         <tbody>
-          <tr><td>One pattern per day of the week (used)</td><td><b>{{ "%.1f" | format(n.bt.weekday) }}%</b></td></tr>
-          <tr><td>One pattern per type of week and day</td><td>{{ "%.1f" | format(n.bt.type) }}%</td></tr>
-          <tr><td>Holidays: their own pattern (used) / the day's</td><td><b>{{ "%.1f" | format(n.bt.sp_own) }}%</b> / {{ "%.1f" | format(n.bt.sp_type) }}%</td></tr>
-          <tr><td>Recent days weigh more (half-life {{ n.half_life }} days) / all equal</td><td><b>{{ "%.1f" | format(n.bt.hl) }}%</b> / {{ "%.1f" | format(n.bt.hl_none) }}%</td></tr>
-          <tr><td>Checks from the average check, last {{ n.check_months }} months</td><td>{{ "%.1f" | format(n.bt.chk) }}%</td></tr>
-          <tr class="sep"><td><b>Live, {{ n.live.first.strftime("%b %-d") }}–{{ n.live.last.strftime("%-d") }}</b> (after the data): sales against the run-rate, ten cafés</td><td><b>{{ n.live.sales | pct1 }}</b></td></tr>
-          <tr><td>Hourly error, the run-rate day on the pattern / checks against expected</td><td><b>{{ "%.1f" | format(n.live.hour_err * 100) }}%</b> / {{ n.live.checks | pct1 }}</td></tr>
+          <tr><td>Weekday pattern × half the season's shift (used)</td><td><b>{{ "%.2f" | format(n.bt.half[0]) }}%</b></td><td><b>{{ "%.2f" | format(n.bt.half[1]) }}%</b></td></tr>
+          <tr><td>Weekday pattern alone / with the full shift</td><td>{{ "%.2f" | format(n.bt.weekday[0]) }}% / {{ "%.2f" | format(n.bt.full[0]) }}%</td><td>{{ "%.2f" | format(n.bt.weekday[1]) }}% / {{ "%.2f" | format(n.bt.full[1]) }}%</td></tr>
+          <tr><td>A pattern of its own per type and weekday</td><td>{{ "%.2f" | format(n.bt.type) }}%</td><td></td></tr>
+          <tr><td>All days weighing the same (used: half-life {{ n.half_life }} days)</td><td></td><td>{{ "%.2f" | format(n.bt.hl_none) }}%</td></tr>
+          <tr><td>Holidays: their own pattern (used) / the weekday's</td><td><b>{{ "%.1f" | format(n.bt.sp_own) }}%</b> / {{ "%.1f" | format(n.bt.sp_type) }}%</td><td></td></tr>
+          <tr><td>Checks from the average check, last {{ n.check_months }} months</td><td></td><td>{{ "%.1f" | format(n.bt.chk) }}%</td></tr>
+          <tr class="sep"><td><b>Live, {{ n.live.first.strftime("%b %-d") }}–{{ n.live.last.strftime("%-d") }}</b> (after the data): sales against the run-rate, ten cafés</td><td colspan="2"><b>{{ n.live.sales | pct1 }}</b></td></tr>
+          <tr><td>Hourly error, the run-rate day on the pattern / checks against expected</td><td colspan="2"><b>{{ "%.1f" | format(n.live.hour_err * 100) }}%</b> / {{ n.live.checks | pct1 }}</td></tr>
         </tbody>
       </table>
-      <p class="note" style="margin-top:8px">Error: each actual day split into hours and compared hour by hour (|actual − split| ÷ actual), learned on the year to Oct 14, 2025 and scored on the year after (recency and checks: learned to Apr 14, 2026, scored on the six months after). Most of it is the noise of a single hour on a single day. Checks run about 3% high when prices rise. Live by café: {{ n.live.lo.sales | pct1 }} ({{ n.live.lo.name }}) to {{ n.live.hi.sales | pct1 }} ({{ n.live.hi.name }}).</p>
+      <p class="note" style="margin-top:6px">Learned before each period; mostly the noise of one hour on one day. Live by café: {{ n.live.lo.sales | pct1 }} ({{ n.live.lo.name }}) to {{ n.live.hi.sales | pct1 }} ({{ n.live.hi.name }}).</p>
     </div>
   </div>
   {{ foot("Code: weektypes/ (model, hourly patterns, backtests, templates) · " ~ SRC) }}
@@ -197,22 +199,22 @@ table.sum .tbadge{font-size:8px;padding:3px 7px 2px}
 <section class="page">
   {{ head(st.name ~ " · week types, next 52 weeks") }}
   <div class="tag-row"><span class="name">{{ st.name }}</span>{% for ty in st.types %}{{ badge(ty.name) }}{% endfor %}</div>
-  <h1>{{ st.name }}: {{ st.n_word }} types of week{% if st.cove %}, and the remodeled café from October{% endif %}{% if st.hols %}, {{ st.hols | length }} holiday week{{ "s" if st.hols | length > 1 }} of {{ "their" if st.hols | length > 1 else "its" }} own{% endif %}</h1>
-  <p class="lede">{% for ty in st.types %}{{ ty.name }} {{ ty.ranges | map(attribute="dates") | join(" and ") }} ({{ ty.avg | fk }} a week){{ "; " if not loop.last else "." }}{% endfor %}{% if st.small_step %} Two types is the minimum: here they are {{ "%.1f" | format(st.step * 100) }}% apart, under the {{ "%.0f" | format(n.step * 100) }}% rule, so the weeks change little through the year.{% endif %} A week sells on average {{ "%.1f" | format(st.fit_week * 100) }}% more or less than its template (at most {{ "%.0f" | format(st.far * 100) }}%).</p>
+  <h1>{{ st.name }}: {{ st.n_word }} types of week{% if st.cove %} and the remodeled café{% endif %}{% if st.hols %}, {{ st.hols | length }} holiday week{{ "s" if st.hols | length > 1 }} of {{ "their" if st.hols | length > 1 else "its" }} own{% endif %}</h1>
+  <p class="lede">A week sells on average {{ "%.1f" | format(st.fit_week * 100) }}% more or less than its template (at most {{ "%.0f" | format(st.far * 100) }}%).{% if st.small_step %} Two types is the minimum: here they are {{ "%.1f" | format(st.step * 100) }}% apart, under the {{ "%.0f" | format(n.step * 100) }}% rule, so the weeks change little through the year.{% endif %}</p>
   <div class="chart-title">Run-rate by week, {{ n.w1.strftime("%b %-d, %Y") }} to {{ n.w52.strftime("%b %-d, %Y") }}, coloured by type</div>
   <div class="chart-sub">Dashed lines: each type's average week{% if st.hols %} · outlined with a dot: holiday weeks with a template of their own{% endif %}</div>
   {{ st.svg }}
   <table class="types{{ ' tight' if (st.types | length) + (st.hols | length) > 5 }}" style="margin-top:8px">
-    <thead><tr><th class="l">Type</th><th class="l">Weeks</th><th class="l">Dates</th><th>Number of weeks</th><th>Average week</th><th>Vs the type below</th><th>Checks a week</th><th>A week vs the template</th><th>Busiest day</th><th>Weekend day vs weekday</th></tr></thead>
+    <thead><tr><th class="l">Type</th><th class="l">Week numbers</th><th class="l">Dates</th><th>Weeks</th><th>Average week</th><th>Vs type below</th><th>Vs its template</th><th>Weekend vs weekday</th><th>Before 11am</th><th>11am–2pm</th><th>After 2pm</th></tr></thead>
     <tbody>
     {% for ty in st.types %}
       <tr><td>{{ badge(ty.name) }}</td><td class="l">{{ ty.ranges | map(attribute="weeks") | join(", ") }}</td><td class="l">{{ ty.ranges | map(attribute="dates") | join(", ") }}</td>
         <td>{{ ty.n_weeks }}</td><td><b>{{ ty.avg | money }}</b></td><td>{{ ty.vs_below | pct if ty.vs_below is not none else "—" }}</td>
-        <td>{{ "{:,}".format(ty.checks) }}</td><td>±{{ "%.1f" | format(ty.fit_week * 100) }}%</td><td>{{ ty.busiest_day }}</td><td>{{ ty.weekend | pct }}</td></tr>
+        <td>±{{ "%.1f" | format(ty.fit_week * 100) }}%</td><td>{{ ty.weekend | pct }}</td>{% for x in ty.parts %}<td>{{ "%.1f" | format(x * 100) }}%</td>{% endfor %}</tr>
     {% endfor %}
     {% for h in st.hols %}
       <tr class="{{ 'sep' if loop.first }}"><td><span class="tbadge hol">Holiday week</span></td><td class="l">Week {{ h.week }}</td><td class="l">{{ h.name }} · {{ h.dates }}</td>
-        <td>1</td><td><b>{{ h.total | money }}</b></td><td class="dim">{{ h.vs | pct }} on its {{ h.type }}</td><td>{{ "{:,}".format(h.checks) }}</td><td></td><td></td><td></td></tr>
+        <td>1</td><td><b>{{ h.total | money }}</b></td><td class="dim">{{ h.vs | pct }} on its {{ h.type }}</td><td></td><td></td>{% for x in h.parts %}<td class="dim">{{ "%.1f" | format(x * 100) }}%</td>{% endfor %}</tr>
     {% endfor %}
     </tbody>
   </table>
@@ -233,7 +235,7 @@ table.sum .tbadge{font-size:8px;padding:3px 7px 2px}
       <div class="blk"><div class="lab">Average week</div><div class="val">{{ ty.avg | money }}</div>
         <div class="cap">{% if ty.vs_below is not none %}{{ ty.vs_below | pct }} on a {{ ty.below }} week{% elif ty.name == "Remodeled" %}the remodeled café, from Oct 1, 2027{% else %}the café's lowest type{% endif %} · weeks from {{ ty.lo | fk }} to {{ ty.hi | fk }}</div></div>
       <div class="blk"><div class="lab">Checks a week</div><div class="val mid">{{ "{:,}".format(ty.checks) }}</div><div class="cap">average check ${{ "%.2f" | format(ty.avg_check) }}</div></div>
-      <div class="blk"><div class="lab">Busiest hour</div><div class="val mid">{{ ty.peak }}</div><div class="cap">{{ ty.peak_sales | money }} · a weekend day sells {{ ty.weekend | pct }} on a weekday</div></div>
+      <div class="blk"><div class="lab">Busiest hour</div><div class="val mid">{{ ty.peak }}</div><div class="cap">{{ ty.peak_sales | money }} · a weekend day sells {{ ty.weekend | pct }} on a weekday<br>Part of the week: {{ "%.0f" | format(ty.parts[0] * 100) }}% before 11am, {{ "%.0f" | format(ty.parts[1] * 100) }}% 11am–2pm, {{ "%.0f" | format(ty.parts[2] * 100) }}% after 2pm</div></div>
       <div class="blk"><div class="lab">Use it in {{ ty.n_weeks }} week{{ "s" if ty.n_weeks > 1 }}</div>
         <ul>{% for r in ty.ranges %}<li><b>{{ r.weeks }}</b> · {{ r.dates }}</li>{% endfor %}</ul>
         {% if ty.own %}<div class="cap" style="margin-top:4px">Except {{ ty.own | map(attribute="name") | join(", ") }}: {{ "pages" if ty.own | length > 1 else "a page" }} of {{ "their" if ty.own | length > 1 else "its" }} own.</div>{% endif %}

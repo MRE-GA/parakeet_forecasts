@@ -3,8 +3,9 @@ sales (whole dollars) and checks.
 
 A type's day is the average of its weeks' run-rate on that day of the week (holiday weeks left out); a holiday week's
 days are its own run-rate days. Days are in whole dollars and split into hours in whole dollars that add up to the day
-(largest remainder), along the store's weekday pattern, or a special day's own pattern on its day (an observed
-holiday keeps the weekday's: weektypes/hourly.py). Checks are each hour's sales divided by the store's average check
+(largest remainder), along the store's pattern for that weekday and type of week (the weekday's pattern times the
+type's seasonal shift), or a special day's own pattern on its day (an observed holiday keeps its weekday's:
+weektypes/hourly.py). Checks are each hour's sales divided by the store's average check
 for that hour and day of the week (the last 12 months; a special day's own where it has one), rounded to whole
 checks.
 
@@ -70,19 +71,21 @@ def split_whole(total: int, weights: np.ndarray) -> np.ndarray:
     return base
 
 
-def store_patterns(h: pd.DataFrame, store: str):
-    """Hours shown, the weekday patterns and average checks (7 x hours), and each special day's own pattern and
-    average check."""
+def store_patterns(h: pd.DataFrame, store: str, label: pd.Series):
+    """Hours shown; the hourly patterns by weekday and type of week (the weekday's pattern, recent days weighing more,
+    times the type's seasonal shift: hourly.fit_patterns); average checks by weekday (7 x hours); and each special
+    day's own pattern and average check. label: the type of each of the 52 weeks, for the past days' types."""
     hours = H.store_hours(h, store)
     g = H.folded(h, store, hours)
+    g["type"] = label.reindex(g.week).to_numpy()
     normal = g[g.normal]
     reg = normal[normal.special == ""]
     recent = reg[reg.date > LAST_DAY - pd.DateOffset(months=H.CHECK_MONTHS)]
-    pat = np.array([H.pattern(reg[reg.dow == d], hours, LAST_DAY, H.RECENCY_HALF_LIFE) for d in range(7)])
+    pat = H.fit_patterns(reg, hours, LAST_DAY, H.RECENCY_HALF_LIFE, strength=H.SEASON_SHIFT)
     chk = np.array([H.avg_check(recent[recent.dow == d], hours) for d in range(7)])
     special = {}
     for lab, sg in normal[normal.special != ""].groupby("special"):
-        fallback = reg[reg.dow == sg.dow.mode().iloc[0]]
+        fallback = reg[reg.dow == sg.dow.mode().iloc[0]]  # for hours opened since its last time
         special[lab] = (H.pattern(sg, hours, LAST_DAY, H.RECENCY_HALF_LIFE, fallback=fallback),
                         H.avg_check(sg, hours))
     return hours, pat, chk, special
@@ -100,13 +103,13 @@ def build(weeks: dict[str, StoreWeeks] | None = None, rr: pd.DataFrame | None = 
     out: dict[str, list[Template]] = {}
     for s in STORES:
         sw = weeks[s]
-        hours, pat, chk, special = store_patterns(h, s)
+        hours, pat, chk, special = store_patterns(h, s, sw.label)
         day = rr[s]
         temps = []
         for t in sw.types:
             reg = sw.regular(t)
             avg = np.array([np.mean([day[week_start(w) + pd.Timedelta(days=d)] for w in reg]) for d in range(7)])
-            cells = [day_cells(avg[d], pat[d], chk[d]) for d in range(7)]
+            cells = [day_cells(avg[d], pat.get(d, (t,)), chk[d]) for d in range(7)]
             temps.append(Template(s, t, "type", [w for w in sw.label.index if sw.label[w] == t], hours.shown,
                                   np.column_stack([c[0] for c in cells]), np.column_stack([c[1] for c in cells])))
         hol_days = {w: dict(v) for w, v in sw.holiday_days.items()}
@@ -117,7 +120,7 @@ def build(weeks: dict[str, StoreWeeks] | None = None, rr: pd.DataFrame | None = 
             for d, (dt, lab) in enumerate(zip(dates, labs)):
                 # an observed holiday is a normal opening day: the weekday's hours (its total is the run-rate's)
                 key = lab if lab and "(observed)" not in lab else ""
-                p, c = special.get(key, (pat[d], chk[d]))
+                p, c = special.get(key, (pat.get(d, (sw.label[w],)), chk[d]))
                 cells.append(day_cells(day[dt], p, c))
             temps.append(Template(s, name, "holiday", [w], hours.shown, np.column_stack([c[0] for c in cells]),
                                   np.column_stack([c[1] for c in cells]), dates, labs, sw.label[w]))
