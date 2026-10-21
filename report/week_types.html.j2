@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Parakeet Café · 2027 Week Types for Payroll</title>
+<style>
+{% include "deck_style.css" %}
+/* this deck */
+.tbadge{display:inline-block;font-family:var(--sans);font-weight:700;font-size:9px;letter-spacing:1.3px;text-transform:uppercase;padding:4px 9px 3px;line-height:1.2;white-space:nowrap}
+.tbadge.hol{background:#000;color:#fff}
+table.heat{border-collapse:separate;border-spacing:2px;table-layout:fixed;width:100%;font-family:var(--sans)}
+table.heat th{font-size:9.5px;letter-spacing:.6px;text-transform:none;text-align:center;border:none;padding:0 0 3px;color:var(--g700);font-weight:700;line-height:1.25}
+table.heat th small{display:block;font-size:8px;font-weight:600;color:var(--pink);letter-spacing:.2px}
+table.heat th.sp{color:#000}
+table.heat th.hr{width:.48in;text-align:right;padding-right:6px;font-size:10px;vertical-align:middle}
+table.heat td{border:none;text-align:center;padding:3px 2px 2px;line-height:1.12;white-space:nowrap}
+table.heat td b{display:block;font-size:12.5px;font-weight:600;letter-spacing:-.1px}
+table.heat td span{display:block;font-size:8.5px;opacity:.78}
+table.heat td.tot{background:var(--g50);color:#000}
+table.heat th.tot{width:.95in}
+table.heat tr.day td{background:var(--g50);color:#000;border-top:1.5px solid #000}
+table.heat tr.day th{border-top:1.5px solid #000;padding-top:3px}
+.side{font-family:var(--sans)}
+.side .blk{border-top:1px solid var(--ink);padding:7px 0 9px}
+.side .blk:first-child{border-top:2px solid var(--ink)}
+.side .lab{font-size:9.5px;letter-spacing:.3px;color:var(--g700)}
+.side .val{font-weight:600;font-size:25px;line-height:1.1;margin-top:3px;letter-spacing:-.3px}
+.side .val.mid{font-size:17px}
+.side .cap{font-size:10px;color:var(--g700);margin-top:2px;line-height:1.35}
+.side ul{list-style:none;margin:4px 0 0;padding:0}
+.side li{font-size:10.5px;line-height:1.35;padding:2px 0}
+.side li b{font-weight:600}
+.side li small{color:var(--g500);font-size:9.5px}
+.tag-row{display:flex;align-items:center;gap:12px;margin-top:12px}
+.tag-row .name{font-family:var(--sans);font-weight:700;font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.tag-row + h1{margin-top:6px;font-size:24px}
+table.cal{border-collapse:separate;border-spacing:1.5px;width:100%;table-layout:fixed;font-family:var(--sans)}
+table.cal th{border:none;padding:0 8px 0 0;font-size:11px;letter-spacing:0;text-transform:none;color:#000;font-weight:600;width:1.35in;text-align:right}
+table.cal td{border:none;padding:0;height:34px;position:relative}
+table.cal td.own::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#000}
+table.cal td.own.dk::after{background:#fff}
+table.cal tr.m td{height:auto;font-size:10px;color:var(--g700);font-weight:600;text-align:left;overflow:visible;white-space:nowrap}
+table.cal tr.w td{height:auto;font-size:8px;color:var(--g500);text-align:left}
+table.cal td.n{width:.55in;text-align:center;font-weight:700;font-size:13px;background:none}
+.legend{display:flex;gap:16px;font-family:var(--sans);font-size:11px;align-items:center;flex-wrap:wrap}
+.legend i{display:inline-block;width:13px;height:13px;margin-right:6px;vertical-align:-2px}
+.legend i.dot{width:7px;height:7px;border-radius:50%;background:#000;margin:0 6px 0 3px;vertical-align:1px}
+svg.wk .ax{font-family:var(--sans);font-size:10px;fill:var(--g700)}
+svg.wk .tl{font-family:var(--sans);font-size:10.5px;font-weight:700;fill:#000}
+table.types td{padding:6px 8px}
+table.types.tight td{padding:3.5px 8px}
+table.types td .tbadge{font-size:8.5px}
+.types-note{font-family:var(--sans);font-size:10.5px;color:var(--g700);margin-top:8px;line-height:1.45}
+table.sum td{padding:5px 10px 5px 0;font-size:10.5px;white-space:normal;line-height:1.35;vertical-align:top}
+table.sum th{text-align:left;padding-left:0}
+table.sum td.nw{white-space:nowrap}
+table.sum .tbadge{font-size:8px;padding:3px 7px 2px}
+</style>
+</head>
+<body>
+{% macro head(eyebrow) %}<div class="head"><img src="assets/logo-bird.png" alt="Parakeet Café"><span class="eyebrow">{{ eyebrow }}</span></div>{% endmacro %}
+{% macro foot(note) %}<div class="foot"><span>Parakeet Café · 2027 Week Types for Payroll</span><span>{{ note }}</span><span class="pn"></span></div>{% endmacro %}
+{% macro badge(t) %}<span class="tbadge" style="background:{{ n.COLOR[t] }};color:{{ n.INK_ON[t] }}">{{ t }}</span>{% endmacro %}
+{% set SRC = "2027 run-rate (today's level, no growth) · hours from Toast checks, Oct 2024 – Oct 14, 2026" %}
+
+{# ================================================================== COVER #}
+<section class="page cover">
+  <div class="cover-left">
+    <img class="logo" src="assets/logo-bird.png" alt="Parakeet Café">
+    <div class="eyebrow">2027 payroll · October 2026</div>
+    <div class="cover-title">Week Types<br>and Hourly<br>Templates</div>
+    <p class="cover-sub">Each café's 2027 weeks grouped into a few types of week, and for each type the average week by day and hour, in sales and checks: the template to build the schedule on.</p>
+    <div class="cover-meta">
+      Ten cafés of the run-rate budget · 52 weeks, {{ n.w1.strftime("%b %-d, %Y") }} to {{ n.w52.strftime("%b %-d, %Y") }}<br>
+      Sales: today's run-rate by day for 2027 · hours and checks: Toast POS, {{ n.hours_from.strftime("%b %Y") }} – {{ n.last_day.strftime("%b %-d, %Y") }}<br>
+      Prepared October 21, 2026 · workbook: Parakeet_2027_Week_Templates.xlsx
+    </div>
+  </div>
+  <div class="cover-right"><img src="assets/hero-1.jpg" alt=""></div>
+</section>
+
+{# ================================================================== SUMMARY #}
+{% set ch = n.coronado_high %}{% set cl = n.coronado_low %}
+<section class="page">
+  {{ head("The short version") }}
+  <h1>Two or three types of week per café, each with its own week by day and hour</h1>
+  <div class="row" style="margin-top:10px">
+    <div class="col flist" style="flex:1.35">
+      <div class="finding"><div class="num">01</div><p><b>Two or three types per café.</b> A café gets a new type only where its weeks sell at least {{ "%.0f" | format(n.step * 100) }}% more than the type below, in runs of at least {{ n.min_run }} weeks. Three types: {{ n.n_by_k[3] | and_join }}. Two (the minimum): {{ n.n_by_k[2] | and_join }}. No café needs four.</p></div>
+      <div class="finding"><div class="num">02</div><p><b>The busiest weeks are summer at the beach.</b> Coronado's High weeks ({{ ch.ranges[0].dates }}) sell {{ ch.avg | fk }} a week, {{ (ch.avg / cl.avg - 1) | pct }} on its Low weeks. Los Angeles goes the other way: Brentwood and Beverly Hills sell least in summer.</p></div>
+      <div class="finding"><div class="num">03</div><p><b>{{ n.n_hol }} holiday weeks get a template of their own</b>, where the week sells {{ "%.0f" | format(n.step * 100) }}% more or less than its type: mostly Thanksgiving, Christmas, New Year's and spring break, busier at the beach and quieter at Brentwood. {{ n.no_hol_stores | and_join }} have none; their holidays are listed on the type's page.</p></div>
+      <div class="finding"><div class="num">04</div><p><b>Same hours, different days.</b> The types differ in how much each day sells, not in how a day divides into hours: a pattern by type of week split the days no better than one per day of the week. Holidays keep their own hours (Thanksgiving closes early).</p></div>
+      <div class="finding"><div class="num">05</div><p><b>At today's level.</b> The sales are the 2027 run-rate, with no growth: the templates on the calendar add up to it within rounding ({{ n.total_rr | fm }} for the ten cafés over the 52 weeks). If the year runs at the manager targets, scale them up.</p></div>
+    </div>
+    <div class="col" style="flex:1">
+      <h3>How to use it</h3>
+      <ol class="steps" style="margin-top:8px">
+        <li><span>Find the week in the calendar (pages 4–5, or the Calendar sheet): it gives the week's type, or its holiday week.</span></li>
+        <li><span>Open the café's page for that type: sales and checks for every hour, Monday to Sunday.</span></li>
+        <li><span>Staff each hour to its sales and checks with your own productivity standard.</span></li>
+        <li><span>On a holiday listed on the type's page, adjust that day: the page says how much more or less it sells.</span></li>
+      </ol>
+      <div class="box" style="margin-top:8px"><p><b>One page per café</b> shows its year week by week and its types; then one page per type and one per holiday week. The workbook has every template, with formulas for the totals.</p></div>
+    </div>
+  </div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== METHOD #}
+<section class="page method">
+  {{ head("How the types and templates are made") }}
+  <h1>Weeks from the run-rate, hours from Toast</h1>
+  <div class="row" style="margin-top:12px">
+    <div class="col">
+      <h3>The types of week</h3>
+      <p>Each café's 52 weeks of 2027 at today's run-rate (Monday to Sunday) are split into types in runs of at least {{ n.min_run }} weeks, so a type always runs from one week to another; December runs on into January. The split keeps each week as close as it can to its type's level, and every change of type has to be worth about four weeks 5% off.</p>
+      <p>A café gets as many types as it can, up to four, while each type sells at least {{ "%.0f" | format(n.step * 100) }}% more than the one below it; never fewer than two. Types are named by level: Low and High, or Low, Normal and High.</p>
+      <h3>Holiday weeks</h3>
+      <p>Week 52 ends on Jan 2, 2028, past the run-rate: New Year's Day and the Sunday after are taken from Jan 1 and Jan 3, 2027. Weeks with a holiday (and spring break) do not move the types. Where one sells {{ "%.0f" | format(n.step * 100) }}% more or less than its type's average week, it gets a template of its own; otherwise its holidays are listed on the type's page with what they sell.</p>
+      <h3>La Jolla Cove</h3>
+      <p>The run-rate carries the budget's remodeled café ($125K a month) from its October 1, 2027 reopening: its types are found on the weeks before, and the weeks after are one more type, Remodeled. Its hours follow today's café until the remodeled one has its own.</p>
+    </div>
+    <div class="col">
+      <h3>The template of a type</h3>
+      <p>The average of the type's weeks, day by day (holiday weeks with their own template left out), so the templates on the calendar add up to the run-rate. Each day is split into hours along the café's pattern for that day of the week: the hour each check was opened in Toast, {{ n.hours_from.strftime("%b %Y") }} to {{ n.last_day.strftime("%b %-d, %Y") }}, recent days weighing more. Holidays follow their own pattern from earlier years. Checks are each hour's sales over the café's average check for that hour and day, last {{ n.check_months }} months.</p>
+      <h3>Tested on the last year</h3>
+      <table class="compact" style="margin-top:4px">
+        <thead><tr><th class="l">Hourly error, splitting the actual day</th><th>Error</th></tr></thead>
+        <tbody>
+          <tr><td>One pattern per day of the week (used)</td><td><b>{{ "%.1f" | format(n.bt.weekday) }}%</b></td></tr>
+          <tr><td>One pattern per type of week and day</td><td>{{ "%.1f" | format(n.bt.type) }}%</td></tr>
+          <tr><td>Holidays: their own pattern (used) / the day's</td><td><b>{{ "%.1f" | format(n.bt.sp_own) }}%</b> / {{ "%.1f" | format(n.bt.sp_type) }}%</td></tr>
+          <tr><td>Recent days weigh more (half-life {{ n.half_life }} days) / all equal</td><td><b>{{ "%.1f" | format(n.bt.hl) }}%</b> / {{ "%.1f" | format(n.bt.hl_none) }}%</td></tr>
+          <tr><td>Checks from the average check, last {{ n.check_months }} months</td><td>{{ "%.1f" | format(n.bt.chk) }}%</td></tr>
+        </tbody>
+      </table>
+      <p class="note" style="margin-top:8px">Error: each actual day split into hours and compared hour by hour (|actual − split| ÷ actual), learned on the year to Oct 14, 2025 and scored on the year after (recency and checks: learned to Apr 14, 2026, scored on the six months after). Most of it is the noise of a single hour on a single day; the averages on the pages are much steadier. Checks run about 3% high when prices rise.</p>
+    </div>
+  </div>
+  {{ foot("Code: weektypes/ (model, hourly patterns, backtests, templates) · " ~ SRC) }}
+</section>
+
+{# ================================================================== CALENDAR #}
+<section class="page">
+  {{ head("The 2027 calendar") }}
+  <h1>Every week of 2027 and its type, café by café</h1>
+  <p class="lede">Week 1 starts Monday {{ n.w1.strftime("%b %-d") }}; week 52 ends Sunday {{ n.w52.strftime("%b %-d, %Y") }}. A dot marks a holiday week with a template of its own.</p>
+  <table class="cal">
+    <tr class="m"><th></th>{% for m in n.months %}<td>{{ m }}</td>{% endfor %}<td class="n"></td></tr>
+    <tr class="w"><th></th>{% for i in range(52) %}<td>{{ i + 1 if (i % 4 == 0) else "" }}</td>{% endfor %}<td class="n" style="font-size:9px;font-weight:600">Types</td></tr>
+    {% for r in n.calendar %}
+    <tr><th>{{ r.name }}</th>{% for c in r.cells %}<td class="{{ 'own' if c.own }}{{ ' dk' if c.own and c.color in ['#82888a', '#373a3c'] }}" style="background:{{ c.color }}" title="{{ c.tip }}"></td>{% endfor %}<td class="n">{{ r.n }}{% if r.remodeled %}<sup style="font-size:9px">+1</sup>{% endif %}</td></tr>
+    {% endfor %}
+  </table>
+  <div class="legend" style="margin-top:12px">
+    {% for t in ["Low", "Normal", "High", "Remodeled"] %}<span><i style="background:{{ n.COLOR[t] }}"></i>{{ t }}</span>{% endfor %}
+    <span><i class="dot"></i>Holiday week with its own template</span>
+    <span class="note" style="margin-left:auto">+1: La Jolla Cove's remodeled café from October 1, 2027</span>
+  </div>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== TYPES AT A GLANCE #}
+<section class="page">
+  {{ head("The 2027 calendar") }}
+  <h1>The types at a glance: their dates and average week</h1>
+  <p class="lede">Dates run Monday to Sunday; a type over the new year runs from the autumn into the next January–March. Holiday weeks with their own template sit inside these dates.</p>
+  <table class="sum" style="margin-top:6px">
+    <thead><tr><th class="l">Café</th>{% for t in ["Low", "Normal", "High", "Remodeled"] %}<th class="l">{{ badge(t) }}</th>{% endfor %}<th class="l">Holiday weeks with their own template</th></tr></thead>
+    <tbody>
+    {% for st in n.stores %}{% set by = {} %}{% for ty in st.types %}{% set _ = by.update({ty.name: ty}) %}{% endfor %}
+      <tr><td class="nw l"><b>{{ st.name }}</b></td>
+      {% for t in ["Low", "Normal", "High", "Remodeled"] %}{% set ty = by.get(t) %}
+        <td class="l">{% if ty %}<b>{{ ty.avg | fk }}</b> a week<br>{{ ty.ranges | map(attribute="dates") | join("<br>") }}{% else %}<span class="dim">—</span>{% endif %}</td>
+      {% endfor %}
+        <td class="l">{% if st.hols %}{{ st.hols | map(attribute="short") | join(", ") }}{% else %}<span class="dim">none</span>{% endif %}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {{ foot(SRC) }}
+</section>
+
+{# ================================================================== STORES #}
+{% for st in n.stores %}
+{% set sw = st.weeks %}
+<section class="page">
+  {{ head(st.name ~ " · 2027 week types") }}
+  <div class="tag-row"><span class="name">{{ st.name }}</span>{% for ty in st.types %}{{ badge(ty.name) }}{% endfor %}</div>
+  <h1>{{ st.name }}: {{ st.n_word }} types of week{% if st.cove %}, and the remodeled café from October{% endif %}{% if st.hols %}, {{ st.hols | length }} holiday week{{ "s" if st.hols | length > 1 }} of {{ "their" if st.hols | length > 1 else "its" }} own{% endif %}</h1>
+  <p class="lede">{% for ty in st.types %}{{ ty.name }} {{ ty.ranges | map(attribute="dates") | join(" and ") }} ({{ ty.avg | fk }} a week){{ "; " if not loop.last else "." }}{% endfor %}{% if st.small_step %} Two types is the minimum: here they are {{ "%.1f" | format(st.step * 100) }}% apart, under the {{ "%.0f" | format(n.step * 100) }}% rule, so the weeks change little through the year.{% endif %}</p>
+  <div class="chart-title">2027 run-rate by week, coloured by type</div>
+  <div class="chart-sub">Dashed lines: each type's average week{% if st.hols %} · outlined with a dot: holiday weeks with a template of their own{% endif %}</div>
+  {{ st.svg }}
+  <table class="types{{ ' tight' if (st.types | length) + (st.hols | length) > 5 }}" style="margin-top:8px">
+    <thead><tr><th class="l">Type</th><th class="l">Weeks</th><th class="l">Dates</th><th>Number of weeks</th><th>Average week</th><th>Vs the type below</th><th>Checks a week</th><th>Busiest day</th><th>Weekend day vs weekday</th></tr></thead>
+    <tbody>
+    {% for ty in st.types %}
+      <tr><td>{{ badge(ty.name) }}</td><td class="l">{{ ty.ranges | map(attribute="weeks") | join(", ") }}</td><td class="l">{{ ty.ranges | map(attribute="dates") | join(", ") }}</td>
+        <td>{{ ty.n_weeks }}</td><td><b>{{ ty.avg | money }}</b></td><td>{{ ty.vs_below | pct if ty.vs_below is not none else "—" }}</td>
+        <td>{{ "{:,}".format(ty.checks) }}</td><td>{{ ty.busiest_day }}</td><td>{{ ty.weekend | pct }}</td></tr>
+    {% endfor %}
+    {% for h in st.hols %}
+      <tr class="{{ 'sep' if loop.first }}"><td><span class="tbadge hol">Holiday week</span></td><td class="l">Week {{ h.week }}</td><td class="l">{{ h.name }} · {{ h.dates }}</td>
+        <td>1</td><td><b>{{ h.total | money }}</b></td><td class="dim">{{ h.vs | pct }} on its {{ h.type }}</td><td>{{ "{:,}".format(h.checks) }}</td><td></td><td></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {{ foot("Hours shown: " ~ st.hours ~ " · " ~ SRC) }}
+</section>
+
+{% for ty in st.types %}
+<section class="page">
+  {{ head(st.name ~ " · week templates") }}
+  <div class="tag-row">{{ badge(ty.name) }}<span class="name">{{ st.name }}</span></div>
+  <h1>{{ ty.name }} weeks: {{ ty.avg | fk }} a week, {{ ty.ranges | map(attribute="dates") | join(" and ") }}</h1>
+  <div class="row" style="gap:.3in;margin-top:6px">
+    <div class="col" style="flex:3.6">{{ ty.heat }}</div>
+    <div class="col side" style="flex:1">
+      <div class="blk"><div class="lab">Average week</div><div class="val">{{ ty.avg | money }}</div>
+        <div class="cap">{% if ty.vs_below is not none %}{{ ty.vs_below | pct }} on a {{ ty.below }} week{% elif ty.name == "Remodeled" %}the remodeled café, from Oct 1, 2027{% else %}the café's lowest type{% endif %} · weeks from {{ ty.lo | fk }} to {{ ty.hi | fk }}</div></div>
+      <div class="blk"><div class="lab">Checks a week</div><div class="val mid">{{ "{:,}".format(ty.checks) }}</div><div class="cap">average check ${{ "%.2f" | format(ty.avg_check) }}</div></div>
+      <div class="blk"><div class="lab">Busiest hour</div><div class="val mid">{{ ty.peak }}</div><div class="cap">{{ ty.peak_sales | money }} · a weekend day sells {{ ty.weekend | pct }} on a weekday</div></div>
+      <div class="blk"><div class="lab">Use it in {{ ty.n_weeks }} week{{ "s" if ty.n_weeks > 1 }}</div>
+        <ul>{% for r in ty.ranges %}<li><b>{{ r.weeks }}</b> · {{ r.dates }}</li>{% endfor %}</ul>
+        {% if ty.own %}<div class="cap" style="margin-top:4px">Except {{ ty.own | map(attribute="name") | join(", ") }}: {{ "pages" if ty.own | length > 1 else "a page" }} of {{ "their" if ty.own | length > 1 else "its" }} own.</div>{% endif %}
+      </div>
+      {% if ty.notes %}<div class="blk"><div class="lab">Holidays in these weeks, against the same day of this template</div>
+        <ul>{% for x in ty.notes %}<li><b>{{ x.day }}</b> <small>{{ x.date }}</small><br>{{ x.sales | money }} · {{ x.vs | pct }}</li>{% endfor %}</ul>
+        {% if ty.more_notes %}<div class="cap">and {{ ty.more_notes }} more within a few percent</div>{% endif %}</div>{% endif %}
+      {% if ty.name == "Remodeled" %}<div class="blk"><div class="cap">Hours and checks follow today's café until the remodeled one has its own.</div></div>{% endif %}
+    </div>
+  </div>
+  {{ foot("Average of the type's weeks at the 2027 run-rate · each cell: sales and checks in that hour · " ~ SRC) }}
+</section>
+{% endfor %}
+
+{% for h in st.hols %}
+<section class="page">
+  {{ head(st.name ~ " · holiday weeks") }}
+  <div class="tag-row"><span class="tbadge hol">Holiday week</span><span class="name">{{ st.name }}</span></div>
+  <h1>{{ h.name }}: {{ h.total | fk }}, {{ h.dates }} ({{ h.vs | pct }} on a {{ h.type }} week)</h1>
+  <div class="row" style="gap:.3in;margin-top:6px">
+    <div class="col" style="flex:3.6">{{ h.heat }}</div>
+    <div class="col side" style="flex:1">
+      <div class="blk"><div class="lab">This week</div><div class="val">{{ h.total | money }}</div><div class="cap">week {{ h.week }} · instead of the {{ badge(h.type) }} template ({{ h.base | money }})</div></div>
+      <div class="blk"><div class="lab">Checks</div><div class="val mid">{{ "{:,}".format(h.checks) }}</div><div class="cap">average check ${{ "%.2f" | format(h.avg_check) }}</div></div>
+      {% if h.days %}<div class="blk"><div class="lab">Its special days, against a {{ h.type }} day</div>
+        <ul>{% for x in h.days %}<li><b>{{ x.day }}</b> <small>{{ x.date }}</small><br>{{ x.sales | money }} · {{ x.vs | pct }}</li>{% endfor %}</ul></div>{% endif %}
+      <div class="blk"><div class="cap">The week's own run-rate, day by day; holidays split into hours along their own pattern from earlier years.</div></div>
+    </div>
+  </div>
+  {{ foot(("Jan 1–2, 2028 are past the run-rate: taken from Jan 1 and Jan 3, 2027 · " if h.past_runrate else "") ~ "The week's own days at the 2027 run-rate · each cell: sales and checks in that hour · " ~ SRC) }}
+</section>
+{% endfor %}
+{% endfor %}
+</body>
+</html>

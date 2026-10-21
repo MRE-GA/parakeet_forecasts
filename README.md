@@ -118,6 +118,43 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
   December as in Part 1, adding up to its 'Oct 15 – Dec 31 at run-rate' to the cent ($5.88M for the ten stores).
   First check, Thursday to Sunday Oct 15–18: the ten stores sold $337.4K against $338.6K (−0.4%).
 
+## Week types for payroll (`outputs/Parakeet_2027_Week_Types.pdf`)
+
+A 60-page deck and a workbook (`outputs/Parakeet_2027_Week_Templates.xlsx`) for scheduling payroll in 2027: each of
+the ten run-rate stores' 52 weeks (Mon–Sun, Jan 4, 2027 to Jan 2, 2028) grouped into types of week, and for each type
+the average week by day and hour, in sales and checks (`weektypes/`, `report/build_week_types.py`).
+
+* **Types** (`weektypes/model.py`): each store's weeks of today's run-rate by day (`outputs/targets_2027_daily.csv`)
+  are split into types in runs of at least 4 weeks (December runs into January), minimising each week's squared log
+  distance to its type plus a cost per change of type (four weeks 5% off), so close types do not alternate. A store
+  gets as many types as it can, at most four, while each sells at least 10% more than the one below; never fewer than
+  two. Three types: Coronado (Low Sep 13 – Mar 7 $65.3K a week, Normal $79.5K, High Jun 28 – Aug 15 $104.3K),
+  La Jolla Juicery, Little Italy Café, La Jolla Cove (plus Remodeled from its Oct 1, 2027 reopening, $125K a month in
+  the run-rate). Two: Beverly Hills, Brentwood, Carlsbad, Del Mar Café, La Jolla Café and Newport Beach (Beverly
+  Hills, Brentwood, Del Mar and La Jolla Café under 10% apart). No store needs four. The beach peaks in summer;
+  Brentwood and Beverly Hills sell least in summer.
+* **Holiday weeks**: weeks with a special day (the daily model's list) and spring break count a quarter in the split
+  and nothing in a type's level; 20 of them sell 10% more or less than their type and get a template of their own
+  (Thanksgiving, Christmas, New Year's and spring break at the beach, quieter at Brentwood; none at Beverly Hills,
+  Carlsbad, Del Mar, La Jolla Café or the Juicery). The others' holidays are listed on their type's page with what
+  they sell against the template.
+* **Hours** (`weektypes/hourly.py`, `weektypes/backtest_hourly.py`): hourly net sales and checks by the hour each
+  check was opened, Oct 2024 – Oct 14, 2026 (`data/sql/extract_parakeet_hourly.sql`, unpacked and checked against
+  the daily file by `weektypes/hourly_data.py` into `data/raw/parakeet_toast_hourly.csv.gz`). Backtest (hourly error
+  splitting the actual day, learned on the year to Oct 14, 2025, scored on the year after): one pattern per weekday
+  21.3% against 21.6% by type of week and weekday, so types differ in their days, not their hours; holidays on their
+  own pattern from earlier years 21.2% against 26.1%; recent days weighing more (half-life 180 days) 20.7% against
+  20.9%. Checks: sales over the average check by hour and weekday of the last 12 months (15.6% hourly error, about
+  3% high as prices rise). Hours that opened later (Little Italy to 6pm since March 2026) take their share from the
+  days since.
+* **Templates** (`weektypes/templates.py`): a type's day is the average of its weeks' run-rate on that weekday
+  (holiday weeks with their own template left out); days in whole dollars split into hours that add up to the day.
+  Applied to the calendar, the templates give back the run-rate of the 52 weeks within rounding (at most $57 a store
+  in the year; the workbook's `Check` tab). Jan 1–2, 2028 are past the run-rate: taken from Jan 1 and Jan 3, 2027.
+* **Workbook**: `Calendar` (every week's type by store), `Types`, one sheet per store with every template (sales,
+  then checks; totals are formulas, recalculated with zero errors), `All templates` (long table) and `Check`. CSVs in
+  `outputs/weektypes/`.
+
 ## Approach
 
 * **Data**: daily net sales per café from `bronze.toast_checks/orders/selections`, using the same
@@ -152,6 +189,11 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python report/build_deck.py --ds /path/to/parakeet-cafe-design     # the budget-review deck
 .venv/bin/python report/build_targets.py --ds /path/to/parakeet-cafe-design  # run-rate review + manager targets (PDF, xlsx)
 .venv/bin/python report/build_daily_targets.py   # targets and run-rate by day: 2027, and the rest of 2026 (xlsx, csv)
+.venv/bin/python -I weektypes/hourly_data.py dump_store1.txt ... dump_store10.txt   # hourly extracts -> data/raw/
+.venv/bin/python weektypes/model.py              # the week types by store (printed)
+.venv/bin/python weektypes/backtest_hourly.py    # hourly patterns and average check -> outputs/weektypes/
+.venv/bin/python weektypes/templates.py          # templates -> outputs/weektypes/ (csv)
+.venv/bin/python report/build_week_types.py --ds /path/to/parakeet-cafe-design   # week-types deck + workbook
 ```
 
 The report needs the Parakeet Cafe design-system skill (brand fonts, logo, photography; not
@@ -166,7 +208,7 @@ for each window listed in the file, then `python src/build_dataset.py <dump file
 data/raw/parakeet_toast_daily.csv   daily net sales and checks by café (14,239 café-days)
 data/cfo_budget_2027*.csv           the investor budget, imported from its workbook (src/import_budget.py)
 data/budget_2027_oct.csv            the October 2026 budget by café, from its PDF (src/import_budget_pdf.py)
-data/sql/                           extraction query
+data/sql/                           extraction queries (daily; hourly for the week types)
 src/forecasting.py                  data prep + the three models (config-driven) + metrics
 src/backtest.py                     round 1 rolling-origin back-test (default settings)
 src/tune.py                         round 2 hyperparameter/feature tuning with a 2026 holdout + plan factor
@@ -179,6 +221,9 @@ src/runrate_scenario.py             2026 finish and 2027 at today's deseasonaliz
 report/build_targets.py             the run-rate review and manager-targets deck, and the targets workbook
 report/build_daily_targets.py       the 2027 targets by day (daily model from daily/), adding up to the months to the cent
 daily/                              the daily-split study: backtests of the methods, the chosen daily model
-report/                             charts, HTML templates, PDF renderer (report and both decks)
+data/raw/parakeet_toast_hourly.csv.gz  net sales and checks by café, day and hour (Oct 2024 – Oct 14, 2026)
+weektypes/                          week types for payroll: the types, hourly patterns and their backtest, templates
+report/build_week_types.py          the week-types deck and its workbook
+report/                             charts, HTML templates, PDF renderer (report and all decks)
 outputs/                            CSV results and the PDF
 ```
