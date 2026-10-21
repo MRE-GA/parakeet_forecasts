@@ -120,7 +120,7 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
 
 ## Week types for payroll, next 52 weeks (`outputs/Parakeet_Week_Types_Next_52_Weeks.pdf`)
 
-A 61-page deck and a workbook (`outputs/Parakeet_Week_Templates_Next_52_Weeks.xlsx`) for scheduling payroll over the
+A 64-page deck and a workbook (`outputs/Parakeet_Week_Templates_Next_52_Weeks.xlsx`) for scheduling payroll over the
 next 52 weeks (Mon–Sun, Oct 26, 2026 to Oct 24, 2027): each of the ten run-rate stores' weeks grouped into types of
 week, and for each type the average week by day and hour, in sales and checks (`weektypes/`,
 `report/build_week_types.py`). It replaces the first version on the 2027 calendar (Jan 4, 2027 – Jan 2, 2028), which
@@ -136,6 +136,9 @@ left November and December 2026 out and borrowed Jan 1–2, 2028 from 2027.
   Beverly Hills, Brentwood, Carlsbad, Del Mar Café, La Jolla Café and Newport Beach (Beverly Hills 7.2%, Brentwood
   8.8%, Del Mar 8.6% and La Jolla Café 9.8% apart, under the 10% rule). The beach peaks in summer; Brentwood and
   Beverly Hills sell least in summer.
+* **Deck**: summary, method, the calendar, the types at a glance, then for each store its year week by week and one
+  page per type (sales and checks by hour, Mon–Sun). The holiday weeks with a template of their own are in an
+  appendix (a list in date order, then one page each); in the workbook, the `Holiday weeks` sheet.
 * **Holiday weeks**: weeks with a special day (the daily model's list) and spring break count a quarter in the split
   and nothing in a type's level; 21 of them sell 10% more or less than their type and get a template of their own
   (Thanksgiving, Christmas and New Year's 2026 first; busier at the beach, quieter at Brentwood; none at Beverly Hills,
@@ -168,8 +171,8 @@ left November and December 2026 out and borrowed Jan 1–2, 2028 from 2027.
   the hourly split missed by 19.5% (19.9% with the weekday pattern alone; the backtest's 20.7%) and checks came in
   +0.2% against expected.
 * **Workbook**: `Calendar` (every week's type by store, with the ISO week), `Weeks` (every week's own sales by day
-  against its template), `Types`, one sheet per store with every template (sales, then checks; totals are formulas,
-  recalculated with zero errors), `All templates` (long table) and `Check`. CSVs in `outputs/weektypes/`.
+  against its template), `Types`, one sheet per store with its types' templates (sales, then checks; totals are
+  formulas, recalculated with zero errors), `Holiday weeks` (the appendix), `All templates` (long table) and `Check`. CSVs in `outputs/weektypes/`.
 
 ## Approach
 

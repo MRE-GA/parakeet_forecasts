@@ -204,7 +204,7 @@ def chips(ty_weeks: list[int], wt: pd.DataFrame, own: dict[int, str]) -> list[di
         r = wt.loc[w]
         label = f"{week_start(w):%b} {week_start(w).day}"
         if w in own:
-            out.append({"label": label, "vs": None, "own": SHORT.get(own[w], own[w])})
+            out.append({"label": label, "vs": None, "own": SHORT.get(own[w], own[w].removesuffix(" week"))})
         else:
             out.append({"label": label, "vs": r.vs_template, "own": None})
     return out
@@ -272,19 +272,19 @@ def collect() -> dict:
                                  "date": f"{dt:%a %b} {dt.day}, {dt.year}", "sales": t.day_sales[j],
                                  "vs": t.day_sales[j] / base.day_sales[j] - 1})
             first, last = t.dates[0], t.dates[-1]
-            hols.append({"name": name, "short": SHORT.get(name, name), "week": w, "t": t,
+            hols.append({"name": name, "short": SHORT.get(name, name.removesuffix(" week")), "week": w, "t": t,
                          "heat": heat_table(t, vmax), "dates": dspan(first, last), "type": sw.label[w],
                          "type_color": COLOR[sw.label[w]], "type_ink": INK_ON[sw.label[w]], "total": t.week_sales,
                          "vs": t.week_sales / base.week_sales - 1, "base": base.week_sales, "days": days,
                          "checks": int(t.checks.sum()), "avg_check": t.week_sales / max(t.checks.sum(), 1),
                          "parts": day_parts(t)})
         steps = [ty["vs_below"] for ty in types if ty["vs_below"] is not None]
-        rows = len(sw.types) + len(sw.holiday)
+        rows = len(sw.types) + 1  # the table's rows (types) and the holiday note under it
         small_step = len(regular_types) == 2 and steps and steps[0] < STEP
         stores.append({"key": s, "name": DISPLAY[s], "weeks": sw, "types": types, "hols": hols,
                        "n": len(regular_types), "n_word": NUM[len(regular_types)],
                        # the chart gives way to the table on stores with many rows
-                       "svg": weekly_svg(sw, temps[s], h=max(130, min(260, 470 - 32 * rows))),
+                       "svg": weekly_svg(sw, temps[s], h=max(170, min(270, 470 - 32 * rows))),
                        "small_step": small_step, "step": steps[0] if steps else None,
                        "hours": f"{hour_label(temps[s][0].hours[0])}–{hour_label(temps[s][0].hours[-1] + 1)}",
                        "cove": s == COVE, "fit_week": reg_w.vs_template.abs().mean(),
@@ -334,6 +334,7 @@ def collect() -> dict:
             later.append({"name": st["name"], "hi": hi["parts"][2], "lo": lo["parts"][2], "hi_t": hi["name"],
                           "lo_t": lo["name"]})
     n["later"] = sorted(later, key=lambda x: x["lo"] - x["hi"])
+    n["hol_all"] = sorted(({**h, "store": st["name"]} for st in stores for h in st["hols"]), key=lambda x: x["week"])
     n["live"]["lo"] = min(n["live"]["stores"], key=lambda x: x["sales"])
     n["live"]["hi"] = max(n["live"]["stores"], key=lambda x: x["sales"])
     cor = next(st for st in stores if st["key"] == "Coronado")
@@ -385,11 +386,12 @@ def export_xlsx(n: dict) -> dict:
         f"{CHECK_MONTHS} months.",
         "",
         "Sheets: Calendar (the type of every week, by store) · Weeks (every week's own run-rate by day against its "
-        "template) · Types (each type's weeks and average week) · one sheet per store with its templates (sales, "
-        "then "
-        "checks; totals are formulas) · All templates (one row per store, template, day and hour) · Check (the "
-        "templates applied to the calendar against the run-rate).",
-        "To schedule a week: find its type in Calendar, then use that template in the store's sheet. Weeks gives the "
+        "template) · Types (each type's weeks and average week) · one sheet per store with its types' templates "
+        "(sales, then checks; totals are formulas) · Holiday weeks (appendix: the holiday weeks with a template of "
+        "their own) · All templates (one row per store, template, day and hour) · Check (the templates applied to "
+        "the calendar against the run-rate).",
+        "To schedule a week: find its type in Calendar, then use that template in the store's sheet (a holiday week "
+        "in bold: its template is in Holiday weeks). Weeks gives the "
         "week's own sales by day: where a day is a few percent above or below the template, scale that day.",
         f"Live check, {n['live']['first']:%b %-d} - {n['live']['last']:%b %-d, %Y} (after the data): the ten stores "
         f"sold {n['live']['sales']:+.1%} against the run-rate; hourly error {n['live']['hour_err']:.1%}; checks "
@@ -476,17 +478,9 @@ def export_xlsx(n: dict) -> dict:
     for j, wdt in enumerate([18, 12, 26, 44, 10, 14, 12, 60], 1):
         ws.column_dimensions[get_column_letter(j)].width = wdt
 
-    # one sheet per store
-    for st in n["stores"]:
-        ws = wb.create_sheet(st["name"][:31])
-        r = 1
-        ws.cell(r, 1, f"{st['name']} · week templates, next 52 weeks (sales in $, then checks; Monday to Sunday)"
-                ).font = Font(bold=True, size=13)
-        r += 2
-        blocks = [(ty["t"], f"{ty['name']} · " + "; ".join(f"{x['weeks']}: {x['dates']}" for x in ty["ranges"]))
-                  for ty in st["types"]]
-        blocks += [(h["t"], f"{h['name']} · week {h['week']} ({h['dates']}) · instead of the {h['type']} template")
-                   for h in st["hols"]]
+    def template_blocks(ws, blocks):
+        """Each template as two grids (sales, then checks), hours down and days across, with formula totals."""
+        r = 3
         for t, title in blocks:
             c = ws.cell(r, 1, title)
             if t.kind == "holiday":
@@ -519,6 +513,23 @@ def export_xlsx(n: dict) -> dict:
         ws.column_dimensions["A"].width = 10
         for j in range(2, 10):
             ws.column_dimensions[get_column_letter(j)].width = 13
+
+    # one sheet per store: its types
+    for st in n["stores"]:
+        ws = wb.create_sheet(st["name"][:31])
+        ws.cell(1, 1, f"{st['name']} · week templates, next 52 weeks (sales in $, then checks; Monday to Sunday)"
+                ).font = Font(bold=True, size=13)
+        if st["hols"]:
+            ws.cell(2, 1, "Holiday weeks with a template of their own: sheet 'Holiday weeks' (appendix)")
+        template_blocks(ws, [(ty["t"], f"{ty['name']} · " + "; ".join(f"{x['weeks']}: {x['dates']}"
+                                                                     for x in ty["ranges"])) for ty in st["types"]])
+
+    # the appendix: every holiday week with a template of its own, in date order
+    ws = wb.create_sheet("Holiday weeks")
+    ws.cell(1, 1, "Appendix · holiday weeks with a template of their own, in date order: use it instead of the "
+                  "type's template that week").font = Font(bold=True, size=13)
+    template_blocks(ws, [(h["t"], f"{h['store']} · {h['name']} · week {h['week']} ({h['dates']}) · instead of the "
+                                  f"{h['type']} template") for h in n["hol_all"]])
 
     # long table and check
     ws = wb.create_sheet("All templates")
@@ -584,7 +595,7 @@ def main() -> None:
     args = ap.parse_args()
     ds = find_design_system(args.ds)
     copy_assets(ds)
-    for f in ["photos/hero-1.jpg"]:
+    for f in ["photos/hero-1.jpg", "photos/split-order.jpg"]:
         shutil.copy(ds / "assets" / f, BUILD / "assets" / Path(f).name)
     n = collect()
     print(n["check"].to_string(index=False))
