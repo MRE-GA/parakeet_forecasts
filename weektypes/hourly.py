@@ -6,7 +6,7 @@ Days used: normal trading days (no closure or partial closure: daily/common.py) 
 (weektypes/backtest_hourly.py) patterns by type of week split the days no better (hourly error 21.6% against
 21.3%), so the types differ in how much each day sells (the run-rate), not in how a day divides into hours. Special
 days (holidays and the days around them) are left out of those patterns and make patterns of their own from the same
-day in earlier years (21.2% against 26.1% with the weekday's pattern).
+day in earlier years (20.9% against 26.0% with the weekday's pattern).
 
 Hours shown: the hours with at least 0.5% of the store's sales in the last six months; sales in other hours (a few
 dollars before opening or after closing) join the nearest hour shown. An hour that opened later (Little Italy has

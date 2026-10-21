@@ -1,53 +1,53 @@
-week,monday,sunday,Beverly Hills,Brentwood,Carlsbad,Coronado,Del Mar Café,La Jolla Café,La Jolla Juicery,Little Italy Café,Newport Beach,La Jolla Cove
-1,2027-01-04,2027-01-10,Low,High,High,Low,High,High,Low,Normal,High,Low
-2,2027-01-11,2027-01-17,Low,High,High,Low,High,High,Low,Normal,High,Low
-3,2027-01-18,2027-01-24,High,High,High,Low,High,High,Low,Normal,High,Low
-4,2027-01-25,2027-01-31,High,High,High,Low,High,High,Low,Normal,High,Low
-5,2027-02-01,2027-02-07,High,High,High,Low,High,High,Low,Normal,High,Low
-6,2027-02-08,2027-02-14,High,High,High,Low,High,High,Low,High,High,Low
-7,2027-02-15,2027-02-21,High,High,High,Low,High,High,Low,High,High,Normal
-8,2027-02-22,2027-02-28,High,High,High,Low,High,High,Normal,High,High,Normal
-9,2027-03-01,2027-03-07,High,High,High,Low,High,High,Normal,High,High,Normal
-10,2027-03-08,2027-03-14,High,High,High,Normal,High,High,Normal,High,High,Normal
-11,2027-03-15,2027-03-21,High,High,High,Normal,High,High,Normal,High,High,Normal
-12,2027-03-22,2027-03-28,High,High,High,Normal,High,High,Normal,High,High,Normal
-13,2027-03-29,2027-04-04,High,High,High,Spring break,High,High,Normal,Spring break,High,Spring break
-14,2027-04-05,2027-04-11,High,High,High,Normal,High,High,Normal,High,High,Normal
-15,2027-04-12,2027-04-18,High,High,High,Normal,High,High,Normal,High,High,Normal
-16,2027-04-19,2027-04-25,High,High,High,Normal,High,High,Normal,High,High,Normal
-17,2027-04-26,2027-05-02,High,High,High,Normal,High,High,Normal,High,High,Normal
-18,2027-05-03,2027-05-09,High,High,High,Normal,High,High,Normal,High,High,Normal
-19,2027-05-10,2027-05-16,High,High,High,Normal,High,High,Normal,High,High,Normal
-20,2027-05-17,2027-05-23,High,High,High,Normal,High,High,Normal,High,High,Normal
-21,2027-05-24,2027-05-30,High,High,High,Normal,High,High,Normal,High,High,Normal
-22,2027-05-31,2027-06-06,High,High,High,Normal,High,High,Normal,High,Memorial Day week,Normal
-23,2027-06-07,2027-06-13,High,High,High,Normal,High,High,Normal,High,High,Normal
-24,2027-06-14,2027-06-20,High,Low,High,Normal,High,High,Normal,High,Father's Day week,High
-25,2027-06-21,2027-06-27,High,Low,High,Normal,High,High,High,High,High,High
-26,2027-06-28,2027-07-04,High,Fourth of July week,High,High,High,High,High,High,High,High
-27,2027-07-05,2027-07-11,High,Low,High,High,High,High,High,High,Week after the Fourth,High
-28,2027-07-12,2027-07-18,High,Low,High,High,High,High,High,High,High,High
-29,2027-07-19,2027-07-25,High,Low,High,High,High,High,High,High,High,High
-30,2027-07-26,2027-08-01,High,Low,High,High,High,High,High,High,High,High
-31,2027-08-02,2027-08-08,High,Low,High,High,High,High,High,High,High,High
-32,2027-08-09,2027-08-15,High,Low,High,High,High,High,High,High,High,High
-33,2027-08-16,2027-08-22,High,Low,High,Normal,High,High,High,High,High,High
-34,2027-08-23,2027-08-29,High,Low,Low,Normal,High,High,Normal,Normal,High,Normal
-35,2027-08-30,2027-09-05,Low,Low,Low,Normal,Low,High,Normal,Normal,High,Normal
-36,2027-09-06,2027-09-12,Low,Low,Low,Normal,Low,Low,Normal,Normal,High,Normal
-37,2027-09-13,2027-09-19,Low,Low,Low,Low,Low,Low,Normal,Normal,Low,Normal
-38,2027-09-20,2027-09-26,Low,Low,Low,Low,Low,Low,Low,Normal,Low,Normal
-39,2027-09-27,2027-10-03,Low,Low,Low,Low,Low,Low,Low,Normal,Low,Reopening week
-40,2027-10-04,2027-10-10,Low,High,Low,Low,Low,Low,Low,Normal,Low,Remodeled
-41,2027-10-11,2027-10-17,Low,High,Low,Low,Low,Low,Low,Normal,Low,Remodeled
-42,2027-10-18,2027-10-24,Low,High,Low,Low,Low,Low,Low,Normal,Low,Remodeled
-43,2027-10-25,2027-10-31,Low,High,Low,Low,Low,Low,Low,Low,Low,Remodeled
-44,2027-11-01,2027-11-07,Low,High,Low,Low,Low,Low,Low,Low,Low,Remodeled
-45,2027-11-08,2027-11-14,Low,High,High,Low,Low,Low,Low,Veterans Day week,Low,Veterans Day week
-46,2027-11-15,2027-11-21,Low,High,High,Low,Low,Low,Low,Low,Low,Remodeled
-47,2027-11-22,2027-11-28,Low,High,High,Thanksgiving week,Low,Low,Low,Low,Thanksgiving week,Thanksgiving week
-48,2027-11-29,2027-12-05,Low,High,High,Low,Low,Low,Low,Low,Low,Remodeled
-49,2027-12-06,2027-12-12,Low,High,High,Low,Low,Low,Low,Low,Low,Remodeled
-50,2027-12-13,2027-12-19,Low,High,High,Low,High,Low,Low,Low,Low,Remodeled
-51,2027-12-20,2027-12-26,Low,Christmas week,High,Christmas week,High,High,Low,Normal,High,Remodeled
-52,2027-12-27,2028-01-02,Low,New Year's week,High,New Year's week,High,High,Low,New Year's week,New Year's week,New Year's week
+week,monday,sunday,iso_week,Beverly Hills,Brentwood,Carlsbad,Coronado,Del Mar Café,La Jolla Café,La Jolla Juicery,Little Italy Café,Newport Beach,La Jolla Cove
+1,2026-10-26,2026-11-01,44,Low,High,Low,Low,Low,Low,Low,Low,Low,Normal
+2,2026-11-02,2026-11-08,45,Low,High,Low,Low,Low,Low,Low,Low,Low,Normal
+3,2026-11-09,2026-11-15,46,Low,High,Low,Low,Low,Low,Low,Veterans Day week,Low,Normal
+4,2026-11-16,2026-11-22,47,Low,High,Low,Low,Low,Low,Low,Low,Low,Normal
+5,2026-11-23,2026-11-29,48,Low,High,High,Thanksgiving week,Low,Low,Low,Low,Thanksgiving week,Thanksgiving week
+6,2026-11-30,2026-12-06,49,Low,High,High,Low,Low,Low,Low,Low,Low,Low
+7,2026-12-07,2026-12-13,50,Low,High,High,Low,Low,Low,Low,Low,Low,Low
+8,2026-12-14,2026-12-20,51,Low,High,High,Low,High,Low,Low,Low,Low,Low
+9,2026-12-21,2026-12-27,52,Low,Christmas week,High,Christmas week,High,High,Low,Normal,High,Christmas week
+10,2026-12-28,2027-01-03,53,Low,High,High,New Year's week,High,High,Low,New Year's week,New Year's week,New Year's week
+11,2027-01-04,2027-01-10,1,Low,High,High,Low,High,High,Low,Normal,High,Normal
+12,2027-01-11,2027-01-17,2,Low,High,High,Low,High,High,Low,Normal,High,Normal
+13,2027-01-18,2027-01-24,3,High,High,High,Low,High,High,Low,Normal,High,Normal
+14,2027-01-25,2027-01-31,4,High,High,High,Low,High,High,Low,Normal,High,Normal
+15,2027-02-01,2027-02-07,5,High,High,High,Low,High,High,Low,Normal,High,Normal
+16,2027-02-08,2027-02-14,6,High,High,High,Low,High,High,Low,High,High,Normal
+17,2027-02-15,2027-02-21,7,High,High,High,Low,High,High,Low,High,High,High
+18,2027-02-22,2027-02-28,8,High,High,High,Low,High,High,Normal,High,High,High
+19,2027-03-01,2027-03-07,9,High,High,High,Low,High,High,Normal,High,High,High
+20,2027-03-08,2027-03-14,10,High,High,High,Normal,High,High,Normal,High,High,High
+21,2027-03-15,2027-03-21,11,High,High,High,Normal,High,High,Normal,High,High,High
+22,2027-03-22,2027-03-28,12,High,High,High,Normal,High,High,Normal,High,High,High
+23,2027-03-29,2027-04-04,13,High,Spring break,High,Spring break,High,High,Normal,Spring break,High,Spring break
+24,2027-04-05,2027-04-11,14,High,High,High,Normal,High,High,Normal,High,High,High
+25,2027-04-12,2027-04-18,15,High,High,High,Normal,High,High,Normal,High,High,High
+26,2027-04-19,2027-04-25,16,High,High,High,Normal,High,High,Normal,High,High,High
+27,2027-04-26,2027-05-02,17,High,High,High,Normal,High,High,Normal,High,High,High
+28,2027-05-03,2027-05-09,18,High,High,High,Normal,High,High,Normal,High,High,High
+29,2027-05-10,2027-05-16,19,High,High,High,Normal,High,High,Normal,High,High,High
+30,2027-05-17,2027-05-23,20,High,High,High,Normal,High,High,Normal,High,High,High
+31,2027-05-24,2027-05-30,21,High,High,High,Normal,High,High,Normal,High,High,High
+32,2027-05-31,2027-06-06,22,High,High,High,Normal,High,High,Normal,High,Memorial Day week,High
+33,2027-06-07,2027-06-13,23,High,Low,High,Normal,High,High,Normal,High,High,High
+34,2027-06-14,2027-06-20,24,High,Low,High,Normal,High,High,High,High,Father's Day week,Super high
+35,2027-06-21,2027-06-27,25,High,Low,High,Normal,High,High,High,High,High,Super high
+36,2027-06-28,2027-07-04,26,High,Fourth of July week,High,High,High,High,High,High,High,Super high
+37,2027-07-05,2027-07-11,27,High,Low,High,High,High,High,High,High,Week after the Fourth,Super high
+38,2027-07-12,2027-07-18,28,High,Low,High,High,High,High,High,High,High,Super high
+39,2027-07-19,2027-07-25,29,High,Low,High,High,High,High,High,High,High,Super high
+40,2027-07-26,2027-08-01,30,High,Low,High,High,High,High,High,High,High,Super high
+41,2027-08-02,2027-08-08,31,High,Low,High,High,High,High,High,High,High,Super high
+42,2027-08-09,2027-08-15,32,High,Low,High,High,High,High,High,High,High,Super high
+43,2027-08-16,2027-08-22,33,High,Low,High,Normal,High,High,High,High,High,Super high
+44,2027-08-23,2027-08-29,34,High,Low,Low,Normal,High,High,High,Normal,High,High
+45,2027-08-30,2027-09-05,35,Low,Low,Low,Normal,Low,High,High,Normal,High,High
+46,2027-09-06,2027-09-12,36,Low,Low,Low,Normal,Low,Low,Labor Day week,Normal,High,High
+47,2027-09-13,2027-09-19,37,Low,Low,Low,Low,Low,Low,Low,Normal,Low,High
+48,2027-09-20,2027-09-26,38,Low,Low,Low,Low,Low,Low,Low,Normal,Low,High
+49,2027-09-27,2027-10-03,39,Low,Low,Low,Low,Low,Low,Low,Normal,Low,Reopening week
+50,2027-10-04,2027-10-10,40,Low,Low,Low,Low,Low,Low,Low,Normal,Low,Remodeled
+51,2027-10-11,2027-10-17,41,Low,Low,Low,Low,Low,Low,Low,Normal,Low,Remodeled
+52,2027-10-18,2027-10-24,42,Low,Low,Low,Low,Low,Low,Low,Normal,Low,Remodeled

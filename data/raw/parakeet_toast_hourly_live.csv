@@ -1,0 +1,591 @@
+store,date,hour,net_sales,checks
+Beverly Hills,2026-10-15,7,399,12
+Beverly Hills,2026-10-15,8,407,21
+Beverly Hills,2026-10-15,9,490,20
+Beverly Hills,2026-10-15,10,1012,29
+Beverly Hills,2026-10-15,11,589,25
+Beverly Hills,2026-10-15,12,685,29
+Beverly Hills,2026-10-15,13,1053,38
+Beverly Hills,2026-10-15,14,507,25
+Beverly Hills,2026-10-15,15,333,18
+Beverly Hills,2026-10-15,16,568,21
+Beverly Hills,2026-10-15,17,395,14
+Beverly Hills,2026-10-15,18,440,12
+Beverly Hills,2026-10-16,7,279,11
+Beverly Hills,2026-10-16,8,583,15
+Beverly Hills,2026-10-16,9,731,24
+Beverly Hills,2026-10-16,10,1281,29
+Beverly Hills,2026-10-16,11,1074,32
+Beverly Hills,2026-10-16,12,1126,33
+Beverly Hills,2026-10-16,13,1069,36
+Beverly Hills,2026-10-16,14,489,16
+Beverly Hills,2026-10-16,15,432,19
+Beverly Hills,2026-10-16,16,824,22
+Beverly Hills,2026-10-16,17,142,6
+Beverly Hills,2026-10-16,18,307,8
+Beverly Hills,2026-10-17,7,98,4
+Beverly Hills,2026-10-17,8,857,22
+Beverly Hills,2026-10-17,9,736,28
+Beverly Hills,2026-10-17,10,1103,37
+Beverly Hills,2026-10-17,11,925,28
+Beverly Hills,2026-10-17,12,1098,33
+Beverly Hills,2026-10-17,13,1302,35
+Beverly Hills,2026-10-17,14,455,23
+Beverly Hills,2026-10-17,15,198,13
+Beverly Hills,2026-10-17,16,335,11
+Beverly Hills,2026-10-17,17,267,9
+Beverly Hills,2026-10-17,18,90,5
+Beverly Hills,2026-10-18,7,379,12
+Beverly Hills,2026-10-18,8,755,25
+Beverly Hills,2026-10-18,9,979,24
+Beverly Hills,2026-10-18,10,742,25
+Beverly Hills,2026-10-18,11,1507,50
+Beverly Hills,2026-10-18,12,1028,28
+Beverly Hills,2026-10-18,13,1387,37
+Beverly Hills,2026-10-18,14,570,22
+Beverly Hills,2026-10-18,15,397,13
+Beverly Hills,2026-10-18,16,238,8
+Beverly Hills,2026-10-18,17,635,16
+Beverly Hills,2026-10-18,18,313,10
+Beverly Hills,2026-10-19,7,164,6
+Beverly Hills,2026-10-19,8,222,11
+Beverly Hills,2026-10-19,9,286,14
+Beverly Hills,2026-10-19,10,493,20
+Beverly Hills,2026-10-19,11,907,25
+Beverly Hills,2026-10-19,12,1282,44
+Beverly Hills,2026-10-19,13,462,22
+Beverly Hills,2026-10-19,14,612,25
+Beverly Hills,2026-10-19,15,370,13
+Beverly Hills,2026-10-19,16,175,9
+Beverly Hills,2026-10-19,17,129,3
+Beverly Hills,2026-10-19,18,181,6
+Brentwood,2026-10-15,7,432,23
+Brentwood,2026-10-15,8,556,21
+Brentwood,2026-10-15,9,394,22
+Brentwood,2026-10-15,10,884,27
+Brentwood,2026-10-15,11,625,19
+Brentwood,2026-10-15,12,907,21
+Brentwood,2026-10-15,13,490,20
+Brentwood,2026-10-15,14,395,20
+Brentwood,2026-10-15,15,296,13
+Brentwood,2026-10-15,16,280,9
+Brentwood,2026-10-15,17,397,11
+Brentwood,2026-10-15,18,229,7
+Brentwood,2026-10-16,7,312,15
+Brentwood,2026-10-16,8,430,25
+Brentwood,2026-10-16,9,599,27
+Brentwood,2026-10-16,10,337,17
+Brentwood,2026-10-16,11,1008,36
+Brentwood,2026-10-16,12,1352,40
+Brentwood,2026-10-16,13,726,24
+Brentwood,2026-10-16,14,445,18
+Brentwood,2026-10-16,15,392,18
+Brentwood,2026-10-16,16,230,8
+Brentwood,2026-10-16,17,171,12
+Brentwood,2026-10-16,18,213,10
+Brentwood,2026-10-17,7,571,20
+Brentwood,2026-10-17,8,746,24
+Brentwood,2026-10-17,9,1214,50
+Brentwood,2026-10-17,10,1274,42
+Brentwood,2026-10-17,11,1226,44
+Brentwood,2026-10-17,12,1382,37
+Brentwood,2026-10-17,13,858,23
+Brentwood,2026-10-17,14,312,14
+Brentwood,2026-10-17,15,389,14
+Brentwood,2026-10-17,16,361,11
+Brentwood,2026-10-17,17,143,7
+Brentwood,2026-10-17,18,146,3
+Brentwood,2026-10-18,7,368,8
+Brentwood,2026-10-18,8,625,21
+Brentwood,2026-10-18,9,769,25
+Brentwood,2026-10-18,10,1316,39
+Brentwood,2026-10-18,11,1206,35
+Brentwood,2026-10-18,12,1166,32
+Brentwood,2026-10-18,13,948,29
+Brentwood,2026-10-18,14,901,29
+Brentwood,2026-10-18,15,321,18
+Brentwood,2026-10-18,16,301,11
+Brentwood,2026-10-18,17,276,11
+Brentwood,2026-10-18,18,243,7
+Brentwood,2026-10-19,6,11,1
+Brentwood,2026-10-19,7,265,17
+Brentwood,2026-10-19,8,377,18
+Brentwood,2026-10-19,9,375,17
+Brentwood,2026-10-19,10,527,21
+Brentwood,2026-10-19,11,785,23
+Brentwood,2026-10-19,12,1151,27
+Brentwood,2026-10-19,13,506,20
+Brentwood,2026-10-19,14,422,16
+Brentwood,2026-10-19,15,521,24
+Brentwood,2026-10-19,16,222,10
+Brentwood,2026-10-19,17,308,9
+Brentwood,2026-10-19,18,125,8
+Carlsbad,2026-10-15,7,311,23
+Carlsbad,2026-10-15,8,460,25
+Carlsbad,2026-10-15,9,1080,39
+Carlsbad,2026-10-15,10,948,38
+Carlsbad,2026-10-15,11,1724,47
+Carlsbad,2026-10-15,12,1403,41
+Carlsbad,2026-10-15,13,851,38
+Carlsbad,2026-10-15,14,491,29
+Carlsbad,2026-10-15,15,675,28
+Carlsbad,2026-10-15,16,258,16
+Carlsbad,2026-10-15,17,219,9
+Carlsbad,2026-10-15,18,212,10
+Carlsbad,2026-10-16,7,643,28
+Carlsbad,2026-10-16,8,1149,41
+Carlsbad,2026-10-16,9,1086,55
+Carlsbad,2026-10-16,10,1606,59
+Carlsbad,2026-10-16,11,1251,42
+Carlsbad,2026-10-16,12,1187,43
+Carlsbad,2026-10-16,13,637,30
+Carlsbad,2026-10-16,14,488,23
+Carlsbad,2026-10-16,15,322,16
+Carlsbad,2026-10-16,16,375,20
+Carlsbad,2026-10-16,17,762,14
+Carlsbad,2026-10-16,18,430,12
+Carlsbad,2026-10-17,7,763,19
+Carlsbad,2026-10-17,8,720,25
+Carlsbad,2026-10-17,9,951,33
+Carlsbad,2026-10-17,10,1623,60
+Carlsbad,2026-10-17,11,1617,51
+Carlsbad,2026-10-17,12,2170,62
+Carlsbad,2026-10-17,13,1103,38
+Carlsbad,2026-10-17,14,737,36
+Carlsbad,2026-10-17,15,775,31
+Carlsbad,2026-10-17,16,508,25
+Carlsbad,2026-10-17,17,167,11
+Carlsbad,2026-10-17,18,450,16
+Carlsbad,2026-10-18,7,679,17
+Carlsbad,2026-10-18,8,903,35
+Carlsbad,2026-10-18,9,1424,38
+Carlsbad,2026-10-18,10,1690,62
+Carlsbad,2026-10-18,11,1529,45
+Carlsbad,2026-10-18,12,1371,44
+Carlsbad,2026-10-18,13,1013,43
+Carlsbad,2026-10-18,14,1071,51
+Carlsbad,2026-10-18,15,473,26
+Carlsbad,2026-10-18,16,755,24
+Carlsbad,2026-10-18,17,688,21
+Carlsbad,2026-10-18,18,277,11
+Carlsbad,2026-10-18,19,29,1
+Carlsbad,2026-10-19,6,27,1
+Carlsbad,2026-10-19,7,381,18
+Carlsbad,2026-10-19,8,492,25
+Carlsbad,2026-10-19,9,661,26
+Carlsbad,2026-10-19,10,1112,39
+Carlsbad,2026-10-19,11,600,27
+Carlsbad,2026-10-19,12,1568,51
+Carlsbad,2026-10-19,13,1223,48
+Carlsbad,2026-10-19,14,310,19
+Carlsbad,2026-10-19,15,311,17
+Carlsbad,2026-10-19,16,220,11
+Carlsbad,2026-10-19,17,588,17
+Carlsbad,2026-10-19,18,335,12
+Carlsbad,2026-10-19,19,7,1
+Carmel Valley,2026-10-15,7,803,41
+Carmel Valley,2026-10-15,8,989,38
+Carmel Valley,2026-10-15,9,1878,66
+Carmel Valley,2026-10-15,10,1841,61
+Carmel Valley,2026-10-15,11,1355,50
+Carmel Valley,2026-10-15,12,1156,44
+Carmel Valley,2026-10-15,13,1022,42
+Carmel Valley,2026-10-15,14,576,27
+Carmel Valley,2026-10-15,15,592,30
+Carmel Valley,2026-10-15,16,404,25
+Carmel Valley,2026-10-15,17,452,18
+Carmel Valley,2026-10-15,18,188,9
+Carmel Valley,2026-10-16,7,1193,51
+Carmel Valley,2026-10-16,8,1456,52
+Carmel Valley,2026-10-16,9,1769,66
+Carmel Valley,2026-10-16,10,1467,50
+Carmel Valley,2026-10-16,11,1707,60
+Carmel Valley,2026-10-16,12,1385,56
+Carmel Valley,2026-10-16,13,741,34
+Carmel Valley,2026-10-16,14,635,24
+Carmel Valley,2026-10-16,15,447,21
+Carmel Valley,2026-10-16,16,383,16
+Carmel Valley,2026-10-16,17,328,20
+Carmel Valley,2026-10-16,18,282,7
+Carmel Valley,2026-10-17,7,455,19
+Carmel Valley,2026-10-17,8,2095,56
+Carmel Valley,2026-10-17,9,2179,65
+Carmel Valley,2026-10-17,10,2576,67
+Carmel Valley,2026-10-17,11,2233,67
+Carmel Valley,2026-10-17,12,1797,49
+Carmel Valley,2026-10-17,13,1588,45
+Carmel Valley,2026-10-17,14,804,37
+Carmel Valley,2026-10-17,15,577,29
+Carmel Valley,2026-10-17,16,266,15
+Carmel Valley,2026-10-17,17,443,16
+Carmel Valley,2026-10-17,18,271,6
+Carmel Valley,2026-10-18,7,870,28
+Carmel Valley,2026-10-18,8,1234,43
+Carmel Valley,2026-10-18,9,2389,69
+Carmel Valley,2026-10-18,10,1805,64
+Carmel Valley,2026-10-18,11,2795,63
+Carmel Valley,2026-10-18,12,1961,53
+Carmel Valley,2026-10-18,13,1290,45
+Carmel Valley,2026-10-18,14,854,29
+Carmel Valley,2026-10-18,15,508,28
+Carmel Valley,2026-10-18,16,628,24
+Carmel Valley,2026-10-18,17,309,19
+Carmel Valley,2026-10-18,18,135,6
+Carmel Valley,2026-10-18,19,0,1
+Carmel Valley,2026-10-19,7,906,32
+Carmel Valley,2026-10-19,8,1198,54
+Carmel Valley,2026-10-19,9,1424,53
+Carmel Valley,2026-10-19,10,1414,58
+Carmel Valley,2026-10-19,11,1747,60
+Carmel Valley,2026-10-19,12,1082,41
+Carmel Valley,2026-10-19,13,699,40
+Carmel Valley,2026-10-19,14,567,32
+Carmel Valley,2026-10-19,15,451,23
+Carmel Valley,2026-10-19,16,409,24
+Carmel Valley,2026-10-19,17,203,15
+Carmel Valley,2026-10-19,18,228,12
+Coronado,2026-10-15,7,498,20
+Coronado,2026-10-15,8,1017,40
+Coronado,2026-10-15,9,658,29
+Coronado,2026-10-15,10,1256,42
+Coronado,2026-10-15,11,1016,39
+Coronado,2026-10-15,12,837,40
+Coronado,2026-10-15,13,638,23
+Coronado,2026-10-15,14,399,23
+Coronado,2026-10-15,15,409,19
+Coronado,2026-10-15,16,262,13
+Coronado,2026-10-15,17,598,14
+Coronado,2026-10-15,18,239,10
+Coronado,2026-10-16,7,512,15
+Coronado,2026-10-16,8,688,33
+Coronado,2026-10-16,9,986,42
+Coronado,2026-10-16,10,1689,59
+Coronado,2026-10-16,11,1611,56
+Coronado,2026-10-16,12,1180,46
+Coronado,2026-10-16,13,1119,47
+Coronado,2026-10-16,14,622,32
+Coronado,2026-10-16,15,622,27
+Coronado,2026-10-16,16,359,19
+Coronado,2026-10-16,17,415,15
+Coronado,2026-10-16,18,455,13
+Coronado,2026-10-17,7,782,27
+Coronado,2026-10-17,8,1075,35
+Coronado,2026-10-17,9,1690,53
+Coronado,2026-10-17,10,1848,73
+Coronado,2026-10-17,11,2254,75
+Coronado,2026-10-17,12,1591,56
+Coronado,2026-10-17,13,1174,51
+Coronado,2026-10-17,14,944,40
+Coronado,2026-10-17,15,457,32
+Coronado,2026-10-17,16,443,22
+Coronado,2026-10-17,17,612,22
+Coronado,2026-10-17,18,243,14
+Coronado,2026-10-18,7,845,30
+Coronado,2026-10-18,8,1108,33
+Coronado,2026-10-18,9,2029,66
+Coronado,2026-10-18,10,2103,76
+Coronado,2026-10-18,11,1812,53
+Coronado,2026-10-18,12,2018,60
+Coronado,2026-10-18,13,1386,46
+Coronado,2026-10-18,14,830,37
+Coronado,2026-10-18,15,840,39
+Coronado,2026-10-18,16,546,21
+Coronado,2026-10-18,17,706,25
+Coronado,2026-10-18,18,232,13
+Coronado,2026-10-19,7,477,24
+Coronado,2026-10-19,8,901,25
+Coronado,2026-10-19,9,754,34
+Coronado,2026-10-19,10,984,38
+Coronado,2026-10-19,11,1033,46
+Coronado,2026-10-19,12,1076,36
+Coronado,2026-10-19,13,635,25
+Coronado,2026-10-19,14,722,29
+Coronado,2026-10-19,15,177,11
+Coronado,2026-10-19,16,307,17
+Coronado,2026-10-19,17,226,11
+Coronado,2026-10-19,18,446,15
+La Jolla,2026-10-15,7,372,23
+La Jolla,2026-10-15,8,844,32
+La Jolla,2026-10-15,9,1014,38
+La Jolla,2026-10-15,10,1058,37
+La Jolla,2026-10-15,11,1031,40
+La Jolla,2026-10-15,12,734,41
+La Jolla,2026-10-15,13,750,28
+La Jolla,2026-10-15,14,448,24
+La Jolla,2026-10-15,15,552,28
+La Jolla,2026-10-15,16,320,14
+La Jolla,2026-10-15,17,578,18
+La Jolla,2026-10-15,18,318,11
+La Jolla,2026-10-16,7,797,34
+La Jolla,2026-10-16,8,833,29
+La Jolla,2026-10-16,9,708,27
+La Jolla,2026-10-16,10,847,36
+La Jolla,2026-10-16,11,639,30
+La Jolla,2026-10-16,12,1466,49
+La Jolla,2026-10-16,13,563,23
+La Jolla,2026-10-16,14,734,30
+La Jolla,2026-10-16,15,272,17
+La Jolla,2026-10-16,16,363,23
+La Jolla,2026-10-16,17,312,14
+La Jolla,2026-10-16,18,306,13
+La Jolla,2026-10-17,7,367,18
+La Jolla,2026-10-17,8,932,25
+La Jolla,2026-10-17,9,1067,38
+La Jolla,2026-10-17,10,1149,45
+La Jolla,2026-10-17,11,1743,53
+La Jolla,2026-10-17,12,1186,38
+La Jolla,2026-10-17,13,909,40
+La Jolla,2026-10-17,14,399,22
+La Jolla,2026-10-17,15,468,19
+La Jolla,2026-10-17,16,409,16
+La Jolla,2026-10-17,17,317,18
+La Jolla,2026-10-17,18,292,11
+La Jolla,2026-10-18,7,360,13
+La Jolla,2026-10-18,8,496,20
+La Jolla,2026-10-18,9,1031,35
+La Jolla,2026-10-18,10,1360,40
+La Jolla,2026-10-18,11,1414,43
+La Jolla,2026-10-18,12,1339,39
+La Jolla,2026-10-18,13,937,36
+La Jolla,2026-10-18,14,382,25
+La Jolla,2026-10-18,15,369,14
+La Jolla,2026-10-18,16,167,8
+La Jolla,2026-10-18,17,240,10
+La Jolla,2026-10-18,18,150,9
+La Jolla,2026-10-19,7,383,14
+La Jolla,2026-10-19,8,454,30
+La Jolla,2026-10-19,9,568,24
+La Jolla,2026-10-19,10,545,22
+La Jolla,2026-10-19,11,1064,38
+La Jolla,2026-10-19,12,1081,38
+La Jolla,2026-10-19,13,878,34
+La Jolla,2026-10-19,14,453,20
+La Jolla,2026-10-19,15,229,17
+La Jolla,2026-10-19,16,341,15
+La Jolla,2026-10-19,17,158,5
+La Jolla,2026-10-19,18,308,9
+La Jolla Cove,2026-10-15,7,199,13
+La Jolla Cove,2026-10-15,8,214,13
+La Jolla Cove,2026-10-15,9,338,17
+La Jolla Cove,2026-10-15,10,156,10
+La Jolla Cove,2026-10-15,11,53,5
+La Jolla Cove,2026-10-15,12,65,5
+La Jolla Cove,2026-10-15,13,137,8
+La Jolla Cove,2026-10-15,14,105,7
+La Jolla Cove,2026-10-15,15,245,11
+La Jolla Cove,2026-10-15,16,46,3
+La Jolla Cove,2026-10-16,7,287,17
+La Jolla Cove,2026-10-16,8,374,20
+La Jolla Cove,2026-10-16,9,304,25
+La Jolla Cove,2026-10-16,10,202,14
+La Jolla Cove,2026-10-16,11,224,16
+La Jolla Cove,2026-10-16,12,121,11
+La Jolla Cove,2026-10-16,13,312,21
+La Jolla Cove,2026-10-16,14,211,14
+La Jolla Cove,2026-10-16,15,160,15
+La Jolla Cove,2026-10-16,16,103,6
+La Jolla Cove,2026-10-17,7,290,15
+La Jolla Cove,2026-10-17,8,354,21
+La Jolla Cove,2026-10-17,9,340,20
+La Jolla Cove,2026-10-17,10,293,21
+La Jolla Cove,2026-10-17,11,366,28
+La Jolla Cove,2026-10-17,12,259,19
+La Jolla Cove,2026-10-17,13,339,14
+La Jolla Cove,2026-10-17,14,251,14
+La Jolla Cove,2026-10-17,15,169,12
+La Jolla Cove,2026-10-17,16,198,9
+La Jolla Cove,2026-10-17,17,13,1
+La Jolla Cove,2026-10-18,7,231,15
+La Jolla Cove,2026-10-18,8,328,19
+La Jolla Cove,2026-10-18,9,308,22
+La Jolla Cove,2026-10-18,10,412,30
+La Jolla Cove,2026-10-18,11,214,18
+La Jolla Cove,2026-10-18,12,205,13
+La Jolla Cove,2026-10-18,13,209,11
+La Jolla Cove,2026-10-18,14,286,15
+La Jolla Cove,2026-10-18,15,281,16
+La Jolla Cove,2026-10-18,16,208,16
+La Jolla Cove,2026-10-19,7,165,14
+La Jolla Cove,2026-10-19,8,163,10
+La Jolla Cove,2026-10-19,9,187,14
+La Jolla Cove,2026-10-19,10,219,10
+La Jolla Cove,2026-10-19,11,87,10
+La Jolla Cove,2026-10-19,12,191,16
+La Jolla Cove,2026-10-19,13,23,1
+La Jolla Cove,2026-10-19,14,105,7
+La Jolla Cove,2026-10-19,15,113,9
+La Jolla Cove,2026-10-19,16,93,5
+La Jolla Juicery,2026-10-15,7,100,4
+La Jolla Juicery,2026-10-15,8,237,9
+La Jolla Juicery,2026-10-15,9,62,5
+La Jolla Juicery,2026-10-15,10,249,13
+La Jolla Juicery,2026-10-15,11,242,14
+La Jolla Juicery,2026-10-15,12,327,19
+La Jolla Juicery,2026-10-15,13,252,17
+La Jolla Juicery,2026-10-15,14,314,16
+La Jolla Juicery,2026-10-15,15,361,15
+La Jolla Juicery,2026-10-15,16,96,3
+La Jolla Juicery,2026-10-15,17,207,12
+La Jolla Juicery,2026-10-16,7,182,4
+La Jolla Juicery,2026-10-16,8,289,15
+La Jolla Juicery,2026-10-16,9,312,16
+La Jolla Juicery,2026-10-16,10,319,16
+La Jolla Juicery,2026-10-16,11,278,11
+La Jolla Juicery,2026-10-16,12,301,20
+La Jolla Juicery,2026-10-16,13,449,21
+La Jolla Juicery,2026-10-16,14,348,17
+La Jolla Juicery,2026-10-16,15,181,11
+La Jolla Juicery,2026-10-16,16,268,10
+La Jolla Juicery,2026-10-16,17,44,3
+La Jolla Juicery,2026-10-17,7,76,3
+La Jolla Juicery,2026-10-17,8,228,10
+La Jolla Juicery,2026-10-17,9,300,10
+La Jolla Juicery,2026-10-17,10,456,20
+La Jolla Juicery,2026-10-17,11,421,25
+La Jolla Juicery,2026-10-17,12,525,29
+La Jolla Juicery,2026-10-17,13,326,18
+La Jolla Juicery,2026-10-17,14,421,13
+La Jolla Juicery,2026-10-17,15,212,10
+La Jolla Juicery,2026-10-17,16,262,16
+La Jolla Juicery,2026-10-17,17,135,10
+La Jolla Juicery,2026-10-18,7,118,5
+La Jolla Juicery,2026-10-18,8,120,6
+La Jolla Juicery,2026-10-18,9,330,18
+La Jolla Juicery,2026-10-18,10,246,16
+La Jolla Juicery,2026-10-18,11,422,25
+La Jolla Juicery,2026-10-18,12,234,12
+La Jolla Juicery,2026-10-18,13,178,10
+La Jolla Juicery,2026-10-18,14,265,16
+La Jolla Juicery,2026-10-18,15,213,10
+La Jolla Juicery,2026-10-18,16,142,5
+La Jolla Juicery,2026-10-18,17,136,7
+La Jolla Juicery,2026-10-19,7,83,5
+La Jolla Juicery,2026-10-19,8,139,6
+La Jolla Juicery,2026-10-19,9,175,8
+La Jolla Juicery,2026-10-19,10,221,10
+La Jolla Juicery,2026-10-19,11,238,13
+La Jolla Juicery,2026-10-19,12,226,12
+La Jolla Juicery,2026-10-19,13,239,12
+La Jolla Juicery,2026-10-19,14,338,19
+La Jolla Juicery,2026-10-19,15,303,13
+La Jolla Juicery,2026-10-19,16,111,5
+La Jolla Juicery,2026-10-19,17,43,3
+Little Italy,2026-10-15,6,250,1
+Little Italy,2026-10-15,7,729,19
+Little Italy,2026-10-15,8,814,29
+Little Italy,2026-10-15,9,781,25
+Little Italy,2026-10-15,10,1034,40
+Little Italy,2026-10-15,11,1264,42
+Little Italy,2026-10-15,12,1007,33
+Little Italy,2026-10-15,13,692,22
+Little Italy,2026-10-15,14,526,25
+Little Italy,2026-10-15,15,199,13
+Little Italy,2026-10-15,16,103,9
+Little Italy,2026-10-16,7,439,13
+Little Italy,2026-10-16,8,996,25
+Little Italy,2026-10-16,9,1392,41
+Little Italy,2026-10-16,10,2165,60
+Little Italy,2026-10-16,11,1301,46
+Little Italy,2026-10-16,12,803,29
+Little Italy,2026-10-16,13,667,30
+Little Italy,2026-10-16,14,434,16
+Little Italy,2026-10-16,15,390,15
+Little Italy,2026-10-16,16,159,9
+Little Italy,2026-10-16,17,208,14
+Little Italy,2026-10-16,18,202,7
+Little Italy,2026-10-17,7,600,22
+Little Italy,2026-10-17,8,1320,46
+Little Italy,2026-10-17,9,1665,51
+Little Italy,2026-10-17,10,1884,60
+Little Italy,2026-10-17,11,2330,69
+Little Italy,2026-10-17,12,1497,52
+Little Italy,2026-10-17,13,1034,43
+Little Italy,2026-10-17,14,756,37
+Little Italy,2026-10-17,15,708,29
+Little Italy,2026-10-17,16,334,23
+Little Italy,2026-10-17,17,344,22
+Little Italy,2026-10-17,18,150,10
+Little Italy,2026-10-18,7,445,15
+Little Italy,2026-10-18,8,882,30
+Little Italy,2026-10-18,9,1989,49
+Little Italy,2026-10-18,10,2087,60
+Little Italy,2026-10-18,11,1621,50
+Little Italy,2026-10-18,12,2013,53
+Little Italy,2026-10-18,13,1099,48
+Little Italy,2026-10-18,14,722,37
+Little Italy,2026-10-18,15,417,27
+Little Italy,2026-10-18,16,269,13
+Little Italy,2026-10-18,17,287,14
+Little Italy,2026-10-18,18,284,15
+Little Italy,2026-10-19,7,308,12
+Little Italy,2026-10-19,8,633,20
+Little Italy,2026-10-19,9,1326,44
+Little Italy,2026-10-19,10,1465,38
+Little Italy,2026-10-19,11,1009,32
+Little Italy,2026-10-19,12,965,31
+Little Italy,2026-10-19,13,443,21
+Little Italy,2026-10-19,14,510,20
+Little Italy,2026-10-19,15,130,10
+Little Italy,2026-10-19,16,74,4
+Little Italy,2026-10-19,17,6,1
+Newport,2026-10-15,7,333,17
+Newport,2026-10-15,8,448,17
+Newport,2026-10-15,9,874,28
+Newport,2026-10-15,10,818,33
+Newport,2026-10-15,11,1019,34
+Newport,2026-10-15,12,874,31
+Newport,2026-10-15,13,807,22
+Newport,2026-10-15,14,357,14
+Newport,2026-10-15,15,346,14
+Newport,2026-10-15,16,450,16
+Newport,2026-10-15,17,244,10
+Newport,2026-10-15,18,299,15
+Newport,2026-10-16,7,432,21
+Newport,2026-10-16,8,1434,32
+Newport,2026-10-16,9,1393,38
+Newport,2026-10-16,10,974,34
+Newport,2026-10-16,11,1020,27
+Newport,2026-10-16,12,955,27
+Newport,2026-10-16,13,702,24
+Newport,2026-10-16,14,489,20
+Newport,2026-10-16,15,294,14
+Newport,2026-10-16,16,311,18
+Newport,2026-10-16,17,252,10
+Newport,2026-10-16,18,412,16
+Newport,2026-10-17,7,642,25
+Newport,2026-10-17,8,1314,35
+Newport,2026-10-17,9,1231,46
+Newport,2026-10-17,10,1833,44
+Newport,2026-10-17,11,1885,48
+Newport,2026-10-17,12,1256,40
+Newport,2026-10-17,13,1019,38
+Newport,2026-10-17,14,887,34
+Newport,2026-10-17,15,1024,31
+Newport,2026-10-17,16,529,28
+Newport,2026-10-17,17,628,16
+Newport,2026-10-17,18,584,26
+Newport,2026-10-17,19,7,1
+Newport,2026-10-18,7,327,17
+Newport,2026-10-18,8,1095,28
+Newport,2026-10-18,9,1486,46
+Newport,2026-10-18,10,1577,49
+Newport,2026-10-18,11,1804,46
+Newport,2026-10-18,12,1690,42
+Newport,2026-10-18,13,1352,38
+Newport,2026-10-18,14,1010,34
+Newport,2026-10-18,15,720,34
+Newport,2026-10-18,16,316,16
+Newport,2026-10-18,17,512,20
+Newport,2026-10-18,18,354,20
+Newport,2026-10-19,7,604,28
+Newport,2026-10-19,8,518,22
+Newport,2026-10-19,9,684,27
+Newport,2026-10-19,10,850,23
+Newport,2026-10-19,11,1144,38
+Newport,2026-10-19,12,526,23
+Newport,2026-10-19,13,642,21
+Newport,2026-10-19,14,376,22
+Newport,2026-10-19,15,450,14
+Newport,2026-10-19,16,228,12
+Newport,2026-10-19,17,245,9
+Newport,2026-10-19,18,165,12

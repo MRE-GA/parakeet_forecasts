@@ -1,16 +1,15 @@
-"""Week types for payroll: each store's 2027 weeks grouped into 2 to 4 types of week, so that payroll can schedule
+"""Week types for payroll: each store's next 52 weeks grouped into 2 to 4 types of week, so that payroll can schedule
 each type from one template (weektypes/templates.py: the type's average week by day and hour).
 
-Week types. The weeks are the 52 Monday-to-Sunday weeks of 2027 (ISO weeks: Jan 4, 2027 to Jan 2, 2028) and their
-sales are today's run-rate by day (report/build_daily_targets.py: outputs/targets_2027_daily.csv, and
-outputs/runrate_2026_daily.csv for nothing but Jan 1-2, 2028, which the run-rate does not reach: New Year's Day and
-the Sunday after are taken from Jan 1 and Jan 3, 2027). Each store's weeks are split into types in runs of at least
-four weeks in a row (the year wraps around: December runs on into January), so a type is "from week X to week Y",
-never one week here and one there. The split minimises the squared log difference between each week and its type's
-level, plus a cost for every change of type (SWITCH), so two close types do not alternate through the year; the store
-gets as many types as it can (at most four) while every type sells at least 10% more than the one below it, and never
-fewer than two. Types are named by level: Low and High; Low, Normal and High; or Low, Normal, High
-and Super high.
+Week types. The weeks are the next 52 Monday-to-Sunday weeks (from Monday Oct 26, 2026, the week after this was
+built, to Sunday Oct 24, 2027) and their sales are today's run-rate by day (report/build_daily_targets.py:
+outputs/runrate_2026_daily.csv to Dec 31, 2026, then outputs/targets_2027_daily.csv). Each store's weeks are split into
+types in runs of at least four weeks in a row, the first and the last run included, so a type is "from week X to
+week Y", never one week here and one there. The split minimises the squared log difference between each week and its
+type's level, plus a cost for every change of type (SWITCH), so two close types do not alternate through the year; the
+store gets as many types as it can (at most four) while every type's average week (as its template has it: holiday
+weeks with a template of their own left out) sells at least 10% more than the one below it, and never fewer than two.
+Types are named by level: Low and High; Low, Normal and High; or Low, Normal, High and Super high.
 
 Holiday weeks. A week with a special day (the daily model's list: daily/common.py) or the week after Easter (spring
 break) does not pull the types: it counts a quarter in the split, so it takes the type it is closest to, and nothing
@@ -20,7 +19,7 @@ weeks of their type; their special days are listed on the type's page.
 
 La Jolla Cove. The run-rate carries the budget's remodeled café from its October 1, 2027 reopening ($125K a month), so
 its types are found on the weeks before the reopening; the week of the reopening is a holiday week of its own and the
-weeks after it are one more type, Remodeled.
+three weeks after it are one more type, Remodeled.
 
     python weektypes/model.py   -> each store's types, their weeks and holiday weeks (printed)
 """
@@ -41,10 +40,11 @@ OUT = ROOT / "outputs"
 HOURLY = ROOT / "data" / "raw" / "parakeet_toast_hourly.csv.gz"
 RUNRATE_27 = OUT / "targets_2027_daily.csv"
 RUNRATE_26 = OUT / "runrate_2026_daily.csv"
-WEEK1 = pd.Timestamp("2027-01-04")  # Monday of ISO week 1, 2027
+WEEK1 = pd.Timestamp("2026-10-26")  # the next 52 weeks: from the Monday after this was built (Oct 21, 2026)
 N_WEEKS = 52
 DAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
 MIN_RUN = 4  # weeks in a row, at least
+CIRCULAR = False  # the next 52 weeks are a sequence, not a calendar year that repeats: the edges need 4 weeks too
 SWITCH = 4 * 0.05 ** 2  # a change of type costs as much as four weeks 5% off their type's level (in logs)
 HOLIDAY_WEIGHT = 0.25  # holiday weeks lean to the type they are closest to without moving the ranges much
 STEP = 0.10  # a type sells at least this much more than the type below it; also the holiday-week threshold
@@ -69,19 +69,17 @@ def week_of(d: pd.Timestamp) -> int:
 # ------------------------------------------------------------------------------------------
 # The run-rate by day and week
 # ------------------------------------------------------------------------------------------
+def window() -> pd.DatetimeIndex:
+    return pd.date_range(WEEK1, week_start(N_WEEKS) + pd.Timedelta(days=6))
+
+
 def runrate_days() -> pd.DataFrame:
-    """Today's run-rate by store (Toast name) and day for the 52 weeks of 2027; Jan 1-2, 2028 from Jan 1 and 3, 2027."""
+    """Today's run-rate by day (rows) and store (Toast name) over the 52 weeks: the rest of 2026, then 2027."""
     back = {v: k for k, v in NAME.items()}
     r = pd.concat([pd.read_csv(RUNRATE_26, parse_dates=["date"]), pd.read_csv(RUNRATE_27, parse_dates=["date"])])
     r = r.assign(store=r.store.map(lambda s: back.get(s, s))).set_index(["store", "date"]).runrate
-    extra = []
-    for s in STORES:
-        extra += [(s, pd.Timestamp("2028-01-01"), r[(s, pd.Timestamp("2027-01-01"))]),
-                  (s, pd.Timestamp("2028-01-02"), r[(s, pd.Timestamp("2027-01-03"))])]
-    r = pd.concat([r, pd.DataFrame(extra, columns=["store", "date", "runrate"]).set_index(["store", "date"]).runrate])
-    days = pd.date_range(WEEK1, week_start(N_WEEKS) + pd.Timedelta(days=6))
-    out = r.unstack(0).reindex(days)[STORES]
-    assert not out.isna().any().any()
+    out = r.unstack(0).reindex(window())[STORES]
+    assert not out.isna().any().any(), "the run-rate does not cover the 52 weeks"
     return out
 
 
@@ -89,8 +87,8 @@ def runrate_days() -> pd.DataFrame:
 # Holiday weeks
 # ------------------------------------------------------------------------------------------
 def holiday_weeks() -> dict[int, list[tuple[pd.Timestamp, str]]]:
-    """Weeks of 2027 with a special day (the daily model's list), and the week after Easter (spring break)."""
-    days = pd.date_range(WEEK1, week_start(N_WEEKS) + pd.Timedelta(days=6))
+    """Weeks with a special day (the daily model's list), and the week after Easter (spring break)."""
+    days = window()
     sp = SPECIAL.reindex(days).dropna()
     out: dict[int, list] = {}
     for d, lab in sp.items():
@@ -98,8 +96,9 @@ def holiday_weeks() -> dict[int, list[tuple[pd.Timestamp, str]]]:
             near = [SPECIAL.get(d + pd.Timedelta(days=k)) for k in (-1, 1)]
             lab = next(f"{n} (observed)" for n in near if n and n != "Observed holiday")
         out.setdefault(week_of(d), []).append((d, lab))
-    e = EASTER[2027]
-    out.setdefault(week_of(e + pd.Timedelta(days=1)), []).append((e + pd.Timedelta(days=1), "Spring break"))
+    for e in EASTER.values():
+        if e + pd.Timedelta(days=7) in days:
+            out.setdefault(week_of(e + pd.Timedelta(days=1)), []).append((e + pd.Timedelta(days=1), "Spring break"))
     return dict(sorted(out.items()))
 
 
@@ -229,7 +228,8 @@ class StoreWeeks:
         return float(self.weekly[self.regular(t)].mean())
 
     def ranges(self, t: str) -> list[tuple[int, int]]:
-        """The runs of a type (holiday weeks included in the run they sit in), wrapping December into January."""
+        """The runs of a type (holiday weeks included in the run they sit in). A run over the end of the 52 weeks into
+        their start is shown as two: they are a year apart."""
         on = (self.label == t).to_numpy()
         runs, i, n = [], 0, len(on)
         while i < n:
@@ -241,52 +241,51 @@ class StoreWeeks:
                 i = j + 1
             else:
                 i += 1
-        if len(runs) > 1 and runs[0][0] == 1 and runs[-1][1] == n:  # Dec -> Jan
-            runs[0][0] = runs[-1][0]
-            runs.pop()
         return [tuple(r) for r in runs]
+
+
+def holiday_own(label: pd.Series, weekly: pd.Series, hol: dict, fixed: set) -> set:
+    """The holiday weeks that get a template of their own: those that sell 10% more or less than their type's average
+    week, the average without them (start from all of them apart and settle). Weeks in fixed always do."""
+    own = set(hol) | fixed
+    for _ in range(20):
+        base = {t: weekly[[w for w in label.index if label[w] == t and w not in own]].mean() for t in set(label)}
+        new = {w for w in hol if abs(weekly[w] / base[label[w]] - 1) >= STEP} | fixed
+        if new == own:
+            break
+        own = new
+    return own
 
 
 def classify_store(store: str, weekly: pd.Series, hol: dict) -> StoreWeeks:
     weeks = weekly.index.to_numpy()
-    span = weeks
+    span, fixed, after = weeks, set(), None
     if store == COVE:  # types on the weeks before the reopening; the reopening week and the weeks after apart
         reopen = week_of(COVE_REOPENS)
-        span = weeks[weeks < reopen]
+        span, fixed = weeks[weeks < reopen], {reopen}
+        after = pd.Series(REMODELED, index=weeks[weeks >= reopen])
     x = np.log(weekly[span].to_numpy())
     in_hol = np.isin(span, list(hol))
     tried, fits = {}, {}
     for k in range(MIN_TYPES, MAX_TYPES + 1):
-        cost, lab, mu = segment(x, in_hol, k, circular=store != COVE)
+        cost, lab, mu = segment(x, in_hol, k, circular=CIRCULAR)
         if lab is None:
             continue
-        fits[k] = pd.Series(lab, index=span)
-        tried[k] = [weekly[[w for w in span if fits[k][w] == l and w not in hol]].mean() for l in range(k)]
+        label = pd.Series(lab, index=span).map(dict(enumerate(TYPE_NAMES[k])))
+        if after is not None:
+            label = pd.concat([label, after])
+        own = holiday_own(label, weekly, hol, fixed)
+        # the type's average week as its template has it: holiday weeks with their own template left out
+        tried[k] = [weekly[[w for w in span if label[w] == t and w not in own]].mean() for t in TYPE_NAMES[k]]
+        fits[k] = (label, own)
     # as many types as possible while each sells at least 10% more than the one below; never fewer than two
     ok = [k for k, avg in tried.items() if all(hi / lo >= 1 + STEP for lo, hi in zip(avg, avg[1:]))]
     k = max(ok, default=MIN_TYPES)
-    lab_s = fits[k]
-    names = TYPE_NAMES[k]
-    label = lab_s.map(dict(enumerate(names)))
-    types = list(names)
-    if store == COVE:
-        after = pd.Series(REMODELED, index=weeks[weeks >= reopen])
-        label = pd.concat([label, after])
-        types.append(REMODELED)
+    label, own = fits[k]
+    types = TYPE_NAMES[k] + ([REMODELED] if after is not None else [])
     sw = StoreWeeks(store, weekly, types, label.sort_index(), tried=tried,
                     holiday_days={w: d for w, d in hol.items()})
-    # holiday weeks: a template of their own where they sell 10% more or less than their type's average week (the
-    # average without them: start from all of them apart and settle)
-    own = set(hol) | ({reopen} if store == COVE else set())
-    for _ in range(20):
-        base = {t: weekly[[w for w in sw.label.index if sw.label[w] == t and w not in own]].mean() for t in types}
-        new = {w for w in hol if abs(weekly[w] / base[sw.label[w]] - 1) >= STEP}
-        new |= {reopen} if store == COVE else set()
-        if new == own:
-            break
-        own = new
-    sw.holiday = {w: ("Reopening week" if store == COVE and w == reopen else holiday_week_name(hol[w]))
-                  for w in sorted(own)}
+    sw.holiday = {w: ("Reopening week" if w in fixed else holiday_week_name(hol[w])) for w in sorted(own)}
     return sw
 
 

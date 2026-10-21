@@ -118,42 +118,50 @@ with a workbook for the store managers (`outputs/Parakeet_2027_Manager_Targets.x
   December as in Part 1, adding up to its 'Oct 15 – Dec 31 at run-rate' to the cent ($5.88M for the ten stores).
   First check, Thursday to Sunday Oct 15–18: the ten stores sold $337.4K against $338.6K (−0.4%).
 
-## Week types for payroll (`outputs/Parakeet_2027_Week_Types.pdf`)
+## Week types for payroll, next 52 weeks (`outputs/Parakeet_Week_Types_Next_52_Weeks.pdf`)
 
-A 60-page deck and a workbook (`outputs/Parakeet_2027_Week_Templates.xlsx`) for scheduling payroll in 2027: each of
-the ten run-rate stores' 52 weeks (Mon–Sun, Jan 4, 2027 to Jan 2, 2028) grouped into types of week, and for each type
-the average week by day and hour, in sales and checks (`weektypes/`, `report/build_week_types.py`).
+A 61-page deck and a workbook (`outputs/Parakeet_Week_Templates_Next_52_Weeks.xlsx`) for scheduling payroll over the
+next 52 weeks (Mon–Sun, Oct 26, 2026 to Oct 24, 2027): each of the ten run-rate stores' weeks grouped into types of
+week, and for each type the average week by day and hour, in sales and checks (`weektypes/`,
+`report/build_week_types.py`). It replaces the first version on the 2027 calendar (Jan 4, 2027 – Jan 2, 2028), which
+left November and December 2026 out and borrowed Jan 1–2, 2028 from 2027.
 
-* **Types** (`weektypes/model.py`): each store's weeks of today's run-rate by day (`outputs/targets_2027_daily.csv`)
-  are split into types in runs of at least 4 weeks (December runs into January), minimising each week's squared log
-  distance to its type plus a cost per change of type (four weeks 5% off), so close types do not alternate. A store
-  gets as many types as it can, at most four, while each sells at least 10% more than the one below; never fewer than
-  two. Three types: Coronado (Low Sep 13 – Mar 7 $65.3K a week, Normal $79.5K, High Jun 28 – Aug 15 $104.3K),
-  La Jolla Juicery, Little Italy Café, La Jolla Cove (plus Remodeled from its Oct 1, 2027 reopening, $125K a month in
-  the run-rate). Two: Beverly Hills, Brentwood, Carlsbad, Del Mar Café, La Jolla Café and Newport Beach (Beverly
-  Hills, Brentwood, Del Mar and La Jolla Café under 10% apart). No store needs four. The beach peaks in summer;
-  Brentwood and Beverly Hills sell least in summer.
+* **Types** (`weektypes/model.py`): each store's weeks of today's run-rate by day (`outputs/runrate_2026_daily.csv`
+  to Dec 31, then `outputs/targets_2027_daily.csv`) are split into types in runs of at least 4 weeks, the first and
+  last included, minimising each week's squared log distance to its type plus a cost per change of type (four weeks
+  5% off), so close types do not alternate. A store gets as many types as it can, at most four, while each type's
+  average week (as its template has it) sells at least 10% more than the one below; never fewer than two. Four types:
+  La Jolla Cove before its Oct 1, 2027 reopening (then Remodeled, the run-rate's $125K a month). Three: Coronado (Low
+  $64.7K a week, Normal $79.5K, High Jun 28 – Aug 15, 2027 $104.3K), La Jolla Juicery, Little Italy Café. Two:
+  Beverly Hills, Brentwood, Carlsbad, Del Mar Café, La Jolla Café and Newport Beach (Beverly Hills 7.2%, Brentwood
+  8.8%, Del Mar 8.6% and La Jolla Café 9.8% apart, under the 10% rule). The beach peaks in summer; Brentwood and
+  Beverly Hills sell least in summer.
 * **Holiday weeks**: weeks with a special day (the daily model's list) and spring break count a quarter in the split
-  and nothing in a type's level; 20 of them sell 10% more or less than their type and get a template of their own
-  (Thanksgiving, Christmas, New Year's and spring break at the beach, quieter at Brentwood; none at Beverly Hills,
-  Carlsbad, Del Mar, La Jolla Café or the Juicery). The others' holidays are listed on their type's page with what
-  they sell against the template.
+  and nothing in a type's level; 21 of them sell 10% more or less than their type and get a template of their own
+  (Thanksgiving, Christmas and New Year's 2026 first; busier at the beach, quieter at Brentwood; none at Beverly Hills,
+  Carlsbad, Del Mar or La Jolla Café). The others' holidays are listed on their type's page with what they sell
+  against the template. Observed holidays keep the weekday's hours.
 * **Hours** (`weektypes/hourly.py`, `weektypes/backtest_hourly.py`): hourly net sales and checks by the hour each
   check was opened, Oct 2024 – Oct 14, 2026 (`data/sql/extract_parakeet_hourly.sql`, unpacked and checked against
   the daily file by `weektypes/hourly_data.py` into `data/raw/parakeet_toast_hourly.csv.gz`). Backtest (hourly error
   splitting the actual day, learned on the year to Oct 14, 2025, scored on the year after): one pattern per weekday
   21.3% against 21.6% by type of week and weekday, so types differ in their days, not their hours; holidays on their
-  own pattern from earlier years 21.2% against 26.1%; recent days weighing more (half-life 180 days) 20.7% against
+  own pattern from earlier years 21.0% against 26.0%; recent days weighing more (half-life 180 days) 20.7% against
   20.9%. Checks: sales over the average check by hour and weekday of the last 12 months (15.6% hourly error, about
-  3% high as prices rise). Hours that opened later (Little Italy to 6pm since March 2026) take their share from the
-  days since.
+  3% high as prices rise). Hours that opened later (Little Italy to 6pm, Friday to Sunday, since March 2026) take
+  their share from the days since.
 * **Templates** (`weektypes/templates.py`): a type's day is the average of its weeks' run-rate on that weekday
   (holiday weeks with their own template left out); days in whole dollars split into hours that add up to the day.
-  Applied to the calendar, the templates give back the run-rate of the 52 weeks within rounding (at most $57 a store
-  in the year; the workbook's `Check` tab). Jan 1–2, 2028 are past the run-rate: taken from Jan 1 and Jan 3, 2027.
-* **Workbook**: `Calendar` (every week's type by store), `Types`, one sheet per store with every template (sales,
-  then checks; totals are formulas, recalculated with zero errors), `All templates` (long table) and `Check`. CSVs in
-  `outputs/weektypes/`.
+  Applied to the calendar, the templates give back the run-rate of the 52 weeks ($29.45M for the ten) within
+  rounding (at most $41 a store; the workbook's `Check` tab). Every week keeps its own run-rate by day
+  (`outputs/weektypes/weeks.csv`): a week sells on average 1.8% (Beverly Hills) to 4.1% (Coronado) more or less than
+  its template; each type's page lists its weeks with that gap, and the workbook's `Weeks` sheet has their days.
+* **Live check** (`weektypes/live_check.py`, `data/sql/extract_parakeet_hourly_flat.sql`): Oct 15–19, 2026, the five
+  days after the data: the ten stores sold −0.8% against the run-rate (Beverly Hills −4.5% to La Jolla Juicery +15.0%),
+  the hourly split missed by 19.9% (the backtest's 20.7%) and checks came in +0.1% against expected.
+* **Workbook**: `Calendar` (every week's type by store, with the ISO week), `Weeks` (every week's own sales by day
+  against its template), `Types`, one sheet per store with every template (sales, then checks; totals are formulas,
+  recalculated with zero errors), `All templates` (long table) and `Check`. CSVs in `outputs/weektypes/`.
 
 ## Approach
 
@@ -193,6 +201,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 .venv/bin/python weektypes/model.py              # the week types by store (printed)
 .venv/bin/python weektypes/backtest_hourly.py    # hourly patterns and average check -> outputs/weektypes/
 .venv/bin/python weektypes/templates.py          # templates -> outputs/weektypes/ (csv)
+.venv/bin/python -I weektypes/live_check.py dump.txt   # live check on days after the data (flat hourly extract)
 .venv/bin/python report/build_week_types.py --ds /path/to/parakeet-cafe-design   # week-types deck + workbook
 ```
 

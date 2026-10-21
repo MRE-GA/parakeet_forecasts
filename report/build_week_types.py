@@ -1,12 +1,12 @@
-"""Build the 2027 week-types deck (payroll templates: sales and checks by hour and day for each type of week, store by
-store) and its workbook.
+"""Build the week-types deck for the next 52 weeks (payroll templates: sales and checks by hour and day for each type
+of week, store by store) and its workbook.
 
     python report/build_week_types.py [--ds PATH_TO_PARAKEET_DESIGN_SYSTEM] [--no-pdf] [--shots DIR]
 
 The weeks, types and templates come from weektypes/ (model.py, hourly.py, templates.py; backtests in
 backtest_hourly.py), on today's run-rate by day (run report/build_daily_targets.py first) and the hourly Toast extract
-(data/raw/parakeet_toast_hourly.csv.gz). Outputs: outputs/Parakeet_2027_Week_Types.pdf and
-outputs/Parakeet_2027_Week_Templates.xlsx.
+(data/raw/parakeet_toast_hourly.csv.gz); the live check from weektypes/live_check.py. Outputs:
+outputs/Parakeet_Week_Types_Next_52_Weeks.pdf and outputs/Parakeet_Week_Templates_Next_52_Weeks.xlsx.
 """
 from __future__ import annotations
 
@@ -32,10 +32,11 @@ from hourly import CHECK_MONTHS, RECENCY_HALF_LIFE  # noqa: E402
 from model import (COVE, DAYS, DISPLAY, HOURS_FROM, LAST_DAY, MIN_RUN, N_WEEKS, REMODELED, STEP, STORES,  # noqa: E402
                    runrate_days, week_start)
 
-PDF = ROOT / "outputs" / "Parakeet_2027_Week_Types.pdf"
-XLSX = ROOT / "outputs" / "Parakeet_2027_Week_Templates.xlsx"
+PDF = ROOT / "outputs" / "Parakeet_Week_Types_Next_52_Weeks.pdf"
+XLSX = ROOT / "outputs" / "Parakeet_Week_Templates_Next_52_Weeks.xlsx"
 RECALC = Path.home() / ".claude" / "skills"
 BACKTEST = ROOT / "outputs" / "weektypes" / "backtest_hourly.csv"
+LIVE = ROOT / "outputs" / "weektypes" / "live_check.csv"
 COLOR = {"Low": "#cccccc", "Normal": "#82888a", "High": "#f59ab8", "Super high": "#ef4b81", REMODELED: "#373a3c"}
 INK_ON = {"Low": "#000", "Normal": "#fff", "High": "#000", "Super high": "#fff", REMODELED: "#fff"}
 PINK = (239, 75, 129)
@@ -61,23 +62,32 @@ def pct(x: float) -> str:
     return f"{x * 100:+.0f}%".replace("-", "−")
 
 
+def pct1(x: float) -> str:
+    return f"{x * 100:+.1f}%".replace("-", "−")
+
+
 def fm(x: float) -> str:
     return f"${x / 1e6:,.2f}M"
 
 
 def dspan(a: pd.Timestamp, b: pd.Timestamp) -> str:
-    """Jun 28 – Aug 15; Nov 22–28 within a month."""
-    if a.month == b.month and a.year == b.year:
-        return f"{a:%b} {a.day}–{b.day}"
-    return f"{a:%b} {a.day} – {b:%b} {b.day}"
+    """Nov 23–29, 2026; Mar 8 – Jun 27, 2027; Dec 28, 2026 – Jan 3, 2027."""
+    if a.year != b.year:
+        return f"{a:%b} {a.day}, {a.year} – {b:%b} {b.day}, {b.year}"
+    if a.month == b.month:
+        return f"{a:%b} {a.day}–{b.day}, {b.year}"
+    return f"{a:%b} {a.day} – {b:%b} {b.day}, {b.year}"
 
 
 def week_range(a: int, b: int) -> dict:
     first, last = week_start(a), week_start(b) + pd.Timedelta(days=6)
-    n = (b - a) % N_WEEKS + 1
-    wraps = b < a
     label = f"Weeks {a}–{b}" if a != b else f"Week {a}"
-    return {"weeks": label, "dates": dspan(first, last) + (" (over the new year)" if wraps else ""), "n": n}
+    return {"weeks": label, "dates": dspan(first, last), "n": b - a + 1}
+
+
+def mlabel(d: pd.Timestamp) -> str:
+    """A month on an axis; January with its year."""
+    return f"{d:%b} {d.year}" if d.month == 1 else f"{d:%b}"
 
 
 def and_join(items: list[str]) -> str:
@@ -118,7 +128,7 @@ def heat_table(t: T.Template, vmax: float) -> str:
 
 
 def weekly_svg(sw, temps: list[T.Template], h: int, w: int = 1160) -> str:
-    """The 2027 run-rate by week, coloured by type; holiday weeks with a page of their own outlined."""
+    """The run-rate by week, coloured by type; holiday weeks with a page of their own outlined."""
     pad_l, pad_r, pad_t, pad_b = 54, 120, 14, 26
     y = sw.weekly.to_numpy()
     ymax = float(np.ceil(y.max() * 1.08 / 5000) * 5000)
@@ -139,10 +149,10 @@ def weekly_svg(sw, temps: list[T.Template], h: int, w: int = 1160) -> str:
                  f'fill="{COLOR[t]}"' + (' stroke="#000" stroke-width="1.6"' if own else "") + "/>")
         if own:
             s.append(f'<circle cx="{x + bw / 2:.1f}" cy="{Y(y[i]) - 7:.1f}" r="2.6" fill="#000"/>')
-        m = week_start(wk).month
+        m = (week_start(wk).year, week_start(wk).month)
         if m not in months_done and week_start(wk).day <= 7:
             months_done.add(m)
-            s.append(f'<text x="{x + 1:.1f}" y="{h - 8}" class="ax">{week_start(wk):%b}</text>')
+            s.append(f'<text x="{x + 1:.1f}" y="{h - 8}" class="ax">{mlabel(week_start(wk))}</text>')
     by = {tt.name: tt for tt in temps}
     for t in sw.types:
         v = by[t].week_sales
@@ -172,11 +182,25 @@ def calendar_rows(weeks) -> list[dict]:
 
 
 def month_heads() -> list[str]:
-    out, seen = [], set()
-    for w in range(1, N_WEEKS + 1):
-        m = week_start(w)
-        out.append(f"{m:%b}" if m.month not in seen and m.day <= 7 else "")
-        seen.add(m.month) if m.day <= 7 else None
+    """The calendar's month row: a month over its first full week, January with its year."""
+    return [mlabel(week_start(w)) if week_start(w).day <= 7 else "" for w in range(1, N_WEEKS + 1)]
+
+
+def week_heads() -> list[str]:
+    """The calendar's second row: every fourth week's Monday."""
+    return [f"{week_start(w):%b} {week_start(w).day}" if w % 4 == 1 else "" for w in range(1, N_WEEKS + 1)]
+
+
+def chips(ty_weeks: list[int], wt: pd.DataFrame, own: dict[int, str]) -> list[dict]:
+    """Every week a template is used in: its Monday and its own run-rate against the template."""
+    out = []
+    for w in ty_weeks:
+        r = wt.loc[w]
+        label = f"{week_start(w):%b} {week_start(w).day}"
+        if w in own:
+            out.append({"label": label, "vs": None, "own": SHORT.get(own[w], own[w])})
+        else:
+            out.append({"label": label, "vs": r.vs_template, "own": None})
     return out
 
 
@@ -186,10 +210,13 @@ def month_heads() -> list[str]:
 def collect() -> dict:
     rr = runrate_days()
     weeks, temps = T.build(rr=rr)
+    wt_all = T.week_table(weeks, temps, rr)
     stores = []
     for s in STORES:
         sw = weeks[s]
         by = {t.name: t for t in temps[s]}
+        wt = wt_all[wt_all.store == DISPLAY[s]].set_index("week")
+        reg_w = wt[wt.kind == "type"]
         vmax = max(t.sales.max() for t in temps[s] if t.kind == "type")
         regular_types = [t for t in sw.types if t != REMODELED]
         types = []
@@ -209,12 +236,13 @@ def collect() -> dict:
                     if lab == "Spring break":
                         continue
                     v = rr.loc[dt, s]
-                    notes.append({"day": lab.replace(" (observed)", ", observed"), "date": f"{dt:%a %b} {dt.day}",
-                                  "sales": v, "vs": v / d[dt.dayofweek] - 1})
+                    notes.append({"day": lab.replace(" (observed)", ", observed"),
+                                  "date": f"{dt:%a %b} {dt.day}, {dt.year}", "sales": v, "vs": v / d[dt.dayofweek] - 1})
             notes.sort(key=lambda r: -abs(r["vs"]))
             keep = 3 if name == REMODELED or len(sw.ranges(name)) > 1 else 4  # room left in the side column
             own = [{"name": sw.holiday[w], "week": w} for w in sorted(sw.holiday) if sw.label[w] == name]
             weekly = sw.weekly[reg]
+            fit = reg_w[reg_w.template == name]
             types.append({
                 "name": name, "color": COLOR[name], "ink": INK_ON[name], "t": t, "heat": heat_table(t, vmax),
                 "n_weeks": len(t.weeks), "n_regular": len(reg), "ranges": ranges, "avg": t.week_sales,
@@ -223,7 +251,9 @@ def collect() -> dict:
                 "peak": f"{DAYS[pk[1]]} {hour_label(t.hours[pk[0]])}", "peak_sales": t.sales[pk],
                 "weekend": (d[5] + d[6]) / 2 / d[:5].mean() - 1, "lo": weekly.min(), "hi": weekly.max(),
                 "busiest_day": DAYS[int(np.argmax(d))], "notes": notes[:keep], "more_notes": max(len(notes) - keep, 0),
-                "own": own,
+                "more_max": max((abs(x["vs"]) for x in notes[keep:]), default=0.0),
+                "own": own, "chips": chips(t.weeks, wt, sw.holiday),
+                "fit_week": fit.vs_template.abs().mean(), "fit_day": fit.day_gap_abs.sum() / fit.week_sales.sum(),
             })
         hols = []
         for w, name in sw.holiday.items():
@@ -232,10 +262,11 @@ def collect() -> dict:
             days = []
             for j, (dt, lab) in enumerate(zip(t.dates, t.special)):
                 if lab:
-                    days.append({"day": lab.replace(" (observed)", ", observed"), "date": f"{dt:%a %b} {dt.day}",
-                                 "sales": t.day_sales[j], "vs": t.day_sales[j] / base.day_sales[j] - 1})
+                    days.append({"day": lab.replace(" (observed)", ", observed"),
+                                 "date": f"{dt:%a %b} {dt.day}, {dt.year}", "sales": t.day_sales[j],
+                                 "vs": t.day_sales[j] / base.day_sales[j] - 1})
             first, last = t.dates[0], t.dates[-1]
-            hols.append({"name": name, "short": SHORT.get(name, name), "week": w, "t": t, "past_runrate": w == N_WEEKS,
+            hols.append({"name": name, "short": SHORT.get(name, name), "week": w, "t": t,
                          "heat": heat_table(t, vmax), "dates": dspan(first, last), "type": sw.label[w],
                          "type_color": COLOR[sw.label[w]], "type_ink": INK_ON[sw.label[w]], "total": t.week_sales,
                          "vs": t.week_sales / base.week_sales - 1, "base": base.week_sales, "days": days,
@@ -249,13 +280,24 @@ def collect() -> dict:
                        "svg": weekly_svg(sw, temps[s], h=max(150, min(250, 430 - 30 * rows))),
                        "small_step": small_step, "step": steps[0] if steps else None,
                        "hours": f"{hour_label(temps[s][0].hours[0])}–{hour_label(temps[s][0].hours[-1] + 1)}",
-                       "cove": s == COVE})
+                       "cove": s == COVE, "fit_week": reg_w.vs_template.abs().mean(),
+                       "fit_day": reg_w.day_gap_abs.sum() / reg_w.week_sales.sum(),
+                       "far": reg_w.vs_template.abs().max()})
     bt = pd.read_csv(BACKTEST)
     agg = bt.groupby(["test", "method"])[["err", "sales"]].sum()
     err = (agg.err / agg.sales * 100).round(1)
-    n = {"stores": stores, "calendar": calendar_rows(weeks), "months": month_heads(),
+    live = pd.read_csv(LIVE)
+    lv = live.groupby("store", sort=False)[["actual", "runrate", "hour_err", "checks", "checks_expected"]].sum()
+    lv_all = lv.sum()
+    n = {"stores": stores, "calendar": calendar_rows(weeks), "months": month_heads(), "week_heads": week_heads(),
+         "wt": wt_all,
+         "live": {"first": pd.Timestamp(live.date.min()), "last": pd.Timestamp(live.date.max()),
+                  "sales": lv_all.actual / lv_all.runrate - 1, "hour_err": lv_all.hour_err / lv_all.actual,
+                  "checks": lv_all.checks / lv_all.checks_expected - 1,
+                  "stores": [{"name": i, "sales": r.actual / r.runrate - 1} for i, r in lv.iterrows()]},
          "weeks": weeks, "temps": temps, "rr": rr,
          "n_by_k": {k: [st["name"] for st in stores if st["n"] == k] for k in (2, 3, 4)},
+         "fit_lo": min(st["fit_week"] for st in stores), "fit_hi": max(st["fit_week"] for st in stores),
          "n_hol": sum(len(st["hols"]) for st in stores),
          "hol_stores": [st["name"] for st in stores if st["hols"]],
          "no_hol_stores": [st["name"] for st in stores if not st["hols"]],
@@ -270,6 +312,8 @@ def collect() -> dict:
          "check_months": CHECK_MONTHS, "min_run": MIN_RUN, "step": STEP,
          "w1": week_start(1), "w52": week_start(N_WEEKS) + pd.Timedelta(days=6), "COLOR": COLOR, "INK_ON": INK_ON}
     n["total_rr"] = float(rr.sum().sum())
+    n["live"]["lo"] = min(n["live"]["stores"], key=lambda x: x["sales"])
+    n["live"]["hi"] = max(n["live"]["stores"], key=lambda x: x["sales"])
     cor = next(st for st in stores if st["key"] == "Coronado")
     n["coronado_high"] = next(ty for ty in cor["types"] if ty["name"] == "High")
     n["coronado_low"] = next(ty for ty in cor["types"] if ty["name"] == "Low")
@@ -301,12 +345,12 @@ def export_xlsx(n: dict) -> dict:
     ws = wb.active
     ws.title = "Read me"
     notes = [
-        "Parakeet Café · 2027 week types: sales and checks by hour for payroll",
+        "Parakeet Café · week types for the next 52 weeks: sales and checks by hour for payroll",
         "",
-        f"Weeks: the 52 Monday-to-Sunday weeks of 2027 (week 1 starts Mon {n['w1']:%b %-d, %Y}; week 52 ends Sun "
-        f"{n['w52']:%b %-d, %Y}; Jan 1-2, 2028 are past the run-rate and taken from Jan 1 and Jan 3, 2027).",
-        "Sales: today's run-rate by day for 2027 (the run-rate budget: last 45 days of Toast sales to Oct 14, 2026, "
-        "seasonally adjusted and held flat), whole dollars.",
+        f"Weeks: the next 52 Monday-to-Sunday weeks (week 1 starts Mon {n['w1']:%b %-d, %Y}; week 52 ends Sun "
+        f"{n['w52']:%b %-d, %Y}).",
+        "Sales: today's run-rate by day (the run-rate budget: last 45 days of Toast sales to Oct 14, 2026, seasonally "
+        "adjusted and held flat; the rest of 2026, then 2027), whole dollars.",
         f"Types: each store's weeks in 2 to 4 types, in runs of at least {MIN_RUN} weeks; each type sells at least "
         f"{STEP:.0%} more than the one below (two types at least). La Jolla Cove: one more type, Remodeled, after its "
         "October 1, 2027 reopening.",
@@ -318,10 +362,16 @@ def export_xlsx(n: dict) -> dict:
         f"Checks: each hour's sales divided by the store's average check for that hour and day of the week, last "
         f"{CHECK_MONTHS} months.",
         "",
-        "Sheets: Calendar (the type of every week, by store) · Types (each type's weeks and average week) · one "
-        "sheet per store with its templates (sales, then checks; totals are formulas) · All templates (one row per "
-        "store, template, day and hour) · Check (the templates applied to the calendar against the run-rate).",
-        "To schedule a week: find its type in Calendar, then use that template in the store's sheet.",
+        "Sheets: Calendar (the type of every week, by store) · Weeks (every week's own run-rate by day against its "
+        "template) · Types (each type's weeks and average week) · one sheet per store with its templates (sales, "
+        "then "
+        "checks; totals are formulas) · All templates (one row per store, template, day and hour) · Check (the "
+        "templates applied to the calendar against the run-rate).",
+        "To schedule a week: find its type in Calendar, then use that template in the store's sheet. Weeks gives the "
+        "week's own sales by day: where a day is a few percent above or below the template, scale that day.",
+        f"Live check, {n['live']['first']:%b %-d} - {n['live']['last']:%b %-d, %Y} (after the data): the ten stores "
+        f"sold {n['live']['sales']:+.1%} against the run-rate; hourly error {n['live']['hour_err']:.1%}; checks "
+        f"{n['live']['checks']:+.1%}.",
     ]
     for i, t in enumerate(notes, 1):
         ws.cell(i, 1, t).font = Font(bold=(i == 1), size=13 if i == 1 else 11)
@@ -329,7 +379,7 @@ def export_xlsx(n: dict) -> dict:
 
     # calendar
     ws = wb.create_sheet("Calendar")
-    hdr = ["Week", "Monday", "Sunday"] + [st["name"] for st in n["stores"]]
+    hdr = ["Week", "Monday", "Sunday", "ISO week"] + [st["name"] for st in n["stores"]]
     for j, v in enumerate(hdr, 1):
         c = ws.cell(1, j, v)
         c.font, c.fill, c.alignment = head_font, ink_fill, Alignment(horizontal="center", wrap_text=True)
@@ -338,7 +388,8 @@ def export_xlsx(n: dict) -> dict:
         ws.cell(r, 1, w)
         ws.cell(r, 2, week_start(w).date()).number_format = "ddd mmm d, yyyy"
         ws.cell(r, 3, (week_start(w) + pd.Timedelta(days=6)).date()).number_format = "ddd mmm d, yyyy"
-        for j, st in enumerate(n["stores"], 4):
+        ws.cell(r, 4, int(week_start(w).isocalendar().week))
+        for j, st in enumerate(n["stores"], 5):
             sw = st["weeks"]
             t = sw.label[w]
             c = ws.cell(r, j, sw.holiday.get(w, t))
@@ -347,9 +398,37 @@ def export_xlsx(n: dict) -> dict:
             c.alignment = Alignment(horizontal="center")
             if w in sw.holiday:
                 c.border = Border(left=thin, right=thin, top=thin, bottom=thin)
-    ws.freeze_panes = "D2"
+    ws.freeze_panes = "E2"
     for j in range(1, len(hdr) + 1):
-        ws.column_dimensions[get_column_letter(j)].width = 8 if j == 1 else 16
+        ws.column_dimensions[get_column_letter(j)].width = 8 if j in (1, 4) else 16
+    ws.row_dimensions[1].height = 30
+
+    # every week's own run-rate by day against its template
+    ws = wb.create_sheet("Weeks")
+    hdr = ["Store", "Week", "Monday", "Template"] + DAYS + ["Week sales", "Template week", "Vs template",
+                                                            "Day furthest from the template"]
+    for j, v in enumerate(hdr, 1):
+        c = ws.cell(1, j, v)
+        c.font, c.fill, c.alignment = head_font, ink_fill, Alignment(horizontal="center", wrap_text=True)
+    for i, row in enumerate(n["wt"].itertuples(index=False), 2):
+        ws.cell(i, 1, row.store)
+        ws.cell(i, 2, row.week)
+        ws.cell(i, 3, row.monday).number_format = "ddd mmm d, yyyy"
+        c = ws.cell(i, 4, row.template)
+        if row.kind == "holiday":
+            c.fill, c.font = ink_fill, head_font
+        else:
+            c.fill, c.font = fill(COLOR[row.template]), Font(color=xl(INK_ON[row.template]))
+        for j, d in enumerate(DAYS, 5):
+            ws.cell(i, j, round(getattr(row, d))).number_format = money_fmt
+        ws.cell(i, 12, f"=SUM(E{i}:K{i})").number_format = money_fmt
+        ws.cell(i, 13, int(row.template_sales)).number_format = money_fmt
+        ws.cell(i, 14, f"=L{i}/M{i}-1").number_format = '+0.0%;-0.0%;0.0%'
+        ws.cell(i, 15, f"{row.largest_day} {row.largest_day_gap:+.0%}")
+    ws.freeze_panes = "E2"
+    ws.auto_filter.ref = f"A1:O{len(n['wt']) + 1}"
+    for j, wdt in enumerate([18, 7, 16, 22] + [10] * 7 + [12, 13, 11, 16], 1):
+        ws.column_dimensions[get_column_letter(j)].width = wdt
     ws.row_dimensions[1].height = 30
 
     # types
@@ -379,8 +458,8 @@ def export_xlsx(n: dict) -> dict:
     for st in n["stores"]:
         ws = wb.create_sheet(st["name"][:31])
         r = 1
-        ws.cell(r, 1, f"{st['name']} · 2027 week templates (sales in $, then checks; Monday to Sunday)").font = \
-            Font(bold=True, size=13)
+        ws.cell(r, 1, f"{st['name']} · week templates, next 52 weeks (sales in $, then checks; Monday to Sunday)"
+                ).font = Font(bold=True, size=13)
         r += 2
         blocks = [(ty["t"], f"{ty['name']} · " + "; ".join(f"{x['weeks']}: {x['dates']}" for x in ty["ranges"]))
                   for ty in st["types"]]
@@ -468,9 +547,9 @@ def recalc(path: Path, timeout: int = 120) -> dict:
 # ------------------------------------------------------------------------------------------
 def render(n: dict) -> Path:
     env = Environment(loader=FileSystemLoader(ROOT / "report"), autoescape=False)
-    env.filters.update(money=money, fk=fk, fm=fm, pct=pct, and_join=and_join)
+    env.filters.update(money=money, fk=fk, fm=fm, pct=pct, pct1=pct1, and_join=and_join)
     html = env.get_template("week_types.html.j2").render(n=n, DAYS=DAYS)
-    path = BUILD / "parakeet_2027_week_types.html"
+    path = BUILD / "parakeet_week_types_next_52_weeks.html"
     path.write_text(html, encoding="utf-8")
     return path
 

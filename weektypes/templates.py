@@ -3,11 +3,15 @@ sales (whole dollars) and checks.
 
 A type's day is the average of its weeks' run-rate on that day of the week (holiday weeks left out); a holiday week's
 days are its own run-rate days. Days are in whole dollars and split into hours in whole dollars that add up to the day
-(largest remainder), along the store's weekday pattern, or a special day's own pattern on its day
-(weektypes/hourly.py). Checks are each hour's sales divided by the store's average check for that hour and day of the
-week (the last 12 months; a special day's own where it has one), rounded to whole checks.
+(largest remainder), along the store's weekday pattern, or a special day's own pattern on its day (an observed
+holiday keeps the weekday's: weektypes/hourly.py). Checks are each hour's sales divided by the store's average check
+for that hour and day of the week (the last 12 months; a special day's own where it has one), rounded to whole
+checks.
 
-    python weektypes/templates.py   -> outputs/weektypes/templates_long.csv, calendar.csv
+Every week also keeps its own run-rate by day (week_table), so a week that sells a few percent more or less than its
+type's template can be scaled to it.
+
+    python weektypes/templates.py   -> outputs/weektypes/templates_long.csv, calendar.csv, weeks.csv
 """
 from __future__ import annotations
 
@@ -111,8 +115,9 @@ def build(weeks: dict[str, StoreWeeks] | None = None, rr: pd.DataFrame | None = 
             labs = [hol_days.get(w, {}).get(d, "") for d in dates]
             cells = []
             for d, (dt, lab) in enumerate(zip(dates, labs)):
-                key = lab.replace(" (observed)", "") if lab else ""
-                p, c = special.get(key, (pat[d], chk[d])) if key else (pat[d], chk[d])
+                # an observed holiday is a normal opening day: the weekday's hours (its total is the run-rate's)
+                key = lab if lab and "(observed)" not in lab else ""
+                p, c = special.get(key, (pat[d], chk[d]))
                 cells.append(day_cells(day[dt], p, c))
             temps.append(Template(s, name, "holiday", [w], hours.shown, np.column_stack([c[0] for c in cells]),
                                   np.column_stack([c[1] for c in cells]), dates, labs, sw.label[w]))
@@ -123,7 +128,9 @@ def build(weeks: dict[str, StoreWeeks] | None = None, rr: pd.DataFrame | None = 
 def calendar(weeks: dict[str, StoreWeeks]) -> pd.DataFrame:
     rows = []
     for w in range(1, N_WEEKS + 1):
-        r = {"week": w, "monday": week_start(w).date(), "sunday": (week_start(w) + pd.Timedelta(days=6)).date()}
+        m = week_start(w)
+        r = {"week": w, "monday": m.date(), "sunday": (m + pd.Timedelta(days=6)).date(),
+             "iso_week": int(m.isocalendar().week)}
         for s in STORES:
             sw = weeks[s]
             r[DISPLAY[s]] = sw.holiday.get(w, sw.label[w])
@@ -139,6 +146,28 @@ def check_totals(weeks, temps, rr) -> pd.DataFrame:
         total = sum(by[weeks[s].holiday.get(w, weeks[s].label[w])].week_sales for w in range(1, N_WEEKS + 1))
         run = rr[s].sum()
         rows.append({"store": DISPLAY[s], "templates": total, "runrate": round(run, 2), "difference": total - run})
+    return pd.DataFrame(rows)
+
+
+def week_table(weeks, temps, rr) -> pd.DataFrame:
+    """Every store and week: the template it uses, and its own run-rate by day against the template's days."""
+    rows = []
+    for s in STORES:
+        sw = weeks[s]
+        by = {t.name: t for t in temps[s]}
+        for w in range(1, N_WEEKS + 1):
+            t = by[sw.holiday.get(w, sw.label[w])]
+            own = rr[s].loc[week_start(w): week_start(w) + pd.Timedelta(days=6)].to_numpy()
+            gap = own / t.day_sales - 1
+            r = {"store": DISPLAY[s], "week": w, "monday": week_start(w).date(), "template": t.name, "kind": t.kind,
+                 "type": sw.label[w]}
+            r.update({d: round(float(v), 2) for d, v in zip(DAYS, own)})
+            r.update({"week_sales": round(float(own.sum()), 2), "template_sales": t.week_sales,
+                      "vs_template": float(own.sum() / t.week_sales - 1),
+                      "largest_day_gap": float(gap[np.argmax(np.abs(gap))]),
+                      "largest_day": DAYS[int(np.argmax(np.abs(gap)))],
+                      "day_gap_abs": float(np.abs(own - t.day_sales).sum())})
+            rows.append(r)
     return pd.DataFrame(rows)
 
 
@@ -161,6 +190,12 @@ def main() -> None:
     weeks, temps = build(rr=rr)
     long_table(temps).to_csv(OUTDIR / "templates_long.csv", index=False)
     calendar(weeks).to_csv(OUTDIR / "calendar.csv", index=False)
+    wt = week_table(weeks, temps, rr)
+    wt.to_csv(OUTDIR / "weeks.csv", index=False)
+    fit = wt.groupby("store", sort=False).agg(week=("vs_template", lambda x: x.abs().mean()),
+                                              day=("day_gap_abs", "sum"), sales=("week_sales", "sum"))
+    print("how far a week is from its template (mean |week - template|), and a day (sum |day - template| / sales):")
+    print(fit.assign(day=fit.day / fit.sales)[["week", "day"]].mul(100).round(1).to_string())
     chk = check_totals(weeks, temps, rr)
     print(chk.to_string(index=False))
     for s in STORES:

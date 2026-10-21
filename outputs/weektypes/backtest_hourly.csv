@@ -1,74 +1,74 @@
 test,store,method,err,sales,bias
 1 pattern,Beverly Hills,weekday,674068.1588703266,2291948.0,
-1 pattern,Beverly Hills,type x weekday,676570.9238855465,2291948.0,
-1 pattern,Beverly Hills,type x day group,671711.0277758308,2291948.0,
-1 pattern,Beverly Hills,type,677183.9055614204,2291948.0,
-1 pattern,Beverly Hills,average of weekday and type x weekday,673175.6413817854,2291948.0,
-1 special days,Beverly Hills,special day: type x weekday,45812.645963574294,143839.0,
-1 special days,Beverly Hills,special day: its own pattern,10197.084013665943,31256.0,
+1 pattern,Beverly Hills,type x weekday,676366.7250140521,2291948.0,
+1 pattern,Beverly Hills,type x day group,671596.5740616652,2291948.0,
+1 pattern,Beverly Hills,type,674738.4591501721,2291948.0,
+1 pattern,Beverly Hills,average of weekday and type x weekday,673553.2477452611,2291948.0,
+1 special days,Beverly Hills,special day: type x weekday,45359.77894121315,143839.0,
+1 special days,Beverly Hills,special day: its own pattern,10187.60509716525,31256.0,
 1 pattern,Brentwood,weekday,556897.515141222,2109071.0,
-1 pattern,Brentwood,type x weekday,564119.9100284406,2109071.0,
-1 pattern,Brentwood,type x day group,560484.4309750109,2109071.0,
-1 pattern,Brentwood,type,576733.5639570919,2109071.0,
-1 pattern,Brentwood,average of weekday and type x weekday,558326.1474057075,2109071.0,
-1 special days,Brentwood,special day: type x weekday,46298.93121476182,142404.0,
-1 special days,Brentwood,special day: its own pattern,10057.741864473737,33787.0,
+1 pattern,Brentwood,type x weekday,566272.9800236509,2109071.0,
+1 pattern,Brentwood,type x day group,561441.1611358753,2109071.0,
+1 pattern,Brentwood,type,578632.0492821888,2109071.0,
+1 pattern,Brentwood,average of weekday and type x weekday,559891.030702217,2109071.0,
+1 special days,Brentwood,special day: type x weekday,46999.27799469375,142404.0,
+1 special days,Brentwood,special day: its own pattern,10091.163197825636,33787.0,
 1 pattern,Carlsbad,weekday,653102.3009357282,3383729.0,
-1 pattern,Carlsbad,type x weekday,656540.9312442282,3383729.0,
-1 pattern,Carlsbad,type x day group,655601.7362330332,3383729.0,
-1 pattern,Carlsbad,type,662306.3885559777,3383729.0,
-1 pattern,Carlsbad,average of weekday and type x weekday,652942.931399283,3383729.0,
-1 special days,Carlsbad,special day: type x weekday,65361.41439842868,253485.0,
-1 special days,Carlsbad,special day: its own pattern,10249.7372652426,55703.0,
+1 pattern,Carlsbad,type x weekday,660814.3248006038,3383729.0,
+1 pattern,Carlsbad,type x day group,658068.4288991005,3383729.0,
+1 pattern,Carlsbad,type,661926.6513021949,3383729.0,
+1 pattern,Carlsbad,average of weekday and type x weekday,654936.5907240107,3383729.0,
+1 special days,Carlsbad,special day: type x weekday,65293.58040616013,253485.0,
+1 special days,Carlsbad,special day: its own pattern,10151.419719470246,55703.0,
 1 pattern,Coronado,weekday,674481.7391131765,3636884.0,
-1 pattern,Coronado,type x weekday,688139.5471064716,3636884.0,
-1 pattern,Coronado,type x day group,682531.3906901961,3636884.0,
-1 pattern,Coronado,type,692564.7534646441,3636884.0,
-1 pattern,Coronado,average of weekday and type x weekday,674581.893394655,3636884.0,
-1 special days,Coronado,special day: type x weekday,82711.10416810177,320949.0,
-1 special days,Coronado,special day: its own pattern,15217.404466427617,80825.0,
+1 pattern,Coronado,type x weekday,679935.6975649433,3636884.0,
+1 pattern,Coronado,type x day group,676476.7566016607,3636884.0,
+1 pattern,Coronado,type,690494.3306471771,3636884.0,
+1 pattern,Coronado,average of weekday and type x weekday,672593.0845242009,3636884.0,
+1 special days,Coronado,special day: type x weekday,81300.9831659443,320949.0,
+1 special days,Coronado,special day: its own pattern,14752.689562901101,80825.0,
 1 pattern,Del Mar Café,weekday,699241.917244021,4258024.0,
-1 pattern,Del Mar Café,type x weekday,700708.3721336161,4258024.0,
-1 pattern,Del Mar Café,type x day group,695049.9770325894,4258024.0,
-1 pattern,Del Mar Café,type,725597.8124626908,4258024.0,
-1 pattern,Del Mar Café,average of weekday and type x weekday,696205.103620478,4258024.0,
-1 special days,Del Mar Café,special day: type x weekday,69538.86724397224,312516.0,
-1 special days,Del Mar Café,special day: its own pattern,10347.94478373536,67152.0,
+1 pattern,Del Mar Café,type x weekday,702881.4310263841,4258024.0,
+1 pattern,Del Mar Café,type x day group,697988.4618289357,4258024.0,
+1 pattern,Del Mar Café,type,730405.3904609021,4258024.0,
+1 pattern,Del Mar Café,average of weekday and type x weekday,698290.2044433601,4258024.0,
+1 special days,Del Mar Café,special day: type x weekday,69746.39786745358,312516.0,
+1 special days,Del Mar Café,special day: its own pattern,10115.79060168066,67152.0,
 1 pattern,La Jolla Café,weekday,554085.5359815387,2666463.0,
-1 pattern,La Jolla Café,type x weekday,557382.3828622452,2666463.0,
-1 pattern,La Jolla Café,type x day group,550882.6766084335,2666463.0,
-1 pattern,La Jolla Café,type,559180.0883358424,2666463.0,
-1 pattern,La Jolla Café,average of weekday and type x weekday,553775.6147583819,2666463.0,
-1 special days,La Jolla Café,special day: type x weekday,52757.90783689406,204545.0,
-1 special days,La Jolla Café,special day: its own pattern,9151.748445535028,44498.0,
+1 pattern,La Jolla Café,type x weekday,558897.7661789951,2666463.0,
+1 pattern,La Jolla Café,type x day group,552262.2335090851,2666463.0,
+1 pattern,La Jolla Café,type,560470.4116875987,2666463.0,
+1 pattern,La Jolla Café,average of weekday and type x weekday,554372.328108917,2666463.0,
+1 special days,La Jolla Café,special day: type x weekday,53709.22049313404,204545.0,
+1 special days,La Jolla Café,special day: its own pattern,9018.71781311497,44498.0,
 1 pattern,La Jolla Juicery,weekday,225402.96095007786,817506.0,
-1 pattern,La Jolla Juicery,type x weekday,230061.139618125,817506.0,
-1 pattern,La Jolla Juicery,type x day group,225358.4730362406,817506.0,
-1 pattern,La Jolla Juicery,type,227083.72339098682,817506.0,
-1 pattern,La Jolla Juicery,average of weekday and type x weekday,226049.9394676541,817506.0,
-1 special days,La Jolla Juicery,special day: type x weekday,20055.85435326559,55815.0,
-1 special days,La Jolla Juicery,special day: its own pattern,4606.550671735279,13026.0,
+1 pattern,La Jolla Juicery,type x weekday,232760.28597825026,817506.0,
+1 pattern,La Jolla Juicery,type x day group,229268.97290773987,817506.0,
+1 pattern,La Jolla Juicery,type,228576.67031775153,817506.0,
+1 pattern,La Jolla Juicery,average of weekday and type x weekday,227524.57070318243,817506.0,
+1 special days,La Jolla Juicery,special day: type x weekday,20430.847026873744,55815.0,
+1 special days,La Jolla Juicery,special day: its own pattern,4614.471730797056,13026.0,
 1 pattern,Little Italy Café,weekday,629494.844169052,2882972.0,
-1 pattern,Little Italy Café,type x weekday,644422.6901998693,2882972.0,
-1 pattern,Little Italy Café,type x day group,636087.4418640046,2882972.0,
-1 pattern,Little Italy Café,type,638549.3315831043,2882972.0,
-1 pattern,Little Italy Café,average of weekday and type x weekday,633832.0463336364,2882972.0,
-1 special days,Little Italy Café,special day: type x weekday,57658.63339931214,243189.0,
-1 special days,Little Italy Café,special day: its own pattern,13348.326650614392,60590.0,
+1 pattern,Little Italy Café,type x weekday,644893.6615047841,2882972.0,
+1 pattern,Little Italy Café,type x day group,638843.6943168556,2882972.0,
+1 pattern,Little Italy Café,type,634683.108678644,2882972.0,
+1 pattern,Little Italy Café,average of weekday and type x weekday,634078.1578394579,2882972.0,
+1 special days,Little Italy Café,special day: type x weekday,59430.62178807224,243189.0,
+1 special days,Little Italy Café,special day: its own pattern,13324.86525376836,60590.0,
 1 pattern,Newport Beach,weekday,632405.668807942,3104681.0,
-1 pattern,Newport Beach,type x weekday,637758.1944796687,3104681.0,
-1 pattern,Newport Beach,type x day group,631128.6748433033,3104681.0,
-1 pattern,Newport Beach,type,634156.898344178,3104681.0,
-1 pattern,Newport Beach,average of weekday and type x weekday,632507.996717189,3104681.0,
-1 special days,Newport Beach,special day: type x weekday,69363.99029245024,290895.0,
-1 special days,Newport Beach,special day: its own pattern,10335.856790708656,61486.0,
+1 pattern,Newport Beach,type x weekday,637147.7753867842,3104681.0,
+1 pattern,Newport Beach,type x day group,629979.6260581916,3104681.0,
+1 pattern,Newport Beach,type,631236.5804708251,3104681.0,
+1 pattern,Newport Beach,average of weekday and type x weekday,632652.4292151214,3104681.0,
+1 special days,Newport Beach,special day: type x weekday,65264.6391179125,290895.0,
+1 special days,Newport Beach,special day: its own pattern,10121.363635144731,61486.0,
 1 pattern,La Jolla Cove,weekday,188751.23563044536,578515.0,
-1 pattern,La Jolla Cove,type x weekday,193321.18612904596,578515.0,
-1 pattern,La Jolla Cove,type x day group,191396.0002578992,578515.0,
-1 pattern,La Jolla Cove,type,189259.6746744385,578515.0,
-1 pattern,La Jolla Cove,average of weekday and type x weekday,189877.42980027501,578515.0,
-1 special days,La Jolla Cove,special day: type x weekday,18743.966289120905,55437.0,
-1 special days,La Jolla Cove,special day: its own pattern,4438.910494142534,13382.0,
+1 pattern,La Jolla Cove,type x weekday,194637.73612550506,578515.0,
+1 pattern,La Jolla Cove,type x day group,191571.62437431453,578515.0,
+1 pattern,La Jolla Cove,type,189156.3119729372,578515.0,
+1 pattern,La Jolla Cove,average of weekday and type x weekday,189865.10521497822,578515.0,
+1 special days,La Jolla Cove,special day: type x weekday,18612.861542379247,55437.0,
+1 special days,La Jolla Cove,special day: its own pattern,4389.804687922571,13382.0,
 2 recency,Beverly Hills,half-life none,396124.9038745605,1301129.0,
 2 recency,Beverly Hills,half-life 730,394854.560794977,1301129.0,
 2 recency,Beverly Hills,half-life 365,393769.65885386115,1301129.0,
@@ -79,7 +79,7 @@ test,store,method,err,sales,bias
 2 average check,Beverly Hills,check: last 6 months,10168.201919484396,40627.0,4967.143677971657
 2 average check,Beverly Hills,check: last 12 months,10457.67389371459,40627.0,6059.453618052831
 2 average check,Beverly Hills,check: all 18 months,10648.93208855896,40627.0,6407.319378726815
-2 average check,Beverly Hills,"check: by type, all 18 months",10644.263407990242,40627.0,6304.173205462387
+2 average check,Beverly Hills,"check: by type, all 18 months",11109.911372827946,40627.0,7183.318265512295
 2 recency,Brentwood,half-life none,282501.65054692246,1079758.0,
 2 recency,Brentwood,half-life 730,281171.9599598522,1079758.0,
 2 recency,Brentwood,half-life 365,280070.00844431965,1079758.0,
@@ -90,7 +90,7 @@ test,store,method,err,sales,bias
 2 average check,Brentwood,check: last 6 months,7617.5155688689,39142.0,2048.7660360959158
 2 average check,Brentwood,check: last 12 months,7305.34812284488,39142.0,1173.1548335884909
 2 average check,Brentwood,check: all 18 months,7219.083380922928,39142.0,1119.165890962948
-2 average check,Brentwood,"check: by type, all 18 months",7343.137646457976,39142.0,767.6296497305867
+2 average check,Brentwood,"check: by type, all 18 months",7333.040750867765,39142.0,1112.4024789597183
 2 recency,Carlsbad,half-life none,332819.6552647804,1778529.0,
 2 recency,Carlsbad,half-life 730,331276.72069149074,1778529.0,
 2 recency,Carlsbad,half-life 365,329861.7490573606,1778529.0,
@@ -101,7 +101,7 @@ test,store,method,err,sales,bias
 2 average check,Carlsbad,check: last 6 months,9082.139861464982,65778.0,1622.7712701263802
 2 average check,Carlsbad,check: last 12 months,8851.864921418173,65778.0,347.94129059886654
 2 average check,Carlsbad,check: all 18 months,8800.16644799041,65778.0,270.8858691610198
-2 average check,Carlsbad,"check: by type, all 18 months",8871.123045222528,65778.0,465.17230418581204
+2 average check,Carlsbad,"check: by type, all 18 months",8818.618268543509,65778.0,-342.77368889386514
 2 recency,Coronado,half-life none,359810.24429864704,2033743.0,
 2 recency,Coronado,half-life 730,359076.4398426162,2033743.0,
 2 recency,Coronado,half-life 365,358411.31364666205,2033743.0,
@@ -112,7 +112,7 @@ test,store,method,err,sales,bias
 2 average check,Coronado,check: last 6 months,10387.704733604482,76029.0,4744.855323275302
 2 average check,Coronado,check: last 12 months,9689.925984879976,76029.0,2958.5513737921137
 2 average check,Coronado,check: all 18 months,10116.889278833529,76029.0,4285.830208045421
-2 average check,Coronado,"check: by type, all 18 months",9369.078677496062,76029.0,1903.252324902101
+2 average check,Coronado,"check: by type, all 18 months",9747.678685397072,76029.0,3103.4118191727657
 2 recency,Del Mar Café,half-life none,370467.8532669839,2249993.0,
 2 recency,Del Mar Café,half-life 730,370781.7671410217,2249993.0,
 2 recency,Del Mar Café,half-life 365,371235.6338353959,2249993.0,
@@ -123,7 +123,7 @@ test,store,method,err,sales,bias
 2 average check,Del Mar Café,check: last 6 months,10760.959650454593,80868.0,1620.2192263699635
 2 average check,Del Mar Café,check: last 12 months,10589.768344867842,80868.0,1114.9438589010413
 2 average check,Del Mar Café,check: all 18 months,10764.947660037189,80868.0,2044.3715127734138
-2 average check,Del Mar Café,"check: by type, all 18 months",10768.493090165348,80868.0,2021.1682703230856
+2 average check,Del Mar Café,"check: by type, all 18 months",10602.002184629699,80868.0,1386.9745011391942
 2 recency,La Jolla Café,half-life none,286479.77854083444,1405293.0,
 2 recency,La Jolla Café,half-life 730,286346.98824102513,1405293.0,
 2 recency,La Jolla Café,half-life 365,286256.2551748673,1405293.0,
@@ -134,7 +134,7 @@ test,store,method,err,sales,bias
 2 average check,La Jolla Café,check: last 6 months,8697.79611876867,55642.0,1900.5144843393623
 2 average check,La Jolla Café,check: last 12 months,8398.375785699953,55642.0,1011.1938368965236
 2 average check,La Jolla Café,check: all 18 months,8529.967375720506,55642.0,1634.1561113900048
-2 average check,La Jolla Café,"check: by type, all 18 months",8656.312992289997,55642.0,1541.9734141262747
+2 average check,La Jolla Café,"check: by type, all 18 months",8465.214280726355,55642.0,877.1649667010365
 2 recency,La Jolla Juicery,half-life none,120291.56928980316,458865.0,
 2 recency,La Jolla Juicery,half-life 730,120168.78009123777,458865.0,
 2 recency,La Jolla Juicery,half-life 365,120117.95945388645,458865.0,
@@ -145,7 +145,7 @@ test,store,method,err,sales,bias
 2 average check,La Jolla Juicery,check: last 6 months,3397.289428553992,23056.0,1006.8400569706374
 2 average check,La Jolla Juicery,check: last 12 months,3336.5812045879566,23056.0,1065.518419440762
 2 average check,La Jolla Juicery,check: all 18 months,3356.59973242199,23056.0,1217.7799748250895
-2 average check,La Jolla Juicery,"check: by type, all 18 months",3371.0349601054445,23056.0,879.7179947913485
+2 average check,La Jolla Juicery,"check: by type, all 18 months",3472.759244533362,23056.0,1198.9439250662913
 2 recency,Little Italy Café,half-life none,330706.72763655154,1622755.0,
 2 recency,Little Italy Café,half-life 730,329968.94933053595,1622755.0,
 2 recency,Little Italy Café,half-life 365,329258.54752850014,1622755.0,
@@ -156,7 +156,7 @@ test,store,method,err,sales,bias
 2 average check,Little Italy Café,check: last 6 months,9553.973816362397,56256.0,3323.5275209332863
 2 average check,Little Italy Café,check: last 12 months,9231.855036509636,56256.0,2376.968589999091
 2 average check,Little Italy Café,check: all 18 months,9280.133934070764,56256.0,2798.7884622054225
-2 average check,Little Italy Café,"check: by type, all 18 months",9235.206819749015,56256.0,2065.698814211602
+2 average check,Little Italy Café,"check: by type, all 18 months",9463.662018684714,56256.0,1434.8687983907748
 2 recency,Newport Beach,half-life none,329278.7987242469,1699484.0,
 2 recency,Newport Beach,half-life 730,327202.33845606854,1699484.0,
 2 recency,Newport Beach,half-life 365,325371.64292013267,1699484.0,
@@ -167,7 +167,7 @@ test,store,method,err,sales,bias
 2 average check,Newport Beach,check: last 6 months,9159.506391295787,58232.0,2879.4085211873266
 2 average check,Newport Beach,check: last 12 months,8878.863863349718,58232.0,1635.0489338399643
 2 average check,Newport Beach,check: all 18 months,8977.746218573706,58232.0,1799.8237257866465
-2 average check,Newport Beach,"check: by type, all 18 months",8890.967142130075,58232.0,1610.205627878623
+2 average check,Newport Beach,"check: by type, all 18 months",8948.288969453231,58232.0,1362.3280920211105
 2 recency,La Jolla Cove,half-life none,104800.34095633574,318009.0,
 2 recency,La Jolla Cove,half-life 730,104441.42120961542,318009.0,
 2 recency,La Jolla Cove,half-life 365,104093.2434230982,318009.0,
@@ -178,4 +178,4 @@ test,store,method,err,sales,bias
 2 average check,La Jolla Cove,check: last 6 months,3909.2882559355357,20636.0,908.3720883038186
 2 average check,La Jolla Cove,check: last 12 months,3766.898528250592,20636.0,287.80751118267705
 2 average check,La Jolla Cove,check: all 18 months,3800.0216960832904,20636.0,563.2612617891696
-2 average check,La Jolla Cove,"check: by type, all 18 months",3811.6090038064394,20636.0,-70.11274825159072
+2 average check,La Jolla Cove,"check: by type, all 18 months",3863.9598376102886,20636.0,415.57831832799013
